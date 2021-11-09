@@ -136,6 +136,14 @@
    [ exch 1 exch dup { 32 idiv exch } forall 0 exch { 31 and } forall ] polymod0
  } bind def
 
+/setcolidx {
+    dup dup
+    16 lt {
+        8 lt {0 0 0 setrgbcolor} {0 1 0 setrgbcolor} ifelse
+    } {
+        24 lt {1 0 0 setrgbcolor} {0 0 1 setrgbcolor} ifelse
+    } ifelse
+} bind def
 /centreshow {dup stringwidth pop 2 div neg 0 rmoveto show} bind def
 /centresquare {dup neg 2 div dup rmoveto dup 0 rlineto dup 0 exch rlineto neg 0 rlineto closepath stroke} bind def
 /concatstrings % (a) (b) -> (ab)  
@@ -229,10 +237,11 @@ end
    /Helvetica findfont 6 scalefont setfont
    0 30 360 {title 6 2 index 262 outsidecircletext} for
    outerfont findfont 18 scalefont setfont
-   perm {0 38 sqrt 40 mul moveto outercode exch 1 getinterval centreshow -11.25 rotate} forall
+   perm {0 38 sqrt 40 mul moveto outercode exch setcolidx 1 getinterval centreshow -11.25 rotate} forall
    /Courier findfont 12 scalefont setfont
    180 rotate
-   0 1 31 {139 rotate perm {0 2 index 2 add sqrt 40 mul moveto 1 index 31 exch sub perm exch get binop code exch 1 getinterval centreshow -11.25 rotate} forall pop} for
+   0 1 31 {139 rotate perm {0 2 index 2 add sqrt 40 mul moveto 1 index 31 exch sub perm exch get binop code exch setcolidx 1 getinterval centreshow -11.25 rotate} forall pop} for
+   0 0 0 setrgbcolor
    showpage
  } bind def
 
@@ -250,8 +259,8 @@ end
    newpath 0 6 40 mul moveto 10 -20 rlineto -20 0 rlineto closepath fill
    /Courier findfont 12 scalefont setfont
    180 rotate
-   0 1 31 {139 rotate dup 2 add sqrt 40 mul 2.5 add newpath 0 exch 2 copy moveto 12 centresquare moveto 9 -3 rmoveto (\254) /Symbol findfont 12 scalefont setfont show
-            31 exch sub perm exch get code exch 1 getinterval /Courier findfont 12 scalefont setfont show} for
+   0 1 31 {139 rotate dup 2 add sqrt 40 mul 2.5 add newpath 0 exch 2 copy moveto 12 0 0 0 setrgbcolor centresquare moveto 9 -3 rmoveto (\254) /Symbol findfont 12 scalefont setfont show
+            31 exch sub perm exch get code exch setcolidx 1 getinterval /Courier findfont 12 scalefont setfont show} for
    showpage
  } bind def
 

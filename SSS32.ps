@@ -336,8 +336,8 @@ page exch perm 3 index get exch  makeShare code exch 1 getinterval show
 showpage
 } bind def
 
-/arraySpace 8 def
-/arrayHeight 10 def
+/arraySpace 13 def
+/arrayHeight 16 def
 /showArray {
   { 3 copy pop moveto code exch 1 getinterval show exch arraySpace add exch } forall pop pop
 } bind def
@@ -558,32 +558,30 @@ showpage
 pgsize 40 sub exch 2 div exch
 moveto (Bech32 Checksum Worksheet for donotusesss32 Prefix) centreshow
 
-/Courier findfont 12 scalefont setfont
+/Courier findfont arraySpace scalefont setfont
 
--10 rotate
-
--80 770
-0 1 65 {
+80 700
+0 1 21 {
 3 copy pop
 0 1 4 index 2 mod 0 eq {polymodulus length 1 add} {polymodulus length 1 sub} ifelse {
 3 copy pop
 moveto
 -0.5 -1.9 rmoveto
-0 10 rlineto
+0 arrayHeight rlineto
 arraySpace 0 rlineto
-0 -10 rlineto
+0 arrayHeight neg rlineto
 closepath
 dup polymodulus length lt {0.2} {1} ifelse setlinewidth
-3 index dup 2 mod 0 eq 3 1 roll add 66 ge and { gsave 1 0.9 0.9 setrgbcolor fill grestore } if
+pop
 stroke
 exch arraySpace add exch
 } for
 pop pop
 2 mod 0 eq
- { 10 sub exch arraySpace 2 mul add exch}
+ { arrayHeight sub exch arraySpace 2 mul add exch}
  {
  2 copy moveto -0.5 -1.9 rmoveto arraySpace polymodulus length mul 0 rlineto 1 setlinewidth stroke
- 10 sub
+ arrayHeight sub
  } ifelse
 } for
 2 copy
@@ -591,21 +589,17 @@ polymodulus length {
 2 copy
 moveto
 -0.5 -1.9 rmoveto
-0 10 rlineto
+0 arrayHeight rlineto
 arraySpace 0 rlineto
-0 -10 rlineto
+0 arrayHeight neg rlineto
 closepath
 0.25 setlinewidth
 stroke
 exch arraySpace add exch
 } repeat
 pop pop
-0.85 setgray
-checksum showArray
-0 setgray
 
--80 770
-% [16 10 19 29 27 25 15 15 22 25 25 1 16 25 24 3 25 11 27 29 16 11 25 3 16 25 25 13 16 25 24 28 3 25 18 10 11 3 16 1] % s2name00keepsecretmasterseedsecurej2trsp
+80 700
 (donotusesss32) polymodhrp
 0 2 38 {
     /arrayIdx exch def
@@ -618,11 +612,11 @@ checksum showArray
 
     % Show next checksum-table lookup
     x arraySpace 2 mul add
-    y 10 sub
+    y arrayHeight sub
     polymod 0 2 getinterval aload pop polymodshift2 showArray
 
     x arraySpace 2 mul add
-    y 20 sub
+    y arrayHeight 2 mul sub
 
     polymod 0 2 getinterval aload pop polymodshift2
     [ polymod 2 polymodulus length 2 sub getinterval aload pop 32 32 ]
@@ -630,72 +624,86 @@ checksum showArray
 } for
 showArray
 
-10 rotate
-100 320 moveto
-/Helvetica-bold findfont 10 scalefont setfont
-(Verifying Checksums) show
-100 300 moveto
-/Helvetica findfont 9 scalefont setfont
-(Write out the 40 character data portion in the) show
-100 290 moveto
-(bold boxes, two at a time, starting on the top) show
-100 280 moveto
-(row.  Working from the top row down, look up) show
-100 270 moveto
-(the first two characters of each odd row in the) show
-100 260 moveto
-(Bech32 Checksum Table and write the ) polymodulus length 10 string cvs concatstrings show
-100 250 moveto
-(character word into the even row below it.  Fill) show
-100 240 moveto
-(in the odd rows by adding the two characters) show
-100 230 moveto
-(above each cell.  You may use either the) show
-100 220 moveto
-(addition wheel table.  The first few boxes are) show
-100 210 moveto
-(already filled in for you.  The last row will sum) show
-100 200 moveto
-(to ) checksumstring ( if the checksum is valid.) concatstrings concatstrings show
-100 160 moveto
-/Helvetica-bold findfont 10 scalefont setfont
-(Creating Checksums) show
-100 140 moveto
-/Helvetica findfont 9 scalefont setfont
-(Follow the "Verifying Checksums" instructions) show
-100 130 moveto
-(to fill in everything but the pink cells. To fill in) show
-100 120 moveto
-(the pink cells, write ) checksumstring ( into the bottom) concatstrings concatstrings show
-100 110 moveto
-(row.  Working from the bottom up, fill in the) show
-100 100 moveto
-(pink cells by adding the two characters below) show
-100 90 moveto
-(each cell.  The six characters in the bold pink) show
-100 80 moveto
-(boxes will be the checksum.) show
+370 347
+13 {
+    /y exch def
+    /x exch def
+    x y moveto
+    1 0 rmoveto    % 2 0
+    3 0 rlineto    % 4 0
+    -1 -5 rlineto   % 4 -5
+    2 0 rlineto    % 6 0
+    -3 -3 rlineto  % 3 -8
+    -3 3 rlineto   % 0 -5
+    2 0 rlineto    % 2 -5
+    -1 5 rlineto    % 2 0
+    closepath
+    fill
 
-250 650
-/offsety exch def
-/offsetx exch def
-/Courier findfont 10 scalefont setfont
-20 offsetx add offsety moveto (Addition Table) show
-/Courier-Bold findfont 8 scalefont setfont
-0 1 31 {
-dup 2 add 7 mul offsetx add offsety 10 sub moveto
-perm exch get
-code exch 1 getinterval show
+    x arraySpace add y
+} repeat
+
+85 421
+13 {
+    /y exch def
+    /x exch def
+    x y moveto
+    1 0 rmoveto    % 2 0
+    3 0 rlineto    % 4 0
+    -1 -5 rlineto   % 4 -5
+    2 0 rlineto    % 6 0
+    -3 -3 rlineto  % 3 -8
+    -3 3 rlineto   % 0 -5
+    2 0 rlineto    % 2 -5
+    -1 5 rlineto    % 2 0
+    closepath
+    fill
+
+    x arraySpace add y
+} repeat
+
+
+%% second table
+80 400
+0 1 21 {
+3 copy pop
+0 1 4 index 2 mod 0 eq {polymodulus length 1 add} {polymodulus length 1 sub} ifelse {
+3 copy pop
+moveto
+-0.5 -1.9 rmoveto
+0 arrayHeight rlineto
+arraySpace 0 rlineto
+0 arrayHeight neg rlineto
+closepath
+dup polymodulus length lt {0.2} {1} ifelse setlinewidth
+3 index dup 2 mod 0 eq 3 1 roll add 22 ge and { gsave 1 0.9 0.9 setrgbcolor fill grestore } if
+stroke
+exch arraySpace add exch
 } for
+pop pop
+2 mod 0 eq
+ { arrayHeight sub exch arraySpace 2 mul add exch}
+ {
+ 2 copy moveto -0.5 -1.9 rmoveto arraySpace polymodulus length mul 0 rlineto 1 setlinewidth stroke
+ arrayHeight sub
+ } ifelse
+} for
+2 copy
+polymodulus length {
+2 copy
+moveto
+-0.5 -1.9 rmoveto
+0 arrayHeight rlineto
+arraySpace 0 rlineto
+0 arrayHeight neg rlineto
+closepath
+0.25 setlinewidth
+stroke
+exch arraySpace add exch
+} repeat
+pop pop
+0.85 setgray
+checksum showArray
+0 setgray
 
-0 1 31 {
-/Courier-Bold findfont 8 scalefont setfont
-offsetx 34.5 7 mul add offsety 20 sub 2 index 8 mul sub moveto
-dup code exch perm exch get 1 getinterval show
-/Courier findfont 8 scalefont setfont
-dup 1 31 {
-dup 2 add 7 mul offsetx add offsety 20 sub 3 index 8 mul sub moveto
-perm exch get
-perm 2 index get gf32add code exch 1 getinterval show
-} for pop } for
 showpage

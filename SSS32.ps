@@ -164,8 +164,7 @@
   } bind def
 
 % /polymodulus [18 29 21 20 22 29] def % coefficents from c0 to c5
-/polymodulus [29 22 20 21 29 18] def % coefficents from c5 to c0
-% /polymodulus [10 30 14 26 0 17 28 18 18 5 26 6 22] def % coefficents from c12 to c0
+/polymodulus [10 30 14 26 0 17 28 18 18 5 26 6 22] def % coefficents from c12 to c0
 /checksum {[polymodulus length 1 sub {0} repeat 1]} bind def
 /checksumstring { polymodulus length string checksum 0 1 polymodulus length 1 sub {3 copy exch 1 index get code exch 1 getinterval putinterval pop } for pop } bind def
 
@@ -338,6 +337,7 @@ showpage
 } bind def
 
 /arraySpace 8 def
+/arrayHeight 10 def
 /showArray {
   { 3 copy pop moveto code exch 1 getinterval show exch arraySpace add exch } forall pop pop
 } bind def
@@ -538,14 +538,14 @@ perm exch get exch perm exch get exch
 2 copy
 code exch get exch code exch get exch
 2 string dup 1 4 3 roll put dup 0 4 3 roll put
-/Courier-Bold findfont 8 scalefont setfont
+/Courier-Bold findfont 4.5 scalefont setfont
 show
 3 0 rmoveto
 polymodulus length string
 3 1 roll
 polymodshift2 0 1 polymodulus length 1 sub { 3 copy get code exch get 3 2 roll exch put } for
 pop
-/Courier findfont 8 scalefont setfont
+/Courier findfont 4.5 scalefont setfont
 show
 pop
 } for
@@ -604,20 +604,28 @@ checksum showArray
 
 100 650
 % [16 10 19 29 27 25 15 15 22 25 25 1 16 25 24 3 25 11 27 29 16 11 25 3 16 25 25 13 16 25 24 28 3 25 18 10 11 3 16 1] % s2name00keepsecretmasterseedsecurej2trsp
-[ 40 {32} repeat ]
 (donotusesss32) polymodhrp
-exch
-0 2 2 index length 1 sub {
- 5 copy
- [ 4 1 roll 2 getinterval exch aload length dup 1 add exch roll aload pop ]
- showArray
- 5 3 roll 10 sub 5 1 roll arraySpace 2 mul add 5 1 roll
- 5 copy
- pop pop 0 2 getinterval aload pop polymodshift2 dup 4 1 roll showArray
- [ 5 4 roll 2 polymodulus length 2 sub getinterval aload pop polymodulus length 1 add index polymodulus length 1 add index 2 getinterval aload pop ] gf32addarray exch pop exch
- 4 2 roll 10 sub 4 2 roll
+0 2 38 {
+    /arrayIdx exch def
+    /polymod exch def
+    /y exch def
+    /x exch def
+
+    % Show summand
+    x y [ polymod aload pop 32 32 ] showArray
+
+    % Show next checksum-table lookup
+    x arraySpace 2 mul add
+    y 10 sub
+    polymod 0 2 getinterval aload pop polymodshift2 showArray
+
+    x arraySpace 2 mul add
+    y 20 sub
+
+    polymod 0 2 getinterval aload pop polymodshift2
+    [ polymod 2 polymodulus length 2 sub getinterval aload pop 32 32 ]
+    gf32addarray
 } for
-pop
 showArray
 
 100 420 moveto

@@ -560,8 +560,10 @@ moveto (Bech32 Checksum Worksheet for donotusesss32 Prefix) centreshow
 
 /Courier findfont 12 scalefont setfont
 
-100 650
-0 1 39 {
+-10 rotate
+
+-80 770
+0 1 65 {
 3 copy pop
 0 1 4 index 2 mod 0 eq {polymodulus length 1 add} {polymodulus length 1 sub} ifelse {
 3 copy pop
@@ -572,7 +574,7 @@ arraySpace 0 rlineto
 0 -10 rlineto
 closepath
 dup polymodulus length lt {0.2} {1} ifelse setlinewidth
-3 index dup 2 mod 0 eq 3 1 roll add 40 ge and { gsave 1 0.9 0.9 setrgbcolor fill grestore } if
+3 index dup 2 mod 0 eq 3 1 roll add 66 ge and { gsave 1 0.9 0.9 setrgbcolor fill grestore } if
 stroke
 exch arraySpace add exch
 } for
@@ -602,7 +604,7 @@ pop pop
 checksum showArray
 0 setgray
 
-100 650
+-80 770
 % [16 10 19 29 27 25 15 15 22 25 25 1 16 25 24 3 25 11 27 29 16 11 25 3 16 25 25 13 16 25 24 28 3 25 18 10 11 3 16 1] % s2name00keepsecretmasterseedsecurej2trsp
 (donotusesss32) polymodhrp
 0 2 38 {
@@ -628,49 +630,50 @@ checksum showArray
 } for
 showArray
 
-100 420 moveto
+10 rotate
+100 320 moveto
 /Helvetica-bold findfont 10 scalefont setfont
 (Verifying Checksums) show
-100 400 moveto
+100 300 moveto
 /Helvetica findfont 9 scalefont setfont
 (Write out the 40 character data portion in the) show
-100 390 moveto
+100 290 moveto
 (bold boxes, two at a time, starting on the top) show
-100 380 moveto
+100 280 moveto
 (row.  Working from the top row down, look up) show
-100 370 moveto
+100 270 moveto
 (the first two characters of each odd row in the) show
-100 360 moveto
-(Bech32 Checksum Table and write the ) polymodulus length 10 string cvs concatstrings show
-100 350 moveto
-(character word into the even row below it.  Fill) show
-100 340 moveto
-(in the odd rows by adding the two characters) show
-100 330 moveto
-(above each cell.  You may use either the) show
-100 320 moveto
-(addition wheel table.  The first few boxes are) show
-100 310 moveto
-(already filled in for you.  The last row will sum) show
-100 300 moveto
-(to ) checksumstring ( if the checksum is valid.) concatstrings concatstrings show
 100 260 moveto
+(Bech32 Checksum Table and write the ) polymodulus length 10 string cvs concatstrings show
+100 250 moveto
+(character word into the even row below it.  Fill) show
+100 240 moveto
+(in the odd rows by adding the two characters) show
+100 230 moveto
+(above each cell.  You may use either the) show
+100 220 moveto
+(addition wheel table.  The first few boxes are) show
+100 210 moveto
+(already filled in for you.  The last row will sum) show
+100 200 moveto
+(to ) checksumstring ( if the checksum is valid.) concatstrings concatstrings show
+100 160 moveto
 /Helvetica-bold findfont 10 scalefont setfont
 (Creating Checksums) show
-100 240 moveto
+100 140 moveto
 /Helvetica findfont 9 scalefont setfont
 (Follow the "Verifying Checksums" instructions) show
-100 230 moveto
+100 130 moveto
 (to fill in everything but the pink cells. To fill in) show
-100 220 moveto
+100 120 moveto
 (the pink cells, write ) checksumstring ( into the bottom) concatstrings concatstrings show
-100 210 moveto
+100 110 moveto
 (row.  Working from the bottom up, fill in the) show
-100 200 moveto
+100 100 moveto
 (pink cells by adding the two characters below) show
-100 190 moveto
+100 90 moveto
 (each cell.  The six characters in the bold pink) show
-100 180 moveto
+100 80 moveto
 (boxes will be the checksum.) show
 
 250 650

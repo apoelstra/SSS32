@@ -342,7 +342,7 @@ showpage
   { 3 copy pop moveto code exch 1 getinterval show exch arraySpace add exch } forall pop pop
 } bind def
 
-%%Pages: 21
+%%Pages: 22
 %%Page: 1 1
 /Helvetica findfont 6 scalefont setfont
 40 750 moveto
@@ -526,34 +526,99 @@ showTopWheelPage
 showTopWheelPage
 
 %%Page: 19 19
+90 rotate
+0 -792 translate
 /Helvetica-bold findfont 10 scalefont setfont
-pgsize 40 sub exch 2 div exch
+%pgsize 40 sub exch 2 div exch
+pgsize 2 div exch 130 add
 moveto (Bech32 Checksum Table) centreshow
 
-0 1 31 {
-0 1 31 {
-2 copy 730 exch 7 mul sub 1 index 11 idiv 240 mul sub exch 11 mod 50 mul 30 add exch moveto
-2 copy
-perm exch get exch perm exch get exch
-2 copy
-code exch get exch code exch get exch
-2 string dup 1 4 3 roll put dup 0 4 3 roll put
-/Courier-Bold findfont 4.5 scalefont setfont
-show
-3 0 rmoveto
-polymodulus length string
-3 1 roll
-polymodshift2 0 1 polymodulus length 1 sub { 3 copy get code exch get 3 2 roll exch put } for
-pop
-/Courier findfont 4.5 scalefont setfont
-show
-pop
-} for
-pop
+0 1 15 {
+    0 1 31 {
+        /yidx exch def
+        /xidx exch def
+
+        yidx 2 mod 0 eq {0.6} {0} ifelse setgray
+
+        % Position for bold letters
+        xidx 8 mod 90 mul 30 add
+        730 yidx 7.5 mul sub xidx 8 idiv 270 mul sub
+        moveto
+
+        2 string % Allocate a new string
+        % Each of these dups creates a new pointer to the above string
+        dup 1 code perm yidx get get put
+        dup 0 code perm xidx get get put
+        /Courier-Bold findfont 8.5 scalefont setfont
+        show
+
+        % Display checksum
+        3 0 rmoveto
+
+        xidx yidx
+        polymodulus length string
+        % Compute "checksum table" entry which is checksum of AB00...00
+        perm xidx get perm yidx get polymodshift2
+        % Draw it
+        0 1 polymodulus length 1 sub {
+            3 copy get code exch get 3 2 roll exch put
+        } for
+        pop
+        /Courier findfont 8.5 scalefont setfont
+        show
+        pop
+    } for
+    pop
 } for
 showpage
 
 %%Page: 20 20
+90 rotate
+0 -792 translate
+/Helvetica-bold findfont 10 scalefont setfont
+pgsize 2 div exch 130 add
+moveto (Bech32 Checksum Table) centreshow
+
+16 1 31 {
+    0 1 31 {
+        /yidx exch def
+        /xidx exch def
+
+        yidx 2 mod 0 eq {0.6} {0} ifelse setgray
+
+        % Position for bold letters
+        xidx 16 sub 8 mod 90 mul 30 add
+        730 yidx 7.5 mul sub xidx 16 sub 8 idiv 270 mul sub
+        moveto
+
+        2 string % Allocate a new string
+        % Each of these dups creates a new pointer to the above string
+        dup 1 code perm yidx get get put
+        dup 0 code perm xidx get get put
+        /Courier-Bold findfont 8.5 scalefont setfont
+        show
+
+        % Display checksum
+        3 0 rmoveto
+
+        xidx yidx
+        polymodulus length string
+        % Compute "checksum table" entry which is checksum of AB00...00
+        perm xidx get perm yidx get polymodshift2
+        % Draw it
+        0 1 polymodulus length 1 sub {
+            3 copy get code exch get 3 2 roll exch put
+        } for
+        pop
+        /Courier findfont 8.5 scalefont setfont
+        show
+        pop
+    } for
+    pop
+} for
+showpage
+
+%%Page: 21 21
 /Helvetica-Bold findfont 10 scalefont setfont
 pgsize 40 sub exch 2 div exch
 moveto (Bech32 Checksum Worksheet for donotusesss32 Prefix) centreshow
@@ -707,7 +772,7 @@ checksum showArray
 
 showpage
 
-%%Page: 21 21
+%%Page: 22 22
 /Helvetica-Bold findfont 10 scalefont setfont
 pgsize 40 sub exch 2 div exch
 moveto (Bech32 Checksum Worksheet for donotusesss32 Prefix) centreshow

@@ -342,7 +342,7 @@ showpage
   { 3 copy pop moveto code exch 1 getinterval show exch arraySpace add exch } forall pop pop
 } bind def
 
-%%Pages: 20
+%%Pages: 21
 %%Page: 1 1
 /Helvetica findfont 6 scalefont setfont
 40 750 moveto
@@ -704,6 +704,91 @@ exch arraySpace add exch
 pop pop
 0.85 setgray
 checksum showArray
+
+showpage
+
+%%Page: 21 21
+/Helvetica-Bold findfont 10 scalefont setfont
+pgsize 40 sub exch 2 div exch
+moveto (Bech32 Checksum Worksheet for donotusesss32 Prefix) centreshow
+
 0 setgray
+
+40 600
+0 1 27 {
+3 copy pop
+0 1 4 index 2 mod 0 eq {polymodulus length 1 add} {polymodulus length 1 sub} ifelse {
+3 copy pop
+moveto
+-0.5 -1.9 rmoveto
+0 arrayHeight rlineto
+arraySpace 0 rlineto
+0 arrayHeight neg rlineto
+closepath
+dup polymodulus length lt {0.2} {1} ifelse setlinewidth
+pop
+stroke
+exch arraySpace add exch
+} for
+pop pop
+2 mod 0 eq
+ { arrayHeight sub exch arraySpace 2 mul add exch}
+ {
+ 2 copy moveto -0.5 -1.9 rmoveto arraySpace polymodulus length mul 0 rlineto 1 setlinewidth stroke
+ arrayHeight sub
+ } ifelse
+} for
+2 copy
+polymodulus length {
+2 copy
+moveto
+-0.5 -1.9 rmoveto
+0 arrayHeight rlineto
+arraySpace 0 rlineto
+0 arrayHeight neg rlineto
+closepath
+0.25 setlinewidth
+stroke
+exch arraySpace add exch
+} repeat
+pop pop
+
+44 621
+13 {
+    /y exch def
+    /x exch def
+    x y moveto
+    1 0 rmoveto    % 2 0
+    3 0 rlineto    % 4 0
+    -1 -5 rlineto   % 4 -5
+    2 0 rlineto    % 6 0
+    -3 -3 rlineto  % 3 -8
+    -3 3 rlineto   % 0 -5
+    2 0 rlineto    % 2 -5
+    -1 5 rlineto    % 2 0
+    closepath
+    fill
+
+    x arraySpace add y
+} repeat
+
+408 151
+13 {
+    /y exch def
+    /x exch def
+    x y moveto
+    1 0 rmoveto    % 2 0
+    3 0 rlineto    % 4 0
+    -1 -5 rlineto   % 4 -5
+    2 0 rlineto    % 6 0
+    -3 -3 rlineto  % 3 -8
+    -3 3 rlineto   % 0 -5
+    2 0 rlineto    % 2 -5
+    -1 5 rlineto    % 2 0
+    closepath
+    fill
+
+    x arraySpace add y
+} repeat
 
 showpage

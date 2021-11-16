@@ -76,6 +76,7 @@
 % /code2 (\300abcdefghijklmnopqrstuvwxyz\247\250\251\252\245) def
 /perm [29 24 13 25 9 8 23 18 22 31 27 19 1 0 3 16 11 28 12 14 6 4 2 15 10 17 21 20 26 30 7 5 ] def
 /permS [16 29 24 13 25 9 8 23 18 22 31 27 19 1 0 3 11 28 12 14 6 4 2 15 10 17 21 20 26 30 7 5 ] def
+/permV [22 6 29 0 21 8 12 7 19 10 25 11 26 31 4 24 3 20 23 14 5 1 17 9 28 30 27 2 13 16 15 18 ] def
 % Generator for GF(32) is alpha^5 = alpha^3 + 1
 
 /gf32add % x y -> x [+] y where [+] is addition in GF32.
@@ -279,7 +280,7 @@ end
    perm {0 38 sqrt 40 mul moveto outercode exch 1 getinterval centreshow -11.25 rotate} forall
    /Courier findfont 12 scalefont setfont
    180 rotate
-   0 1 31 {139 rotate perm {0 2 index 2 add sqrt 40 mul moveto 1 index 31 exch sub perm exch get binop code exch 1 getinterval centreshow -11.25 rotate} forall pop} for
+   0 1 31 {139 rotate perm {0 2 index 2 add sqrt 40 mul moveto 1 index 31 exch sub permV exch get binop code exch 1 getinterval centreshow -11.25 rotate} forall pop} for
    showpage
  } bind def
 
@@ -298,7 +299,7 @@ end
    /Courier findfont 12 scalefont setfont
    180 rotate
    0 1 31 {139 rotate dup 2 add sqrt 40 mul 2.5 add newpath 0 exch 2 copy moveto 12 centresquare moveto 9 -3 rmoveto (\254) /Symbol findfont 12 scalefont setfont show
-            31 exch sub perm exch get code exch 1 getinterval /Courier findfont 12 scalefont setfont show} for
+            31 exch sub permV exch get code exch 1 getinterval /Courier findfont 12 scalefont setfont show} for
    showpage
  } bind def
 

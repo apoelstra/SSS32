@@ -338,7 +338,7 @@ showpage
 } bind def
 
 /arraySpace 13 def
-/arrayHeight 16 def
+/arrayHeight 14 def
 /showArray {
   { 3 copy pop moveto code exch 1 getinterval show exch arraySpace add exch } forall pop pop
 } bind def
@@ -620,118 +620,70 @@ moveto (Bech32 Checksum Table) centreshow
 showpage
 
 %%Page: 21 21
+
+90 rotate
+0 -792 translate
+
 /Helvetica-Bold findfont 10 scalefont setfont
-pgsize 40 sub exch 2 div exch
+pgsize 2 div exch 130 add
 moveto (Bech32 Checksum Worksheet for donotusesss32 Prefix) centreshow
 
 /Courier findfont arraySpace scalefont setfont
 
-80 700
-0 1 21 {
-3 copy pop
-0 1 4 index 2 mod 0 eq {polymodulus length 1 add} {polymodulus length 1 sub} ifelse {
-3 copy pop
-moveto
--0.5 -1.9 rmoveto
-0 arrayHeight rlineto
-arraySpace 0 rlineto
-0 arrayHeight neg rlineto
-closepath
-dup polymodulus length lt {0.2} {1} ifelse setlinewidth
-pop
-stroke
-exch arraySpace add exch
-} for
-pop pop
-2 mod 0 eq
- { arrayHeight sub exch arraySpace 2 mul add exch}
- {
- 2 copy moveto -0.5 -1.9 rmoveto arraySpace polymodulus length mul 0 rlineto 1 setlinewidth stroke
- arrayHeight sub
- } ifelse
-} for
-2 copy
-polymodulus length {
-2 copy
-moveto
--0.5 -1.9 rmoveto
-0 arrayHeight rlineto
-arraySpace 0 rlineto
-0 arrayHeight neg rlineto
-closepath
-0.25 setlinewidth
-stroke
-exch arraySpace add exch
-} repeat
-pop pop
+100 700
 
-80 700
-(donotusesss32) polymodhrp
-0 2 38 {
-    /arrayIdx exch def
-    /polymod exch def
-    /y exch def
-    /x exch def
-
-    % Show summand
-    x y [ polymod aload pop 32 32 ] showArray
-
-    % Show next checksum-table lookup
-    x arraySpace 2 mul add
-    y arrayHeight sub
-    polymod 0 2 getinterval aload pop polymodshift2 showArray
-
-    x arraySpace 2 mul add
-    y arrayHeight 2 mul sub
-
-    polymod 0 2 getinterval aload pop polymodshift2
-    [ polymod 2 polymodulus length 2 sub getinterval aload pop 32 32 ]
-    gf32addarray
-} for
-showArray
-
-370 347
-13 {
-    /y exch def
-    /x exch def
-    x y moveto
-    1 0 rmoveto    % 2 0
-    3 0 rlineto    % 4 0
-    -1 -5 rlineto   % 4 -5
-    2 0 rlineto    % 6 0
-    -3 -3 rlineto  % 3 -8
-    -3 3 rlineto   % 0 -5
-    2 0 rlineto    % 2 -5
-    -1 5 rlineto    % 2 0
+% Draw initial bold boxes
+2 copy moveto
+1 1 polymodulus length {
+    3 copy pop
+    moveto
+    -0.5 -1.9 rmoveto
+    0 arrayHeight rlineto
+    arraySpace 0 rlineto
+    0 arrayHeight neg rlineto
     closepath
-    fill
 
-    x arraySpace add y
-} repeat
+    pop
+    1 setlinewidth
+    stroke
+    exch arraySpace add exch
+} for
+arrayHeight sub exch
+arraySpace polymodulus length mul sub exch
 
-85 421
-13 {
-    /y exch def
-    /x exch def
-    x y moveto
-    1 0 rmoveto    % 2 0
-    3 0 rlineto    % 4 0
-    -1 -5 rlineto   % 4 -5
-    2 0 rlineto    % 6 0
-    -3 -3 rlineto  % 3 -8
-    -3 3 rlineto   % 0 -5
-    2 0 rlineto    % 2 -5
-    -1 5 rlineto    % 2 0
+% Draw initial narrow boxes and underline
+1 1 polymodulus length {
+    3 copy pop
+    moveto
+    -0.5 -1.9 rmoveto
+    0 arrayHeight rlineto
+    arraySpace 0 rlineto
+    0 arrayHeight neg rlineto
     closepath
-    fill
 
-    x arraySpace add y
-} repeat
+    pop
+    0.2 setlinewidth
+    stroke
+    exch arraySpace add exch
+} for
+
+2 copy moveto
+-0.5 -1.9 rmoveto
+arraySpace polymodulus length mul neg 0 rlineto
+1 setlinewidth stroke
+
+% Draw initial checksum
+2 copy
+exch arraySpace polymodulus length mul sub exch
+(donotusesss32) polymodhrp [ exch aload pop 12 { 0 } repeat ] polymod0 showArray
+
+arrayHeight sub exch
+arraySpace polymodulus length mul sub exch
 
 
 %% second table
-80 400
-0 1 21 {
+%80 400
+0 1 31 {
 3 copy pop
 0 1 4 index 2 mod 0 eq {polymodulus length 1 add} {polymodulus length 1 sub} ifelse {
 3 copy pop
@@ -742,7 +694,7 @@ arraySpace 0 rlineto
 0 arrayHeight neg rlineto
 closepath
 dup polymodulus length lt {0.2} {1} ifelse setlinewidth
-3 index dup 2 mod 0 eq 3 1 roll add 22 ge and { gsave 1 0.9 0.9 setrgbcolor fill grestore } if
+3 index dup 2 mod 0 eq 3 1 roll add 32 ge and { gsave 1 0.9 0.9 setrgbcolor fill grestore } if
 stroke
 exch arraySpace add exch
 } for

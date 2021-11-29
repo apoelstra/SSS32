@@ -105,11 +105,16 @@
   ] put
 
   /loadchars { { dup load } forall } bind def
+  /substitutechars { dup where { pop load def } { pop } ifelse } bind def
   /newcharstrings <<
     basefontdict /CharStrings get begin
       otherfontdict /CharStrings get begin
-        [/.notdef] loadchars
-        scalarchars loadchars
+        10 dict begin
+          /Omega /uni03A9 substitutechars % Load helvetica's Omega into /Omega if it exists.
+          /circleplus /uni2295 substitutechars % Load helvetica's circleplus into /circleplus if it exists.
+          [/.notdef] loadchars
+          scalarchars loadchars
+        end
       end
     end
   >> def

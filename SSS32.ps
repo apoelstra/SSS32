@@ -79,11 +79,9 @@
 
 /ScalarEncoding 256 array def
 10 dict begin
-  /symbolchars [/multiply /aleph /alpha /beta /Gamma /Delta /epsilon /eta /theta /Lambda /mu /nu /Xi /pi /rho /Sigma /tau /phi /psi /Omega /numbersign /ampersand /lozenge /heart /Euro] def
-  /latinchars [/yen /cent /percent /section /paragraph /at /daggerdbl /space ] def
+  /scalarchars [/multiply /aleph /alpha /beta /Gamma /Delta /epsilon /eta /theta /Lambda /mu /nu /Xi /pi /rho /Sigma /tau /phi /psi /Omega /numbersign /ampersand /diamond /heart /Euro /yen /cent /percent /section /paragraph /daggerdbl /circleplus /space ] def
   0 1 255 { ScalarEncoding exch /.notdef put } for
-  symbolchars aload pop
-  latinchars aload pop
+  scalarchars aload pop
   32 -1 0 { code exch get exch ScalarEncoding 3 1 roll put } for
   /basefontdict /Symbol findfont def
   /otherfontdict /Helvetica findfont def
@@ -106,18 +104,15 @@
     basefontbb 3 get otherfontbb 3 get max
   ] put
 
-  /newcharstrings basefontdict /CharStrings get maxlength dict def
-
-  basefontdict /CharStrings get
-  /.notdef 2 copy get newcharstrings 3 1 roll put
-  symbolchars
-  { 2 copy get newcharstrings 3 1 roll put }
-  forall pop
-
-  otherfontdict /CharStrings get
-  latinchars
-  { 2 copy get newcharstrings 3 1 roll put }
-  forall pop
+  /loadchars { { dup load } forall } bind def
+  /newcharstrings <<
+    basefontdict /CharStrings get begin
+      otherfontdict /CharStrings get begin
+        [/.notdef] loadchars
+        scalarchars loadchars
+      end
+    end
+  >> def
   newfontdict /CharStrings newcharstrings put
   /Scalar newfontdict definefont pop
 end

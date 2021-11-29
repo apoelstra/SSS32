@@ -74,6 +74,9 @@
 /permV [22 11 10 29 31 28 17 24 27 12 21 13 19 14 20 25 1 6 26 9 0 4 30 8 3 2 7 23 16 15 5 18 ] def
 /permP [0 1 2 4 8 16 9 18 13 26 29 19 15 30 21 3 6 12 24 25 27 31 23 7 14 28 17 11 22 5 10 20] def
 
+/min { 2 copy gt {exch} if pop } bind def
+/max { 2 copy lt {exch} if pop } bind def
+
 /ScalarEncoding 256 array def
 10 dict begin
   /symbolchars [/multiply /aleph /alpha /beta /Gamma /Delta /epsilon /eta /theta /Lambda /mu /nu /Xi /pi /rho /Sigma /tau /phi /psi /Omega /numbersign /ampersand /lozenge /heart /euro] def
@@ -83,6 +86,7 @@
   latinchars aload pop
   32 -1 0 { code exch get exch ScalarEncoding 3 1 roll put } for
   /basefontdict /Symbol findfont def
+  /otherfontdict /Helvetica findfont def
   /newfontdict basefontdict maxlength dict def
   basefontdict {
     exch dup dup dup /FID ne exch /Encoding ne and exch /UniqueID ne and
@@ -92,6 +96,16 @@
   } forall
   newfontdict /FontName /Scalar put
   newfontdict /Encoding ScalarEncoding put
+
+  /basefontbb [ basefontdict /FontBBox get exec ] def
+  /otherfontbb [ otherfontdict /FontBBox get exec ] def
+  newfontdict /FontBBox [
+    basefontbb 0 get otherfontbb 0 get min
+    basefontbb 1 get otherfontbb 1 get min
+    basefontbb 2 get otherfontbb 2 get max
+    basefontbb 3 get otherfontbb 3 get max
+  ] put
+
   /newcharstrings basefontdict /CharStrings get maxlength dict def
 
   basefontdict /CharStrings get
@@ -100,7 +114,7 @@
   { 2 copy get newcharstrings 3 1 roll put }
   forall pop
 
-  /Helvetica findfont /CharStrings get
+  otherfontdict /CharStrings get
   latinchars
   { 2 copy get newcharstrings 3 1 roll put }
   forall pop
@@ -108,9 +122,9 @@
   /Scalar newfontdict definefont pop
 end
 
-/Symbol findfont /FontType get ==
-/Helvetica findfont /CharStrings get [ exch { pop } forall ] ==
-/Helvetica findfont /CharStrings get dup length == maxlength ==
+/Symbol findfont /FontBBox get ==
+/Helvetica findfont /FontBBox get ==
+/Scalar findfont /FontBBox get ==
 
 % Generator for GF(32) is alpha^5 = alpha^3 + 1
 

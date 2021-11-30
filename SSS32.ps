@@ -390,7 +390,7 @@ end
        31 exch sub % 31 - loop index
        permV exch get code exch 1 getinterval % Permute index and extract 1-char substring of alphabet
        /Courier findfont 12 scalefont setfont underlineshow % ...and draw it
-       (\256) /Scalar findfont 12 scalefont setfont show % Draw a right arrow
+       (\256) /Symbol findfont 12 scalefont setfont show % Draw a right arrow
    } for
  } bind def
 

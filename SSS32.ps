@@ -84,7 +84,7 @@
   scalarchars aload pop
   32 -1 0 { code exch get exch ScalarEncoding 3 1 roll put } for
   /basefontdict /Symbol findfont def
-  /otherfontdict /Helvetica findfont def
+  /otherfontdict /Courier findfont def
   /newfontdict basefontdict maxlength dict def
   basefontdict {
     exch dup dup dup /FID ne exch /Encoding ne and exch /UniqueID ne and
@@ -112,9 +112,9 @@
     basechars begin
       otherchars begin
         10 dict begin
-          /phi /phi1 substitutechars % Load helvetica's phi1 into /phi if it exists.
-          /Omega /uni03A9 substitutechars % Load helvetica's Omega into /Omega if it exists.
-          /circleplus /uni2295 substitutechars % Load helvetica's circleplus into /circleplus if it exists.
+          /phi /phi1 substitutechars % Load courier's phi1 into /phi if it exists.
+          /Omega /uni03A9 substitutechars % Load courier's Omega into /Omega if it exists.
+          /circleplus /uni2295 substitutechars % Load courier's circleplus into /circleplus if it exists.
           [/.notdef] loadchars
           scalarchars loadchars
         end
@@ -124,10 +124,6 @@
   newfontdict /CharStrings newcharstrings put
   /Scalar newfontdict definefont pop
 end
-
-/Symbol findfont /FontBBox get ==
-/Helvetica findfont /FontBBox get ==
-/Scalar findfont /FontBBox get ==
 
 % Generator for GF(32) is alpha^5 = alpha^3 + 1
 

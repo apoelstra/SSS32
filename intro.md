@@ -137,8 +137,9 @@ how trustworthy the hardware or its manufacturer, these are nontrivial risks and
 over the lifetime of a Bitcoin secret (which may, perhaps, exceed any one human's
 lifetime), they add up to a very serious risk.
 
-We propose then, to eliminate this risk factor entirely, by providing the user
-a way to
+Unlike electronic computers, paper cannot "remember" secret data, and when handled
+correctly it cannot leak secret data, and these facts can be readily ascertained
+with no special skills or equipment. We propose then, to provide the user a way to
 * Compute and verify very powerful checksums (see the next section)
 * Split their secret into up to 31 "shares", of which some number are needed to
 reconstruct the secret (see the previous section)
@@ -147,7 +148,7 @@ compromised
 * Recursively split shares, so that they may themselves be spread across multiple
 parties
 
-entirely without the use of electronic computers. In this way, coins which do
+using only pencil and paper (and brass fasteners). In this way, coins which do
 not need to be spent may have their secure storage refreshed or reorganized an
 arbitrary number of times, without the uncertainty and risk associated with
 electronic computers ever entering the picture.
@@ -182,13 +183,101 @@ russ32 checksums can be computed and verified entirely by hand,
 
 # Detailed Introduction
 
+We now give a detailed introduction to the contents of this package and its
+usage. This will be followed by a tutorial in the form of a worked example.
+Ambitious users are free to skip past this all to the actual content, the
+worksheets, which have self-contained instructions.
 
-   - bech32 alphabet has 32 characters and is missing letters
-     - every share has a single-character index. you can only have 31 shares
-     - the 32nd "share", the S share, is your actual secret
-   - tables and volvelles
+## Bech32 and the Alphabet
 
-   - definition of russ32
-   - link to error correction code
+In order to store 128-bit secrets, SSS32 borrows the
+[Bech32 alphabet](https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki)
+which provides 32 5-bit characters. These characters consist of the 26 letters
+of the Latin alphabet and 10 arabic numerals, except `B` (which looks like 8),
+`O` (which looks like 0), `I` and `1` (which look like each other, and like
+non-character vertical lines).
+
+The alphabet, in natural ordering, is `ACDEFGHJKLMNPQRSTUVWXYZ023456789`.
+
+We also use an alternate alphabet, consisting of non-Latin symbols, which is
+only used for intermediate computations. It is never used for storage, and
+nothing represented in this alphabet is ever secret data.
+
+| Symbol | Name |
+|---|------|
+| × | cross |
+| ℵ | aleph |
+| α | alpha |
+| β | beta |
+| Γ | gamma |
+| ∆ | delta |
+| ε | epsilon |
+| η | eta |
+| Θ | theta |
+| Λ | lambda |
+| µ | mu |
+| Ξ | xi |
+| Π | pi |
+| ρ | rho |
+| Σ | sigma |
+| Φ | phi |
+| Ψ | psi |
+| Ω | omega |
+| @ | at |
+| # | pound |
+| % | percent |
+| ¢ | cent |
+| ¥ | yen |
+| € | euro |
+| ¤ | scarab |
+| ⊕ | xor |
+| † | dagger |
+| ‡ | double-dagger |
+| § | section |
+| ¶ | paragraph |
+| ♦ | diamond |
+| ♥ | heart |
+
+Users do not need to know the correspondence of this alphabet to bitstrings,
+or to each other, although curious users are encouraged to read the
+[mathematical companion](todo). The purpose of having two alphabets is to
+guide the computational process, by making it difficult to incorrectly
+combine different sets of data.
+
+## Tables, Volvelles, and Slide Rulers
+
+## Storage and Headers
+
+To store 128-bit secrets, we round 128 up to 130, so that the secret can be
+represented by 26 bech32 characters. We prefix this with the 3 characters
+`ms1` and a 6-character header, and suffix it with a 13-character checksum:
+
+| Human-readable Part | Threshold | Secret ID | Share Index | Secret data | Checksum |
+|---------------|--------|---------|--------|----------|----------|
+| 3 chars (ms1) | 1 char | 4 chars | 1 char | 26 chars | 13 chars |
+
+The components of the header are:
+* The **threshold** indicates what the secret sharing threshold is, and should be
+a digit between `2`and `9` inclusive. Higher threshold values are not supported
+by the header format. If the user does not intend to use secret sharing, she
+should instead use `0`.
+* The **secret ID** is four characters which can be anything at all. They should
+be the same for all shares of a given secret, and distinct between secrets.
+* The **share index** indicates which share this is, and may be of the 32
+available characters except `S`. Shares conventionally are generated in order
+(`A`, then `C`, `D`, `E` and so on). **The secret itself has share ID `S`**,
+which may not be used for other shares. If the user is not using secret sharing,
+she should just put `S` here.
+
+We will explain the share splitting process in more detail over the next two
+sections.
+
+## Share Generation
+
+## Checksum Computation
+
+## Splitting and Sharing
+
+## Recovery
 
 

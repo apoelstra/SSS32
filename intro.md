@@ -230,7 +230,7 @@ nothing represented in this alphabet is ever secret data.
 | ¥ | yen |
 | € | euro |
 | ¤ | scarab |
-| ⊕ | xor |
+| ⊕ | circle-plus |
 | † | dagger |
 | ‡ | double-dagger |
 | § | section |
@@ -246,6 +246,56 @@ combine different sets of data.
 
 ## Tables, Volvelles, and Slide Rulers
 
+Throughout the checksumming, share creation and recovery, there are four kinds
+of basic arithmetic that need to be done on bech32 characters and/or symbols.
+Since there are only 32 characters, each of these can be represented by a
+32-by-32 lookup table. (They can also be computed directly, but these operations
+do not correspond to familiar arithmetic and it is much faster and more reliable
+to do lookups.)
+
+However, there is an alternate form of a lookup table, called a slide chart or
+**volvelle**. Such a table is constructed using two circular sheets of paper
+or cardstock, fastened through the center such that they can rotate relative
+to each other, and with windows cut through the top sheet to allow symbols on
+the bottom sheet to be revealed.
+
+#![volvelle with Galois Theory text visible in the background](volvelle.jpeg)
+
+The top sheet has a pointer which points to a character printed on the outside
+of the bottom sheet.
+
+Our volvelles have 32 windows cut into the top sheet, each labelled by a bech32
+character, and have 31 or 32 symbols printed on the outside of the bottom sheet.
+This allows the user to do a "lookup" in a 32x31 or 32x32 table by spinning the
+volvelle so that the pointer corresponds to the row they intend to look up, and
+then finding the appropriate entry in that row by looking through the windows.
+
+We have three volvelles, labelled "Addition", "Translation" and "Recovery", whose
+roles will become clear as we explain the creation and recovery processes.
+
+As well as volvelles, we one **circular slide rule** whose operation is more
+straightforward: it allows "multiplication" of one symbol by any other by
+spinning the top wheel to point to the first symbol. Every symbol is printed
+on the outside of the top wheel; look up the second symbol there, and you
+will see it pointing to the result on the outside of the bottom wheel.
+
+#![circular slide rule propped up on a laptop screen](slideruler.jpg)
+
+The different paper computers are used in the following scenarios:
+* In checksum computation and creation of initial shares, only the Addition volvelle is needed.
+* To create further shares, the Addition and Translation volvelles are needed.
+* To recover a secret in a 2-of-n split, all three volvelles are needed.
+* To recover a secret in a k-of-n split where k is 3 or more, all volvelles and the slide rule are needed.
+
+The volvelle data are all provided first in the form of ordinary tables. Then
+the volvelles themselves are provided in Module 0 in the form of printed circles
+that need to be cut out and assembled.
+
+We recommend you keep the tables, and these instructions, with your stored
+secrets. This way, even if you lose the volvelles (which need to be cut out
+and are oddly shaped), it is still possible to work through the recovery process.
+And of course, all of this is available freely on the Internet.
+
 ## Storage and Headers
 
 To store 128-bit secrets, we round 128 up to 130, so that the secret can be
@@ -254,7 +304,7 @@ represented by 26 bech32 characters. We prefix this with the 3 characters
 
 | Human-readable Part | Threshold | Secret ID | Share Index | Secret data | Checksum |
 |---------------|--------|---------|--------|----------|----------|
-| 3 chars (ms1) | 1 char | 4 chars | 1 char | 26 chars | 13 chars |
+| 3 characterss (`ms1`) | 1 character | 4 characters | 1 character | 26 characters | 13 characters |
 
 The components of the header are:
 * The **threshold** indicates what the secret sharing threshold is, and should be
@@ -272,9 +322,75 @@ she should just put `S` here.
 We will explain the share splitting process in more detail over the next two
 sections.
 
-## Share Generation
+## Initial Share Generation
 
-## Checksum Computation
+There are two scenarios that we support in this document.
+* They want to generate a checksummed secret, and do not care about SSSS.
+* They want to generate a split secret with threshold k ≥ 2, such that any k shares
+  can be used to regenerate a secret
+
+In the case that the user has an existing secret in the form of BIP39 words,
+a similar but more complicated process is required, which is covered in Module 1.
+We do not discuss it here.
+
+The process for both cases begins in roughly the same way.
+
+### Unshared Checksummed Secret
+
+For an unshared checksummed secret, the process is:
+
+1. Generate a 6-character header from the bech32 alphabet. The first character
+   should be `0` and the last character `S`, and the middle 4 can be arbitrary,
+   but should be chosen to make the 
+2. Generate 26 random characters, representing 130 bits of entropy. Add these
+   after the header.
+3. Follow the instructions on the "Checksum Worksheet" to generate a 13-character
+   checksum after the end of the random data.
+4. Follow the instructions on a fresh "Checksum Worksheet" to validate the checksum
+   to double-check that you did not make any mistakes.
+
+The checksum worksheet is likely to take 30-90 minutes, depending on user proficiency
+with the Addition volvelle. Even though this is a long time, it is important to do
+it twice (once in step 3 and again in step 4) because mistakes made during checksum
+computation cannot be corrected after the fact.
+
+### New Split Secret with Threshold k
+
+In this document we require k be between 2 and 9 inclusive, so that it can be
+represented by the bech32 characters `2` through `9`.
+
+For a split secret, generate k "initial shares" using exactly the same steps as
+in the Unshared Checksummed Secret case. The only difference is that in Step 1,
+`0` should be replaced with the digit k, and `S` should be replaced by the share
+index.
+
+The first share index should be `A`, the second `C`, the third `D`, and so on,
+following the bech32 alphabet. If you are unsure of the ordering, refer to the
+outside of the Addition volvelle.
+
+Once the inital shares are generated, continue to the next section.
+
+## Derived Share Generation
+
+The k initial shares together actually form a set of k-of-k SSSS shares. However,
+the user likely would like a k-of-n scheme where n is bigger than k. In this caes,
+the user needs to create n-k additional "derived" shares. These are not generated
+randomly but instead derived from the initial shares.
+
+The steps are as follows:
+
+1. Follow the instructions on the "Constructing Shares" worksheet: for each of your
+   iniital shares, look up a translation symbol in the provided tables and translate
+   that share using the Translation volvelle. Then add all the translated shares
+   using the Addition volvelle.
+2. The result will be a new share, miraculously with a well-formed header and a valid
+   checksum. To validate this checksum, fill out a fresh Checksum Worksheet with the
+   new share.
+
+It is very likely that you will make mistakes during this process, resulting in a bad
+checksum. Mistakes during the translation step are correctable, but the error correction
+process involves computers and is not necessary here since the user has all the data
+she needs.
 
 ## Splitting and Sharing
 

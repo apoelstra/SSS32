@@ -144,7 +144,7 @@ divisors} and imply that multiplication in the ring is not invertible.
 
 We do not like zero divisors, so from here on out we will be sure to mod out
 our polynomial ring only by irreducible polynomials. It is a fact that the
-resulting quotient ring will then be a field, and we term in a \textbf{quotient
+resulting quotient ring will then be a field, and we term it a \textbf{quotient
 field}. It is a fact that $x^5 + x^3 + 1$ is irreducible in $\ftwo$, so that
 $\ftwo/(x^5 + x^3 + 1)$ is a quotient field with 32 elements.
 
@@ -164,7 +164,7 @@ are no nontrivial proper subgroups. These are an elementary facts of group theor
 
 We refer to this new field as $\fttwo$. It is fact of field theory that all
 groups with 32 elements are isomorphic to this one, which justifies the name.
-But bear in mind that, for our purposes, the group was constructed as $\ftwo[x]/
+But bear in mind that, for our purposes, the field was constructed as $\ftwo[x]/
 (x^5 + x^3 + 1)$ and has a distinguished generator $\alpha$ which is a root
 of that polynomial.
 
@@ -459,7 +459,7 @@ As an extreme example, consider the case of multiplication. In this case, we
 exclude $0\in\fttwo$ and have only 31 positions and 31 values to reveal. By
 ordering the positions of the wheel as increasing powers of $\alpha$, and the
 entries on the front of the wheel as decreasing powers of $\alpha$, then every
-turn of the volvelle would simply all the revealed symbols by one window, and
+turn of the volvelle would simply shift all the revealed symbols by one window, and
 there would not ever even be unrevealed symbols. In this case we can simplify
 the design to a \textbf{circular slide rule}.
 
@@ -473,17 +473,17 @@ improve this, but let me argue here that we cannot.
 
 Consider the case of the addition (xor) volvelle. One natural idea to consider
 is that the value in the top window (labelled $A\rightarrow$) must always differ
-from the value in the bottom window (labeled $T\rightarrow$) by $K=A-T$. So
-if we were put the $A$ and $T$ windows at the same radius from the center, rotated
+from the value in the bottom window (labeled $T\rightarrow$) by $\texttt{K}=\texttt{A}-\texttt{T}$. So
+if we were put the \texttt{A} and \texttt{T} windows at the same radius from the center, rotated
 180 degrees from each other, we could use the same set of 32 bottom symbols for
-both windows, reducing the density by two.
+both windows, as long as the pairs on opposite sides always differed by \texttt{K},
+reducing the density by two.
 
-Unfortunately, this reduction depends on the fact that the $A$ \emph{index} and
-$T$ \emph{index} are also rotated 180 degrees from each other. But then one rotation
-later, the $C$ and $U$ indices are 180 degrees from each other, and these have a
-different sum than $A$ and $T$.
-
-In general, to accomplish this, we would need to mod our group out by $K$ additively
+Unfortunately, while \texttt{A} and \texttt{T} are 180 degrees from each other and
+differ by $\texttt{K}$, the same cannot be said for \texttt{C} and \texttt{U}, say,
+or any other pair of letters which naturally lie 180 degrees from each other.
+ 
+In general, to accomplish what we are trying, we would need to mod our group out by $K$ additively
 and then take all the two-element cosets and place their entries on opposite sides
 of the addition wheel. The result, no matter what element you mod out by and no matter
 how you order the cosets, is unnatural and confusing to use\footnote{I did not try
@@ -495,7 +495,7 @@ to use.
 Similar considerations apply to the other two volvelles.
 
 \paragraph{Which Volvelles Are There?} We have all the preliminary tools under
-our belt to list the 3 volvelles and slide ruler, and what they do:
+our belt to list the 3 volvelles and slide rule, and what they do:
 
 \begin{itemize}
 \item The \textbf{Addition Volvelle} computes addition between bech32 characters.
@@ -504,7 +504,7 @@ As observed above, this corresponds to the xor function on their binary represen
 character and a bech32 character. 
 \item The \textbf{Recovery Volvelle}, turned to bech32 character $x$, and viewing
 window $y$, computes the symbolic character corresponding to $(y + S)/(x + y)$.
-\item The \textbf{Multiplication Wheel} is a circular slide ruler which performs
+\item The \textbf{Multiplication Wheel} is a circular slide rule which performs
 multiplication between two symbol characters.
 \end{itemize}
 
@@ -535,7 +535,8 @@ share values and share indices. I don't believe there is any way to avoid this.
 
 The final preliminary we need is that of a \textbf{BCH code}. There is a
 rich and enormous theory underlying BCH codes, and linear codes in general,
-but we will take an operationalist point of view:
+but we will take an operationalist point of view and summarize just the facts
+that we need:
 
 An \textbf{error-correcting code} is a mapping from a set of raw data, called
 \textbf{messages} into a larger set of \textbf{codewords} which have
@@ -545,26 +546,26 @@ number of characters at which the two codewords differ.
 
 Since all codewords differ by at least the minimum distance $d$, if there
 are at most $d-1$ errors in a codeword, the result is guaranteed not to
-be a valid codeword, and to be detected as a codeword. If there are fewer
+be a valid codeword, and to be detected as an error pattern. If there are fewer
 than $d/2$ errors, the correct codeword is uniquely determined by being
-the closest codeword to the actual received text, which means that this
-number of errors can actually be corrected.
+the closest codeword to the error pattern, which means that this many
+errors can actually be corrected.
 
 A \textbf{BCH code} is a specific type of error-correcting code. In a BCH
 code, codewords are constructed by encoding data as the coefficients of a
 large polynomial, then affixing some number of \textbf{checksum characters}.
 The checksum characters are chosen such that the resulting polynomial is in
-a specific residue class modulo a \textbf{generator polynomial} $G$.
+a specific residue class modulo a \textbf{generator polynomial} $G(x)$.
 
 Given a potential codeword, there is a unique minimum-degree polynomial
-equivalent to this codeword modulo $G$, which can be found by modular
+equivalent to this codeword modulo $G(x)$, which can be found by modular
 reduction. We refer to this reduced polynomial as the \textbf{reside}
 of the codeword.
 
 There are several properties of a BCH code that we will need:
 \begin{itemize}
 \item The \textbf{degree} of the code is the degree the roots of its
-generator polynomial. (Since the polynomial is not, in general, irreducible,
+generator polynomial. (Since the generator polynomial is not, in general, irreducible,
 this is \emph{not} the degree of the generator polynomial.)
 
 The degree of our BCH code, and that of bech32, is 2. Degree-1 BCH codes are
@@ -572,7 +573,7 @@ called \textbf{Reed-Solomon codes}.
 \item The $m$-value is the specific residue that all codewords must 
 must have. All $m$ values are equivalent, in the sense that it is easy
 to convert from one $m$ value to another (simply add the difference to
-the checksum characters, modulo $G$).
+the checksum characters, modulo $G(x)$).
 
 But $m=0$ has the particularly bad property that any codeword can be extended
 by addition of an arbitrary number of 0s to get another valid codeword. (This
@@ -650,7 +651,7 @@ append \texttt{SECRETSHARE32} in place of the checksum, take the resulting polyn
 mod $G(x)$, then use the result as the actual checksum.
 
 How do we do this in practice? In short, we build up our polynomial two characters
-as a time: multiply by $x^2$, reduce, repeat. In detail:
+as a time: multiply by $x^2$, add two new characters, reduce, repeat. In detail:
 
 \paragraph{Checksum Verification.}
 
@@ -681,7 +682,7 @@ the reduction of $\ell_1x^{14} + \ell_2x^{13}$.
 
 We obtain the latter reduction by looking up $\ell_1$ and $\ell_2$ in the
 giant provided "Checksum Table", which computes every possible reduction
-in Postscript.
+in PostScript.
 
 \item Repeat the previous two steps until you run out of data.
 \item Check that the final result is \texttt{SECRETSHARE32}.
@@ -766,7 +767,8 @@ with notation chosen to highlight that \emph{the Lagrange basis polynomials for
 $k\geq3$ are products of the basis polynomials for $k=2$}.
 
 This fortuitous fact means that the user can compute polynomials $\ell_i(\texttt{S})$
-by looking up factors using the Recover Share volvelle, and then multiplying the
+by looking up factors using the Recover Share volvelle (rotate it to index $p$ then
+read all the $w_i$'s off the front), and then multiplying the
 results using the Multiplication slide chart.
 
 The multiplication slide chart is the only wheel which takes two symbols as input,
@@ -850,6 +852,10 @@ Checksum Worksheet errors, and adding artwork and color.
 
 The result has been a remarkable, and even mathematically novel, project which
 fits together much better than any of us expected.
+
+We hope you will appreciate the mathematical beauty of this construction, or
+at least appreciate the peace of mind that comes with being able to redundantly
+back up your Bitcoin secrets without the use of electronic computing devices.
 
 \end{document}
 

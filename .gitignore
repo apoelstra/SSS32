@@ -1,0 +1,10 @@
+*.fas
+*.lib
+*.log
+*.aux
+*.pdf
+a.out
+*.nav
+*.out
+*.snm
+*.toc

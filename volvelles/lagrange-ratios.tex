@@ -1,0 +1,60 @@
+% Default course lecture note template by asp 
+\documentclass[letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[top=3cm, bottom=3cm, left=3.85cm, right=3.85cm]{geometry}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{amsmath} 
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{color}
+
+\begin{document}
+
+% Two-column title block
+\begin{minipage}[b]{0.7\linewidth}
+{\huge Lagrange Ratio Thing}
+\end{minipage}
+\begin{minipage}[b]{0.3\linewidth}
+  \begin{flushright}
+    Andrew Poelstra\\
+    2021 November 28
+  \end{flushright}
+\end{minipage}
+\\
+
+% Actual content start
+\paragraph{Theorem.} Let $x,y,z$ be distinct elements of a field $\mathbb{F}$,
+none equal to a distinguished element $S\in\mathbb{F}$. Define the two quantities
+\[
+    \alpha = \frac{S - y}{S - x} \qquad
+    \beta = \frac{S - z}{S - x}
+\]
+Then the Lagrange basis polynomials evaluated at $S$
+\[ \ell_x(S) = \frac{(S - y)(S - z)}{(x - y)(x - z)} \]
+\[ \ell_y(S) = \frac{(S - x)(S - z)}{(y - x)(y - z)} \]
+\[ \ell_z(S) = \frac{(S - x)(S - y)}{(z - x)(z - y)} \]
+can be computed explicitly in terms of $\alpha$ and $\beta$.
+
+\paragraph{Proof.} We will provide the proof for $\ell_x(S)$. The others
+proceed almost identically.
+
+We first observe that
+\begin{align*}
+S - y &= \alpha(S - x) \\
+S - z &= \beta(S - x) \\
+x - y &= (S - y) - (S - x) \\
+      &= (\alpha - 1)(S - x) \\
+x - z &= (S - z) - (S - x) \\
+      &= (\beta - 1)(S - x)
+\end{align*}
+In other words, all four parentetical terms in the expression for $\ell_x(S)$
+are equal to $(S - x)$ times some function of $\alpha$ and $\beta$. Putting
+them all together,
+\[ \ell_x(S) = \frac{\alpha\beta}{(\alpha - 1)(\beta - 1)} \]
+
+\end{document}
+

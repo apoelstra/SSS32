@@ -245,6 +245,42 @@ The purpose of having two alphabets is to
 guide the computational process, by making it difficult to incorrectly
 combine different sets of data.
 
+## Generating Random Bech32 Characters
+
+The following is a scheme for generating random bech32 characters, using five
+distinguishable dice. (For example, five ordinary six-sided dice of different
+colors would work. But you don't need to use six-sided dice, or even dice with
+the same number of sides as each other, so there is a lot of flexibility.)
+
+Then to generate a single Bech32 character, roll the five dice. Note each die's
+value. Roll them again. Then, for each die,
+
+* If the second roll was greater than the first, mark a 1
+* If the second roll was less than the first, mark a 0
+* If the second roll was equal to the first, roll that die again until it's not.
+
+You will get a five bit number. For example, 10110. Look this value up in the
+following table:
+
+|----|----|----|----|
+| `00000: Q` | `00001: P` | `00010: Z` | `00011: R` |
+|----|----|----|----|
+| `00100: Y` | `00101: 9` | `00110: X` | `00111: 8` |
+|----|----|----|----|
+| `01000: G` | `01001: F` | `01010: 2` | `01011: T` |
+|----|----|----|----|
+| `01100: V` | `01101: D` | `01110: W` | `01111: 0` |
+|----|----|----|----|
+| `10000: S` | `10001: 3` | `10010: J` | `10011: N` |
+|----|----|----|----|
+| `10100: 5` | `10101: 4` | `10110: K` | `10111: K` |
+|----|----|----|----|
+| `11000: C` | `11001: E` | `11010: 6` | `11011: M` |
+|----|----|----|----|
+| `11100: U` | `11101: A` | `11110: 7` | `11111: L` |
+|----|----|----|----|
+
+
 ## Tables, Volvelles, and Slide Rulers
 
 Throughout the checksumming, share creation and recovery, there are four kinds

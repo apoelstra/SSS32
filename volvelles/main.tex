@@ -298,7 +298,7 @@ alphabetically, and by their ``numeric'' binary value. These three
 representations are useful in different contexts:
 \begin{enumerate}
 \item Representing elements as a power of $\alpha$ makes multiplication
-very easy, since multiplication is just addition mod 32 in the exponent.
+very easy, since multiplication is just addition mod 31 in the exponent.
 
 This is how our multiplication wheel can be implemented as a slide rule.
 \item Representing alphabetically makes it easy for humans to scan and sort.
@@ -570,6 +570,26 @@ this is \emph{not} the degree of the generator polynomial.)
 
 The degree of our BCH code, and that of bech32, is 2. Degree-1 BCH codes are
 called \textbf{Reed-Solomon codes}.
+
+\item The \textbf{length} of the code is how long a coded message can be
+(including the checksum!) for the code to retain its error-correcting
+properties.
+
+The length $\ell$ can be computed as the smallest polynomial of the form
+$x^\ell - x$ that the generator divides. It is then clear that if you have a
+message of this length, that the $\ell$th character will be interpreted
+as the coefficient of $x^{\ell-1} \equiv 1$ mod $G(x)$, meaning that it
+will just mask your first character rather than being checksummed
+independently.
+
+The length of our code is 93. The length of bech32 is 1023 (although through
+an exhaustive search, it was found to have better error detection properties
+than the algebra would suggest, up to length 71).
+
+This means that you cannot encode messages longer than 80 characters (six
+character header plus 370 data bits) using this checksum! You must split
+your data and use multiple checksums.
+
 \item The $m$-value is the specific residue that all codewords must 
 must have. All $m$ values are equivalent, in the sense that it is easy
 to convert from one $m$ value to another (simply add the difference to
@@ -619,7 +639,7 @@ the standard generator of $\fttwo$,
 
 To checksum a string of bech32 characters $\{v_i\}_{i=1}^n$, we want to encode it
 as a polynomial
-\[ p(x) = x^n + \sum_{i=0}^{n-1} v^{n-i} x^n \]
+\[ p(x) = x^n + \sum_{i=0}^{n-1} v^{n-i} x^i \]
 such that $p(x)$ mod $G(x)$ is equal to \texttt{SECRETSHARE32}, or
 \begin{align*}
 r(x) =

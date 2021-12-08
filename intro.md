@@ -262,6 +262,7 @@ value. Roll them again. Then, for each die,
 You will get a five bit number. For example, 10110. Look this value up in the
 following table:
 
+|------------|------------|------------|------------|
 | `00000: Q` | `00001: P` | `00010: Z` | `00011: R` |
 | `00100: Y` | `00101: 9` | `00110: X` | `00111: 8` |
 | `01000: G` | `01001: F` | `01010: 2` | `01011: T` |

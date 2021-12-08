@@ -179,7 +179,7 @@ verify by hand.
 In this scheme, we introduce a new checksum, *russ32* (lol let's rename this -AP),
 which can detect up to *8* errors, correct up to 4, and has probability less than
 one in a million million million of failing to detect other random errors. Further,
-russ32 checksums can be computed and verified entirely by hand, 
+russ32 checksums can be computed and verified entirely by hand,
 
 # Detailed Introduction
 
@@ -240,7 +240,8 @@ nothing represented in this alphabet is ever secret data.
 
 Users do not need to know the correspondence of this alphabet to bitstrings,
 or to each other, although curious users are encouraged to read the
-[mathematical companion](todo). The purpose of having two alphabets is to
+[mathematical companion](https://github.com/apoelstra/SSS32/blob/2021-12--math-intro/volvelles/main.tex).
+The purpose of having two alphabets is to
 guide the computational process, by making it difficult to incorrectly
 combine different sets of data.
 
@@ -341,7 +342,7 @@ For an unshared checksummed secret, the process is:
 
 1. Generate a 6-character header from the bech32 alphabet. The first character
    should be `0` and the last character `S`, and the middle 4 can be arbitrary,
-   but should be chosen to make the 
+   but should be chosen to make the
 2. Generate 26 random characters, representing 130 bits of entropy. Add these
    after the header.
 3. Follow the instructions on the "Checksum Worksheet" to generate a 13-character
@@ -390,10 +391,80 @@ The steps are as follows:
 It is very likely that you will make mistakes during this process, resulting in a bad
 checksum. Mistakes during the translation step are correctable, but the error correction
 process involves computers and is not necessary here since the user has all the data
-she needs.
+she needs. Further, a bad checksum is just as likely to have resulted from incorrect
+computations in the Checksum Worksheet, which the error correction process cannot handle.
 
-## Splitting and Sharing
+The most straightforward way to handle a wrong checksum is to redo the entire share
+derivation step, checking each calculation against the first time you did it.
+
+There is a less demoralizing, but more time-consuming, way to do the share derivatio
+process:
+
+1. Before beginning, make sure you have complete Checksum Worksheets for all of your
+   initial shares (if you just generated these, the worksheets should be readily available).
+2. Start the Checksum Worksheet for your derived share, copying the translated share
+   into the bold boxes as usual.
+3. Repeat the translation-and-adding process, this time taking the **bottom diagonal
+   squares** from the initial Checksum Worksheets and combining these. Copy the
+   result into the bottom diagonal of the new Checksum Worksheet.
+4. Write the target residue `SECRETSHARE32` at the bottom of the Checksum Worksheet.
+5. Now filling in the rest of the Checksum Worksheet as usual. If you ever compute a
+   value that doesn't match one of your pre-filled squares, you know the mistake was
+   in that column. Redo the computations *just for that column* before continuing.
+
+## Distribution of Shares
+
+Once the shares have been generated, there is no difference between the initial and
+derived shares. You are free to distribute these as you see fit.
+
+You can generate up to 31 total shares before running out of available letters for
+share indices. You can make multiple copies of shares, but of course remember that
+only one copy counts during recovery: you need k *distinct* shares to recover your
+secret.
 
 ## Recovery
+
+Once you have generated and (distributed) your shares, you may like to recover your
+secret. In the future, we hope that hardware wallets will accept input of shares
+and do the recovery themselves, but we assume for this section that you want to
+recover your secret by hand.
+
+First, make sure you have k shares available. Exactly k are needed; if you have
+more, then just set the extras aside.
+
+The process is then very similar to the process for share derivation, except that
+rather than looking up symbols in a provided table, you use the Recovery Wheel
+volvelle to compute them.
+
+### k = 2
+
+If k = 2, the process is as follows:
+
+1. Complete Checksum Worksheets for the k shares you are using. (This is not strictly
+   necessary, but if any mistakes happen during the recovery process it's helpful to
+   be confident in your original shares' correctness.)
+2. For each share that you have, spin the Recover Share volvelle so that it is
+   pointing to that share index. Read the symbol from the window of the **other
+   share**.
+3. Translate this share (the one the volvelle is spun to) using the Translation
+   volvelle.
+4. Add the translated shares. The result will magically have a valid header and
+   share index `S`. This is your secret. Keep it safe.
+5. Complete a Checksum Worksheet for the derived secret.
+
+As during share derivation, if you use the checksum worksheets for your input shares,
+and repeat the translate-and-add process for the cells in the bottom diagonal, you
+can identify mistakes as soon as they happen, avoiding the need to repeat tons of
+work if you mess up.
+
+### k > 2
+
+The process for k > 2 is identical, except for step 2, which needs to be modified
+since there is more than one "other share" for each share:
+
+2 (alternatee). For each share, point the Recover Share volvelle to its index. Look
+  up the symbols for **all the other shares** in the windows. Multiply these symbols
+  together using the Multiplication slide rule. The result is the symbol that you
+  should translate by.
 
 

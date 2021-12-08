@@ -262,7 +262,7 @@ value. Roll them again. Then, for each die,
 You will get a five bit number. For example, 10110. Look this value up in the
 following table:
 
-| A | B | C | D |
+| - | - | - | - |
 |------------|------------|------------|------------|
 | `00000: Q` | `00001: P` | `00010: Z` | `00011: R` |
 | `00100: Y` | `00101: 9` | `00110: X` | `00111: 8` |
@@ -272,7 +272,6 @@ following table:
 | `10100: 5` | `10101: 4` | `10110: K` | `10111: K` |
 | `11000: C` | `11001: E` | `11010: 6` | `11011: M` |
 | `11100: U` | `11101: A` | `11110: 7` | `11111: L` |
-|------------|------------|------------|------------|
 
 
 ## Tables, Volvelles, and Slide Rulers

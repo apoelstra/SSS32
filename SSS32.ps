@@ -857,9 +857,9 @@ showpage
    grestore
    /Scalar findfont 18 scalefont setfont
    [ permP 1 31 getinterval { 16 xor [ exch 17 ] 16 exch 17 exch lagrange dup 1 eq {pop 0} if} forall ]
-   {0 38 sqrt 40 mul 29 sub moveto code2 exch 1 getinterval centreshow angle rotate} forall
+   {0 38 sqrt 40 mul moveto code2 exch 1 getinterval centreshow angle rotate} forall
    /Courier findfont 18 scalefont setfont
-   permP 1 31 getinterval {0 38 sqrt 40 mul moveto code exch 16 xor 1 getinterval centreshow angle neg rotate} forall
+   permP 1 31 getinterval {0 38 sqrt 40 mul 29 sub moveto code exch 16 xor 1 getinterval centreshow angle neg rotate} forall
    grestore
 
    end
@@ -903,7 +903,12 @@ showpage
    newpath 0 6 40 mul 29 add 8 sub moveto 8 16 rlineto -16 0 rlineto closepath fill
 
    % Draw white interior circle
-   newpath 0 0 6 40 mul 29 sub 0 360 arc stroke
+   newpath 0 0 6 40 mul 0 360 arc stroke
+%hack white out part you cut out
+ newpath -10 260 moveto 20 0 rlineto 0 -50 rlineto -20 0 rlineto closepath
+ gsave 1 setgray fill grestore stroke
+%end hack
+
    % Draw centre cross
    newpath 0 6 moveto 0 -6 lineto stroke
    newpath 6 0 moveto -6 0 lineto stroke
@@ -913,10 +918,11 @@ showpage
    % Draw letters
    /Courier findfont 18 scalefont setfont
    /sz 3 def
-   permP 1 31 getinterval {
-      0 24 sqrt 40 mul sz 2 mul sub moveto code exch 16 xor 1 getinterval centreshow
+      angle rotate
+   permP 2 30 getinterval {
+      0 24 sqrt 40 mul 29 add sz 2 mul sub moveto code exch 16 xor 1 getinterval centreshow
       % Draw indicator arrow
-      newpath 0 6 40 mul 29 sub moveto sz sz 2 mul neg rlineto sz 2 mul neg 0 rlineto closepath fill
+      newpath 0 6 40 mul moveto sz sz 2 mul neg rlineto sz 2 mul neg 0 rlineto closepath fill
       angle rotate
    } forall
    grestore

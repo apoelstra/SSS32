@@ -791,21 +791,24 @@ showpage
    10 dict begin
 
    gsave
-   /title (Multiplicaton) def
+   /title (Recover Share) def
    /angle 360 31 div neg def
    % Move cursor to center of page
    pgsize 2 div exch 2 div exch translate
    % Draw white interior circle
    newpath 0 0 6 40 mul 29 sub 0 360 arc stroke
-   newpath 0 0 6 40 mul 0 360 arc stroke
+   newpath 0 0 6 40 mul 29 add 0 360 arc stroke
    newpath 0 0 6 0 360 arc stroke
    % Draw letters
    /Helvetica findfont 6 scalefont setfont
    gsave
-   0 360 8 div 360 {title 6 3 -1 roll 234 outsidecircletext} for
+   0 360 8 div 360 {title 6 3 -1 roll 263 outsidecircletext} for
    grestore
    /Symbol findfont 18 scalefont setfont
-   permP 1 31 getinterval {0 38 sqrt 40 mul 29 sub moveto code2 exch 1 getinterval centreshow angle rotate} forall
+   [ permP 1 31 getinterval { 16 xor [ exch 17 ] 16 exch 17 exch lagrange dup 1 eq {pop 0} if} forall ]
+   {0 38 sqrt 40 mul 29 sub moveto code2 exch 1 getinterval centreshow angle rotate} forall
+   /Courier findfont 18 scalefont setfont
+   permP 1 31 getinterval {0 38 sqrt 40 mul moveto code exch 16 xor 1 getinterval centreshow angle neg rotate} forall
    grestore
 
    end
@@ -819,26 +822,26 @@ showpage
    10 dict begin
 
    gsave
-   /title (Multiplicaton) def
+   /title (Recover Share) def
    /angle 360 31 div neg def
    % Move cursor to center of page
    pgsize 2 div exch 2 div exch translate
 
    % Draw handle
    1 0 0 setrgbcolor
-   newpath 6 40 mul 29 sub 7.25 40 mul moveto
+   newpath 6 40 mul 29 sub 7.25 40 mul 29 add moveto
    0 0 6 40 mul 29 sub 0 180 arc
-   6 40 mul 29 sub neg 7.25 40 mul lineto
+   6 40 mul 29 sub neg 7.25 40 mul 29 add lineto
    closepath
    clip
    newpath 10 0 moveto
    30 0 lineto
-   36 7.5 40 mul 29 sub 0 7.5 40 mul 29 sub 5 arct
-   -36 7.5 40 mul 29 sub -30 0 5 arct
+   36 7.5 40 mul 0 7.5 40 mul 5 arct
+   -36 7.5 40 mul -30 0 5 arct
    -36 0 lineto
    -10 0 lineto
-   -10 6 40 mul 8 sub lineto
-   10 6 40 mul 8 sub lineto
+   -10 6 40 mul 29 add 8 sub lineto
+   10 6 40 mul 29 add 8 sub lineto
    closepath
    0.8 setgray
    fill
@@ -846,7 +849,7 @@ showpage
    initclip
 
    % Draw indicator arrow
-   newpath 0 6 40 mul 8 sub moveto 8 16 rlineto -16 0 rlineto closepath fill
+   newpath 0 6 40 mul 29 add 8 sub moveto 8 16 rlineto -16 0 rlineto closepath fill
 
    % Draw white interior circle
    newpath 0 0 6 40 mul 29 sub 0 360 arc stroke
@@ -857,10 +860,10 @@ showpage
    /Helvetica findfont 12 scalefont setfont
    title 12 270 30 insidecircletext
    % Draw letters
-   /Symbol findfont 18 scalefont setfont
+   /Courier findfont 18 scalefont setfont
    /sz 3 def
    permP 1 31 getinterval {
-      0 24 sqrt 40 mul sz 2 mul sub moveto code2 exch 1 getinterval centreshow
+      0 24 sqrt 40 mul sz 2 mul sub moveto code exch 16 xor 1 getinterval centreshow
       % Draw indicator arrow
       newpath 0 6 40 mul 29 sub moveto sz sz 2 mul neg rlineto sz 2 mul neg 0 rlineto closepath fill
       angle rotate

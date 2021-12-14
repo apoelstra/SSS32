@@ -1107,7 +1107,7 @@ showpage
 
 /labeledbox {
   10 dict begin
-  { /beginred /n } {exch def} forall
+  { /offset /beginred /n } {exch def} forall
   /n n hrp length add 2 add def
   gsave
     n beginred thick box
@@ -1115,19 +1115,19 @@ showpage
   gsave
     arraySpace 6 sub 14 5 sub rmoveto
     /Courier findfont 3 scalefont setfont
-    n 10 lt { ( ) show } if n 2 string cvs show
+    n offset add 10 lt { ( ) show } if n offset add 2 string cvs show
   grestore
   end
 } bind def
 /Helvetica-Bold findfont 10 scalefont setfont
-pgsize aload pop exch pop 2 div 700
+pgsize aload pop exch pop 2 div 200 add 700
 moveto (ms32 Checksum Worksheet) centreshow
 
 /Courier findfont 15 scalefont setfont
 
-120 670
+216 710
 % [10 29 19 13 4 16 20 8 16 7 4 13 6 8 27 31 28 14 17 21 31 25 19 15 1 3 13 29 22 5 8 31 9 17 15 30 19 15 21 16 19 26 16 22 31]
-[ 45 {32} repeat ]
+[ 41 {32} repeat ]
 10 dict begin
 { /codeword /y /x } {exch def} forall
 x y moveto hrp (1) concatstrings dup stringwidth pop neg 3 sub 0 rmoveto show
@@ -1135,7 +1135,7 @@ x y moveto hrp (1) concatstrings dup stringwidth pop neg 3 sub 0 rmoveto show
 /edge codeword length polymodulus length sub hrp length add 2 add def
 /gaps [ 0 1 codeword length { 4 mod 1 eq {gapSpace} {arraySpace} ifelse } for ] def
 /k polymodulus length odd sub def
-  {edge labeledbox} x arraySpace odd mul add y moveto codeword gaps 1 k getinterval 0 showArrayBox
+  {edge 0 labeledbox} x arraySpace odd mul add y moveto codeword gaps 1 k getinterval 0 showArrayBox
 /y y 14 sub def
 /reduction [hrp polymodhrp aload pop k {0} repeat ] polymod0 def
   {reduction length thin box} x arraySpace odd mul add y moveto reduction gaps 1 k getinterval odd showArrayBox
@@ -1144,8 +1144,43 @@ x y moveto hrp (1) concatstrings dup stringwidth pop neg 3 sub 0 rmoveto show
 
 {
   k codeword length ge {exit} if
+  { codeword length k sub 100 add thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
+  {edge 100 add 0 labeledbox} codeword gaps k 1 add 2 getinterval k showArrayBox
+  /x x gaps k 1 add reduction length sub 2 getinterval aload pop add add def
+  /y y 14 sub def
+  /reduction residue 0 2 getinterval aload pop polymodshift2 def
+  {reduction length thin box} x y moveto reduction gaps k 1 add reduction length 2 sub sub reduction length getinterval 0 showArrayBox
+  /y y 15 sub def
+  /residue reduction [residue 2 polymodulus length 2 sub getinterval aload pop codeword k 2 getinterval aload pop] gf32addarray def
+  /k k 2 add def
+} loop
+
+%gsave 0.85 setgray x y moveto checksum gaps k 1 add residue length sub residue length getinterval 0 showArray grestore
+{residue length thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
+
+end
+
+36 655
+% [10 29 19 13 4 16 20 8 16 7 4 13 6 8 27 31 28 14 17 21 31 25 19 15 1 3 13 29 22 5 8 31 9 17 15 30 19 15 21 16 19 26 16 22 31]
+[ 47 {32} repeat ]
+10 dict begin
+{ /codeword /y /x } {exch def} forall
+%x y moveto hrp (1) concatstrings 0 16 rmoveto show
+/odd polymodulus length codeword length add 2 mod def
+/edge codeword length polymodulus length sub hrp length add 2 add def
+/gaps [ 0 1 codeword length { 4 mod 1 eq {gapSpace} {arraySpace} ifelse } for ] def
+/k polymodulus length odd sub def
+%  {edge 37 labeledbox} x arraySpace odd mul add y moveto codeword gaps 1 k getinterval 0 showArrayBox
+%/y y 14 sub def
+/reduction [k 13 add {32} repeat ] polymod0 def
+%  {reduction length thin box} x arraySpace odd mul add y moveto reduction gaps 1 k getinterval odd showArrayBox
+%/y y 15 sub def
+/residue reduction [1 odd eq {0} if codeword 0 k getinterval aload pop ] gf32addarray def
+
+{
+  k codeword length ge {exit} if
   { codeword length k sub thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
-  {edge labeledbox} codeword gaps k 1 add 2 getinterval k showArrayBox
+  {edge 28 labeledbox} codeword gaps k 1 add 2 getinterval k showArrayBox
   /x x gaps k 1 add reduction length sub 2 getinterval aload pop add add def
   /y y 14 sub def
   /reduction residue 0 2 getinterval aload pop polymodshift2 def
@@ -1158,76 +1193,7 @@ x y moveto hrp (1) concatstrings dup stringwidth pop neg 3 sub 0 rmoveto show
 gsave 0.85 setgray x y moveto checksum gaps k 1 add residue length sub residue length getinterval 0 showArray grestore
 {residue length thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
 
-
-end
-
-100 420 moveto
-/Helvetica-Bold findfont 10 scalefont setfont
-(Verifying Checksums) show
-100 400 moveto
-/Helvetica findfont 9 scalefont setfont
-(Write out the 45 character data portion in the) show
-100 390 moveto
-(bold boxes, two at a time, starting on the top) show
-100 380 moveto
-(row.  Working from the top row down, look up) show
-100 370 moveto
-(the first two characters of each odd row in the) show
-100 360 moveto
-(ms32 Checksum Table and write the ) polymodulus length 10 string cvs concatstrings show
-100 350 moveto
-(character word into the even row below it.  Fill) show
-100 340 moveto
-(in the odd rows by adding the two characters) show
-100 330 moveto
-(above each cell.  You may use either the) show
-100 320 moveto
-(addition wheel table.  The first few boxes are) show
-100 310 moveto
-(already filled in for you.  The last row will sum) show
-100 300 moveto
-(to ) checksumstring ( if the checksum is valid.) concatstrings concatstrings show
-100 260 moveto
-/Helvetica-Bold findfont 10 scalefont setfont
-(Creating Checksums) show
-100 240 moveto
-/Helvetica findfont 9 scalefont setfont
-(Follow the "Verifying Checksums" instructions) show
-100 230 moveto
-(to fill in everything but the shaded cells. To fill in) show
-100 220 moveto
-(the shaded cells, write ) checksumstring ( into the bottom) concatstrings concatstrings show
-100 210 moveto
-(row.  Working from the bottom up, fill in the) show
-100 200 moveto
-(shaded cells by adding the two characters below) show
-100 190 moveto
-(each cell.  The ) polymodulus length 10 string cvs ( characters in the bold shaded) concatstrings concatstrings show
-100 180 moveto
-(boxes will be the checksum.) show
-
-450 650
-/offsety exch def
-/offsetx exch def
-/Courier findfont 10 scalefont setfont
-20 offsetx add offsety moveto (Addition Table) show
-/Courier-Bold findfont 8 scalefont setfont
-0 1 31 {
-dup 2 add 7 mul offsetx add offsety 10 sub moveto
-perm exch get
-code exch 1 getinterval show
-} for
-
-0 1 31 {
-/Courier-Bold findfont 8 scalefont setfont
-offsetx 34.5 7 mul add offsety 20 sub 2 index 8 mul sub moveto
-dup code exch perm exch get 1 getinterval show
-/Courier findfont 8 scalefont setfont
-dup 1 31 {
-dup 2 add 7 mul offsetx add offsety 20 sub 3 index 8 mul sub moveto
-perm exch get
-perm 2 index get gf32add code exch 1 getinterval show
-} for pop } for
+end 
 
 pgsave restore
 showpage
@@ -1267,8 +1233,7 @@ moveto (BIP-39 Conversion Worksheet) centreshow
     0 9 rmoveto
     /Courier findfont 3 scalefont setfont
     n 5 mod 0 eq {
-        /n n 5 idiv 8 add def
-         n 2 string cvs show
+         n 5 idiv 16 add 2 string cvs show
     } if
   grestore
   % Every 11 write a bottom-left value
@@ -1276,8 +1241,7 @@ moveto (BIP-39 Conversion Worksheet) centreshow
     0 14 rmoveto
     /Courier-Bold findfont 6 scalefont setfont
     n 11 mod 10 eq {
-        /n n 11 idiv 1 add def
-         n 2 string cvs show
+         n 11 idiv 1 add 2 string cvs show
     } if
   grestore
   end

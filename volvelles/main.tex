@@ -5,6 +5,7 @@
 \usepackage[english]{babel}
 \usepackage[top=3cm, bottom=3cm, left=3.85cm, right=3.85cm]{geometry}
 \usepackage[onehalfspacing]{setspace}
+\usepackage{hyperref}
 \usepackage{amsmath,amsthm,amssymb,wasysym,fdsymbol,marvosym}
 \usepackage{graphicx}
 \usepackage[usenames,dvipsnames]{color}
@@ -53,6 +54,7 @@
 \newcommand{\ftwo}{\mathbb{F}_2}
 \newcommand{\fttwo}{\mathbb{F}_{32}}
 \newcommand{\binrep}[1]{\left\{#1\right\}}
+\newcommand{\vc}[1]{\texttt{#1}} % volvelle character
 
 \begin{document}
 
@@ -436,7 +438,7 @@ L & $\alpha^{20}$ & 11111 \\
 
 \clearpage
 
-\subsection{Volvelles}
+\subsection{The Addition Volvelle}
 
 Volvelles, or slide charts, are computers constructed by two sheets of paper, cut
 into circles and affixed at the center so that they are able to rotate relative
@@ -448,67 +450,239 @@ The top sheet has holes cut into it, selectively revealing data printed on the
 bottom sheet, depending on the rotation. The top sheet has a pointer used to
 index the data being revealed.
 
-\paragraph{Volvelles and Algebraic Structure.} Our volvelles have 32 holes cut
+\paragraph{The Addition Volvelle.} We have provided one volvelle, which computes
+addition in $\fttwo$. By setting the pointer to some value $x$, and looking at
+the window labeled $y\to$, the value $x+y$ will be revealed. It is instructive
+to observe that the expected symmetries are there: $x+y=y+x$, $x+x=Q$, $x+Q=x$,
+etc.
+
+\paragraph{Volvelles and Algebraic Structure.} Our volvelle has 32 holes cut
 in the face, corresponding to the 32 bech32 characters. If all 32 positions
 of the volvelle revealed distinct locations on the bottom wheel, it would
 require symbols to be printed on the bottom wheel in 1024 positions. If there
 were algebraic structure relating the results of different volvelle positions,
 we could reduce this number.
 
-As an extreme example, consider the case of multiplication. In this case, we
-exclude $0\in\fttwo$ and have only 31 positions and 31 values to reveal. By
-ordering the positions of the wheel as increasing powers of $\alpha$, and the
-entries on the front of the wheel as decreasing powers of $\alpha$, then every
-turn of the volvelle would simply shift all the revealed symbols by one window, and
-there would not ever even be unrevealed symbols. In this case we can simplify
-the design to a \textbf{circular slide rule}.
+We will return to this idea in the next section, about slide rules, but for now
+we simply observe that we did \textbf{not} reduce the number of symbols from
+the maximum 1024.
 
-\begin{center} \includegraphics[scale=1.3]{slideruler.jpg} \end{center}
+Why not? Well, observe that the way to reduce symbols is to have two windows at
+the same radius from the center of the volvelle. Then on the bottom sheet, a
+single circle of values would provide the revealed symbols for both windows.
+Let's say that one window is labeled $x\to$, and the other labeled $y\to$. Then
+since the windows are at a fixed angle $\theta$ from each other (being printed
+on the same solid sheet of paper), we would require the bottom circle of values
+to satisify
+\[ \textnormal{for all } z\in\fttwo:\qquad x + z \textnormal{ and } y+z \textnormal{ are at angle $\theta$ to each other} \]
+Now, $x+z$ and $y+z$ differ by the fixed quantity $x+y$ (recall we are in
+characteristic 2), so this can be restated as
+\[ \textnormal{for all } z\in\fttwo:\qquad z \textnormal{ and } z+(x+y) \textnormal{ are at angle $\theta$ to each other} \]
+Then observing that $(x+y) + (x+y) = 0$, two applications of the above equation
+give us
+\[ \textnormal{for all } z\in\fttwo:\qquad z \textnormal{ is at angle $2\theta$ from itself} \]
+It is now clear that if we either need to repeat characters (defeating the goal
+of reducing the amount of symbols on the bottom wheel) or have $\theta=180^\circ$.
 
-In the case of the other volvelles, we are not so lucky, and we have been forced
-to print all 1024 symbols on the bottom wheel, necessitating small (though usable)
-windows and more importantly, leaving us with the uncomfortable feeling that we
-are leaving algebraic structure unexploited. It is an open question whether we can
-improve this, but let me argue here that we cannot.
+Okay, so perhaps we can get a 50\% reduction in density for the bottom wheel, by
+setting $\theta=180^\circ$ and having the windows on opposite sides of the top
+wheel be at the same radius and use the same set of bottom-wheel symbols.
 
-Consider the case of the addition (xor) volvelle. One natural idea to consider
-is that the value in the top window (labelled $A\rightarrow$) must always differ
-from the value in the bottom window (labeled $T\rightarrow$) by $\texttt{K}=\texttt{A}-\texttt{T}$. So
-if we were put the \texttt{A} and \texttt{T} windows at the same radius from the center, rotated
-180 degrees from each other, we could use the same set of 32 bottom symbols for
-both windows, as long as the pairs on opposite sides always differed by \texttt{K},
-reducing the density by two.
+Let's play this out. Take, for example, the \vc{A} and \vc{T} windows on the
+addition volvelle. These differ by \vc{K}, so we require that on the bottom
+wheel, symbols at this radius differ from their opposite symbol by \vc{K}.
+If the top wheel is pointing at some symbol $a$, and we turn it $180^\circ$
+to $b$, we have simply exchanged the values in these windows, i.e. added
+\vc{K} to both. But this implies that $a+b=\vc{K}$.
 
-Unfortunately, while \texttt{A} and \texttt{T} are 180 degrees from each other and
-differ by $\texttt{K}$, the same cannot be said for \texttt{C} and \texttt{U}, say,
-or any other pair of letters which naturally lie 180 degrees from each other.
- 
-In general, to accomplish what we are trying, we would need to mod our group out by $K$ additively
-and then take all the two-element cosets and place their entries on opposite sides
-of the addition wheel. The result, no matter what element you mod out by and no matter
-how you order the cosets, is unnatural and confusing to use\footnote{I did not try
-all possibilities exhaustively, so I could be wrong here. But I really doubt it.}.
-From a user point of view, it is necessary that all the volvelle indices be in
-alphabetical order, or very nearly so, or else the volvelle is slow and confusing
-to use.
+In other words, for this compression to work, we need every pair of opposing
+symbols to add to \vc{K}; i.e. we need to take the sixteen 2-element cosets
+obtained by modding out by \vc{K} and then order the symbols so that each
+coset's members appear opposite each other.
 
-Similar considerations apply to the other two volvelles.
+It can be seen, by modding out by every possible symbol, and trying various
+orderings of the resulting cosets, that no such choice will lead to a
+``natural'' ordering\footnote{There are 16 cosets, so $15\approxeq2^{40}$
+different arrangements around a circle. Then you can exchange the members
+in each coset, for another $2^{15}$ possibilities. So an exhaustive search
+would require about $2^{55}$ work. I did not do an exhaustive search, so I
+may be wrong in claiming that ``no such choice'' works. But I spent several
+hours starting from random permutations and then looking for local optima
+and never got very close. My measure of ``naturalness'' was to take the
+distance $d$ between each character and its alphanumeric successor, and to
+sum all the $2^d$s.}. This means that to get this compression, we'd need
+to reorder the wheel such that users wouldn't know which direction to spin
+to find a desired symbol, and the resulting harm to usability would exceed
+the benefit of having larger windows.
 
-\paragraph{Which Volvelles Are There?} We have all the preliminary tools under
-our belt to list the 3 volvelles and slide rule, and what they do:
+If this argument was too abstract, take the addition volvelle and spin it to
+\vc{C} (one right of \vc{A}) and look at the symbols in the \vc{A} and \vc{T}
+windows. Then spin it $180^\circ$ to \vc{U} (one right of \vc{T}) and look
+at the same symbols. You will see different symbols. For this scheme to work,
+they would need to be the same symbols. Ergo, we'd have to reorder the symbols
+in a confusing order to make this work.
 
+(By the way, this \emph{could} be made to work if we rearranged our mapping
+between bech32 symbols and $\fttwo$ objects so that the \vc{K}-cosets, or
+whatever, were naturally ordered. But deviating from the bech32 spec in this
+way, for such a minor benefit in volvelle layout, doesn't seem worth the
+potential confusion/incompatibility between the schemes.)
+
+\subsection{The Multiplication-Translation Slide Rule}
+
+\paragraph{Multiplication.}
+While the addition volvelle could not be re-arranged to reduce the number of
+symbols beyond 1024, let's consider the second operation we might like to do:
+\emph{multiplication}.
+
+For reasons that we will describe later, when multiplying in $\fttwo$ it turns
+out that we want to use the alternate symbol alphabet rather than the bech32
+alphabet. We also don't care so much about multiplication by zero, which always
+results in zero, which we can tell the user rather than putting it into a
+volvelle.
+
+Now, we have 31 nonzero elements, so a volvelle would naively have $31^2=961$
+entries. Can we do better? Using the same reasoning as with the addition volvelle,
+if we wanted two windows $x\to$ and $y\to$ to share a radius, we'd need that
+\[ \textnormal{for all } z\in\fttwo:\qquad xz \textnormal{ and } yz \textnormal{ are at angle $\theta$ to each other} \]
+We have a group under multiplication with 31 elements in it. It is then a fact
+that if we choose any element $\alpha\in\fttwo^*$ except 1, that $\alpha$
+\textbf{generates} the group. Meaning that every element $z$, including 1,
+can be written as $z=\alpha^{i_z}$ where $i_z$ is some integer modulo 31. So we
+may write
+\[ \textnormal{for all } \alpha^{i_z}\in\fttwo:\qquad \alpha^{i_x}\alpha^{i_z} = \alpha^{i_x+i_z} \textnormal{ and } \alpha^{i_y}\alpha^{i_z} = \alpha^{i_y+i_z} \textnormal{ are at angle $\theta$ to each other} \]
+
+By squinting at this for a moment, you can observe that if $\theta$ is one 31th
+of a full rotation, and we make sure that each $\alpha^i$ on the front wheel is
+followed by $\alpha^{i+1}$, then \emph{every single window can have the same
+radius}. In fact, we don't need windows, since the bottom wheel now has only a
+single circle of symbols, all of which are always visible.
+
+This is the intuition behind the \textbf{multiplication wheel}, which is actually
+a circular slide wheel:
+
+FIXME put an image here
+
+\paragraph{Translation.} There are actually two kinds of multiplication that
+we might want to do: symbol-by-symbol multiplication and symbol-by-bech32-character
+multiplication. The latter we refer to as \textbf{translation}.
+
+Algebraically, multiplication and translation are identical, of course. But in
+practice, multiplication is used to combine $k=2$ Lagrange basis polynomials
+(encoded as symbols) to get $k>2$ basis polynomials (also symbols).
+Meanwhile transalation is used to multiple the basis polynomials (symbols) by
+share values (characters) to get translated shares (characters).
+
+Since translation is identical to multiplication, we might hope that we could
+construct a translation slide rule by simply relabelling the multiplication
+slide rule. Indeed, we could do this by changing the inner wheel to use
+bech32 characters rather than symbols. Then to translate a character $c$ by
+a symbol $\sigma$, the user would turn the wheel to point to $c$, look for
+$\sigma$, and find what it points to.
+
+However, in practice this is a pretty awkward setup, for two reasons:
 \begin{itemize}
-\item The \textbf{Addition Volvelle} computes addition between bech32 characters.
-As observed above, this corresponds to the xor function on their binary representation.
-\item The \textbf{Translation Volvelle} computes multiplication between a symbol
-character and a bech32 character. 
-\item The \textbf{Recovery Volvelle}, turned to bech32 character $x$, and viewing
-window $y$, computes the symbolic character corresponding to $(y + S)/(x + y)$.
-\item The \textbf{Multiplication Wheel} is a circular slide rule which performs
-multiplication between two symbol characters.
+\item Again, because the correspondence between bech32 characters and $\fttwo$
+does not have any algebraic structure, ordering the characters by increasing
+powers of $\alpha$ results in an unintuitive ordering.
+
+We have chosen to just live with this problem. All the characters are visible
+at the same time, so it isn't nearly as a bad a usability burden as it would've
+been with a volvelle.
+\item Since zero (\vc{Q}) is a valid share value, we actually do need to think
+about multiplication by 0.
+
+In contrast, zero would not be valid Lagrange basis polynomial, unless the user
+tried to input the \vc{S} share, which the Recovery slide rule (see next section)
+won't let her do.
+
+We solve this by just printing $\vc{Q}\leftrightarrow\vc{Q}$ on the front of
+the slide rule.
+\item Most importantly, under normal usage, a user has a single symbol $\sigma$
+which she wants to translate the 48+ characters of a share by. If she had to
+rotate the wheel to every symbol and then look up $\sigma$ again, this would
+be tiring and error-prone.
+
+It would be better if she could just turn the wheel to $\sigma$ and then look
+up every character.
 \end{itemize}
 
-We see now the justification for having two alphabets: both share creation and
+This seems physically impossible, since the wheel pointer points to a symbol
+on the outer wheel, which uses the output (bech32) alphabet. However, Russell
+noticed that if we simply glue the Translation wheel to the back of the
+Multiplication wheel, with the symbol ordering reversed, the user can move
+the pointer on the \emph{back} of the wheel and then do lookups on the
+\emph{front}.
+
+Of course, we are mathematicians, so while we have brass fasteners, we have
+no glue. So the actual assembly method is to print both sides attached to
+each other, then fold them together. We then have two slide rules, whose
+top and bottom wheels are now the ``outer'' and ``inner'' wheels, and which
+are on opposite sides of the same pages.
+
+FIXME put an image here
+
+\subsection{The Recovery Slide Chart}
+
+There is one remaining paper computer to design. This one is the \textbf{Recovery
+wheel}, which computes Lagrange basis polynomials, evaluated at \vc{S}. That is,
+it computes the map
+\[ (p, r) \mapsto \frac{r + S}{r + p} = \frac{r + S}{r + S + p + S} \eqqcolon \frac{\hat{r}}{\hat{r}+\hat{p}} \]
+The idea is that the user would turn the wheel so that the pointer points at
+share index $p$, looks on the wheel for the arrow labeled $r$, and the resulting
+symbol is the Lagrange basis polynomial.
+
+Here $p$ and $r$ are both bech32 characters and the output is a symbol.
+
+We observe that the difference between a character $c$ and $\hat{c}=c+\vc{S}$
+is merely a matter of labelling, so to keep our heads on straight, from this
+point on we will talk exclusively in terms of hatted variables.
+
+Writing $\gamma \coloneqq \gamma(p,r) = \hat{r}/(\hat{r} + \hat{p})$, we can solve
+for $\hat{r}$ as
+\[ \hat{r} = \hat{p}\frac{\gamma}{1 + \gamma} \]
+The map $\gamma\mapsto\frac{\gamma}{1+\gamma}$ is its own inverse, so in
+particular it is a bijection (except at 1, where it is undefined), i.e. a
+relabelling, so we can write $\hat{\gamma}\coloneqq\frac{\gamma}{1+\gamma}$.
+Now $\hat{r} = \hat{p}\hat{\gamma}$. This looks like a multiplication wheel!
+
+Putting this together, to design the Recovery wheel\footnote{For Russell's actual
+reasoning, which I don't follow, search ``tada'' on \url{https://gnusha.org/bitcoin-wizards/2021-12-07.log}.}, we
+\begin{enumerate}
+\item Start with the standard multiplication wheel for $\hat{p}$ and $\hat{\gamma}$,
+with output $\hat{r}$, except that we have a missing symbol for $\hat{\gamma}=1$ on
+the inner wheel.
+\item Reverse the direction of arrows because the user actually has $\hat{p}$ and
+and $\hat{r}$ and is seeking $\hat{\gamma}$.
+\item Unwind the bijections to go from the hatted variables to the real ones.
+\end{enumerate}
+
+Finally, we observe that after unhatting, our inner wheel has symbols of the
+form $\frac{\alpha^i}{1+\alpha^i}$ in order for 1 running from 1 through 30.
+If we turn the pointer straight up, then look at the symbols horizontally
+opposite of each other, they satisfy
+\[
+x + y = \frac{\alpha^{-i}}{1+\alpha^{-i}} +  \frac{\alpha^i}{1+\alpha^i} = 1
+\]
+In fact, this is exactly the relation between pairs of Lagrange basis polynomials
+for the case $k=2$. (There are only two of them, and they add up to one because
+Lagrange basis polynomials form affine sets.) So we can draw horizontal lines
+between these pairs, making the wheel visuall distinct from the other wheels and
+also guiding the user in the $k=2$ case\footnote{Russell's reasoning for these
+lines, which made sense to me when I first heard it, was that to look up these
+basis polynomials, you turn to one symbol and look up the other; then turn to
+the other and look up the symbol. So by some sort of symmetry of turning these
+pairs all have to be opposite each other.
+
+But now I can't see the symmetry he was referring to, and it looks like he just
+got lucky. Surely there is some ``deep'' reason that this all works out?}
+
+FIXME put an image here
+
+
+\paragraph{The two alphabets.}
+Now that we have all four of our paper computers defined,
+we can see the justification for having two alphabets: both share creation and
 and secret recovery are implemented as Lagrange interpolation using Equation
 \eqref{eq:linterp} on page \pageref{eq:linterp}. In that equation, we are performing
 a linear combination of $y_i$ values, which are secret shares encoded as bech32
@@ -608,7 +782,7 @@ with it a ton of algebraic properties which are needed for analysis, so this
 is what is used in the literature.
 
 In practice it is common to use a string of all-bits-one for $m$. For our code,
-we chose characters which spell out \texttt{SECRETSHARE32}.
+we chose characters which spell out \vc{SECRETSHARE32}.
 
 \item The \textbf{checksum length} is the number of extra characters that
 need to be added to a string to ensure that it has the correct residue.
@@ -640,21 +814,21 @@ the standard generator of $\fttwo$,
 To checksum a string of bech32 characters $\{v_i\}_{i=1}^n$, we want to encode it
 as a polynomial
 \[ p(x) = x^n + \sum_{i=0}^{n-1} v^{n-i} x^i \]
-such that $p(x)$ mod $G(x)$ is equal to \texttt{SECRETSHARE32}, or
+such that $p(x)$ mod $G(x)$ is equal to \vc{SECRETSHARE32}, or
 \begin{align*}
 r(x) =
     &\binrep{16}x^{12} + \binrep{25}x^{11} + \binrep{24}x^{10} + \binrep{3}x^9 + \binrep{25}x^8 + \binrep{11}x^7\\
     &+ \binrep{16}x^6 + \binrep{23}x^5 + \binrep{29}x^4 + \binrep{3}x^3 + \binrep{25}x^2 + \binrep{17}x + \binrep{10}
 \end{align*}
 Remembering throughout that an $n$-degree polynomial has $(n+1)$ terms, the way that
-we do this is to concatenate the target residue \texttt{SECRETSHARE32} to our message
+we do this is to concatenate the target residue \vc{SECRETSHARE32} to our message
 $\{ v_i \}$, compute the resulting residue
 \begin{equation}
  \hat{p}(x) = x^{n+13} + \sum_{i=0}^{n+13-1} v^{n+13-i} x^{i} \textnormal{ mod } G(x)
  \label{eq:modg}
 \end{equation}
-We call the thirteen resulting characters the \texttt{checksum} and replace our
-copy of \texttt{SECRETSHARE32} with them
+We call the thirteen resulting characters the \textbf{checksum} and replace our
+copy of \vc{SECRETSHARE32} with them
 
 Why does this work? Our goal is to find a checksum such that, when it is concatenated
 to our original message, we get the correct residue mod $G(x)$. In Equation \eqref{eq:modg},
@@ -666,8 +840,8 @@ negation of our checksum. Remember that in $\fttwo$ negation is a no-op, so we'r
 
 As described in the last section, our checksum verification algorithm is: encode the
 message as a polynomial, take it mod $G(x)$, and compare it against the fixed string
-\texttt{SECRETSHARE32}. The checksum generation algorithm is essentially the same:
-append \texttt{SECRETSHARE32} in place of the checksum, take the resulting polynomial
+\vc{SECRETSHARE32}. The checksum generation algorithm is essentially the same:
+append \vc{SECRETSHARE32} in place of the checksum, take the resulting polynomial
 mod $G(x)$, then use the result as the actual checksum.
 
 How do we do this in practice? In short, we build up our polynomial two characters
@@ -676,17 +850,17 @@ as a time: multiply by $x^2$, add two new characters, reduce, repeat. In detail:
 \paragraph{Checksum Verification.}
 
 \begin{enumerate}
-\item Take the prefix \texttt{ms1} and encode it as a bech32 human readable part (HRP),
-which works out to \texttt{RRQDN} (the process is to take the high 3 bits of each
+\item Take the prefix \vc{ms1} and encode it as a bech32 human readable part (HRP),
+which works out to \vc{RRQDN} (the process is to take the high 3 bits of each
 8-bit ASCII character, followed by 0, followed by the low 5 bits of each character).
-Prefix a 1, or \texttt{P}. The resulting initial polynomial is \texttt{PRRQDN}, or
+Prefix a 1, or \vc{P}. The resulting initial polynomial is \vc{PRRQDN}, or
 \[ x^5 + \binrep{3}x^4 + \binrep{3}x^3 + 0x^2 + \binrep{13}x + \binrep{19} \]
 Multiply this by $x^{13}$ and reduce it mod $G(x)$. The result will be
-\texttt{TXJXCH7MFTY2P}. This string is initially filled in in the checksum
+\vc{TXJXCH7MFTY2P}. This string is initially filled in in the checksum
 worksheet.
 
 \item Add the first 13 characters of the data to be checksummed. The result will
-be the residue of \texttt{ms1<first 13 user characters>}, and this is what the
+be the residue of \vc{ms1<first 13 user characters>}, and this is what the
 first two lines of the checksum worksheet compute.
 
 \item Multiply by $x^2$ and add the next two characters of data. This is done by
@@ -705,7 +879,7 @@ giant provided "Checksum Table", which computes every possible reduction
 in PostScript.
 
 \item Repeat the previous two steps until you run out of data.
-\item Check that the final result is \texttt{SECRETSHARE32}.
+\item Check that the final result is \vc{SECRETSHARE32}.
 \end{enumerate}
 
 \paragraph{Checksum Generation.} This is basically identical to checksum verification,
@@ -713,8 +887,8 @@ except that the final 13 characters are initially not available. On the workshee
 are colored pink to indicate to the user that she should stop filling random data into
 the cells.
 
-In the mathematical description we suggest putting \texttt{SECRETSHARE} in place of
-the checksum, then replacing it. It is equivalent to instead write \texttt{SECRETSHARE}
+In the mathematical description we suggest putting \vc{SECRETSHARE} in place of
+the checksum, then replacing it. It is equivalent to instead write \vc{SECRETSHARE}
 in the final row of cells, which lays directly below the final 13 user-data cells, and
 ``backsolve'' by then adding all the rows above it. This will place the residue, which
 is the desired checksum, in the correct place.
@@ -737,14 +911,14 @@ There are two places where we use Lagrange interpolation:
 \begin{itemize}
 \item When creating a share with index $x$, we start with $k$ initial shares $x_1$,
 $x_2$, \ldots, $x_k$ whose indices are always the first $k$ symbols of the bech32
-alphabet \texttt{A}, \texttt{C}, \texttt{D}, etc.
+alphabet \vc{A}, \vc{C}, \vc{D}, etc.
 
 (There is an alternate process where the user starts with a fixed secret, in which
-case $x_1$ is \texttt{S} and the other $x_i$'s are shifted, but the rest is exactly
+case $x_1$ is \vc{S} and the other $x_i$'s are shifted, but the rest is exactly
 the same.)
 \item When recovering a secret, we start with $k$ shares with indices $\{x_i\}_{i=1}^k$
 which are fixed during recovery but unpredictable in advance, and compute the
-\texttt{S} share.
+\vc{S} share.
 \end{itemize}
 
 In both cases, the computation is straightforward: evaluate \eqref{eq:linterp} as
@@ -765,7 +939,7 @@ page.
 share under question is 1 ($\aleph$) while the index for all the other shares
 is 0 ($\times$).)
 
-\item During recovery, there are up to 31 outstanding non-\texttt{S} shares and
+\item During recovery, there are up to 31 outstanding non-\vc{S} shares and
 the user has an arbitrary subset of $k$ of them. There are $\binom{31}k$
 possibilities, which for $k=2$ is a reasonable number --- 465 --- but for
 $k\geq3$ quickly grows out of hand.
@@ -773,7 +947,7 @@ $k\geq3$ quickly grows out of hand.
 For $k = 2$ we provide a table, both in tabular form and in the form of a volvelle.
 This is what the ``Recover Share'' volvelle is, and at position $p$, window $w$ it
 computes
-\[ \ell_i(\texttt{S}) = \frac{w + \texttt{S}}{w + p} \]
+\[ \ell_i(\vc{S}) = \frac{w + \vc{S}}{w + p} \]
 Here position $p$ is the index of share $y_i$ whose multiplier is being computed,
 and $w$ is the index of the other share. This is the only volvelle which takes two
 bech32 characters and outputs a symbol, so it is clear which volvelle she should
@@ -782,11 +956,11 @@ could make this more intuitive? Not that we could think of.
 
 For $k \geq 3$, for target share $p$ (index of $y_i$) with other shares
 $\{w_i\}_{i=1}^{k-1}$, we need to compute
-\[ \ell_i(\texttt{S}) = \prod_{i=1}^{k-1} \frac{w_i + \texttt{S}}{w_i + p} \]
+\[ \ell_i(\vc{S}) = \prod_{i=1}^{k-1} \frac{w_i + \vc{S}}{w_i + p} \]
 with notation chosen to highlight that \emph{the Lagrange basis polynomials for
 $k\geq3$ are products of the basis polynomials for $k=2$}.
 
-This fortuitous fact means that the user can compute polynomials $\ell_i(\texttt{S})$
+This fortuitous fact means that the user can compute polynomials $\ell_i(\vc{S})$
 by looking up factors using the Recover Share volvelle (rotate it to index $p$ then
 read all the $w_i$'s off the front), and then multiplying the
 results using the Multiplication slide chart.
@@ -809,7 +983,7 @@ to help keep everything straight.
 
 \subsection{SSSS and Checksumming}
 
-Once the user has computed her derived share(s) or recovered her secret \texttt{S}
+Once the user has computed her derived share(s) or recovered her secret \vc{S}
 share, she will likely notice that the produced share header is of the correct form
 and has the correct index. This is cool to see but not mathematically surprising:
 the fixed parts of the header are produced by interpolating a constant polynomial
@@ -825,7 +999,7 @@ arbitrary cell, say, the fourth cell of the tenth row, you can use the above pro
 to combine those cells from the initial shares' worksheets and produce the
 corresponding cell on the derived share's worksheet.
 
-This means in particular, that the final row (\texttt{SECRETSHARE32}) will be
+This means in particular, that the final row (\vc{SECRETSHARE32}) will be
 preserved, meaning that the checksum of the derived share will be correct. But it
 also means that, if the user uses the checksum worksheet to verify her share
 translation (which she should!) she can ``sanity check'' her work by pre-deriving

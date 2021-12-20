@@ -627,43 +627,42 @@ FIXME put an image here
 There is one remaining paper computer to design. This one is the \textbf{Recovery
 wheel}, which computes Lagrange basis polynomials, evaluated at \vc{S}. That is,
 it computes the map
-\[ (p, r) \mapsto \frac{r + S}{r + p} = \frac{r + S}{r + S + p + S} \eqqcolon \frac{\hat{r}}{\hat{r}+\hat{p}} \]
+\[ (p, r) \mapsto \frac{r + S}{r + p} = \frac{r + S}{r + S + p + S} \eqqcolon \frac{\hat{r}}{\hat{r}+\hat{p}} = \frac{1}{1 + \hat{p}/\hat{r}} \]
+(where $\hat{c}\coloneqq c+\vc{S}$ is just a relabeling of our character set).
+
 The idea is that the user would turn the wheel so that the pointer points at
 share index $p$, looks on the wheel for the arrow labeled $r$, and the resulting
-symbol is the Lagrange basis polynomial.
+symbol is the Lagrange basis polynomial. We notice that the result is undefined
+when $r = p$, which corresponds to the case when you are trying to use the same
+share twice, which makes intuitive sense.
 
 Here $p$ and $r$ are both bech32 characters and the output is a symbol.
 
-We observe that the difference between a character $c$ and $\hat{c}=c+\vc{S}$
-is merely a matter of labelling, so to keep our heads on straight, from this
-point on we will talk exclusively in terms of hatted variables.
+Now, as before we may write $\hat{p}=\alpha^{i_{\hat{p}}}$ and
+$\hat{r}=\alpha^{i_{\hat{r}}}$, where $\alpha$ is a generator of our multiplicative
+group. Then we have
+\[ (p, r) \mapsto \left[ 1 + \alpha^{i_{\hat{p}} - i_{\hat{r}}} \right]^{-1} \]
 
-Writing $\gamma \coloneqq \gamma(p,r) = \hat{r}/(\hat{r} + \hat{p})$, we can solve
-for $\hat{r}$ as
-\[ \hat{r} = \hat{p}\frac{\gamma}{1 + \gamma} \]
-The map $\gamma\mapsto\frac{\gamma}{1+\gamma}$ is its own inverse, so in
-particular it is a bijection (except at 1, where it is undefined), i.e. a
-relabelling, so we can write $\hat{\gamma}\coloneqq\frac{\gamma}{1+\gamma}$.
-Now $\hat{r} = \hat{p}\hat{\gamma}$. This looks like a multiplication wheel!
-
-Putting this together, to design the Recovery wheel\footnote{For Russell's actual
-reasoning, which I don't follow, search ``tada'' on \url{https://gnusha.org/bitcoin-wizards/2021-12-07.log}.}, we
+The addition of 1 and the multiplicative inversion can be accomplished by more
+relabeling, and the fact that we have a difference rather than sum in the exponent
+of $\alpha$ can be accomodated by reversing the direction of our arrows relative
+to the arrows on the multiplication wheel. Putting it all together, to get a
+recovery slide rule, we
 \begin{enumerate}
-\item Start with the standard multiplication wheel for $\hat{p}$ and $\hat{\gamma}$,
-with output $\hat{r}$, except that we have a missing symbol for $\hat{\gamma}=1$ on
-the inner wheel.
-\item Reverse the direction of arrows because the user actually has $\hat{p}$ and
-and $\hat{r}$ and is seeking $\hat{\gamma}$.
-\item Unwind the bijections to go from the hatted variables to the real ones.
+\item Reverse the arrows in our multiplication slide rule, as we are doing
+division rather than multiplication.
+\item Apply $x\mapsto+\vc{S}$ to the inputs (which are now both on the bottom
+wheel, so we can permute them independently of the outputs), and
+$x\mapsto[1+x]^{-1}$ to the output (which is on the top wheel).
 \end{enumerate}
 
-Finally, we observe that after unhatting, our inner wheel has symbols of the
-form $\frac{\alpha^i}{1+\alpha^i}$ in order for 1 running from 1 through 30.
-If we turn the pointer straight up, then look at the symbols horizontally
-opposite of each other, they satisfy
-\[
-x + y = \frac{\alpha^{-i}}{1+\alpha^{-i}} +  \frac{\alpha^i}{1+\alpha^i} = 1
-\]
+FIXME put an image here
+
+Finally, we observe that, if we center our slide rule on the $\alpha^0$ output
+slot (the one with the pointer on it, rather than a symbol), looking $j$ positions
+to the left and right we have the values
+\[ \left[ 1 + \alpha^{-j} \right]^{-1} \textnormal{ and } \left[ 1 + \alpha^j \right]^{-1}  \]
+and it can be computed directly that these sum to 1.
 In fact, this is exactly the relation between pairs of Lagrange basis polynomials
 for the case $k=2$. (There are only two of them, and they add up to one because
 Lagrange basis polynomials form affine sets.) So we can draw horizontal lines
@@ -676,8 +675,6 @@ pairs all have to be opposite each other.
 
 But now I can't see the symmetry he was referring to, and it looks like he just
 got lucky. Surely there is some ``deep'' reason that this all works out?}
-
-FIXME put an image here
 
 
 \paragraph{The two alphabets.}

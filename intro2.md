@@ -49,21 +49,19 @@ represented by 26 bech32 characters. We prefix this with the 3 characters
 
 | Human-readable Part | Threshold | Secret ID | Share Index | Secret data | Checksum |
 |---------------|--------|---------|--------|----------|----------|
-| 3 characterss (`ms1`) | 1 character | 4 characters | 1 character | 26 characters | 13 characters |
+| 3 characters (`ms1`) | 1 character | 4 characters | 1 character | 26 characters | 13 characters |
 
 The components of the header are:
 * The **threshold** indicates what the secret sharing threshold is, and should be
 a digit between `2`and `9` inclusive. Higher threshold values are not supported.
-* The **secret ID** is four characters which can be anything at all. They should
-be the same for all shares of a given secret, and distinct between secrets.
+* The **secret ID** is four arbitrary bech32 characters. They should be the same
+for all shares of a given secret, but distinct between secrets.
 * The **share index** indicates which share this is, and may be any bech32
 character except `S`. **The secret itself will have share index `S`**,
 
 If the user merely wants to checksum her secret, and not use secret splitting,
-she should use the digit `0` for the threshold value and `S` for the share index.
-
-We will explain the share splitting process in more detail over the next two
-sections.
+she should use the same format, but with the digit `0` for the threshold value
+and `S` for the share index.
 
 ## Initial Share Generation
 

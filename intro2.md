@@ -7,7 +7,7 @@ Add reference page with
 
 # Detailed Introduction
 
-## Tables, Volvelles, and Slide Rulers
+## Tables and Volvelles
 
 Throughout the checksumming, share creation and recovery, there are four kinds
 of basic arithmetic that need to be done on bech32 characters and/or symbols.
@@ -15,30 +15,31 @@ Since there are only 32 characters, each of these can be compactly represented
 by a lookup table.
 
 However, the algebraic structure of this arithmetic lets us alternately represent
-these operations as **volvelles** and **circular slide rules**. These are paper
-computers which are constructed from circular sheets of paper or cardstock,
-fastened through their centers such that they can rotate relative to each other.
-Volvelles have windows in the top sheet which reveal symbols on the bottom;
-slide rules have all symbols visible on both top and bottom, with arrows
-indicating the mapping between symbols.
+these operations as **volvelles**, or paper computers. These are constructed from
+circular sheets of paper or cardstock, fastened through their centers such tha
+ they can rotate relative to each other.
+
+We have one slide chart, which has windows in its top sheet which reveal symbols
+on the bottom; the rest of our volvelles are slide rules, which have all symbols
+visible on both top and bottom, and arrows mapping between them.
 
 ![a volvelle](volvelle.gif)
 
 ![a slide rule](slide-rule.gif)
 
-We have provided lookup tables on the Paper Computer Tables page; the paper
-computer versions are in Module 0.
+We have provided lookup tables near the beginning of our booklet; the volvelle
+versions are in Module 0.
 
-We have three paper computers: a Addition volvelle, a Recovery slide rule, and
+We have three volvelles: an Addition slide chart, a Recovery slide rule, and
 a two-sided Multiplication/Translation slide rule. They are needed in the following
 scenarios:
-* In checksum computation and creation of initial shares, only the Addition volvelle is needed.
-* To create further shares, the Translation/Multiplication slide rule is also needed.
-* To recover a secret, all three paper computers are needed.
+* In checksum computation and creation of initial shares, only Addition is needed.
+* To create further shares, the Translation/Multiplication wheel is also needed.
+* To recover a secret, all three volvelles are needed.
 
 We recommend you keep the tables, and these instructions, with your stored
-secrets. This way, even if you lose the paper computers (which need to be cut out
-and are oddly shaped), it is still possible to work through the recovery process.
+secrets. This way, even if you lose the volvelles (which are somewhat oddly
+shaped), it is still possible to work through the recovery process.
 And of course, all of this is available freely on the Internet.
 
 ## Data Encoding

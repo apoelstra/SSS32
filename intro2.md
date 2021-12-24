@@ -22,9 +22,9 @@ Volvelles have windows in the top sheet which reveal symbols on the bottom;
 slide rules have all symbols visible on both top and bottom, with arrows
 indicating the mapping between symbols.
 
-#![a volvelle](volvelle.gif)
+![a volvelle](volvelle.gif)
 
-#![a slide rule](slide-rule.gif)
+![a slide rule](slide-rule.gif)
 
 We have provided lookup tables on the Paper Computer Tables page; the paper
 computer versions are in Module 0.
@@ -166,16 +166,16 @@ volvelle to compute them as follows:
    necessary, but if any mistakes happen during the recovery process it's helpful to
    be confident in your original shares' correctness.)
 2. For each share that you have,
-  1. Spin the Recovery slide chart so its pointer is
-     at its share index. Read the symbol corresponding to **each other share**.
-  2. Multiply each of these symbols together using the Multiplication slide chart,
-     by turning the pointer to one symbol, looking up the next, then spinning the
-     wheel to the position you just looked up. (For k = 2 you will have only one
-     symbol, so this step is trivial: just spin the Multiplication slide chart to
-     that symbol.)
-  3. Leave the Multiplication slide chart pointed at the result of the previous step,
-     and flip it over. It is now the Translation slide chart.
-  4. Translate the share, character by character.
+   1. Spin the Recovery slide chart so its pointer is
+      at its share index. Read the symbol corresponding to **each other share**.
+   2. Multiply each of these symbols together using the Multiplication slide chart,
+      by turning the pointer to one symbol, looking up the next, then spinning the
+      wheel to the position you just looked up. (For k = 2 you will have only one
+      symbol, so this step is trivial: just spin the Multiplication slide chart to
+      that symbol.)
+   3. Leave the Multiplication slide chart pointed at the result of the previous step,
+      and flip it over. It is now the Translation slide chart.
+   4. Translate the share, character by character.
 3. Add the translated shares. The result will magically have a valid header and
    share index `S`. This is your secret. Keep it safe.
 4. Complete a Checksum Worksheet for the derived secret.

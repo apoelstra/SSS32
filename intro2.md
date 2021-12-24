@@ -139,7 +139,7 @@ process:
 ## Distribution of Shares
 
 Once the shares have been generated, there is no difference between the initial and
-derived shares. You are free to distribute these as you see fit.
+derived shares. Distribute these as you wish.
 
 You can generate up to 31 total shares before running out of available letters for
 share indices. You can make multiple copies of shares, but of course remember that

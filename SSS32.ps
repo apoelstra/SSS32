@@ -1200,42 +1200,6 @@ end
 } bind def
 
 %******************
-%* Share Tables
-%*
-/showShareTable {
-/offsety exch def
-/offsetx exch def
-/page exch def
-/Courier findfont 10 scalefont setfont
-20 offsetx add offsety moveto (Page: ) show
-/Courier-Bold findfont 8 scalefont setfont
-code page get glyphshow
-2 1 31 {
-dup 7 mul offsetx add offsety 10 sub moveto
-permS exch get
-code exch get glyphshow
-} for
-
-0 1 31 {
-/Courier-Bold findfont 8 scalefont setfont
-offsetx offsety 20 sub 2 index 8 mul sub moveto
-dup code exch perm exch get get glyphshow
-/Courier findfont 8 scalefont setfont
-2 1 31 {
-dup 7 mul offsetx add offsety 20 sub 3 index 8 mul sub moveto
-permS exch get
-page exch perm 3 index get exch  makeShare code exch get glyphshow
-} for pop } for
-} bind def
-
-/showShareTablePage {
-325 400 showShareTable
-50 400 showShareTable
-325 720 showShareTable
-50 720 showShareTable
-} bind def
-
-%******************
 %* Checksum Worksheet
 %*
 %* Functionality for the checksum, addition, bit conversion, etc., worksheets,
@@ -1765,30 +1729,13 @@ pgsave restore showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-{ 10 dict begin
-  /in exch def
-  /out exch def
-  16 out [ in out ] lagrange
-  dup 1 eq {pop 0} if % X out trying to recover a share with itself.
-  end
-}
-(Recover Share) code2 code [ 32 permS 1 31 getinterval aload pop ] drawBottomWheelPage
 pgsave restore
 showpage
+
 %%Page: 8 8
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-% note 0 and 1 are never used, so they are removed from the wheel.
-gsave
-pgsize aload pop 2 div exch 2 div exch translate
-360 64 div rotate
-16 {
-  newpath 0 6 40 mul moveto 0 28 rlineto stroke
-  360 16 div rotate
-} repeat
-grestore
-{gf32mul} (Translation) code code2 [32 1 1 31 {} for] drawBottomWheelPage
 
 pgsave restore
 showpage
@@ -1796,7 +1743,6 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-{xor} (Addition) code dup perm drawBottomWheelPage
 
 pgsave restore
 showpage
@@ -1804,7 +1750,6 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-showTopWheelPage
 
 pgsave restore
 showpage
@@ -1812,7 +1757,6 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-showTopWheelPage
 
 pgsave restore
 showpage
@@ -1820,7 +1764,6 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-showTopWheelPage
 
 pgsave restore
 showpage
@@ -1925,7 +1868,6 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-29 24 13 25 showShareTablePage
 
 pgsave restore
 showpage
@@ -1933,7 +1875,6 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-9 8 23 18 showShareTablePage
 
 pgsave restore
 showpage
@@ -1941,7 +1882,6 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-22 31 27 19 showShareTablePage
 
 pgsave restore
 showpage
@@ -1949,7 +1889,6 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-1 0 3 16 showShareTablePage
 
 pgsave restore
 showpage
@@ -1957,7 +1896,6 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-11 28 12 14 showShareTablePage
 
 pgsave restore
 showpage
@@ -1965,7 +1903,6 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-6 4 2 15 showShareTablePage
 
 pgsave restore
 showpage
@@ -1973,7 +1910,7 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-10 17 21 20 showShareTablePage
+{xor} (Addition) code dup perm drawBottomWheelPage
 
 pgsave restore
 showpage
@@ -1981,7 +1918,7 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-26 30 7 5 showShareTablePage
+showTopWheelPage
 
 pgsave restore
 showpage

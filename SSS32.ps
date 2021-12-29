@@ -111,15 +111,133 @@
     /section (Part I: High-Level Introduction) /endsection
   ] [ % pagebreak
     /section (Part II: Detailed Introduction) /endsection
+%    /dropcap (H) (ere we give a detailed overview of the share creation and recovery)
+%    (process.)
+%    /linebreak /linebreak % avoid bug between dropcap and subsequent heading
     /subsection (II.1. Tables and Volvelles) /endsubsection
+    /dropcap (T) (hroughout the checksumming, share creation and recovery, there are four kinds)
+    (of basic arithmetic that need to be done on bech32 characters and/or symbols.)
+    (Since there are only 32 characters, each of these can be compactly represented)
+    (by a lookup table.)
+    /paragraph
+    (However, the algebraic structure of this arithmetic lets us alternately represent)
+    (these operations as) /bold (volvelles,) /normal (or paper computers. These are constructed from)
+    (circular sheets of paper or cardstock, fastened through their centers such that)
+    (they can rotate relative to each other.)
+    /paragraph
+    (We have one slide chart, which has windows in its top sheet which reveal symbols)
+    (on the bottom; the rest of our volvelles are slide rules, which have all symbols)
+    (visible on both top and bottom, and arrows mapping between them.)
+
     /subsection (II.2. Data Encoding) /endsubsection
+    /dropcap (T) (o store 128-bit secrets, we round 128 up to 130, so that the secret can be)
+    (represented by 26 bech32 characters. We prefix this with the 3 characters)
+    /tt (ms1) /normal (and a 6-character header, and suffix it with a 13-character checksum:)
+
+    /paragraph
+    /paragraph
+    (\(table here\))
+    /paragraph
+    /paragraph
+%| Human-readable Part | Threshold | Secret ID | Share Index | Secret data | Checksum |
+%|---------------|--------|---------|--------|----------|----------|
+%| 3 characters (`ms1`) | 1 character | 4 characters | 1 character | 26 characters | 13 characters |
+
+    /paragraph
+    /paragraph
+    (The components of the header are:)
+    /startlist
+    /listitem* (The) /bold (threshold) /normal (indicates what the secret sharing)
+     (threshold is, and should be a digit between) /tt (2) /normal (and) /tt (9) /normal
+     (inclusive. Higher threshold values are not supported.) /endlistitem
+    /listitem* (The) /bold (secret ID) /normal (is four arbitrary bech32 characters.)
+     (They should be the same for all shares of a given secret, but distinct)
+     (between secrets.) /endlistitem
+    /listitem* (The) /bold (share index) /normal (indicates which share this is,)
+     (and may be any bech32 character except) /tt (S.) /bold (The secret itself will)
+     (have share index) /tt (S.) /normal /endlistitem
+
+    /paragraph
+    (If the user merely wants to checksum her secret, and not use secret splitting,)
+    (she should use the same format, but with the digit) /tt (0) /normal (for the threshold value)
+    (and) /tt (S) /normal (for the share index.)
   ] [ % pagebreak
-    /subsection (II.3. Secret Sharing) /endsubsection
+    /subsection (II.3. Secret Splitting) /endsubsection
+    /dropcap (S) (secret splitting is divided into two parts: generating the initial)
+    (shares, which are random and independent from each other, and generating the)
+    /bold (derived) /normal (shares, which are constructed from the initial ones.)
+
+    (There are two scenarios that we support in this document:)
+    /linebreak
+    /startlist
+    /listitem* (Generating a split secret with threshold k > 1, such that any k shares)
+     (can be used to regenerate the secret) /endlistitem
+    /listitem* (Generating a checksummed secret, without using SSSS.) /endlistitem
+
+    /paragraph
+    (If the user is not planning to use SSSS, the instructions are exactly the same as)
+    (the SSSS case, except that she should generate the single share) /tt (S) /normal
+    (rather than k initial shares, and set the threshold value in the header to) /tt (0.)
+    /normal
+
+    /paragraph
+    (In the case that the user has an existing secret in the form of BIP39 words,)
+    (a similar but more complicated process is required, which is covered in Module 1.)
+    (We do not discuss it here.)
+
     /subsubsection (II.3.a. Initial Share Generation) /endsubsubsection
+
+    (To generate a split secret, the first step is to choose your threshold k. We)
+    (require that it be between 2 and 9 inclusive, so that it can be represented by)
+    (the bech32 characters) /tt (2) /normal (through) /tt (9.) /normal (Then take)
+    (the k initial characters from the bech32 alphabet \() /tt (A, C, D,) /normal
+    (and so on\), and for each one:)
+    /startlist
+    /listitem1 (Construct a 6-character header, as described above, with the)
+      (initial character as the share index.) /endlistitem
+    /listitem1 (Generate 26 random characters, representing 130 bits of entropy.)
+      (Use the Dice Worksheet for instructions on doing this. Add these characters)
+      (after the header.) /endlistitem
+    /listitem1 (Generate a 13-character checksum, following the instructions on the)
+      (Checksum Worksheet.) /endlistitem
+
+    /paragraph
+    (The checksum worksheet is likely to take 30-90 minutes, depending on user proficiency)
+    (with the Addition volvelle. Even though this is a long time, we strongly recommend)
+    (doing it twice, because mistakes made during checksum computation cannot be)
+    (corrected after the fact.)
+
     /subsubsection (II.3.b. Derived Share Generation) /endsubsubsection
+    (The k initial shares together actually form a set of k-of-k SSSS shares. However,)
+    (the user likely would like a k-of-n scheme where n is bigger than k. In this case,)
+    (the user needs to create (n-k) additional "derived" shares. These are not generated)
+    (randomly but instead derived from the initial shares.)
+    /paragraph
+    (The steps are as follows:)
+    /startlist
+    /listitem1 (Follow the instructions on the "Constructing Shares" worksheet:)
+      (for each of your iniital shares, look up a translation symbol in the)
+      (provided tables and translate that share using the Translation volvelle.)
+      (Then add all the translated shares using the Addition volvelle.) /endlistitem
+    /listitem1 (The result will be a new share, miraculously with a well-formed)
+      (header and a valid checksum. To validate this checksum, fill out a fresh)
+      (Checksum Worksheet with the new share.) /endlistitem
+  ] [ % pagebreak
+    /endsubsection /linebreak % lol i should fix the bug that makes this necessary
+    (It is very likely that you will make mistakes during this process, resulting in a bad)
+    (checksum. Mistakes during the translation step are correctable, but the error correction)
+    (process involves computers and is not necessary here since the user has all the data)
+    (she needs. Further, a bad checksum is just as likely to have resulted from incorrect)
+    (computations in the Checksum Worksheet, which the error correction process cannot handle.)
+    /paragraph
+    (The most straightforward way to handle a wrong checksum is to redo the entire share)
+    (derivation step, checking each calculation against the first time you did it.)
+    /paragraph
+    (There is a less demoralizing, but more time-consuming, way to do the share derivation)
+    (process:)
+
     /subsubsection (II.3.c. Distribution) /endsubsubsection
     /subsection (II.4. Recovery) /endsubsection
-  ] [ % pagebreak
     /section (Part III: Worksheets) /endsection
     /subsection (Dice Worksheet) /endsubsection
   ] [ % pagebreak
@@ -340,17 +458,16 @@ end
   /size 12
   /yDisp 0
   /rgbColor [ 0 0 0 ]
-  /underline false
 >> def
 
 /textFont <<
   /face /Times-Roman
   /boldface /Times-Bold
+  /ttface /Courier
   /size 12
   /footnotesize 10
   /yDisp 13
   /rgbColor [ 0 0 0 ]
-  /underline false
 >> def
 
 /sectionFont <<
@@ -358,7 +475,6 @@ end
   /size 32
   /yDisp 32
   /rgbColor [ 0.820 0.204 0.220 ]
-  /underline true
 >> def
 
 /subSectionFont <<
@@ -366,8 +482,15 @@ end
   /size 24
   /yDisp 20
   /rgbColor [ 0.820 0.204 0.220 ]
-  /underline true
 >> def
+
+/subSubSectionFont <<
+  /face /Times-Roman
+  /size 18
+  /yDisp 20
+  /rgbColor [ 0.820 0.204 0.220 ]
+>> def
+
 
 /pgsize currentpagedevice /PageSize known
   { currentpagedevice /PageSize get
@@ -618,6 +741,13 @@ end
           kernX 0 rmoveto
           currentFont /boldface get findfont currentFont /size get scalefont setfont
         }
+        /tt {
+          % add kerning because /bold is accounted for as a "word"
+          % This causes distortion (extra spacing around bold text)
+          % but empirically it seems pretty-much invisible
+          kernX 0 rmoveto
+          currentFont /ttface get findfont currentFont /size get scalefont setfont
+        }
         /normal {
           kernX 0 rmoveto
           currentFont /face get findfont currentFont /size get scalefont setfont
@@ -674,7 +804,11 @@ end
     }
 
     /offsetY {
-      y add /y exch store
+      y dropcapHeight lt not % if we currently aren't past the dropcap...
+      exch y add /y exch store
+      y dropcapHeight lt and { % ...but after moving, we are...
+        dropcapWidth neg offsetX % ...then shift x back to its original value
+      } if
       x y moveto
     }
 
@@ -694,15 +828,8 @@ end
       word 0 maxX false showWord dup 0 lt {
         % ...dump the previous line, with kerning
         totalKern wordN 1 gt { wordN 1 sub div } if dumpLastLine
-
-        % Then drop y
-        y dropcapHeight lt not % if we currently aren't past the dropcap...
         currentFont /yDisp get neg offsetY
-        y dropcapHeight lt and { % ...but after moving, we are...
-          dropcapWidth neg offsetX % ...then shift x back to its original value
-        } if
-
-        % Then retry the word
+        % ...then retry the word
         pop word buffering exec
       } {
         % ...otherwise, add word to buffer for next line's display
@@ -765,7 +892,7 @@ end
         /listitem* {
           doLineBreak
           /y y 4 sub store
-          /x x 36 add store
+          /x x 24 add store
           x y moveto
           /bullet glyphwidth 8 add neg 0 rmoveto
           /bullet glyphshow
@@ -775,7 +902,7 @@ end
           doLineBreak
           /listItemCount listItemCount 1 add store
           /y y 4 sub store
-          /x x 36 add store
+          /x x 24 add store
           x y moveto
           -5 0 rmoveto
           listItemCount 2 string cvs
@@ -785,7 +912,7 @@ end
         }
         /endlistitem {
           0 dumpLastLine
-          /x x 36 sub store
+          /x x 24 sub store
           x y moveto
         }
         /section {
@@ -815,6 +942,22 @@ end
           currentpoint
           x y 4 sub moveto
           pop y 4 sub lineto 1.5 setlinewidth stroke
+
+          doLineBreak
+          textFont setCurrentFont
+          /state /buffering store
+        }
+        /subsubsection {
+          doLineBreak doLineBreak
+          subSubSectionFont setCurrentFont
+          doLineBreak
+        }
+        /endsubsubsection {
+          0 dumpLastLine
+          % Draw underline
+          currentpoint
+          x y 4 sub moveto
+          pop y 4 sub lineto 0.75 setlinewidth stroke
 
           doLineBreak
           textFont setCurrentFont

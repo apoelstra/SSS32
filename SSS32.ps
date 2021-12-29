@@ -1465,10 +1465,27 @@ showpage
 %%EndPageSetup
 % Dice Worksheet
 90 rotate 30 pgsize aload pop pop neg translate
+
+/Times-Roman findfont 12 scalefont setfont
+48 560 moveto
+(Locate 5 dice and roll them all at once. Set a marker on the value that appears on each die. ) show
+(If your die has more than 10 sides, divide) show
+48 540 moveto
+(its value by two. ) show
+(Then roll the dice again, and place the die itself on the new value. If this is the same as ) show
+(the previous value, remove the) show
+48 520 moveto
+(marker, re-roll to re-set it, and try again.) show
+48 480 moveto
+(Finally, follow the tree based on the results of the rolls. If the die is left of the marker, follow the left ) show
+(branch of the tree. If the die is right) show
+48 460 moveto
+(of the marker, follow the right branch.) show
+
 10 dict begin
 % tree
-  /radius 0.705 72 mul 5 div def
-  /spacing 50 def
+  /radius 0.705 72 mul 10.5 div def
+  /spacing 75 def
   /coord { % i j -- x y
      1 index 2 exch exp exch 0.5 add mul 2 mul 1.1 radius mul mul
      exch 0.5 add spacing mul
@@ -1479,17 +1496,17 @@ showpage
     /dx x2 x1 sub def
     /dy y2 y1 sub def
     /l dx dup mul dy dup mul add sqrt def
-    x1 y1 moveto radius l div dup dx mul exch dy mul rmoveto
-    1 2 radius l div mul sub dup dx mul exch dy mul rlineto
+    x1 y1 moveto 0 dup dx mul exch dy mul rmoveto
+    1 2 0 mul sub dup dx mul exch dy mul rlineto
   end
   } bind def
-  0 1 5 {
+  1 1 5 {
     /i exch def
     0 1 2 5 i sub exp 1 sub {
       /j exch def
       /x 2 i exp j 0.5 add mul 2 mul 1.1 radius mul mul def
-      i j coord moveto radius neg 0 rmoveto
-      i j coord radius -180 180 arc
+      i j coord moveto radius 5 div neg 0 rmoveto
+      i j coord radius 5 div -180 180 arc
     } for
   } for
   thick line stroke
@@ -1501,14 +1518,14 @@ showpage
       i j coord i 1 add j 2 idiv coord trimedline
     } for
   } for
-  verythick line stroke
-  /fontsz 10 def
+  thin line stroke
+  /fontsz 12 def
   /Codex findfont fontsz scalefont setfont
   0 1 31 {
     /j exch def
     /x 1.1 radius mul 2 j mul 1 add mul def
-    x spacing 2 div fontsz 0.3 mul sub moveto
-    code j get centreglyphshow
+    x spacing 2 div fontsz 0.3 mul sub 5 sub moveto
+    code perm j get get centreglyphshow
   } for
 % track
   /sz 36 def
@@ -1516,15 +1533,15 @@ showpage
   thick line
   0 1 4 {
     /i exch def
-    /y 300 sz 1.6 mul i mul add def
-    1 1 20 {
+    /y 55 sz 2.1 mul i mul add def
+    1 1 10 {
       /j exch def
-      /x j 1 sub sz mul def
+      /x j 1 sub sz mul 350 add def
       x y sz sz rectstroke
       x sz 2 div add y 9 add moveto j 2 string cvs centreshow
     } for
     % draw label location
-    0 y sz add 3 add moveto 100 0 rlineto stroke
+    350 y sz add 3 add moveto 100 0 rlineto stroke
   } for
 end
 pgsave restore

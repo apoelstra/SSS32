@@ -1,6 +1,6 @@
 %!PS-Adobe-3.0
 %%Orientation: Portrait
-%%Pages: 24
+%%Pages: 27
 %%EndComments
 %%BeginSetup
 [(Shamir's Secret) (Sharing Codex)]
@@ -1464,13 +1464,224 @@ tWidth 44 add tHeight 48 add
 pgsave restore
 showpage
 
+%****************************************************************
+%*
+%* Reference Page
+%*
+%****************************************************************
+%%Page: 4 4
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+
+/boxW pgsize aload pop pop 144 sub 35 div def
+
+% Takes a position specified as percentages of page width/height (excluding
+% margins) and computes the actual x/y coordinates in pts
+/position { % x y -> x y
+  10 dict begin
+    /y exch def
+    /x exch def
+    pgsize aload pop
+    /pageH exch def
+    /pageW exch def
+    pageW 144 sub x mul 72 add
+    pageH 144 sub y mul 72 add
+    neg pageH add % invert y so that "0" is at the top of the page
+  end
+} bind def
+
+%
+% Header/data format
+%
+
+/Helvetica-Bold findfont 16 scalefont setfont
+0.5 0 position moveto (Data Format) centreshow
+% FIXME use russell's line font
+/Courier findfont 14 scalefont setfont
+
+0 0.05 position moveto
+% Draw left 13 boxes
+1 1 13 {
+  pop
+  gsave
+    [] 0 setdash
+    boxW 0 rlineto
+    0 -14 rlineto
+    boxW neg 0 rlineto
+    closepath stroke
+  grestore
+  boxW 0 rmoveto
+} for
+% Draw dashed line
+boxW 2 div 0 rmoveto
+0 -7 rmoveto
+[1 2] 0 setdash
+boxW 4 mul 0
+gsave 2 copy rlineto stroke grestore
+rmoveto
+0 7 rmoveto
+boxW 2 div 0 rmoveto
+% Draw right 17 boxes
+1 1 17 {
+  pop
+  gsave
+    [] 0 setdash
+    boxW 0 rlineto
+    0 -14 rlineto
+    boxW neg 0 rlineto
+    closepath stroke
+  grestore
+  boxW 0 rmoveto
+} for
+
+% Draw a brace, moving the current point to the right
+% by width many pts
+/drawBrace { % width height -> nil
+  10 dict begin
+  {/height /width} {exch def} forall
+  gsave
+    -2 height 2 div rmoveto
+    [] 0 setdash
+    height abs height rlineto
+    width 4 add 2 height mul abs sub 0 rlineto
+    height abs height neg rlineto
+    stroke
+  grestore
+  width 0 rmoveto
+  end
+} bind def
+
+0 0.05 position moveto
+/braceH -3 def
+3 boxW mul 0 rmoveto
+[ 1 4 1 13 13 ] {
+  0 5 braceH mul rmoveto
+  boxW exch mul braceH drawBrace
+  /braceH braceH neg store
+} forall
+
+% Draw example characters in boxes
+0 0.05 position moveto
+2 -12 rmoveto % manually center characters in box
+/sampleString (ms13SSSSA79NT     9Y6AHQ829ZQZVEGNF) def
+0 1 sampleString length 1 sub {
+  sampleString exch 1 getinterval gsave show grestore
+  boxW 0 rmoveto
+} for
+
+% Draw headings above/below braces
+/Helvetica findfont 12 scalefont setfont
+0 0.05 position moveto
+3.5 boxW mul -32 rmoveto
+gsave
+  gsave (recovery) centreshow grestore
+  0 -12 rmoveto gsave (threshold) centreshow grestore
+  0 -12 rmoveto gsave (\(k\)) centreshow grestore
+grestore
+
+2.5 boxW mul 40 rmoveto
+gsave
+  gsave (ID) centreshow grestore
+grestore
+
+2.5 boxW mul -40 rmoveto
+gsave
+  gsave (share) centreshow grestore
+  0 -12 rmoveto gsave (index) centreshow grestore
+grestore
+
+6.5 boxW mul 40 rmoveto
+gsave (data \(26 chars for 128 bits\)) centreshow grestore
+
+13 boxW mul -40 rmoveto
+gsave (checksum \(13 chars\)) centreshow grestore
+
+%
+% bech32->binary chart
+%
+0.50 0.20 position moveto
+/Helvetica-Bold findfont 16 scalefont setfont
+(Bech32 to Binary Conversion) centreshow
+/Courier findfont 12 scalefont setfont
+
+0.5 0.23 position moveto
+22 string stringwidth pop neg 0 rmoveto % goofy centering logic
+0 8 {
+  gsave 4 {
+    dup
+    perm exch get
+    code 1 index get glyphshow (: ) show
+    32 5 { 2 idiv 2 copy and 0 eq {(0)} {(1)} ifelse show } repeat pop
+    pop
+    (    ) show 1 add
+  } repeat grestore
+  0 -14 rmoveto
+} repeat pop
+
+0.50 0.45 position moveto
+/Helvetica-Bold findfont 16 scalefont setfont
+(Binary to Bech32 Conversion) centreshow
+/Courier findfont 12 scalefont setfont
+
+0.5 0.48 position moveto
+22 string stringwidth pop neg 0 rmoveto % goofy centering logic
+0 8 {
+  gsave 4 {
+    dup
+    32 5 { 2 idiv 2 copy and 0 eq {(0)} {(1)} ifelse show } repeat pop
+    (: ) show code 1 index get glyphshow
+    pop
+    (    ) show 1 add
+  } repeat grestore
+  0 -14 rmoveto
+} repeat pop
+
+%
+% Symbol pronunciation
+%
+/Helvetica-Bold findfont 16 scalefont setfont
+0.5 0.72 position moveto
+(Symbols) centreshow
+
+/pronunciation <<
+  /multiply (cross)   /aleph  (aleph)  /alpha   (alpha)   /beta (beta)
+  /Gamma    (gamma)   /Delta  (delta)  /epsilon (epsilon) /eta  (eta)
+  /Theta    (theta)   /Lambda (lambda) /mu      (mu)      /Xi   (xi)
+  /Pi       (pi)      /rho    (rho)    /Sigma   (sigma)   /Phi  (phi)
+  /Psi      (psi)     /Omega  (omega)  /at      (at)      /numbersign (hash)
+  /percent  (percent) /cent   (cent)   /yen     (yen)     /Euro (euro)
+  /currency (dollar)  /circleplus (oplus)     /dagger (dagger)   /daggerdbl (double-dagger)
+  /section  (section) /paragraph  (paragraph) /diamond (diamond) /heart (heart)
+>> def
+
+0.5 0.75 position moveto
+4 string stringwidth pop 90 2 mul add neg 0 rmoveto % goofy centering logic
+gsave
+0 1 31 {
+  dup dup
+  code2 exch get
+  12 codexshow ( ) show
+  gsave
+    /Helvetica findfont 12 scalefont setfont
+    code2 exch get pronunciation exch get show
+  grestore
+  90 0 rmoveto
+
+  4 mod 3 eq {
+    grestore 0 -20 rmoveto gsave
+  } if
+} for
+grestore
+pgsave restore
+showpage
 
 %****************************************************************
 %*
 %* Table of Contents
 %*
 %****************************************************************
-%%Page: 4 4
+%%Page: 5 5
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1543,14 +1754,14 @@ showpage
 %* Main Content
 %*
 %****************************************************************
-%%Page: 5 5
+%%Page: 6 6
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
 72 pgsize aload pop 36 sub exch pop allPageContent 0 get drawPageContent
 pgsave restore showpage
 
-%%Page: 6 6
+%%Page: 7 7
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1564,7 +1775,7 @@ pgsave restore showpage
 (Recover Share) code2 code [ 32 permS 1 31 getinterval aload pop ] drawBottomWheelPage
 pgsave restore
 showpage
-%%Page: 7 7
+%%Page: 8 8
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1581,19 +1792,11 @@ grestore
 
 pgsave restore
 showpage
-%%Page: 8 8
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-{xor} (Addition) code dup perm drawBottomWheelPage
-
-pgsave restore
-showpage
 %%Page: 9 9
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-showTopWheelPage
+{xor} (Addition) code dup perm drawBottomWheelPage
 
 pgsave restore
 showpage
@@ -1614,6 +1817,14 @@ showTopWheelPage
 pgsave restore
 showpage
 %%Page: 12 12
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+showTopWheelPage
+
+pgsave restore
+showpage
+%%Page: 13 13
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1710,7 +1921,7 @@ end
 
 pgsave restore
 showpage
-%%Page: 13 13
+%%Page: 14 14
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1718,7 +1929,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 14 14
+%%Page: 15 15
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1726,7 +1937,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 15 15
+%%Page: 16 16
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1734,7 +1945,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 16 16
+%%Page: 17 17
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1742,7 +1953,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 17 17
+%%Page: 18 18
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1750,7 +1961,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 18 18
+%%Page: 19 19
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1758,7 +1969,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 19 19
+%%Page: 20 20
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1766,7 +1977,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 20 20
+%%Page: 21 21
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1774,7 +1985,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 21 21
+%%Page: 22 22
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1827,7 +2038,7 @@ pgsize aload pop 2 div exch 2 div exch translate
 end
 pgsave restore
 showpage
-%%Page: 22 22
+%%Page: 23 23
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1889,7 +2100,7 @@ end
 
 pgsave restore
 showpage
-%%Page: 22 22
+%%Page: 24 24
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2018,38 +2229,263 @@ end
 
 pgsave restore
 showpage
-%%Page: 23 23
+%%Page: 25 25
+%%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
+90 rotate 0 -750 translate
+
 /Helvetica-Bold findfont 10 scalefont setfont
-pgsize aload pop 40 sub exch 2 div exch
+pgsize aload pop exch pop 2 div 700
 moveto (ms32 Checksum Table) centreshow
 
-0 1 31 {
-0 1 31 {
-2 copy 730 exch 7 mul sub 1 index 11 idiv 240 mul sub exch 11 mod 50 mul 30 add exch moveto
-2 copy
-perm exch get exch perm exch get exch
-2 copy
-code exch get exch code exch get exch
-/Courier-Bold findfont polymodulus length 6 le {8} {4.5} ifelse scalefont setfont
-exch glyphshow glyphshow
-/Courier findfont polymodulus length 6 le {8} {4.5} ifelse scalefont setfont
-3 0 rmoveto
-polymodulus length array
-3 1 roll
-polymodshift2 0 1 polymodulus length 1 sub { 3 copy get code exch get 3 2 roll exch put } for
-pop
-{glyphshow} forall
-pop
+/drawTable {
+  10 dict begin
+  { /startVal /tHeight /tWidth /y /x } {exch def} forall
+
+  /cellH tHeight 32 div def
+  /cellW tWidth 8 div def
+
+  % Draw horizontal background lines: one black one for the heading then
+  % alternating 4-cell-height white/gray for the content background
+  x y moveto
+  0 1 31 {
+    dup 0 eq { 0.8 } {
+      8 mod 4 lt { 0.8 } { 1 } ifelse
+    } ifelse setgray
+
+    gsave
+      tWidth 0 rlineto
+      0 cellH neg rlineto tWidth neg 0 rlineto closepath fill
+    grestore
+    0 cellH neg rmoveto
+  } for
+
+  % Draw vertical background lines: one double-wide black one per column
+  x y moveto
+  0 1 7 {
+    1 setgray
+    gsave
+      0 tHeight neg rlineto
+      cellW 26 div neg 0 rlineto 0 tHeight rlineto closepath fill
+    grestore
+    0 setgray
+    gsave
+      0 tHeight neg rlineto
+      cellW 2 mul 13 div 0 rlineto 0 tHeight rlineto closepath fill
+    grestore
+    cellW 0 rmoveto
+  } for
+
+  % Draw content
+  startVal 1 startVal 7 add {
+    /xVal exch def
+    x xVal startVal sub cellW mul add 2 add y 1.5 add moveto
+    0 1 31 {
+      /yVal exch def
+      0 cellH neg rmoveto
+
+      gsave
+        /Courier-Bold findfont 8.5 scalefont setfont
+        1 setgray
+        code perm xVal get get glyphshow
+        code perm yVal get get glyphshow
+      grestore
+
+      gsave
+        cellW 2 mul 13 div 0 rmoveto
+        perm xVal get perm yVal get polymodshift2 {
+          code exch get glyphshow
+          0.25 0 rmoveto
+        } forall
+      grestore
+    } for
+  } for
+
+  % Bounding box
+  0.5 setlinewidth
+  x y moveto
+  0 tHeight neg rlineto
+  tWidth 0 rlineto
+  0 tHeight rlineto
+  closepath stroke
+
+  end
+} bind def
+
+/Courier findfont 8.5 scalefont setfont
+36 pgsize aload pop exch pop 104 sub
+pgsize aload pop 72 sub exch 108 sub 2 div
+0 drawTable
+
+36 pgsize aload pop exch pop 2 div 32 add
+pgsize aload pop 72 sub exch 108 sub 2 div
+8 drawTable
+
+false {
+0 1 15 {
+  /xidx exch def
+  0 1 31 {
+    /yidx exch def
+    yidx 2 mod 0 eq {0.5 0.2 0.0} {0 0 0} ifelse setrgbcolor
+
+    % Position for bold letters
+    xidx 8 mod 90 mul 30 add
+    680 yidx 7.5 mul sub xidx 8 idiv 270 mul sub
+    moveto
+
+    % Display bold letters
+    gsave
+      /Courier-Bold findfont 8.5 scalefont setfont
+      code perm xidx get get glyphshow
+      code perm yidx get get glyphshow
+    grestore
+
+    % Compute and display "checksum table" entry which is checksum of AB00...00
+    12 0 rmoveto
+    perm xidx get perm yidx get polymodshift2
+    % Draw it
+    0 1 polymodulus length 1 sub {
+      1 index exch get % value from polymod
+      code exch get glyphshow
+    } for
+    pop
+  } for
 } for
-pop
-} for
+} if
 
 pgsave restore
 showpage
-%%Page: 24 24
+%%Page: 26 26
+%%PageOrientation: Landscape
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+90 rotate 0 -750 translate
+
+/Helvetica-Bold findfont 10 scalefont setfont
+pgsize aload pop exch pop 2 div 700
+moveto (ms32 Checksum Table) centreshow
+
+/drawTable {
+  10 dict begin
+  { /startVal /tHeight /tWidth /y /x } {exch def} forall
+
+  /cellH tHeight 32 div def
+  /cellW tWidth 8 div def
+
+  % Draw horizontal background lines: one black one for the heading then
+  % alternating 4-cell-height white/gray for the content background
+  x y moveto
+  0 1 31 {
+    dup 0 eq { 0.8 } {
+      8 mod 4 lt { 0.8 } { 1 } ifelse
+    } ifelse setgray
+
+    gsave
+      tWidth 0 rlineto
+      0 cellH neg rlineto tWidth neg 0 rlineto closepath fill
+    grestore
+    0 cellH neg rmoveto
+  } for
+
+  % Draw vertical background lines: one double-wide black one per column
+  x y moveto
+  0 1 7 {
+    1 setgray
+    gsave
+      0 tHeight neg rlineto
+      cellW 26 div neg 0 rlineto 0 tHeight rlineto closepath fill
+    grestore
+    0 setgray
+    gsave
+      0 tHeight neg rlineto
+      cellW 2 mul 13 div 0 rlineto 0 tHeight rlineto closepath fill
+    grestore
+    cellW 0 rmoveto
+  } for
+
+  % Draw content
+  startVal 1 startVal 7 add {
+    /xVal exch def
+    x xVal startVal sub cellW mul add 2 add y 1.5 add moveto
+    0 1 31 {
+      /yVal exch def
+      0 cellH neg rmoveto
+
+      gsave
+        /Courier-Bold findfont 8.5 scalefont setfont
+        1 setgray
+        code perm xVal get get glyphshow
+        code perm yVal get get glyphshow
+      grestore
+
+      gsave
+        cellW 2 mul 13 div 0 rmoveto
+        perm xVal get perm yVal get polymodshift2 {
+          code exch get glyphshow
+          0.25 0 rmoveto
+        } forall
+      grestore
+    } for
+  } for
+
+  % Bounding box
+  0.5 setlinewidth
+  x y moveto
+  0 tHeight neg rlineto
+  tWidth 0 rlineto
+  0 tHeight rlineto
+  closepath stroke
+
+  end
+} bind def
+
+/Courier findfont 8.5 scalefont setfont
+36 pgsize aload pop exch pop 104 sub
+pgsize aload pop 72 sub exch 108 sub 2 div
+16 drawTable
+
+36 pgsize aload pop exch pop 2 div 32 add
+pgsize aload pop 72 sub exch 108 sub 2 div
+24 drawTable
+
+false {
+0 1 15 {
+  /xidx exch def
+  0 1 31 {
+    /yidx exch def
+    yidx 2 mod 0 eq {0.5 0.2 0.0} {0 0 0} ifelse setrgbcolor
+
+    % Position for bold letters
+    xidx 8 mod 90 mul 30 add
+    680 yidx 7.5 mul sub xidx 8 idiv 270 mul sub
+    moveto
+
+    % Display bold letters
+    gsave
+      /Courier-Bold findfont 8.5 scalefont setfont
+      code perm xidx get get glyphshow
+      code perm yidx get get glyphshow
+    grestore
+
+    % Compute and display "checksum table" entry which is checksum of AB00...00
+    12 0 rmoveto
+    perm xidx get perm yidx get polymodshift2
+    % Draw it
+    0 1 polymodulus length 1 sub {
+      1 index exch get % value from polymod
+      code exch get glyphshow
+    } for
+    pop
+  } for
+} for
+} if
+
+pgsave restore
+showpage
+%%Page: 27 27
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def

@@ -1,6 +1,6 @@
 
 %%Orientation: Portrait
-%%Pages: 21
+%%Pages: 23
 %%EndComments
 %%BeginSetup
 [(Shamir's Secret) (Sharing Codex)]
@@ -316,16 +316,14 @@
     (work if you mess up.)
 
   ] [ % pagebreak
-    /section (Part III: Worksheets) /endsection
-    /subsection (Dice Worksheet) /endsubsection
+    /section (Volvelles) /endsection
+  5 { ] [ } repeat % lol postscript
+    /subsection (Checksum Table) /endsubsection
+  ] [ % pagebreak
+  ] [ % pagebreak
     /subsection (Checksum Worksheet) /endsubsection
-    /subsection (Constructing Shares Worksheet) /endsubsection
   ] [ % pagebreak
     /subsection (Addition Worksheets) /endsubsection
-  ] [ % pagebreak
-
-    /section (Module 0: Volvelles) /endsection
-    /section (Module 1: Extra Worksheets) /endsection
   ]
 ] def
 
@@ -1494,6 +1492,20 @@ end
   end
 } bind def
 
+/box {
+  10 dict begin
+  { /width /beginred /n } {exch def} forall
+  -1.2 -1.9 rmoveto
+  0 14 rlineto
+  arraySpace 0 rlineto
+  0 -14 rlineto
+  closepath
+  width setlinewidth
+  n beginred ge { gsave 1 0.9 0.9 setrgbcolor fill grestore } if
+  stroke
+  end
+} bind def
+
 %******************
 %* Tables and Diagrams
 %*
@@ -1620,7 +1632,7 @@ end
 %* Title Page
 %*
 %****************************************************************
-%%Page: 1 1
+%%Page: (i) 1
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1640,7 +1652,7 @@ showpage
 %* License Information
 %*
 %****************************************************************
-%%Page: 2 2
+%%Page: (ii) 2
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1658,7 +1670,7 @@ showpage
 %* Arithmetic Tables
 %*
 %****************************************************************
-%%Page: 3 3
+%%Page: (iii) 3
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1787,7 +1799,7 @@ showpage
 %* Reference Page
 %*
 %****************************************************************
-%%Page: 4 4
+%%Page: (iv) 4
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1900,7 +1912,7 @@ showpage
 %* Table of Contents
 %*
 %****************************************************************
-%%Page: 5 5
+%%Page: (v) 5
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1973,21 +1985,21 @@ showpage
 %* Main Content
 %*
 %****************************************************************
-%%Page: 6 6
+%%Page: 1 6
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
 72 pgsize aload pop 36 sub exch pop allPageContent 0 get drawPageContent
 pgsave restore showpage
 
-%%Page: 7 7
+%%Page: 2 7
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
 72 pgsize aload pop 36 sub exch pop allPageContent 1 get drawPageContent
 pgsave restore showpage
 
-%%Page: 8 8
+%%Page: 3 8
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -1996,7 +2008,7 @@ pgsave restore showpage
 72 320 drawDataFormat
 pgsave restore showpage
 
-%%Page: 9 9
+%%Page: 4 9
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2051,7 +2063,7 @@ pgsave restore showpage
 end
 pgsave restore showpage
 
-%%Page: 10 10
+%%Page: 5 10
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -2138,7 +2150,7 @@ pgsave restore showpage
 
 pgsave restore showpage
 
-%%Page: 11 11
+%%Page: 6 11
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2196,21 +2208,21 @@ mink 1 maxk {
 } for
 pgsave restore showpage
 
-%%Page: 12 12
+%%Page: 7 12
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
 72 pgsize aload pop 36 sub exch pop allPageContent 5 get drawPageContent
 pgsave restore showpage
 
-%%Page: 13 13
+%%Page: 8 13
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
 72 pgsize aload pop 36 sub exch pop allPageContent 6 get drawPageContent
 pgsave restore showpage
 
-%%Page: 14 14
+%%Page: 9 14
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2218,7 +2230,7 @@ pgsave restore showpage
 
 pgsave restore
 showpage
-%%Page: 15 15
+%%Page: 10 15
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2226,7 +2238,7 @@ showTopWheelPage
 
 pgsave restore
 showpage
-%%Page: 16 16
+%%Page: 11 16
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2279,7 +2291,7 @@ pgsize aload pop 2 div exch 2 div exch translate
 end
 pgsave restore
 showpage
-%%Page: 17 17
+%%Page: 12 17
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2341,7 +2353,7 @@ end
 
 pgsave restore
 showpage
-%%Page: 18 18
+%%Page: 13 18
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2470,7 +2482,7 @@ end
 
 pgsave restore
 showpage
-%%Page: 19 19
+%%Page: 14 19
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -2598,7 +2610,7 @@ false {
 
 pgsave restore
 showpage
-%%Page: 20 20
+%%Page: 15 20
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -2726,26 +2738,13 @@ false {
 
 pgsave restore
 showpage
-%%Page: 21 21
+%%Page: 16 21
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
 90 rotate 0 -750 translate
 /hrp (ms) def
-/box {
-  10 dict begin
-  { /width /beginred /n } {exch def} forall
-  -1.2 -1.9 rmoveto
-  0 14 rlineto
-  arraySpace 0 rlineto
-  0 -14 rlineto
-  closepath
-  width setlinewidth
-  n beginred ge { gsave 1 0.9 0.9 setrgbcolor fill grestore } if
-  stroke
-  end
-} bind def
 
 /labeledbox {
   10 dict begin
@@ -2870,6 +2869,208 @@ dup 2 add 7 mul offsetx add offsety 20 sub 3 index 8 mul sub moveto
 perm exch get
 perm 2 index get gf32add code exch get glyphshow
 } for pop } for
+
+pgsave restore
+showpage
+
+%%Page: 17 22
+%%PageOrientation: Landscape
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+  10 dict begin
+  gsave
+
+  90 rotate 0 -750 translate
+  /Helvetica-Bold findfont 10 scalefont setfont
+  pgsize aload pop exch pop 2 div 700
+  moveto (Addition Worksheet \(k = 2\)) centreshow
+
+  /labeledbox {
+    10 dict begin
+    /n exch 1 add def
+    gsave
+      n 1000 0.2 box
+    grestore
+    gsave
+      arraySpace 6 sub 14 5 sub rmoveto
+     /Courier findfont 3 scalefont setfont
+      n 10 le { ( ) show } if n 2 string cvs show
+    grestore
+    end
+  } bind def
+
+  /drawRow {
+    10 dict begin
+    { /hrp /y /x } { exch def } forall
+      x y moveto hrp dup stringwidth pop neg 3 sub 0 rmoveto show
+      /k 3 def
+
+      /init k k 4 mod sub 4 add k sub def
+      {labeledbox} x y moveto [] [] init showBox
+%      /x x init 0.25 add arraySpace mul add def
+      /k k init add def
+      {
+        k 48 ge {exit} if
+
+        {labeledbox} x y moveto [] [ 4 {arraySpace} repeat ] k 1 sub showBox
+
+        /x x 4.25 arraySpace mul add def
+        /k k 4 add def
+    } loop
+    end
+  } bind def
+
+  /x 96 def
+  /y 675 def
+  % Every other row-pair
+  8 {
+  % Initial row-pair which includes the "ms1" text
+  x y (ms1) drawRow
+  /y y 14 sub def
+  x y (+ ms1) drawRow
+ /y y 20 sub def
+    x y (= ms1) drawRow
+    /y y 32 sub def
+  } repeat
+end
+
+pgsave restore
+showpage
+
+%%Page: 18 23
+%%PageOrientation: Landscape
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+  10 dict begin
+  gsave
+
+  90 rotate 0 -750 translate
+  /Helvetica-Bold findfont 10 scalefont setfont
+  pgsize aload pop exch pop 2 div 700
+  moveto (Addition Worksheet \(k = 3\)) centreshow
+
+  /labeledbox {
+    10 dict begin
+    /n exch 1 add def
+    gsave
+      n 1000 0.2 box
+    grestore
+    gsave
+      arraySpace 6 sub 14 5 sub rmoveto
+     /Courier findfont 3 scalefont setfont
+      n 10 le { ( ) show } if n 2 string cvs show
+    grestore
+    end
+  } bind def
+
+  /drawRow {
+    10 dict begin
+    { /hrp /y /x } { exch def } forall
+      x y moveto hrp dup stringwidth pop neg 3 sub 0 rmoveto show
+      /k 3 def
+
+      /init k k 4 mod sub 4 add k sub def
+      {labeledbox} x y moveto [] [] init showBox
+%      /x x init 0.25 add arraySpace mul add def
+      /k k init add def
+      {
+        k 48 ge {exit} if
+
+        {labeledbox} x y moveto [] [ 4 {arraySpace} repeat ] k 1 sub showBox
+
+        /x x 4.25 arraySpace mul add def
+        /k k 4 add def
+    } loop
+    end
+  } bind def
+
+  /x 96 def
+  /y 675 def
+  % Every other row-pair
+  5 {
+  % Initial row-pair which includes the "ms1" text
+  x y (ms1) drawRow
+  /y y 14 sub def
+  x y (+ ms1) drawRow
+  /y y 20 sub def
+    x y (= ms1) drawRow
+  /y y 14 sub def
+  x y (+ ms1) drawRow
+ /y y 20 sub def
+    x y (= ms1) drawRow
+    /y y 32 sub def
+  } repeat
+end
+
+pgsave restore
+showpage
+
+%%Page: 19 24
+%%PageOrientation: Landscape
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+  10 dict begin
+  gsave
+
+  90 rotate 0 -750 translate
+  /Helvetica-Bold findfont 10 scalefont setfont
+  pgsize aload pop exch pop 2 div 700
+  moveto (Addition Worksheet \(extra\)) centreshow
+
+  /labeledbox {
+    10 dict begin
+    /n exch 1 add def
+    gsave
+      n 1000 0.2 box
+    grestore
+    gsave
+      arraySpace 6 sub 14 5 sub rmoveto
+     /Courier findfont 3 scalefont setfont
+      n 10 le { ( ) show } if n 2 string cvs show
+    grestore
+    end
+  } bind def
+
+  /drawRow {
+    10 dict begin
+    { /hrp /y /x } { exch def } forall
+      x y moveto hrp dup stringwidth pop neg 3 sub 0 rmoveto show
+      /k 3 def
+
+      /init k k 4 mod sub 4 add k sub def
+      {labeledbox} x y moveto [] [] init showBox
+%      /x x init 0.25 add arraySpace mul add def
+      /k k init add def
+      {
+        k 48 ge {exit} if
+
+        {labeledbox} x y moveto [] [ 4 {arraySpace} repeat ] k 1 sub showBox
+
+        /x x 4.25 arraySpace mul add def
+        /k k 4 add def
+    } loop
+    end
+  } bind def
+
+  /x 96 def
+  /y 675 def
+
+  x y (ms1) drawRow
+  /y y 14 sub def
+  x y ( ) drawRow
+  /y y 20 sub def
+  % Every other row-pair
+  14 {
+  % Initial row-pair which includes the "ms1" text
+  x y ( ) drawRow
+  /y y 14 sub def
+  x y ( ) drawRow
+  /y y 20 sub def
+  } repeat
+end
 
 pgsave restore
 showpage

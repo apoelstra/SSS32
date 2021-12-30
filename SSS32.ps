@@ -1,4 +1,4 @@
-%!PS-Adobe-3.0
+
 %%Orientation: Portrait
 %%Pages: 27
 %%EndComments
@@ -94,7 +94,7 @@
     /subsection (Derived \(Remaining\) Share Creation) /endsubsection
     /bold (You will need:) /normal (Addition Volvelle, Multiplication/Translation Wheel, pencil)
     /startlist
-    /listitem1 (Translate the initial shares using the symbols on the Constructing Shares page.) /endlistitem
+    /listitem1 (Translate the initial shares using the symbols in the Derived Shares section) /endlistitem
     /listitem1 (Add the translated initial shares to get the new derived share.) /endlistitem
 
     /subsection (Secret Recovery) /endsubsection
@@ -110,7 +110,7 @@
   ] [ % pagebreak
     /section (Part I: High-Level Introduction) /endsection
   ] [ % pagebreak
-    /section (Part II: Detailed Introduction) /endsection
+    /section (Part II: Detailed Instructions) /endsection
 %    /dropcap (H) (ere we give a detailed overview of the share creation and recovery)
 %    (process.)
 %    /linebreak /linebreak % avoid bug between dropcap and subsequent heading
@@ -136,13 +136,14 @@
 
     /paragraph
     /paragraph
-    (\(table here\))
     /paragraph
     /paragraph
 %| Human-readable Part | Threshold | Secret ID | Share Index | Secret data | Checksum |
 %|---------------|--------|---------|--------|----------|----------|
 %| 3 characters (`ms1`) | 1 character | 4 characters | 1 character | 26 characters | 13 characters |
 
+    /paragraph
+    /paragraph
     /paragraph
     /paragraph
     (The components of the header are:)
@@ -215,15 +216,18 @@
     /paragraph
     (The steps are as follows:)
     /startlist
-    /listitem1 (Follow the instructions on the "Constructing Shares" worksheet:)
-      (for each of your iniital shares, look up a translation symbol in the)
-      (provided tables and translate that share using the Translation volvelle.)
-      (Then add all the translated shares using the Addition volvelle.) /endlistitem
-    /listitem1 (The result will be a new share, miraculously with a well-formed)
-      (header and a valid checksum. To validate this checksum, fill out a fresh)
-      (Checksum Worksheet with the new share.) /endlistitem
+    /listitem1 (Choose the appropriate table from the next page based on your k value.)
+      (For each of your initial shares, look up its translation symbol in that table.) /endlistitem
+    /listitem1 (Translate the share, using the Translation volvelle with that symbol.) /endlistitem
+    /listitem1 (Then add all the translated shares using the Addition volvelle.) /endlistitem
   ] [ % pagebreak
-    /endsubsection /linebreak % lol i should fix the bug that makes this necessary
+    /startText
+    (The result will be a new share, miraculously with a well-formed)
+    (header and a valid checksum. To validate this checksum, fill out a fresh)
+    (Checksum Worksheet with the new share.)
+    16 { /paragraph } repeat % tables here
+    (You can easily generate tables for higher k by editing the source code of this document.)
+    /paragraph
     (It is very likely that you will make mistakes during this process, resulting in a bad)
     (checksum. Mistakes during the translation step are correctable, but the error correction)
     (process involves computers and is not necessary here since the user has all the data)
@@ -236,13 +240,78 @@
     (There is a less demoralizing, but more time-consuming, way to do the share derivation)
     (process:)
 
+    /startlist
+    /listitem1 (Before beginning, make sure you have complete Checksum Worksheets for)
+      (all of your initial shares \(if you just generated these, the worksheets should)
+      (be readily available\).) /endlistitem
+    /listitem1 (Copy your translated share into the bold boxes of a fresh Checksum Worksheet)
+      (as usual.) /endlistitem
+    /listitem1 (Repeat the translation-and-adding process, this time taking the) /bold
+      (bottom diagonal squares) /normal (from the initial Checksum Worksheets and)
+      (combining these. Copy the result into the bottom diagonal of the new)
+      (Checksum Worksheet.) /endlistitem
+    /listitem1 (Write the target residue) /tt (SECRETSHARE32) /normal (at the bottom)
+      (of the Checksum Worksheet.) /endlistitem
+  ] [ % pagebreak
+    /startText
+    (Then fill in the rest of the Checksum Worksheet as usual. If at any point)
+    (you compute a value that doesn't match one of the pre-filled squares, redo)
+    (the computations for) /bold (just that column.) /normal
     /subsubsection (II.3.c. Distribution) /endsubsubsection
+    (Once the shares have been generated, there is no difference between the initial and)
+    (derived shares. Distribute these as you wish.)
+    /paragraph
+    (You can generate up to 31 total shares before running out of available letters for)
+    (share indices. You can make multiple copies of shares, but of course remember that)
+    (only one copy counts during recovery: you need k *distinct* shares to recover your)
+    (secret.)
+
     /subsection (II.4. Recovery) /endsubsection
+    (Once you have generated and \(distributed\) your shares, you may like to)
+    (recover your secret. In the future, we hope that hardware wallets will accept)
+    (input of shares and do the recovery themselves, but we assume for this section)
+    (that you want to recover your secret by hand.)
+    /paragraph
+    (First, make sure you have k shares available. Exactly k are needed; if you have)
+    (more, then just set the extras aside.)
+    /paragraph
+    (The process is then very similar to the process for share derivation, except that)
+    (rather than looking up symbols in a provided table, you use the Recovery Wheel)
+    (volvelle to compute them as follows:)
+    /startlist
+    /listitem1 (Complete Checksum Worksheets for the k shares you are using. \(This)
+      (is not strictly necessary, but if any mistakes happen during the recovery)
+      (process it's helpful to be confident in your original shares' correctness.\))
+      /endlistitem
+    /listitem1 (For each share that you have,) /endlistitem
+    /startsublist
+    /sublistitem1 (Spin the Recovery slide chart so its pointer is at its share)
+      (index. Read the symbol corresponding to) /bold (each other share.) /normal
+      /endsublistitem
+    /sublistitem1 (Multiply each of these symbols together using the Multiplication)
+      (volvelle, by turning the pointer to one symbol, looking up the next, then)
+      (spinning the wheel to the position you just looked up. \(For k = 2 you will)
+      (have only one symbol, so this step is trivial: just spin the Multiplication)
+      (slide chart to that symbol.\)) /endsublistitem
+    /sublistitem1 (Leave the Multiplication volvelle pointed at the result of)
+      (the previous step, and flip it over. It is now the Translation slide chart.)
+      /endsublistitem
+    /sublistitem1 (Translate the share, character by character.) /endsublistitem
+    /listitem1 (Add the translated shares. The result will magically have a valid)
+      (header and share index) /tt (S.) /normal (This is your secret. Keep it safe.)
+      /endlistitem
+    /listitem1 (Complete a Checksum Worksheet for the derived secret.) /endlistitem
+
+    /paragraph
+    (As during share derivation, if you use the checksum worksheets for your input shares,)
+    (and repeat the translate-and-add process for the cells in the bottom diagonal, you)
+    (can identify mistakes as soon as they happen, avoiding the need to repeat tons of)
+    (work if you mess up.)
+
+  ] [ % pagebreak
     /section (Part III: Worksheets) /endsection
     /subsection (Dice Worksheet) /endsubsection
-  ] [ % pagebreak
     /subsection (Checksum Worksheet) /endsubsection
-  ] [ % pagebreak
     /subsection (Constructing Shares Worksheet) /endsubsection
   ] [ % pagebreak
     /subsection (Addition Worksheets) /endsubsection
@@ -797,6 +866,7 @@ end
     /totalKern 0
     /footnoteCount 0
     /listItemCount 0
+    /sublistItemCount 0
 
     /offsetX {
       x add /x exch store
@@ -889,6 +959,7 @@ end
         /linebreak { doLineBreak }
         /paragraph { doLineBreak doLineBreak }
         /startlist { /listItemCount 0 store }
+        /startsublist { /sublistItemCount 0 store }
         /listitem* {
           doLineBreak
           /y y 4 sub store
@@ -910,10 +981,31 @@ end
           (.) show
           x y moveto
         }
+        /sublistitem1 {
+          doLineBreak
+          /sublistItemCount sublistItemCount 1 add store
+          /y y 4 sub store
+          /x x 48 add store
+          x y moveto
+          -5 0 rmoveto
+          sublistItemCount 2 string cvs
+          dup stringwidth pop neg 0 rmoveto show
+          (.) show
+          x y moveto
+        }
+        /endsublistitem {
+          0 dumpLastLine
+          /x x 48 sub store
+          x y moveto
+        }
         /endlistitem {
           0 dumpLastLine
           /x x 24 sub store
           x y moveto
+        }
+        /startText {
+          textFont setCurrentFont
+          doLineBreak
         }
         /section {
           doLineBreak doLineBreak
@@ -1394,6 +1486,118 @@ end
   } forall
   end
 } bind def
+
+%******************
+%* Tables and Diagrams
+%*
+%* Tables, diagrams etc provided throughout the text which may be repeated
+
+/drawDataFormat {
+  10 dict begin
+  {/y /x} {exch def} forall
+  /boxW pgsize aload pop pop 144 sub 35 div def
+
+  x y moveto
+  % FIXME use russell's line font
+  /Courier findfont 14 scalefont setfont
+  % Draw left 13 boxes
+  1 1 13 {
+    pop
+    gsave
+      [] 0 setdash
+      boxW 0 rlineto
+      0 -14 rlineto
+      boxW neg 0 rlineto
+      closepath stroke
+    grestore
+    boxW 0 rmoveto
+  } for
+  % Draw dashed line
+  boxW 2 div 0 rmoveto
+  0 -7 rmoveto
+  [1 2] 0 setdash
+  boxW 4 mul 0
+  gsave 2 copy rlineto stroke grestore
+  rmoveto
+  0 7 rmoveto
+  boxW 2 div 0 rmoveto
+  % Draw right 17 boxes
+  1 1 17 {
+    pop
+    gsave
+      [] 0 setdash
+      boxW 0 rlineto
+      0 -14 rlineto
+      boxW neg 0 rlineto
+      closepath stroke
+    grestore
+    boxW 0 rmoveto
+  } for
+
+  % Draw a brace, moving the current point to the right
+  % by width many pts
+  /drawBrace { % width height -> nil
+    10 dict begin
+    {/height /width} {exch def} forall
+    gsave
+      -2 height 2 div rmoveto
+      [] 0 setdash
+      height abs height rlineto
+      width 4 add 2 height mul abs sub 0 rlineto
+      height abs height neg rlineto
+      stroke
+    grestore
+    width 0 rmoveto
+    end
+  } bind def
+
+  x y moveto
+  /braceH -3 def
+  3 boxW mul 0 rmoveto
+  [ 1 4 1 13 13 ] {
+    0 5 braceH mul rmoveto
+    boxW exch mul braceH drawBrace
+    /braceH braceH neg store
+  } forall
+
+  % Draw example characters in boxes
+  x y moveto
+  2 -12 rmoveto % manually center characters in box
+  /sampleString (ms13SSSSA79NT     9Y6AHQ829ZQZVEGNF) def
+  0 1 sampleString length 1 sub {
+    sampleString exch 1 getinterval gsave show grestore
+    boxW 0 rmoveto
+  } for
+
+  % Draw headings above/below braces
+  /Helvetica findfont 12 scalefont setfont
+  x y moveto
+  3.5 boxW mul -32 rmoveto
+  gsave
+    gsave (recovery) centreshow grestore
+    0 -12 rmoveto gsave (threshold) centreshow grestore
+    0 -12 rmoveto gsave (\(k\)) centreshow grestore
+  grestore
+
+  2.5 boxW mul 40 rmoveto
+  gsave
+    gsave (ID) centreshow grestore
+  grestore
+
+  2.5 boxW mul -40 rmoveto
+  gsave
+    gsave (share) centreshow grestore
+    0 -12 rmoveto gsave (index) centreshow grestore
+  grestore
+
+  6.5 boxW mul 40 rmoveto
+  gsave (data \(26 chars for 128 bits\)) centreshow grestore
+
+  13 boxW mul -40 rmoveto
+  gsave (checksum \(13 chars\)) centreshow grestore
+
+  end
+} bind def
 %%EndSetup
 
 %************************************************************************
@@ -1581,8 +1785,6 @@ showpage
 /pgsave save def
 %%EndPageSetup
 
-/boxW pgsize aload pop pop 144 sub 35 div def
-
 % Takes a position specified as percentages of page width/height (excluding
 % margins) and computes the actual x/y coordinates in pts
 /position { % x y -> x y
@@ -1604,105 +1806,8 @@ showpage
 
 /Helvetica-Bold findfont 16 scalefont setfont
 0.5 0 position moveto (Data Format) centreshow
-% FIXME use russell's line font
-/Courier findfont 14 scalefont setfont
 
-0 0.05 position moveto
-% Draw left 13 boxes
-1 1 13 {
-  pop
-  gsave
-    [] 0 setdash
-    boxW 0 rlineto
-    0 -14 rlineto
-    boxW neg 0 rlineto
-    closepath stroke
-  grestore
-  boxW 0 rmoveto
-} for
-% Draw dashed line
-boxW 2 div 0 rmoveto
-0 -7 rmoveto
-[1 2] 0 setdash
-boxW 4 mul 0
-gsave 2 copy rlineto stroke grestore
-rmoveto
-0 7 rmoveto
-boxW 2 div 0 rmoveto
-% Draw right 17 boxes
-1 1 17 {
-  pop
-  gsave
-    [] 0 setdash
-    boxW 0 rlineto
-    0 -14 rlineto
-    boxW neg 0 rlineto
-    closepath stroke
-  grestore
-  boxW 0 rmoveto
-} for
-
-% Draw a brace, moving the current point to the right
-% by width many pts
-/drawBrace { % width height -> nil
-  10 dict begin
-  {/height /width} {exch def} forall
-  gsave
-    -2 height 2 div rmoveto
-    [] 0 setdash
-    height abs height rlineto
-    width 4 add 2 height mul abs sub 0 rlineto
-    height abs height neg rlineto
-    stroke
-  grestore
-  width 0 rmoveto
-  end
-} bind def
-
-0 0.05 position moveto
-/braceH -3 def
-3 boxW mul 0 rmoveto
-[ 1 4 1 13 13 ] {
-  0 5 braceH mul rmoveto
-  boxW exch mul braceH drawBrace
-  /braceH braceH neg store
-} forall
-
-% Draw example characters in boxes
-0 0.05 position moveto
-2 -12 rmoveto % manually center characters in box
-/sampleString (ms13SSSSA79NT     9Y6AHQ829ZQZVEGNF) def
-0 1 sampleString length 1 sub {
-  sampleString exch 1 getinterval gsave show grestore
-  boxW 0 rmoveto
-} for
-
-% Draw headings above/below braces
-/Helvetica findfont 12 scalefont setfont
-0 0.05 position moveto
-3.5 boxW mul -32 rmoveto
-gsave
-  gsave (recovery) centreshow grestore
-  0 -12 rmoveto gsave (threshold) centreshow grestore
-  0 -12 rmoveto gsave (\(k\)) centreshow grestore
-grestore
-
-2.5 boxW mul 40 rmoveto
-gsave
-  gsave (ID) centreshow grestore
-grestore
-
-2.5 boxW mul -40 rmoveto
-gsave
-  gsave (share) centreshow grestore
-  0 -12 rmoveto gsave (index) centreshow grestore
-grestore
-
-6.5 boxW mul 40 rmoveto
-gsave (data \(26 chars for 128 bits\)) centreshow grestore
-
-13 boxW mul -40 rmoveto
-gsave (checksum \(13 chars\)) centreshow grestore
+0 0.05 position drawDataFormat
 
 %
 % bech32->binary chart
@@ -1880,6 +1985,8 @@ pgsave restore showpage
 /pgsave save def
 %%EndPageSetup
 72 pgsize aload pop 36 sub exch pop allPageContent 2 get drawPageContent
+
+72 320 drawDataFormat
 pgsave restore showpage
 
 %%Page: 9 9
@@ -1894,6 +2001,57 @@ pgsave restore showpage
 /pgsave save def
 %%EndPageSetup
 72 pgsize aload pop 36 sub exch pop allPageContent 4 get drawPageContent
+
+% EDITME
+% Edit these values to draw tables for larger k. Be warned that the total work to recover
+% a secret from k shares will be on the other of (48 + k - 1)k volvelle applications. For
+% k = 8 this is already over 250. And this is not even considering the logistics of keeping
+% eight distributed shares intact and available..
+/mink 2 def
+/maxk 6 def
+
+/x 104 def
+/y 700 def
+/rowtitle 6 string def
+mink 1 maxk {
+  /k exch def
+
+  0 1 k {
+    /rowidx exch def
+    x y moveto
+    /Courier-Bold findfont 12 scalefont setfont
+    rowidx 0 eq {
+      % First row (heading)
+      k (k =   ) rowtitle copy 4 2 getinterval cvs pop
+      rowtitle show
+
+      k mink sub { 12 0 rmoveto } repeat
+      k 1 31 {
+        permS exch get code exch get gsave glyphshow grestore
+        12 0 rmoveto
+      } for % horizontal loop
+    } {
+      % Symbol rows
+      /xinterp rowidx 1 sub def % x coord to interpolate at
+      (  ) show
+      permS xinterp get code exch get glyphshow
+      (   ) show
+
+      k mink sub { 12 0 rmoveto } repeat
+      k 1 31 {
+        permS exch get  % x coord to evaluate at
+        permS xinterp get % x coord to interpolate at
+        permS 0 k getinterval % x coords to interpolate at
+        lagrange % symbol
+        code2 exch get gsave 12 codexshow grestore % print symbol
+        12 0 rmoveto
+      } for % horizontal loop
+    } ifelse
+
+    /y y 11 sub def
+  } for % vertical loop
+  /y y 20 sub def
+} for
 pgsave restore showpage
 
 %%Page: 11 11
@@ -1914,96 +2072,6 @@ pgsave restore showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-10 dict begin
-    72 720 moveto
-    /Helvetica findfont 20 scalefont setfont
-    gsave (Constructing Shares) show grestore
-    0 -20 rmoveto
-    /Times-Roman findfont 12 scalefont setfont
-    468 12
-    [ [
-    (Before constructing shares, you must choose your threshold value k, which is the number of)
-    (shares needed to reconstruct the secret, and must be between 2 and 31 inclusive. \(k = 1 can be)
-    (achieved by simply duplicating the original secret, and k > 31 is mathematically impossible with)
-    (this scheme.\) Be aware that the work required during recovery is quadratic in k, so values greater)
-    (than 4 are not recommended. You also cannot generate more than 31 shares total.)
-    ] [
-    (Next, generate the "S" share, which is the unshared secret, as well as k - 1 more shares with)
-    (consecutive indices starting from "A". These initial shares should be generated randomly using)
-    (dice, affixed with a header, then checksummed. See the Dice Table page and the Checksum)
-    (Worksheet for more details.)
-    ] [
-    (For the case k = 2, you will have only two shares, S and A, and there is a simplified method)
-    (available to generate the remaining shares. Use each character from your S share to select a table)
-    (from the following pages. Look up the row indexed by the corresponding character of your A)
-    (share, then read the corresponding character for the C share from the first column. The character)
-    (for the D share will be in the column after that, and so on.)
-    ] ] showParagraphs
-    [
-    (The general scheme is more involved:)
-    (    1. Choose the appropriate table from this page based on your choice of k.)
-    (    2. Find the column corresponding to the share you wish to create.)
-    (    3. Translate each initial share by its symbol from that column, using the Translation Wheel.)
-    (    4. Add all the translated initial shares together using the Addition Wheel.)
-    ()
-    (Tables for higher k can be easily generated by editing the source code of this file.)
-    ]
-    { gsave show grestore 0 -12 rmoveto } forall
-
-    % EDITME
-    % Edit these values to draw tables for larger k. Be warned that the total work to recover
-    % a secret from k shares will be on the other of (48 + k - 1)k volvelle applications. For
-    % k = 8 this is already over 250. And this is not even considering the logistics of keeping
-    % eight distributed shares intact and available..
-    /mink 2 def
-    /maxk 6 def
-
-    /x 104 def
-    /y 400 def
-    /rowtitle 6 string def
-    mink 1 maxk {
-        /k exch def
-
-        0 1 k {
-            /rowidx exch def
-            x y moveto
-            /Courier-Bold findfont 12 scalefont setfont
-            rowidx 0 eq {
-                % First row (heading)
-                k (k =   ) rowtitle copy 4 2 getinterval cvs pop
-                rowtitle show
-
-                k mink sub { 12 0 rmoveto } repeat
-                k 1 31 {
-                    permS exch get code exch get gsave glyphshow grestore
-                    12 0 rmoveto
-                } for % horizontal loop
-            } {
-                % Symbol rows
-                /xinterp rowidx 1 sub def % x coord to interpolate at
-                (  ) show
-                permS xinterp get code exch get glyphshow
-                (   ) show
-
-                k mink sub { 12 0 rmoveto } repeat
-                k 1 31 {
-                    permS exch get  % x coord to evaluate at
-                    permS xinterp get % x coord to interpolate at
-                    permS 0 k getinterval % x coords to interpolate at
-                    lagrange % symbol
-                    code2 exch get gsave 12 codexshow grestore % print symbol
-                    12 0 rmoveto
-                } for % horizontal loop
-            } ifelse
-
-
-            /y y 11 sub def
-        } for % vertical loop
-
-        /y y 20 sub def
-    } for
-
-end
 
 pgsave restore
 showpage

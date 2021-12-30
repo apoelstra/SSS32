@@ -1,6 +1,6 @@
 
 %%Orientation: Portrait
-%%Pages: 30
+%%Pages: 39
 %%EndComments
 %%BeginSetup
 [(Shamir's Secret) (Sharing Codex)]
@@ -318,21 +318,27 @@
 
   ] [ % pagebreak
     /section (Volvelles) /endsection
-  6 { ] [ } repeat % lol postscript
-    /subsection (Checksum Table) /endsubsection
+  5 { ] [ } repeat % lol postscript
+    /section (Checksum Table) /endsection
   ] [ % pagebreak
   ] [ % pagebreak
+    /section (Checksum Worksheet) /endsection
+  ] [ % pagebreak
+    /section (Addition Worksheets) /endsection
+  ] [ % pagebreak
+  ] [ % pagebreak
+  ] [ % pagebreak
+    /section (Bip39 Stuff) /endsection
     /subsection (Checksum Worksheet) /endsubsection
   ] [ % pagebreak
-    /subsection (Addition Worksheets) /endsubsection
+    /subsection (Conversion Worksheet) /endsubsection
+  ] [ % pagebreak
+    /subsection (Conversion Wordlist) /endsubsection
   ] [ % pagebreak
   ] [ % pagebreak
   ] [ % pagebreak
-    /subsection (Bip39 Checksum Worksheet) /endsubsection
   ] [ % pagebreak
-    /subsection (Bip39 Conversion Worksheet) /endsubsection
-  ] [ % pagebreak
-    /subsection (Bip39 Conversion Wordlist) /endsubsection
+    /section (Module Z: 2-of-n Share Booklet) /endsection
   ]
 ] def
 
@@ -1448,6 +1454,41 @@ end
 end
 } bind def
 
+%******************
+%* Share Tables
+%*
+/showShareTable {
+/offsety exch def
+/offsetx exch def
+/page exch def
+/Courier findfont 10 scalefont setfont
+20 offsetx add offsety moveto (Page: ) show
+/Courier-Bold findfont 8 scalefont setfont
+code page get glyphshow
+2 1 31 {
+dup 7 mul offsetx add offsety 10 sub moveto
+permS exch get
+code exch get glyphshow
+} for
+
+0 1 31 {
+/Courier-Bold findfont 8 scalefont setfont
+offsetx offsety 20 sub 2 index 8 mul sub moveto
+dup code exch perm exch get get glyphshow
+/Courier findfont 8 scalefont setfont
+2 1 31 {
+dup 7 mul offsetx add offsety 20 sub 3 index 8 mul sub moveto
+permS exch get
+page exch perm 3 index get exch  makeShare code exch get glyphshow
+} for pop } for
+} bind def
+
+/showShareTablePage {
+325 400 showShareTable
+50 400 showShareTable
+325 720 showShareTable
+50 720 showShareTable
+} bind def
 %******************
 %* Checksum Worksheet
 %*
@@ -3596,6 +3637,81 @@ showpage
     92 mul 50 sub exch
     false showbinaries39
 } for
+
+pgsave restore
+showpage
+
+%%Page: 26 31
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+
+/Helvetica findfont 14 scalefont setfont
+100 100 moveto (Module Z: share booklet. Instructions for using the booklet go here) show
+pgsave restore
+showpage
+
+%%Page: 27 32
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+29 24 13 25 showShareTablePage
+
+pgsave restore
+showpage
+%%Page: 28 33
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+9 8 23 18 showShareTablePage
+
+pgsave restore
+showpage
+%%Page: 29 34
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+22 31 27 19 showShareTablePage
+
+pgsave restore
+showpage
+%%Page: 30 35
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+1 0 3 16 showShareTablePage
+
+pgsave restore
+showpage
+%%Page: 31 36
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+11 28 12 14 showShareTablePage
+
+pgsave restore
+showpage
+%%Page: 32 37
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+6 4 2 15 showShareTablePage
+
+pgsave restore
+showpage
+%%Page: 33 38
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+10 17 21 20 showShareTablePage
+
+pgsave restore
+showpage
+%%Page: 34 39
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+26 30 7 5 showShareTablePage
 
 pgsave restore
 showpage

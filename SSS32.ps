@@ -1458,92 +1458,92 @@ perm 2 index get gf32add code exch get glyphshow
 
 pgsave restore
 showpage
+
 %%Page: 24 24
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-% Dice Worksheet
-90 rotate 30 pgsize aload pop pop neg translate
+90 rotate
 
-/Times-Roman findfont 12 scalefont setfont
-48 560 moveto
-(Locate 5 dice and roll them all at once. Set a marker on the value that appears on each die. ) show
-(If your die has more than 10 sides, divide) show
-48 540 moveto
-(its value by two. ) show
-(Then roll the dice again, and place the die itself on the new value. If this is the same as ) show
-(the previous value, remove the) show
-48 520 moveto
-(marker, re-roll to re-set it, and try again.) show
-48 480 moveto
-(Finally, follow the tree based on the results of the rolls. If the die is left of the marker, follow the left ) show
-(branch of the tree. If the die is right) show
-48 460 moveto
-(of the marker, follow the right branch.) show
+% Font for the numeric labels on the dice pads
+/Helvetica-Bold findfont 14 scalefont setfont
+% Characteristic size of the pads: equal to a side length for the square
+% pads, and 5/9 the side length for the hexagonal ones. (There is no good
+% mathematical reason for 5/9, it just fit the space requirements.)
+/sz 54 def
 
-10 dict begin
-% tree
-  /radius 0.705 72 mul 10.5 div def
-  /spacing 75 def
-  /coord { % i j -- x y
-     1 index 2 exch exp exch 0.5 add mul 2 mul 1.1 radius mul mul
-     exch 0.5 add spacing mul
-  } bind def
-  /trimedline { % x1 y1 x2 y2 --
-  10 dict begin
-    { /y2 /x2 /y1 /x1 } {exch def} forall
-    /dx x2 x1 sub def
-    /dy y2 y1 sub def
-    /l dx dup mul dy dup mul add sqrt def
-    x1 y1 moveto 0 dup dx mul exch dy mul rmoveto
-    1 2 0 mul sub dup dx mul exch dy mul rlineto
-  end
-  } bind def
-  1 1 5 {
-    /i exch def
-    0 1 2 5 i sub exp 1 sub {
-      /j exch def
-      /x 2 i exp j 0.5 add mul 2 mul 1.1 radius mul mul def
-      i j coord moveto radius 5 div neg 0 rmoveto
-      i j coord radius 5 div -180 180 arc
+86 -108 moveto
+1 1 5 {
+  /dieIdx exch def
+
+  gsave
+    % Draw label line
+    gsave
+      -4 sz 2 sqrt div add sz 2 sqrt div rmoveto
+      -40 sz 2 sqrt div sub 0 rlineto stroke
+    grestore
+    % Draw six squares
+    1 1 6 {
+      /idx exch def
+      /sz2 sz 2 sqrt div def
+
+      % square
+      gsave
+        sz2 sz2 rlineto
+        sz2 sz2 neg rlineto
+        sz2 neg sz2 neg rlineto
+        closepath gsave 0.95 setgray fill grestore stroke
+      grestore
+      % label
+      gsave sz2 -6 rmoveto idx 2 string cvs centreshow grestore
+      % move to origin for next iteration
+      idx 2 mod 0 eq {
+        sz2 sz2 neg rmoveto
+        2 -2 rmoveto % add small gap
+      } {
+        sz2 sz2 rmoveto
+        2 2 rmoveto % add small gap
+      } ifelse
     } for
-  } for
-  thick line stroke
-  0 1 4 {
-    /i exch def
-    0 1 2 5 i sub exp 1 sub {
-      /j exch def
-      /x 2 i exp j 0.5 add mul 2 mul 1.1 radius mul mul def
-      i j coord i 1 add j 2 idiv coord trimedline
+
+    % offset origin before starting hexagons, in an ad-hoc way
+    sz2 2.5 div dup neg rmoveto
+
+    % Draw 14 hexagons
+    7 1 20 {
+      /idx exch def
+      /sz2 sz 1.8 div def % ad-hoc size adjustment
+
+      % hexagon
+      gsave
+        0 sz2 rlineto
+        sz2 3 sqrt mul 2 div sz2 2 div rlineto
+        sz2 3 sqrt mul 2 div sz2 2 div neg rlineto
+        0 sz2 neg rlineto
+        sz2 3 sqrt mul 2 div neg sz2 2 div neg rlineto
+        closepath gsave 0.95 setgray fill grestore stroke
+      grestore
+      % label
+      gsave
+        sz2 3 sqrt mul 2 div sz2 2 div 8 sub rmoveto
+        idx 2 string cvs centreshow
+      grestore
+      % move to origin for next iteration
+      idx 2 mod 0 eq {
+        0 sz2 neg rmoveto
+        sz2 3 sqrt mul 2 div sz2 2 div neg rmoveto
+      } {
+        0 sz2 rmoveto
+        sz2 3 sqrt mul 2 div sz2 2 div rmoveto
+      } ifelse
     } for
-  } for
-  thin line stroke
-  /fontsz 12 def
-  /Codex findfont fontsz scalefont setfont
-  0 1 31 {
-    /j exch def
-    /x 1.1 radius mul 2 j mul 1 add mul def
-    x spacing 2 div fontsz 0.3 mul sub 5 sub moveto
-    code perm j get get centreglyphshow
-  } for
-% track
-  /sz 36 def
-  /Times-Roman findfont 24 scalefont setfont
-  thick line
-  0 1 4 {
-    /i exch def
-    /y 55 sz 2.1 mul i mul add def
-    1 1 10 {
-      /j exch def
-      /x j 1 sub sz mul 350 add def
-      x y sz sz rectstroke
-      x sz 2 div add y 9 add moveto j 2 string cvs centreshow
-    } for
-    % draw label location
-    350 y sz add 3 add moveto 100 0 rlineto stroke
-  } for
-end
+  grestore
+
+  % Move to next row
+  0 -105 rmoveto
+} for
+
 pgsave restore
 showpage
 %%EOF

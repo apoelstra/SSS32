@@ -224,18 +224,16 @@
     /paragraph
     (The steps are as follows:)
     /startlist
-    /listitem1 (Choose the appropriate table from the next page based on your k value.)
+    /listitem1 (Choose the appropriate table based on your k value. \(Tables for higher k)
+      (values are provided in an appendix.\)) % TODO add this appendix
       (For each of your initial shares, look up its translation symbol in that table.) /endlistitem
     /listitem1 (Translate the share, using the Translation volvelle with that symbol.) /endlistitem
     /listitem1 (Then add all the translated shares using the Addition volvelle.) /endlistitem
-    15 { /paragraph } repeat % tables here
+    5 { /paragraph } repeat % tables here
     (The result will be a new share, miraculously with a well-formed)
     (header and a valid checksum. To validate this checksum, fill out a fresh)
     (Checksum Worksheet with the new share.)
     /paragraph
-    (You can easily generate tables for higher k by editing the source code of this document.)
-  ] [ % pagebreak
-    /startText
     (It is very likely that you will make mistakes during this process, resulting in a bad)
     (checksum. Mistakes during the translation step are correctable, but the error correction)
     (process involves computers and is not necessary here since the user has all the data)
@@ -260,7 +258,8 @@
       (Checksum Worksheet.) /endlistitem
     /listitem1 (Write the target residue) /tt (SECRETSHARE32) /normal (at the bottom)
       (of the Checksum Worksheet.) /endlistitem
-    /paragraph
+  ] [ % pagebreak
+    /startText
     (Then fill in the rest of the Checksum Worksheet as usual. If at any point)
     (you compute a value that doesn't match one of the pre-filled squares, redo)
     (the computations for) /bold (just that column.) /normal
@@ -273,7 +272,6 @@
     (only one copy counts during recovery: you need k *distinct* shares to recover your)
     (secret.)
 
-  ] [ % pagebreak
     /subsection (II.4. Recovery) /endsubsection
     /dropcap (O) (nce you have generated and \(distributed\) your shares, you may like to)
     (recover your secret. In the future, we hope that hardware wallets will accept)
@@ -2385,10 +2383,10 @@ pgsave restore showpage
 % k = 8 this is already over 250. And this is not even considering the logistics of keeping
 % eight distributed shares intact and available..
 /mink 2 def
-/maxk 6 def
+/maxk 3 def
 
 /x 104 def
-/y 460 def
+/y 450 def
 /rowtitle 6 string def
 mink 1 maxk {
   /k exch def
@@ -2404,21 +2402,21 @@ mink 1 maxk {
 
       k mink sub { 12 0 rmoveto } repeat
       k 1 31 {
-        permS exch get code exch get gsave glyphshow grestore
+        perm exch get code exch get gsave glyphshow grestore
         12 0 rmoveto
       } for % horizontal loop
     } {
       % Symbol rows
       /xinterp rowidx 1 sub def % x coord to interpolate at
       (  ) show
-      permS xinterp get code exch get glyphshow
+      perm xinterp get code exch get glyphshow
       (   ) show
 
       k mink sub { 12 0 rmoveto } repeat
       k 1 31 {
-        permS exch get  % x coord to evaluate at
-        permS xinterp get % x coord to interpolate at
-        permS 0 k getinterval % x coords to interpolate at
+        perm exch get  % x coord to evaluate at
+        perm xinterp get % x coord to interpolate at
+        perm 0 k getinterval % x coords to interpolate at
         lagrange % symbol
         code2 exch get gsave 12 codexshow grestore % print symbol
         12 0 rmoveto

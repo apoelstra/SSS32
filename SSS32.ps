@@ -168,17 +168,11 @@
     (shares, which are random and independent from each other, and generating the)
     /bold (derived) /normal (shares, which are constructed from the initial ones.)
 
-    (There are two scenarios that we support in this document:)
-    /linebreak
-    /startlist
-    /listitem* (Generating a split secret with threshold k > 1, such that any k shares)
-     (can be used to regenerate the secret) /endlistitem
-    /listitem* (Generating a checksummed secret, without using SSSS.) /endlistitem
-
     /paragraph
-    (If the user is not planning to use SSSS, the instructions are exactly the same as)
-    (the SSSS case, except that she should generate the single share) /tt (S) /normal
-    (rather than k initial shares, and set the threshold value in the header to) /tt (0.)
+    (If the user is not planning to use SSSS, and only wishes to checksum a single)
+    (secret, she may also use these instructions, except that she should generate)
+    (the single share) /tt (S) /normal (rather than k initial shares, and set the)
+    (threshold value in the header to) /tt (0.)
     /normal
 
     /paragraph
@@ -192,16 +186,29 @@
     (require that it be between 2 and 9 inclusive, so that it can be represented by)
     (the bech32 characters) /tt (2) /normal (through) /tt (9.) /normal (Then take)
     (the k initial characters from the bech32 alphabet \() /tt (A, C, D,) /normal
-    (and so on\), and for each one:)
+    (and so on\), and create an initial share for each one:)
+    /paragraph
+    (Start by constructing the 6-chracter header, as described above, with the)
+    (initial character as the share index. Then generate 26 random characters,)
+    (as follows:)
     /startlist
-    /listitem1 (Construct a 6-character header, as described above, with the)
-      (initial character as the share index.) /endlistitem
-    /listitem1 (Generate 26 random characters, representing 130 bits of entropy.)
-      (Use the Dice Worksheet for instructions on doing this. Add these characters)
-      (after the header.) /endlistitem
-    /listitem1 (Generate a 13-character checksum, following the instructions on the)
-      (Checksum Worksheet.) /endlistitem
-
+    /listitem1 (Obtain five distinguishable dice. Label each of the five tracks)
+      (on the following page with the name of each die.) /endlistitem
+    /listitem1 (Roll all five dice, and set a marker on each track indicating)
+      (the value on each die.) /endlistitem
+    /listitem1 (Roll all five dice again, and set the die on the track according)
+      (to its value.) /endlistitem
+    /listitem1 (Redo both rolls for any dice that produced the same value twice.)
+      /endlistitem
+    /listitem1 (Follow the tree according to each track, moving left if the die)
+      (is to the left of the marker, and moving right if the die is to the right)
+      (of the marker.) /endlistitem
+   % (insert page for dice tracks)
+  ] [ % pagebreak
+    /startText
+    (Finally, generate a 13-character checksum on the header and random data, by)
+    (following copying everything onto a fresh Checksum Worksheet and following.)
+    (its instructions.)
     /paragraph
     (The checksum worksheet is likely to take 30-90 minutes, depending on user proficiency)
     (with the Addition volvelle. Even though this is a long time, we strongly recommend)
@@ -220,14 +227,14 @@
       (For each of your initial shares, look up its translation symbol in that table.) /endlistitem
     /listitem1 (Translate the share, using the Translation volvelle with that symbol.) /endlistitem
     /listitem1 (Then add all the translated shares using the Addition volvelle.) /endlistitem
-  ] [ % pagebreak
-    /startText
+    15 { /paragraph } repeat % tables here
     (The result will be a new share, miraculously with a well-formed)
     (header and a valid checksum. To validate this checksum, fill out a fresh)
     (Checksum Worksheet with the new share.)
-    16 { /paragraph } repeat % tables here
-    (You can easily generate tables for higher k by editing the source code of this document.)
     /paragraph
+    (You can easily generate tables for higher k by editing the source code of this document.)
+  ] [ % pagebreak
+    /startText
     (It is very likely that you will make mistakes during this process, resulting in a bad)
     (checksum. Mistakes during the translation step are correctable, but the error correction)
     (process involves computers and is not necessary here since the user has all the data)
@@ -252,8 +259,7 @@
       (Checksum Worksheet.) /endlistitem
     /listitem1 (Write the target residue) /tt (SECRETSHARE32) /normal (at the bottom)
       (of the Checksum Worksheet.) /endlistitem
-  ] [ % pagebreak
-    /startText
+    /paragraph
     (Then fill in the rest of the Checksum Worksheet as usual. If at any point)
     (you compute a value that doesn't match one of the pre-filled squares, redo)
     (the computations for) /bold (just that column.) /normal
@@ -266,6 +272,7 @@
     (only one copy counts during recovery: you need k *distinct* shares to recover your)
     (secret.)
 
+  ] [ % pagebreak
     /subsection (II.4. Recovery) /endsubsection
     (Once you have generated and \(distributed\) your shares, you may like to)
     (recover your secret. In the future, we hope that hardware wallets will accept)
@@ -1994,9 +2001,144 @@ pgsave restore showpage
 /pgsave save def
 %%EndPageSetup
 72 pgsize aload pop 36 sub exch pop allPageContent 3 get drawPageContent
+
+% Dice Worksheet
+50 50 translate
+10 dict begin
+% tree
+  /radius 0.705 72 mul 7 div def
+  /spacing 50 def
+  /coord { % i j -- x y
+     1 index 2 exch exp exch 0.5 add mul 2 mul 1.1 radius mul mul
+     exch 0.5 add spacing mul
+  } bind def
+  /trimedline { % x1 y1 x2 y2 --
+  10 dict begin
+    { /y2 /x2 /y1 /x1 } {exch def} forall
+    /dx x2 x1 sub def
+    /dy y2 y1 sub def
+    /l dx dup mul dy dup mul add sqrt def
+    x1 y1 moveto 0 dup dx mul exch dy mul rmoveto
+    1 2 0 mul sub dup dx mul exch dy mul rlineto
+  end
+  } bind def
+  1 1 5 {
+    /i exch def
+    0 1 2 5 i sub exp 1 sub {
+      /j exch def
+      /x 2 i exp j 0.5 add mul 2 mul 1.1 radius mul mul def
+      i j coord moveto radius 5 div neg 0 rmoveto
+      i j coord radius 5 div -180 180 arc
+    } for
+  } for
+  thick line stroke
+  0 1 4 {
+    /i exch def
+    0 1 2 5 i sub exp 1 sub {
+      /j exch def
+      /x 2 i exp j 0.5 add mul 2 mul 1.1 radius mul mul def
+      i j coord i 1 add j 2 idiv coord trimedline
+    } for
+  } for
+  thin line stroke
+  /fontsz 16 def
+  0 1 31 {
+    /j exch def
+    /x 1.1 radius mul 2 j mul 1 add mul def
+    x spacing 2 div fontsz 0.3 mul sub 5 sub moveto
+    code perm j get get fontsz centrecodexshow
+  } for
+end
 pgsave restore showpage
 
 %%Page: 10 10
+%%PageOrientation: Landscape
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+90 rotate
+
+% Font for the numeric labels on the dice pads
+/Helvetica-Bold findfont 14 scalefont setfont
+% Characteristic size of the pads: equal to a side length for the square
+% pads, and 5/9 the side length for the hexagonal ones. (There is no good
+% mathematical reason for 5/9, it just fit the space requirements.)
+/sz 54 def
+
+86 -108 moveto
+1 1 5 {
+  /dieIdx exch def
+
+  gsave
+    % Draw label line
+    gsave
+      -4 sz 2 sqrt div add sz 2 sqrt div rmoveto
+      -40 sz 2 sqrt div sub 0 rlineto stroke
+    grestore
+    % Draw six squares
+    1 1 6 {
+      /idx exch def
+      /sz2 sz 2 sqrt div def
+
+      % square
+      gsave
+        sz2 sz2 rlineto
+        sz2 sz2 neg rlineto
+        sz2 neg sz2 neg rlineto
+        closepath gsave 0.95 setgray fill grestore stroke
+      grestore
+      % label
+      gsave sz2 -6 rmoveto idx 2 string cvs centreshow grestore
+      % move to origin for next iteration
+      idx 2 mod 0 eq {
+        sz2 sz2 neg rmoveto
+        2 -2 rmoveto % add small gap
+      } {
+        sz2 sz2 rmoveto
+        2 2 rmoveto % add small gap
+      } ifelse
+    } for
+
+    % offset origin before starting hexagons, in an ad-hoc way
+    sz2 2.5 div dup neg rmoveto
+
+    % Draw 14 hexagons
+    7 1 20 {
+      /idx exch def
+      /sz2 sz 1.8 div def % ad-hoc size adjustment
+
+      % hexagon
+      gsave
+        0 sz2 rlineto
+        sz2 3 sqrt mul 2 div sz2 2 div rlineto
+        sz2 3 sqrt mul 2 div sz2 2 div neg rlineto
+        0 sz2 neg rlineto
+        sz2 3 sqrt mul 2 div neg sz2 2 div neg rlineto
+        closepath gsave 0.95 setgray fill grestore stroke
+      grestore
+      % label
+      gsave
+        sz2 3 sqrt mul 2 div sz2 2 div 8 sub rmoveto
+        idx 2 string cvs centreshow
+      grestore
+      % move to origin for next iteration
+      idx 2 mod 0 eq {
+        0 sz2 neg rmoveto
+        sz2 3 sqrt mul 2 div sz2 2 div neg rmoveto
+      } {
+        0 sz2 rmoveto
+        sz2 3 sqrt mul 2 div sz2 2 div rmoveto
+      } ifelse
+    } for
+  grestore
+
+  % Move to next row
+  0 -105 rmoveto
+} for
+
+pgsave restore showpage
+
+%%Page: 11 11
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2011,7 +2153,7 @@ pgsave restore showpage
 /maxk 6 def
 
 /x 104 def
-/y 700 def
+/y 460 def
 /rowtitle 6 string def
 mink 1 maxk {
   /k exch def
@@ -2054,27 +2196,20 @@ mink 1 maxk {
 } for
 pgsave restore showpage
 
-%%Page: 11 11
+%%Page: 12 12
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
 72 pgsize aload pop 36 sub exch pop allPageContent 5 get drawPageContent
 pgsave restore showpage
 
-%%Page: 12 12
+%%Page: 13 13
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
 72 pgsize aload pop 36 sub exch pop allPageContent 6 get drawPageContent
 pgsave restore showpage
 
-%%Page: 13 13
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-
-pgsave restore
-showpage
 %%Page: 14 14
 %%BeginPageSetup
 /pgsave save def

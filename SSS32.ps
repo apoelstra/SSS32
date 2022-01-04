@@ -2115,7 +2115,7 @@ showpage
     32 5 { 2 idiv 2 copy and 0 eq {(0)} {(1)} ifelse show } repeat pop
     (: ) show code 1 index get glyphshow
     pop
-    (      ) show 8 add
+    (      ) show 8 add 32 mod
   } repeat grestore
   0 -14 rmoveto
   1 add

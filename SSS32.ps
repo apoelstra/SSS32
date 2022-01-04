@@ -2088,7 +2088,7 @@ showpage
 /Courier findfont 12 scalefont setfont
 
 0.5 0.23 position moveto
-22 string stringwidth pop neg 0 rmoveto % goofy centering logic
+25 string stringwidth pop neg 0 rmoveto % goofy centering logic
 0 8 {
   gsave 4 {
     dup
@@ -2096,9 +2096,10 @@ showpage
     code 1 index get glyphshow (: ) show
     32 5 { 2 idiv 2 copy and 0 eq {(0)} {(1)} ifelse show } repeat pop
     pop
-    (    ) show 1 add
+    (      ) show 8 add 32 mod
   } repeat grestore
   0 -14 rmoveto
+  1 add
 } repeat pop
 
 0.50 0.45 position moveto
@@ -2107,16 +2108,17 @@ showpage
 /Courier findfont 12 scalefont setfont
 
 0.5 0.48 position moveto
-22 string stringwidth pop neg 0 rmoveto % goofy centering logic
+25 string stringwidth pop neg 0 rmoveto % goofy centering logic
 0 8 {
   gsave 4 {
     dup
     32 5 { 2 idiv 2 copy and 0 eq {(0)} {(1)} ifelse show } repeat pop
     (: ) show code 1 index get glyphshow
     pop
-    (    ) show 1 add
+    (      ) show 8 add
   } repeat grestore
   0 -14 rmoveto
+  1 add
 } repeat pop
 
 %

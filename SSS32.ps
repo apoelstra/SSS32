@@ -75,7 +75,7 @@
     (checksums and SSSS on their Bitcoin secrets.)
 
     /subsection (Assembly) /endsubsection
-    /bold (You will need:) /normal (craft knife, cardstock or heavy paper, brass fasteners, disc printouts.) /linebreak
+    (*You will need*: craft knife, cardstock or heavy paper, brass fasteners, disc printouts.) /linebreak
     (Using the printouts from Module 0 \(which have pictographic instructions\),)
     /startlist
     /listitem1 (Cut out each disc with scissors. Cut out the windows on the top discs with the craft knife.) /endlistitem
@@ -83,23 +83,23 @@
       (Cut a slit along one one of the small lines of the cross in each top disc.) /endlistitem
     /listitem1 (Attach the discs with a brass fastener through the centre holes.) /endlistitem
 
-    /subsection (Initial \(First k\) Share Creation) /endsubsection
-    /bold (You will need:) /normal (Addition Volvelle, Dice Worksheet, Checksum Worksheet, pencil and eraser)
+    /subsection (Initial \(First $k$\) Share Creation) /endsubsection
+    (*You will need:*: Addition Volvelle, Dice Worksheet, Checksum Worksheet, pencil and eraser)
     /linebreak
-    (For each of your initial k shares, you should)
+    (For each of your initial $k$ shares, you should)
     /startlist
     /listitem1 (Generate random data by rolling dice, following the instructions on the Dice Worksheet.) /endlistitem
     /listitem1 (Follow the instructions on the Checksum Worksheet to affix a checksum.) /endlistitem
 
     /subsection (Derived \(Remaining\) Share Creation) /endsubsection
-    /bold (You will need:) /normal (Addition Volvelle, Multiplication/Translation Wheel, pencil)
+    (*You will need*: Addition Volvelle, Multiplication/Translation Wheel, pencil)
     /startlist
     /listitem1 (Translate the initial shares using the symbols in the Derived Shares section) /endlistitem
     /listitem1 (Add the translated initial shares to get the new derived share.) /endlistitem
 
     /subsection (Secret Recovery) /endsubsection
-    /bold (You will need:) /normal (Addition Volvelle, Multiplication/Translation Wheel, Recovery Wheel, pencil)
-    (To recover your secret you must have k shares available. Then)
+    (*You will need*: Addition Volvelle, Multiplication/Translation Wheel, Recovery Wheel, pencil)
+    (To recover your secret you must have $k$ shares available. Then)
     /startlist
     /listitem1 (Look up their recovery symbols with the Recovery Wheel.) /endlistitem
     /listitem1 (Multiply all the symbols for each share with the Multiplication Wheel to get)
@@ -121,7 +121,7 @@
     (by a lookup table.)
     /paragraph
     (However, the algebraic structure of this arithmetic lets us alternately represent)
-    (these operations as) /bold (volvelles,) /normal (or paper computers. These are constructed from)
+    (these operations as *volvelles*, or paper computers. These are constructed from)
     (circular sheets of paper or cardstock, fastened through their centers such that)
     (they can rotate relative to each other.)
     /paragraph
@@ -132,7 +132,7 @@
     /subsection (II.2. Data Encoding) /endsubsection
     /dropcap (T) (o store 128-bit secrets, we round 128 up to 130, so that the secret can be)
     (represented by 26 bech32 characters. We prefix this with the 3 characters)
-    /tt (ms1) /normal (and a 6-character header, and suffix it with a 13-character checksum:)
+    (`ms1` and a 6-character header, and suffix it with a 13-character checksum:)
 
     /paragraph
     /paragraph
@@ -148,32 +148,31 @@
     /paragraph
     (The components of the header are:)
     /startlist
-    /listitem* (The) /bold (threshold) /normal (indicates what the secret sharing)
-     (threshold is, and should be a digit between) /tt (2) /normal (and) /tt (9) /normal
+    /listitem* (The *threshold* indicates what the secret sharing)
+     (threshold is, and should be a digit between `2` and `9`)
      (inclusive. Higher threshold values are not supported.) /endlistitem
-    /listitem* (The) /bold (identifier) /normal (is four arbitrary bech32 characters.)
+    /listitem* (The *identifier* is four arbitrary bech32 characters.)
      (They should be the same for all shares of a given secret, but distinct)
      (between secrets.) /endlistitem
-    /listitem* (The) /bold (share index) /normal (indicates which share this is,)
-     (and may be any bech32 character except) /tt (S.) /bold (The secret itself will)
-     (have share index) /tt (S.) /normal /endlistitem
+    /listitem* (The *share index* indicates which share this is,)
+     (and may be any bech32 character except `S`. *The* *secret* *itself* *will*)
+     (*have* *share* *index* `S`.) /endlistitem
 
     /paragraph
     (If the user merely wants to checksum her secret, and not use secret splitting,)
-    (she should use the same format, but with the digit) /tt (0) /normal (for the threshold value)
-    (and) /tt (S) /normal (for the share index.)
+    (she should use the same format, but with the digit `0` for the threshold value)
+    (and `S` for the share index.)
   ] [ % pagebreak
     /subsection (II.3. Secret Splitting) /endsubsection
     /dropcap (S) (secret splitting is divided into two parts: generating the initial)
     (shares, which are random and independent from each other, and generating the)
-    /bold (derived) /normal (shares, which are constructed from the initial ones.)
+    (*derived* shares, which are constructed from the initial ones.)
 
     /paragraph
     (If the user is not planning to use SSSS, and only wishes to checksum a single)
     (secret, she may also use these instructions, except that she should generate)
-    (the single share) /tt (S) /normal (rather than k initial shares, and set the)
-    (threshold value in the header to) /tt (0.)
-    /normal
+    (the single share `S` rather than $k$ initial shares, and set the)
+    (threshold value in the header to `0`.)
 
     /paragraph
     (In the case that the user has an existing secret in the form of BIP39 words,)
@@ -182,11 +181,11 @@
 
     /subsubsection (II.3.a. Initial Share Generation) /endsubsubsection
 
-    (To generate a split secret, the first step is to choose your threshold k. We)
+    (To generate a split secret, the first step is to choose your threshold $k$. We)
     (require that it be between 2 and 9 inclusive, so that it can be represented by)
-    (the bech32 characters) /tt (2) /normal (through) /tt (9.) /normal (Then take)
-    (the k initial characters from the bech32 alphabet \() /tt (A, C, D,) /normal
-    (and so on\), and create an initial share for each one:)
+    (the bech32 characters `2` through `9`. Then take)
+    (the $k$ initial characters from the bech32 alphabet \(`A`, `C`, `D`, and so)
+    (on\), and create an initial share for each one:)
     /paragraph
     (Start by constructing the 6-chracter header, as described above, with the)
     (initial character as the share index. Then generate 26 random characters,)
@@ -217,14 +216,14 @@
     (corrected after the fact.)
 
     /subsubsection (II.3.b. Derived Share Generation) /endsubsubsection
-    (The k initial shares together actually form a set of k-of-k SSSS shares. However,)
-    (the user likely would like a k-of-n scheme where n is bigger than k. In this case,)
-    (the user needs to create (n-k) additional "derived" shares. These are not generated)
+    (The $k$ initial shares together actually form a set of $k$-of-$k$ SSSS shares. However,)
+    (the user likely would like a $k$-of-$n$ scheme where $n$ is bigger than $k$. In this case,)
+    (the user needs to create \($n$ - $k$\) additional "derived" shares. These are not generated)
     (randomly but instead derived from the initial shares.)
     /paragraph
     (The steps are as follows:)
     /startlist
-    /listitem1 (Choose the appropriate table based on your k value. \(Tables for higher k)
+    /listitem1 (Choose the appropriate table based on your $k$ value. \(Tables for higher $k$)
       (values are provided in an appendix.\)) % TODO add this appendix
       (For each of your initial shares, look up its translation symbol in that table.) /endlistitem
     /listitem1 (Translate the share, using the Translation volvelle with that symbol.) /endlistitem
@@ -252,25 +251,25 @@
       (be readily available\).) /endlistitem
     /listitem1 (Copy your translated share into the bold boxes of a fresh Checksum Worksheet)
       (as usual.) /endlistitem
-    /listitem1 (Repeat the translation-and-adding process, this time taking the) /bold
-      (bottom diagonal squares) /normal (from the initial Checksum Worksheets and)
+    /listitem1 (Repeat the translation-and-adding process, this time taking the)
+      (*bottom diagonal squares* from the initial Checksum Worksheets and)
       (combining these. Copy the result into the bottom diagonal of the new)
       (Checksum Worksheet.) /endlistitem
-    /listitem1 (Write the target residue) /tt (SECRETSHARE32) /normal (at the bottom)
+    /listitem1 (Write the target residue `SECRETSHARE32` at the bottom)
       (of the Checksum Worksheet.) /endlistitem
   ] [ % pagebreak
     /startText
     (Then fill in the rest of the Checksum Worksheet as usual. If at any point)
     (you compute a value that doesn't match one of the pre-filled squares, redo)
-    (the computations for) /bold (just that column.) /normal
+    (the computations for *just that column*.)
     /subsubsection (II.3.c. Distribution) /endsubsubsection
     (Once the shares have been generated, there is no difference between the initial and)
     (derived shares. Distribute these as you wish.)
     /paragraph
     (You can generate up to 31 total shares before running out of available letters for)
     (share indices. You can make multiple copies of shares, but of course remember that)
-    (only one copy counts during recovery: you need k) /bold (distinct) /normal
-    (shares to recover your secret.)
+    (only one copy counts during recovery: you need $k$ *distinct* shares to recover)
+    (your secret.)
 
     /subsection (II.4. Recovery) /endsubsection
     /dropcap (O) (nce you have generated and \(distributed\) your shares, you may like to)
@@ -278,25 +277,25 @@
     (input of shares and do the recovery themselves, but we assume for this section)
     (that you want to recover your secret by hand.)
     /paragraph
-    (First, make sure you have k shares available. Exactly k are needed; if you have)
+    (First, make sure you have $k$ shares available. Exactly $k$ are needed; if you have)
     (more, then just set the extras aside.)
     /paragraph
     (The process is then very similar to the process for share derivation, except that)
     (rather than looking up symbols in a provided table, you use the Recovery Wheel)
     (volvelle to compute them as follows:)
     /startlist
-    /listitem1 (Complete Checksum Worksheets for the k shares you are using. \(This)
+    /listitem1 (Complete Checksum Worksheets for the $k$ shares you are using. \(This)
       (is not strictly necessary, but if any mistakes happen during the recovery)
       (process it's helpful to be confident in your original shares' correctness.\))
       /endlistitem
     /listitem1 (For each share that you have,) /endlistitem
     /startsublist
     /sublistitem1 (Spin the Recovery slide chart so its pointer is at its share)
-      (index. Read the symbol corresponding to) /bold (each other share.) /normal
+      (index. Read the symbol corresponding to *each other share*.)
       /endsublistitem
     /sublistitem1 (Multiply each of these symbols together using the Multiplication)
       (volvelle, by turning the pointer to one symbol, looking up the next, then)
-      (spinning the wheel to the position you just looked up. \(For k = 2 you will)
+      (spinning the wheel to the position you just looked up. \(For $k$ = 2 you will)
       (have only one symbol, so this step is trivial: just spin the Multiplication)
       (slide chart to that symbol.\)) /endsublistitem
     /sublistitem1 (Leave the Multiplication volvelle pointed at the result of)
@@ -304,7 +303,7 @@
       /endsublistitem
     /sublistitem1 (Translate the share, character by character.) /endsublistitem
     /listitem1 (Add the translated shares. The result will magically have a valid)
-      (header and share index) /tt (S.) /normal (This is your secret. Keep it safe.)
+      (header and share index `S`. This is your secret. Keep it safe.)
       /endlistitem
     /listitem1 (Complete a Checksum Worksheet for the derived secret.) /endlistitem
 
@@ -313,7 +312,6 @@
     (and repeat the translate-and-add process for the cells in the bottom diagonal, you)
     (can identify mistakes as soon as they happen, avoiding the need to repeat tons of)
     (work if you mess up.)
-
   ] [ % pagebreak
     /section (Volvelles) /endsection
   5 { ] [ } repeat % lol postscript
@@ -396,6 +394,15 @@ end
      dup dup 4 2 roll copy length
      4 -1 roll putinterval
    } bind def
+
+/checklast { % string ch -> bool
+  exch
+  dup length 0 gt {
+    dup length 1 sub get eq
+  } {
+    pop pop false
+  } ifelse
+} bind def
 
 %******************
 %* Field Arthmetic
@@ -550,6 +557,7 @@ end
 /textFont <<
   /face /Times-Roman
   /boldface /Times-Bold
+  /italicface /Times-Italic
   /ttface /Courier
   /size 12
   /footnotesize 10
@@ -559,6 +567,7 @@ end
 
 /sectionFont <<
   /face /Times-Roman
+  /italicface /Times-Italic
   /size 32
   /yDisp 32
   /rgbColor [ 0.820 0.204 0.220 ]
@@ -566,6 +575,7 @@ end
 
 /subSectionFont <<
   /face /Times-Roman
+  /italicface /Times-Italic
   /size 24
   /yDisp 20
   /rgbColor [ 0.820 0.204 0.220 ]
@@ -790,6 +800,33 @@ end
   end
 } bind def
 
+/showWordControlDict <<
+  ($) {
+    italicOn {
+      currentFont /face get findfont currentFont /size get scalefont setfont
+    } {
+      currentFont /italicface get findfont currentFont /size get scalefont setfont
+    } ifelse
+    /italicOn italicOn not store
+  }
+  (*) {
+    boldOn {
+      currentFont /face get findfont currentFont /size get scalefont setfont
+    } {
+      currentFont /boldface get findfont currentFont /size get scalefont setfont
+    } ifelse
+    /boldOn boldOn not store
+  }
+  (`) {
+    ttOn {
+      currentFont /face get findfont currentFont /size get scalefont setfont
+    } {
+      currentFont /ttface get findfont currentFont /size get scalefont setfont
+    } ifelse
+    /ttOn ttOn not store
+  }
+>> def
+
 % Displays a single word on the current device with the current font
 % Returns the number of points before the end of the line, which will be
 % negative in case of an overrun
@@ -821,40 +858,30 @@ end
           % Add an actual space though so the footnote isn't too crammed
           actuallyDraw { ( ) show } { ( ) stringwidth pop 0 rmoveto } ifelse
         }
-        /bold {
-          % add kerning because /bold is accounted for as a "word"
-          % This causes distortion (extra spacing around bold text)
-          % but empirically it seems pretty-much invisible
-          kernX 0 rmoveto
-          currentFont /boldface get findfont currentFont /size get scalefont setfont
-        }
-        /tt {
-          % add kerning because /bold is accounted for as a "word"
-          % This causes distortion (extra spacing around bold text)
-          % but empirically it seems pretty-much invisible
-          kernX 0 rmoveto
-          currentFont /ttface get findfont currentFont /size get scalefont setfont
-        }
-        /normal {
-          kernX 0 rmoveto
-          currentFont /face get findfont currentFont /size get scalefont setfont
-        }
       >> dup
       word known { word get exec } { pop } ifelse
       1 % arbitrary positive return value
     }
     /stringtype {
-      % Prepend kerning (we expect the caller to set 0 kerning on the first word)
-      kernX 0 rmoveto
-      % Draw the actual word
-      actuallyDraw {
-        word show
+      word length 0 gt {
+        % Prepend kerning (we expect the caller to set 0 kerning on the first word)
+        kernX 0 rmoveto
+        % Draw the actual word
+        0 1 word length 1 sub {
+          word exch 1 getinterval
+          showWordControlDict 1 index known {
+            showWordControlDict exch get exec
+          } {
+            actuallyDraw {
+              show
+            } {
+              stringwidth rmoveto
+            } ifelse
+          } ifelse
+        } for
         maxX currentpoint pop sub % compute return value prior to trailing space
-      } {
-        word stringwidth rmoveto
-        maxX currentpoint pop sub % compute return value prior to trailing space
-      } ifelse
-      ( ) show % print a space so that copy/paste has a hope of working
+        ( ) show % print a space so that copy/paste has a hope of working
+      } { 0 } ifelse
     }
   >> begin word type exec end
 
@@ -885,6 +912,9 @@ end
     /footnoteCount 0
     /listItemCount 0
     /sublistItemCount 0
+    /ttOn false
+    /boldOn false
+    /italicOn false
 
     /offsetX {
       x add /x exch store

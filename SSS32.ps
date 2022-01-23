@@ -771,7 +771,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
     } for
 
     % offset origin before starting hexagons, in an ad-hoc way
-    sz2 2.5 div dup neg rmoveto
+    sz2 2.5 div 2 sub dup neg 7 sub rmoveto
 
     % Draw 14 hexagons
     7 1 20 {
@@ -796,9 +796,11 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
       idx 2 mod 0 eq {
         0 sz2 neg rmoveto
         sz2 3 sqrt mul 2 div sz2 2 div neg rmoveto
+0 -8 rmoveto
       } {
         0 sz2 rmoveto
         sz2 3 sqrt mul 2 div sz2 2 div rmoveto
+0 8 rmoveto
       } ifelse
     } for
   grestore

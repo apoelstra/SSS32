@@ -92,9 +92,6 @@ with the Addition volvelle. Even though this is a long time, we strongly recomme
 doing it twice, because mistakes made during checksum computation cannot be
 corrected after the fact.
 
-If you are not planning to use SSSS, the instructions are exactly the same, except
-that you should generate the single share `S` rather than k initial shares, and
-set the threshold value in the header to `0`.
 
 ## Derived Share Generation
 

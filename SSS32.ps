@@ -1551,7 +1551,7 @@ showpage
 
 %% Instructions
 /Helvetica-Bold findfont 18 scalefont setfont
-60 -72 moveto (Instructions) show
+60 -72 moveto (Generating a Random Character) show
 
 60 -88 moveto
 /Helvetica-bold findfont 12 scalefont setfont
@@ -1567,47 +1567,45 @@ showpage
 (Do not otherwise mark these two pages.) show
 /Helvetica findfont 12 scalefont setfont
 0 setgray
-60 -148 moveto
+60 -153 moveto
 (2. Roll all five dice and set markers on each Die Pad) show
-74 -162 moveto
+74 -167 moveto
 (indicating their values.) show
 
-60 -176 moveto
+60 -186 moveto
 (3. Roll all five dice again and set the dice on each Die) show
-74 -190 moveto
+74 -200 moveto
 (Track indicating their second values.) show
 
-60 -204 moveto
+60 -219 moveto
 (4. Repeat steps 2 and 3 for each die that showed) show
-74 -218 moveto
+74 -233 moveto
 (the same value twice.) show
 
-60 -232 moveto
+60 -252 moveto
 (5. Using your finger, follow the tree to the right) show
-74 -246 moveto
-(using the results indicated on the Die Tracks.) show
-74 -260 moveto
-(Take the first left branch if the first die is) show
-74 -274 moveto
-(is to the left of its marker, the right branch) show
-74 -288 moveto
-(if it is to the right. Similarly, take the second) show
-74 -302 moveto
-(branch based on the results on the second) show
-74 -316 moveto
-(Die Track, and so on.) show
+74 -266 moveto
+(using the results indicated on the Die Tracks:) show
+74 -280 moveto
+(take the first left branch if the first die is to the) show
+74 -294 moveto
+(left of its marker, the right branch if it is to the) show
+74 -308 moveto
+(right. Similarly, take the second branch based) show
+74 -322 moveto
+(on the results on the second Die Track, and) show
+74 -336 moveto
+(so on, until the bottom of the tree.) show
 
-60 -330 moveto
-(6. The character you end at is your result.) show
-60 -344 moveto
-(7. Repeat Steps 2-6 to generate more characters.) show
+60 -355 moveto
+(6. Repeat Steps 2-5 to generate more characters.) show
 
 gsave
-345 -390 translate
+325 -390 translate
 %% Tree
 10 dict begin
 % tree
-  /radius 0.705 72 mul 9 div def
+  /radius 0.705 72 mul 8.5 div def
   /spacing 60 def
   /coord { % i j -- x y
      1 index 2 exch exp exch 0.5 add mul 2 mul 1.1 radius mul mul
@@ -1662,7 +1660,7 @@ newpath 36 -399 moveto 736 -399 lineto stroke
 /Helvetica findfont 14 scalefont setfont
 46 -428 moveto
 (Label) show
-newpath 50 -448 25 110 220 arc -10 10 rlineto 10 -10 rmoveto -1 11 rlineto  stroke
+newpath 66 -445 32.5 140 220 arc -10 10 rlineto 10 -10 rmoveto -1 11 rlineto  stroke
 
 206 -428 moveto
 (Die Pads) show

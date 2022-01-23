@@ -759,7 +759,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
         closepath gsave 0.95 setgray fill grestore stroke
       grestore
       % label
-      gsave sz2 -6 rmoveto idx 2 string cvs centreshow grestore
+      gsave sz2 -5 rmoveto idx 2 string cvs centreshow grestore
       % move to origin for next iteration
       idx 2 mod 0 eq {
         sz2 sz2 neg rmoveto
@@ -789,7 +789,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
       grestore
       % label
       gsave
-        sz2 3 sqrt mul 2 div sz2 2 div 8 sub rmoveto
+        sz2 3 sqrt mul 2 div sz2 2 div 5 sub rmoveto
         idx 2 string cvs centreshow
       grestore
       % move to origin for next iteration
@@ -1653,23 +1653,23 @@ grestore
 
 % Labels for the dice pad rows
 /Helvetica-Bold findfont 18 scalefont setfont
-46 -395 moveto
+60 -395 moveto
 (Die Tracks) show
 newpath 36 -399 moveto 736 -399 lineto stroke
 
 /Helvetica findfont 14 scalefont setfont
-46 -428 moveto
+60 -428 moveto
 (Label) show
-newpath 66 -445 32.5 140 220 arc -10 10 rlineto 10 -10 rmoveto -1 11 rlineto  stroke
+newpath 80 -445 32.5 140 220 arc -10 10 rlineto 10 -10 rmoveto -1 11 rlineto  stroke
 
-206 -428 moveto
+220 -428 moveto
 (Die Pads) show
 
-466 -428 moveto
+500 -428 moveto
 (Die Pads \(d7+\)) show
 
 % Draw a single dice pad row at the bottom
-86 -518 moveto
+100 -518 moveto
 drawDiceRow
 pgsave restore
 showpage
@@ -1681,7 +1681,7 @@ showpage
 %%EndPageSetup
 90 rotate
 
-86 -108 moveto
+100 -118 moveto
 4 { drawDiceRow 0 -135 rmoveto } repeat
 
 pgsave restore

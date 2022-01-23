@@ -1,6 +1,6 @@
 %!PS-Adobe-3.0
 %%Orientation: Portrait
-%%Pages: 24
+%%Pages: 25
 %%EndComments
 %%BeginSetup
 [(Shamir's Secret) (Sharing Codex)]
@@ -1544,6 +1544,62 @@ showpage
   0 -105 rmoveto
 } for
 
+pgsave restore
+showpage
+
+%%Page: 25 25
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+
+% Dice Worksheet
+50 0 translate
+10 dict begin
+% tree
+  /radius 0.705 72 mul 7 div def
+  /spacing 50 def
+  /coord { % i j -- x y
+     1 index 2 exch exp exch 0.5 add mul 2 mul 1.1 radius mul mul
+     exch 0.5 add spacing mul
+  } bind def
+  /trimedline { % x1 y1 x2 y2 --
+  10 dict begin
+    { /y2 /x2 /y1 /x1 } {exch def} forall
+    /dx x2 x1 sub def
+    /dy y2 y1 sub def
+    /l dx dup mul dy dup mul add sqrt def
+    x1 y1 moveto 0 dup dx mul exch dy mul rmoveto
+    1 2 0 mul sub dup dx mul exch dy mul rlineto
+  end
+  } bind def
+  1 1 5 {
+    /i exch def
+    0 1 2 5 i sub exp 1 sub {
+      /j exch def
+      /x 2 i exp j 0.5 add mul 2 mul 1.1 radius mul mul def
+      i j coord moveto radius 5 div neg 0 rmoveto
+      i j coord radius 5 div -180 180 arc
+    } for
+  } for
+  thick line stroke
+  0 1 4 {
+    /i exch def
+    0 1 2 5 i sub exp 1 sub {
+      /j exch def
+      /x 2 i exp j 0.5 add mul 2 mul 1.1 radius mul mul def
+      i j coord i 1 add j 2 idiv coord trimedline
+    } for
+  } for
+  thin line stroke
+  /fontsz 16 def
+  /Codex findfont fontsz scalefont setfont
+  0 1 31 {
+    /j exch def
+    /x 1.1 radius mul 2 j mul 1 add mul def
+    x spacing 2 div fontsz 0.3 mul sub 5 sub moveto
+    code perm j get get centreglyphshow
+  } for
+end
 pgsave restore
 showpage
 %%EOF

@@ -725,6 +725,87 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
 } bind def
 
 %******************
+%* Dice Worksheet
+%*
+%* Functionality for the dice worksheet - the tree and dice pads
+%*
+
+/drawDiceRow {
+  10 dict begin
+  % Characteristic size of the pads: equal to a side length for the square
+  % pads, and 5/9 the side length for the hexagonal ones. (There is no good
+  % mathematical reason for 5/9, it just fit the space requirements.)
+  /sz 54 def
+
+  gsave
+    % Font for the numeric labels on the dice pads
+    /Helvetica-Bold findfont 14 scalefont setfont
+
+    % Draw label line
+    gsave
+      -4 sz 2 sqrt div add sz 2 sqrt div rmoveto
+      -40 sz 2 sqrt div sub 0 rlineto stroke
+    grestore
+    % Draw six squares
+    1 1 6 {
+      /idx exch def
+      /sz2 sz 2 sqrt div def
+
+      % square
+      gsave
+        sz2 sz2 rlineto
+        sz2 sz2 neg rlineto
+        sz2 neg sz2 neg rlineto
+        closepath gsave 0.95 setgray fill grestore stroke
+      grestore
+      % label
+      gsave sz2 -6 rmoveto idx 2 string cvs centreshow grestore
+      % move to origin for next iteration
+      idx 2 mod 0 eq {
+        sz2 sz2 neg rmoveto
+        2 -2 rmoveto % add small gap
+      } {
+        sz2 sz2 rmoveto
+        2 2 rmoveto % add small gap
+      } ifelse
+    } for
+
+    % offset origin before starting hexagons, in an ad-hoc way
+    sz2 2.5 div dup neg rmoveto
+
+    % Draw 14 hexagons
+    7 1 20 {
+      /idx exch def
+      /sz2 sz 1.8 div def % ad-hoc size adjustment
+
+      % hexagon
+      gsave
+        0 sz2 rlineto
+        sz2 3 sqrt mul 2 div sz2 2 div rlineto
+        sz2 3 sqrt mul 2 div sz2 2 div neg rlineto
+        0 sz2 neg rlineto
+        sz2 3 sqrt mul 2 div neg sz2 2 div neg rlineto
+        closepath gsave 0.95 setgray fill grestore stroke
+      grestore
+      % label
+      gsave
+        sz2 3 sqrt mul 2 div sz2 2 div 8 sub rmoveto
+        idx 2 string cvs centreshow
+      grestore
+      % move to origin for next iteration
+      idx 2 mod 0 eq {
+        0 sz2 neg rmoveto
+        sz2 3 sqrt mul 2 div sz2 2 div neg rmoveto
+      } {
+        0 sz2 rmoveto
+        sz2 3 sqrt mul 2 div sz2 2 div rmoveto
+      } ifelse
+    } for
+  grestore
+  end
+} bind def
+
+%******************
 %* Checksum Worksheet
 %*
 %* Functionality for the checksum, addition, bit conversion, etc., worksheets,
@@ -1464,100 +1545,70 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-90 rotate
-
-% Font for the numeric labels on the dice pads
-/Helvetica-Bold findfont 14 scalefont setfont
-% Characteristic size of the pads: equal to a side length for the square
-% pads, and 5/9 the side length for the hexagonal ones. (There is no good
-% mathematical reason for 5/9, it just fit the space requirements.)
-/sz 54 def
-
-86 -108 moveto
-1 1 5 {
-  /dieIdx exch def
-
-  gsave
-    % Draw label line
-    gsave
-      -4 sz 2 sqrt div add sz 2 sqrt div rmoveto
-      -40 sz 2 sqrt div sub 0 rlineto stroke
-    grestore
-    % Draw six squares
-    1 1 6 {
-      /idx exch def
-      /sz2 sz 2 sqrt div def
-
-      % square
-      gsave
-        sz2 sz2 rlineto
-        sz2 sz2 neg rlineto
-        sz2 neg sz2 neg rlineto
-        closepath gsave 0.95 setgray fill grestore stroke
-      grestore
-      % label
-      gsave sz2 -6 rmoveto idx 2 string cvs centreshow grestore
-      % move to origin for next iteration
-      idx 2 mod 0 eq {
-        sz2 sz2 neg rmoveto
-        2 -2 rmoveto % add small gap
-      } {
-        sz2 sz2 rmoveto
-        2 2 rmoveto % add small gap
-      } ifelse
-    } for
-
-    % offset origin before starting hexagons, in an ad-hoc way
-    sz2 2.5 div dup neg rmoveto
-
-    % Draw 14 hexagons
-    7 1 20 {
-      /idx exch def
-      /sz2 sz 1.8 div def % ad-hoc size adjustment
-
-      % hexagon
-      gsave
-        0 sz2 rlineto
-        sz2 3 sqrt mul 2 div sz2 2 div rlineto
-        sz2 3 sqrt mul 2 div sz2 2 div neg rlineto
-        0 sz2 neg rlineto
-        sz2 3 sqrt mul 2 div neg sz2 2 div neg rlineto
-        closepath gsave 0.95 setgray fill grestore stroke
-      grestore
-      % label
-      gsave
-        sz2 3 sqrt mul 2 div sz2 2 div 8 sub rmoveto
-        idx 2 string cvs centreshow
-      grestore
-      % move to origin for next iteration
-      idx 2 mod 0 eq {
-        0 sz2 neg rmoveto
-        sz2 3 sqrt mul 2 div sz2 2 div neg rmoveto
-      } {
-        0 sz2 rmoveto
-        sz2 3 sqrt mul 2 div sz2 2 div rmoveto
-      } ifelse
-    } for
-  grestore
-
-  % Move to next row
-  0 -105 rmoveto
-} for
-
-pgsave restore
-showpage
-
-%%Page: 25 25
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
 
 % Dice Worksheet
-50 0 translate
+90 rotate
+
+%% Instructions
+/Helvetica-Bold findfont 18 scalefont setfont
+60 -72 moveto (Instructions) show
+
+60 -88 moveto
+/Helvetica-bold findfont 12 scalefont setfont
+(You will need: ) show
+/Helvetica findfont 12 scalefont setfont
+(five distinct dice, five markers, this and the following page) show
+
+60 -120 moveto
+(1. Label each Die Track to indicate which die it corresponds to.) show
+/Helvetica-bold findfont 12 scalefont setfont
+74 -134 moveto
+0.7 0 0 setrgbcolor
+(Do not otherwise mark these two pages.) show
+/Helvetica findfont 12 scalefont setfont
+0 setgray
+60 -148 moveto
+(2. Roll all five dice and set markers on each Die Pad) show
+74 -162 moveto
+(indicating their values.) show
+
+60 -176 moveto
+(3. Roll all five dice again and set the dice on each Die) show
+74 -190 moveto
+(Track indicating their second values.) show
+
+60 -204 moveto
+(4. Repeat steps 2 and 3 for each die that showed) show
+74 -218 moveto
+(the same value twice.) show
+
+60 -232 moveto
+(5. Using your finger, follow the tree to the right) show
+74 -246 moveto
+(using the results indicated on the Die Tracks.) show
+74 -260 moveto
+(Take the first left branch if the first die is) show
+74 -274 moveto
+(is to the left of its marker, the right branch) show
+74 -288 moveto
+(if it is to the right. Similarly, take the second) show
+74 -302 moveto
+(branch based on the results on the second) show
+74 -316 moveto
+(Die Track, and so on.) show
+
+60 -330 moveto
+(6. The character you end at is your result.) show
+60 -344 moveto
+(7. Repeat Steps 2-6 to generate more characters.) show
+
+gsave
+345 -390 translate
+%% Tree
 10 dict begin
 % tree
-  /radius 0.705 72 mul 7 div def
-  /spacing 50 def
+  /radius 0.705 72 mul 9 div def
+  /spacing 60 def
   /coord { % i j -- x y
      1 index 2 exch exp exch 0.5 add mul 2 mul 1.1 radius mul mul
      exch 0.5 add spacing mul
@@ -1600,6 +1651,42 @@ showpage
     code perm j get get centreglyphshow
   } for
 end
+grestore
+
+% Labels for the dice pad rows
+/Helvetica-Bold findfont 18 scalefont setfont
+46 -395 moveto
+(Die Tracks) show
+newpath 36 -399 moveto 736 -399 lineto stroke
+
+/Helvetica findfont 14 scalefont setfont
+46 -428 moveto
+(Label) show
+newpath 50 -448 25 110 220 arc -10 10 rlineto 10 -10 rmoveto -1 11 rlineto  stroke
+
+206 -428 moveto
+(Die Pads) show
+
+466 -428 moveto
+(Die Pads \(d7+\)) show
+
+% Draw a single dice pad row at the bottom
+86 -518 moveto
+drawDiceRow
 pgsave restore
 showpage
+
+%%Page: 25 25
+%%PageOrientation: Landscape
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+90 rotate
+
+86 -108 moveto
+4 { drawDiceRow 0 -135 rmoveto } repeat
+
+pgsave restore
+showpage
+
 %%EOF

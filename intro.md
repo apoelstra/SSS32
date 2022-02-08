@@ -2,38 +2,39 @@
 
 The SSSS Codex describes a way, using circular paper computers (volvelles),
 to perform checksumming and Shamir Secret Sharing on their Bitcoin secrets.
+It defines an error-correcting code, **codex32**, and a complete scheme for
+checksumming, splitting and recovering secret data.
 
 Hand-computation comes with some practical limits: to generate random values we
 rely on series of (de-biased) dice rolls. We do not support passphrases or key
 hardening, so our security rests solely on the strength of this randomness.
 With that said, assuming you can generate strong randomness, you will find
-**no cryptographic compromise** in the design or implementation of this scheme.
+**no cryptographic compromise** in the design or implementation of the Codex.
 
 If you prefer the added security of passphrase-based key hardening, you should
 instead use the more-popular
-[SLIP39](https://github.com/satoshilabs/slips/blob/master/slip-0039.md) scheme,
+[SLIP39](https://github.com/satoshilabs/slips/blob/master/slip-0039.md),
 which requires the use of electronic computers.
 
 ## Bitcoin and Seed Values
 
 We assume that your secret is a 128-bit [BIP32 master seed](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki).
 Such seeds are used to derive an effectively unlimited number of addresses from
-a single secret value, eliminating the need for frequent backups. The scheme
-will work just as well for any secret of equal or shorter length.
+a single secret value, eliminating the need for frequent backups.
 
 Many users interact with BIP32 master seeds indirectly, for example by storing a
 set of 12 or 24 [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki)
 seed words. These seed words represent a 132- or 264-bit secret, which is
 converted in the BIP39 protocol to a pointlessly large master seed by means
 of a needlessly complicated and irreversible process. If your coins are
-stored using this scheme, we have provided a module to assist converting
-the seed words to binary (and back) so they can be used in this scheme
+stored using BIP39, we have provided a module to assist converting
+the seed words to binary (and back) so they can be used in the Codex
 in lieu of a master seed. The longer data greatly increases the tedium and
 risk of mistakes, but the procedures are essentially unchanged.
 
-Instead, we encourage you to switch to a scheme, such as Satoshi Labs'
+Instead, we encourage you to switch from BIP39 to something else, such as Satoshi Labs'
 [SLIP39](https://github.com/satoshilabs/slips/blob/master/slip-0039.md)
-or this scheme, in which you directly work with the 128-bit BIP32 seed.
+or the Codex, in which you directly work with the 128-bit BIP32 seed.
 
 ## Shamir's Secret Sharing Scheme
 
@@ -133,7 +134,7 @@ of the time, and will fail to detect other random errors with probability roughl
 one in a billion. However, the SLIP39 checksum is also quite difficult to compute
 or verify by hand.
 
-In this scheme, we introduce a new checksum, **codex32** (FIXME link to BIP),
+In the Codex, we introduce a new checksum, **codex32** (FIXME link to BIP),
 which can detect up to 8 errors, correct up to 4, and has probability less than
 one in a million million million of failing to detect other random errors.
 Further, codex32 checksums can be computed and verified entirely by hand,

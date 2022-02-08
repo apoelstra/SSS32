@@ -3,7 +3,7 @@
 The SSSS Codex describes a way, using circular paper computers (volvelles),
 to perform checksumming and Shamir Secret Sharing on their Bitcoin secrets.
 It defines an error-correcting code, **codex32**, and a complete scheme for
-checksumming, splitting and recovering secret data.
+generating, checksumming, splitting and reconstructing secret data.
 
 Hand-computation comes with some practical limits: to generate random values we
 rely on series of (de-biased) dice rolls. We do not support passphrases or key
@@ -32,9 +32,9 @@ the seed words to binary (and back) so they can be used in the Codex
 in lieu of a master seed. The longer data greatly increases the tedium and
 risk of mistakes, but the procedures are essentially unchanged.
 
-Instead, we encourage you to switch from BIP39 to something else, such as Satoshi Labs'
-[SLIP39](https://github.com/satoshilabs/slips/blob/master/slip-0039.md)
-or the Codex, in which you directly work with the 128-bit BIP32 seed.
+In general, we encourage you to switch from BIP39 to Satoshi Labs'
+[SLIP39](https://github.com/satoshilabs/slips/blob/master/slip-0039.md),
+or better, to directly work with 128-bit BIP32 seeds using the Codex.
 
 ## Shamir's Secret Sharing Scheme
 
@@ -44,7 +44,7 @@ eventually fall into the wrong hands. But if you makes too few, they may all
 become lost, destroyed or misplaced. The consequence in either case is
 a total loss of funds.
 
-A more precise way to make this trade-off is [Shamir's Secret Sharing Scheme](https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing)
+A more nuanced way to make this trade-off is [Shamir's Secret Sharing Scheme](https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing)
 (SSSS), in which you split your secret into N "shares", any K of which can
 be used to reconstruct the original secret. Here N is typically five
 or more, depending on your desire for redundancy, while K is two or three,
@@ -56,9 +56,9 @@ reconstructed in a single place before it can be used. To avoid this, for
 most use-cases we instead recommend [threshold signatures](https://en.bitcoin.it/wiki/OP_CHECKMULTISIG)
 instead.
 * SSSS requires the generation of extra random data beyond the original secret,
-which [must be generated securely](https://bitcointalk.org/index.php?topic=2199659.0)
+which [must be generated securely](https://bitcointalk.org/index.php?topic=2199659.0).
 * If any share is corrupted, the reconstructed secret will be wrong and it is
-impossible to determine which share (or how many shares) was responsible
+impossible to determine which share (or how many shares) was responsible.
 
 We have addressed the latter issue by the clever use of error-correcting
 codes, inspired by SLIP39, but the fact remains that SSSS involves a single
@@ -126,7 +126,7 @@ Both BIP39 and SLIP39, in addition to encoding the raw cryptographic data, also
 store a *checksum*, which is a small amount of extra redundant data used to
 detect such errors. BIP39's checksum is less than one word long, may fail to
 detect even a single incorrect word, and is practically impossible to compute
-by hand. Its primary effects are to cause your key data to be a non-standard
+by hand. Its primary effects are to cause your key data to be an awkward
 length, and to prevent you from verifying your data's integrity by hand.
 
 SLIP39, by contrast, can detect up to 3 errors and correct up to one error 100%

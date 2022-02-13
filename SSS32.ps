@@ -1,6 +1,6 @@
 %!PS-Adobe-3.0
 %%Orientation: Portrait
-%%Pages: 26
+%%Pages: 27
 %%EndComments
 %%BeginSetup
 (SSS32)
@@ -1088,6 +1088,7 @@ showpage
 /pgsave save def
 %%EndPageSetup
 90 rotate 0 -750 translate
+
 /hrp (bip39_24) def
 /thick 1 def
 /thin 0.2 def
@@ -1121,7 +1122,7 @@ showpage
 } bind def
 /Helvetica-Bold findfont 10 scalefont setfont
 pgsize aload pop exch pop 2 div 700
-moveto (ms32 Checksum Worksheet) centreshow
+moveto (bip39_24 Checksum Worksheet) centreshow
 
 /Courier findfont 15 scalefont setfont
 
@@ -1269,7 +1270,7 @@ moveto (BIP-39 Conversion Worksheet) centreshow
     0 9 rmoveto
     /Courier findfont 3 scalefont setfont
     n 5 mod 0 eq {
-         n 5 idiv 16 add 2 string cvs show
+         n 5 idiv 17 add 2 string cvs show
     } if
   grestore
   % Every 11 write a bottom-left value
@@ -1424,5 +1425,116 @@ showpage
 
 pgsave restore
 showpage
+
+%%Page: 27 27
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+
+
+% Can be done using
+/Courier findfont 14 scalefont setfont
+pgsize aload pop exch pop 5 div 700 moveto
+%[ 0 30 10 20 23 3 18 1 0 66 {0} repeat ] polymod0 {
+[ 0 0 0 0 0 0 0 1 0 66 {0} repeat ] polymod0 {
+    code exch 1 getinterval show
+} forall
+
+% The remainder was an attempt to make a worksheet for this, but it is
+% actually a bit complex because of the need to shift all the input chars
+% by 66 places and then shift each remainder char by only 1 place
+% Could be done in two passes but whatever
+/thick 1 def
+/thin 0.2 def
+/box {
+  10 dict begin
+  { /width /n } {exch def} forall
+  -1.2 -1.9 rmoveto
+  0 14 rlineto
+  arraySpace 0 rlineto
+  0 -14 rlineto
+  closepath
+  width setlinewidth stroke
+  end
+} bind def
+
+/labeledbox {
+  10 dict begin
+  { /offset /n } {exch def} forall
+  gsave
+    n thick box
+  grestore
+  gsave
+    arraySpace 6 sub 14 5 sub rmoveto
+    /Courier findfont 3 scalefont setfont
+    n offset add 10 lt { ( ) show } if n offset add 2 string cvs show
+  grestore
+  end
+} bind def
+
+/chResidue {
+    [ exch 66 {0} repeat ] polymod0
+} bind def
+
+36 480
+%[ 0 30 10 20 23 3 18 1 0 ]
+[ 0 0 0 0 0 0 0 1 0 ]
+
+10 dict begin
+{ /codeword /y /x } {exch def} forall
+
+/k 0 def
+/residue [
+  codeword aload pop
+  polymodulus length codeword length sub {0} repeat
+] def
+/gaps [ 0 1 codeword length polymodulus length add { 4 mod 1 eq {gapSpace} {arraySpace} ifelse } for ] def
+
+codeword length {
+  x y moveto
+  { thin box }
+    residue
+    gaps k polymodulus length getinterval
+    0 showArrayBox
+
+%  { 0 labeledbox }
+%    codeword
+%    gaps k 1 getinterval
+%    k showArrayBox
+
+  /reduction residue 0 get chResidue def
+  /x x k 4 mod 1 eq {gapSpace} {arraySpace} ifelse add def
+  /y y 14 sub def
+  /k k 1 add def
+
+  x y moveto
+  { thin box }
+    reduction
+    gaps k polymodulus length getinterval
+    0 showArrayBox
+
+  /y y 15 sub def
+  /residue
+    reduction
+    [residue 1 polymodulus length 1 sub getinterval aload pop 0 ]
+    gf32addarray def
+} repeat
+
+  x y moveto
+  { thin box }
+    residue
+    gaps k polymodulus length getinterval
+    0 showArrayBox
+
+
+%gsave 0.85 setgray x y moveto checksum gaps k 1 add residue length sub residue length getinterval 0 showArray grestore
+%{residue length thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
+
+end
+
+
+pgsave restore
+showpage
+
 
 %%EOF

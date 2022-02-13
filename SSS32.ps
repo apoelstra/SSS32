@@ -1083,11 +1083,11 @@ pop
 pgsave restore
 showpage
 %%Page: 21 21
-%%PageOrientation: Landscape
+% %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-90 rotate 0 -750 translate
+%90 rotate 0 -750 translate
 
 /hrp (bip39_24w) def
 /thick 1 def
@@ -1121,12 +1121,12 @@ showpage
   end
 } bind def
 /Helvetica-Bold findfont 10 scalefont setfont
-pgsize aload pop exch pop 2 div 700
+pgsize aload pop pop 2 div 720
 moveto (bip39_24w Checksum Worksheet) centreshow
 
 /Courier findfont 15 scalefont setfont
 
-406 680
+186 680
 % [10 29 19 13 4 16 20 8 16 7 4 13 6 8 27 31 28 14 17 21 31 25 19 15 1 3 13 29 22 5 8 31 9 17 15 30 19 15 21 16 19 26 16 22 31]
 [ 62 {32} repeat ]
 10 dict begin
@@ -1140,28 +1140,46 @@ x y moveto hrp (1) concatstrings dup stringwidth pop neg 3 sub odd 1 eq { arrayS
 /y y 14 sub def
 /reduction [hrp polymodhrp aload pop k {0} repeat ] polymod0 def
   {reduction length thin box} x arraySpace odd mul add y moveto reduction gaps 1 k getinterval odd showArrayBox
+  gsave
+    /Helvetica findfont 9 scalefont setfont
+    x y moveto
+    odd 1 eq { arraySpace 0 rmoveto } if
+    (+) dup stringwidth pop 2 add neg 2 rmoveto show
+  grestore
 /y y 15 sub def
 /residue reduction [1 odd eq {0} if codeword 0 k getinterval aload pop ] gf32addarray def
 
 {
+  gsave
+    /Helvetica findfont 9 scalefont setfont
+    x y moveto (=) dup stringwidth pop 2 add neg 2 rmoveto show
+  grestore
   k codeword length ge {exit} if
   { codeword length k sub 100 add thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
   {edge 100 add 0 labeledbox} codeword gaps k 1 add 2 getinterval k showArrayBox
   /x x gaps k 1 add reduction length sub 2 getinterval aload pop add add def
   /y y 14 sub def
+
+  gsave
+    /Helvetica findfont 9 scalefont setfont
+    x y moveto (+) dup stringwidth pop 2 add neg 2 rmoveto show
+  grestore
+
   /reduction residue 0 2 getinterval aload pop polymodshift2 def
   {reduction length thin box} x y moveto reduction gaps k 1 add reduction length 2 sub sub reduction length getinterval 0 showArrayBox
   /y y 15 sub def
   /residue reduction [residue 2 polymodulus length 2 sub getinterval aload pop codeword k 2 getinterval aload pop] gf32addarray def
   /k k 2 add def
 
-  k 10 gt k 10 sub 14 mod 0 eq and {
+  % mod 14: 4-split
+  % mod 18: 3-split
+  k 10 gt k 10 sub 18 mod 0 eq and {
       /x x 300 sub def
-      /y y 80 add def
+      /y y 70 add def
   } if
 } loop
 
-%gsave 0.85 setgray x y moveto checksum gaps k 1 add residue length sub residue length getinterval 0 showArray grestore
+gsave 0.85 setgray x y moveto checksum gaps k 1 add residue length sub residue length getinterval 0 showArray grestore
 {residue length thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
 
 end

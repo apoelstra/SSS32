@@ -1,6 +1,6 @@
 
 %%Orientation: Portrait
-%%Pages: 39
+%%Pages: 40
 %%EndComments
 %%BeginSetup
 [(Shamir's Secret) (Sharing Codex)]
@@ -109,35 +109,206 @@
     /toc % turn off table of contents indexing
   ] [ % pagebreak
     /section (Part I: High-Level Introduction) /endsection
+    /notoc % turn off table of contents indexing
+    /dropcap (T) (he SSSS Codex describes a way, using circular paper computers)
+    (\(volvelles\), to perform checksumming and Shamir Secret Sharing on their)
+    (Bitcoin secrets. It defines an error-correcting code, *codex32*, and a)
+    (complete scheme for generating, checksumming, splitting and reconstructing)
+    (secret data.)
+    /paragraph
+    (Hand-computation comes with some practical limits: to generate random values)
+    (we rely on series of (de-biased) dice rolls. We do not support passphrases)
+    (or key hardening, so our security rests solely on the strength of this)
+    (randomness. With that said, assuming you can generate strong randomness,)
+    (you will find no cryptographic compromise in the design or implementation)
+    (of the Codex.)
+    /paragraph
+    (If you prefer the added security of passphrase-based key hardening, you)
+    (should instead use the more-popular SLIP39, which requires the use of electronic)
+    (computers.)
+
+    /subsection (Bitcoin and Seed Values) /endsubsection
+    /dropcap (W) (e assume that your secret is a 128-bit BIP32 master seed. Such)
+    (seeds are used to derive an effectively unlimited number of addresses from a)
+    (single secret value, eliminating the need for frequent backups.)
+    /paragraph
+    (Many users interact with BIP32 master seeds indirectly, for example by storing)
+    (a set of 12 or 24 BIP39 seed words. These seed words represent a 132- or)
+    (264-bit secret, which is converted in the BIP39 protocol to a pointlessly)
+    (large master seed by means of a needlessly complicated and irreversible)
+    (process. If your coins are stored using BIP39, we have provided a module to)
+    (assist converting the seed words to binary \(and back\) so they can be used)
+    (in the Codex in lieu of a master seed. The longer data greatly increases the)
+    (tedium and risk of mistakes, but the procedures are essentially unchanged.)
+    /paragraph
+    (In general, we encourage you to switch from BIP39 to Satoshi Labs' SLIP39,)
+    (or better, to directly work with 128-bit BIP32 seeds using the Codex.)
+
+    /subsection (Shamir's Secret Sharing Scheme) /endsubsection
+    /dropcap (T) (here is an inherent trade-off between the availability of a)
+    (secret and its risk of theft. If you make many copies of your seed words,)
+    (one of them may eventually fall into the wrong hands. But if you makes too)
+    (few, they may all become lost, destroyed or misplaced. The consequence in)
+    (either case is a total loss of funds.)
+    /paragraph
+    (A more nuanced way to make this trade-off is Shamir's Secret Sharing Scheme)
+    (\(SSSS\), in which you split your secret into $N$ "shares", any $K$ of which)
+    (can be used to reconstruct the original secret. Here $N$ is typically five)
+    (or more, depending on your desire for redundancy, while $K$ is two or three,)
+    (reflecting your fear of individual shares being compromised.)
+    /paragraph
+    (Before continuing, we should mention some limitations of SSSS:)
+    /startlist
+    /listitem* (First, electronic computers or not, SSSS requires that the)
+      (complete secret be reconstructed in a single place before it can be used.)
+      (To avoid this, for most use-cases we instead recommend threshold)
+      (signatures instead.) /endlistitem
+  ] [ % pagebreak
+    /startText
+    /listitem* (SSSS requires the generation of extra random data beyond the)
+      (original secret, which must be generated securely. If any share is corrupted,)
+      (the reconstructed secret will be wrong and it is impossible to determine)
+      (which share \(or how many shares\) was responsible.) /endlistitem
+    /paragraph
+    (We have addressed the latter issue by the clever use of error-correcting codes,)
+    (inspired by SLIP39, but the fact remains that SSSS involves a single point of)
+    (failure at the time that the secret key material is actually used. We emphasize)
+    (that SSSS is a *mechanism* *for* *storing* *backups* and not a mechanism for enforcing)
+    (a signing policy.)
+
+    /subsection (Computers and Trust) /endsubsection
+    /dropcap (I) (t is infeasible to sign Bitcoin transactions without the aid of)
+    (electronic computers. To do this, these computers need access to secret key)
+    (material, which puts you in an uncomfortable position: key material, if)
+    (misused or badly generated, can be used to steal all of your coins. And)
+    (there is no way to be assured of how, exactly, an electronic computer is)
+    (manipulating your keys.)
+
+    /paragraph
+    (General-purpose computers are so complex and exposed to adversarial input)
+    (\(in the form of Internet connections, arbitrary programs, and human beings\))
+    (that standard advice is to never expose your key material to such machines.)
+    (Instead, you should provide your keys only to hardware wallets, which)
+    (interact with general-purpose computers only through a narrow interface that)
+    (never exposes secret key data in any form.)
+    /paragraph
+    (However, even hardware wallets are opaque and inscrutable:)
+
+    /startlist
+    /listitem* (they may have bugs which cause key leakage, either now or as a)
+      (consequence of some future firmware update;) /endlistitem
+    /listitem* (they store key material in physical form which can be extracted)
+      (by an attacker with physical access, even if it the wallet has "deleted")
+      (it;) /endlistitem
+    /listitem* (they may expose data through sidechannels, such as the)
+      (electromagnetic waves emitted by processor activity, or by the varying)
+      (power draw from a USB hub;) /endlistitem
+    /listitem* (if tasked with generating random data, they may do so insecurely.) /endlistitem
+
+    /paragraph
+    (Furthermore, when working with secret shares, it is necessary to directly)
+    (export share data, violating the usual "never expose secret data" maxim.)
+    (This introduces more questions: how can the hardware wallet be sure that)
+    (it is communicating only with the correct user, and under correct)
+    (circumstances? It cannot.)
+    /paragraph
+    (These risks have varying degrees of plausibility, but the fact is that no)
+    (matter how trustworthy the hardware or its manufacturer, over the lifetime)
+    (of a Bitcoin secret \(which may, perhaps, exceed any one human's lifetime\),)
+    (even "trivial" risks add up to become very serious.)
+    /paragraph
+    (Unlike electronic computers, paper cannot remember or leak secrets, at least)
+    (when handled correctly, and this can be easily seen without special skills)
+    (or equipment. In this document, we have provided a paper-based means to)
+    /startlist
+    /listitem* (Securely generate random data from potentially biased dice or coin flips) /endlistitem
+    /listitem* (Compute and verify very powerful checksums) /endlistitem
+    /listitem* (Split your secret into up to 31 "shares", of which some number are)
+      (needed to reconstruct the secret) /endlistitem
+    /listitem* (Recombine your secret, perhaps to redo the splitting if some old)
+      (shares are compromised) /endlistitem
+  ] [ % pagebreak
+    /startText
+    (In this way, coins which do not need to be frequently spent may have their)
+    (secure storage refreshed or reorganized an unlimited number of times, without)
+    (ever introducing the uncertainty and risk associated with electronic computers.)
+
+    /subsection (Checksumming and Error Correction) /endsubsection
+    /dropcap (W) (hen you copy or transfer keys, or especially when you are doing)
+    (hand-computations on them, it is possible that errors may arise. Errors)
+    (might also crop up during long-term storage, for example if Cryptosteel)
+    (tiles are subjected to extreme heat which makes some letters unclear, or)
+    (if printer paper suffers water damage.)
+    /paragraph
+    (Both BIP39 and SLIP39, in addition to encoding the raw cryptographic data,)
+    (also store a checksum, which is a small amount of extra redundant data used)
+    (to detect such errors. BIP39's checksum is less than one word long, may fail)
+    (to detect even a single incorrect word, and is practically impossible to)
+    (compute by hand. Its primary effects are to cause your key data to be an)
+    (awkward length, and to prevent you from verifying your data's integrity by)
+    (hand.)
+    /paragraph
+    (SLIP39, by contrast, can detect up to 3 errors and correct up to one error)
+    (100% of the time, and will fail to detect other random errors with probability)
+    (roughly one in a billion. However, the SLIP39 checksum is also quite difficult)
+    (to compute or verify by hand.)
+    /paragraph
+    (In the Codex, we introduce a new checksum, *codex32*, which can detect up to 8)
+    (errors, correct up to 4, and has probability less than one in a million million)
+    (million of failing to detect other random errors. Further, codex32 checksums)
+    (can be computed and verified entirely by hand.)
+
+    /subsection (Bech32 and the Alphabet) /endsubsection
+    /dropcap (I) (n order to store 128-bit secrets, we re-use the Bech32 alphabet)
+    (which provides 32 5-bit characters. These characters consist of the 26)
+    (letters of the Latin alphabet and 10 Arabic numerals, except B \(which looks)
+    (like 8\), O \(which looks like 0\), and I and 1 \(which look like each other\).)
+    /paragraph
+    (We also use an alternate alphabet, consisting mostly of Greek letters, which)
+    (is used for intermediate computations. It is never used for storage, and)
+    (nothing represented in this alphabet is ever secret data. We have provided)
+    (a table of pronunciation to help with its use.)
+    /paragraph
+    (The remainder of this document provides detailed, but mechanical,)
+    (instructions. If you are interested in learning the mathematical theory behind)
+    (this all, we encourage you to check out the mathematical companion, or to)
+    (contact Andrew at `volvelles@wpsoftware.net`.)
+    /paragraph
+    (Godspeed.)
+
+
+    /toc % turn on table of contents indexing
   ] [ % pagebreak
     /section (Part II: Detailed Instructions) /endsection
-%    /dropcap (H) (ere we give a detailed overview of the share creation and recovery)
-%    (process.)
-%    /linebreak /linebreak % avoid bug between dropcap and subsequent heading
-    /subsection (II.1. Tables and Volvelles) /endsubsection
-    /dropcap (T) (hroughout the checksumming, share creation and recovery, there are four kinds)
-    (of basic arithmetic that need to be done on bech32 characters and/or symbols.)
-    (Since there are only 32 characters, each of these can be compactly represented)
-    (by a lookup table.)
-    /paragraph
-    (However, the algebraic structure of this arithmetic lets us alternately represent)
-    (these operations as *volvelles*, or paper computers. These are constructed from)
-    (circular sheets of paper or cardstock, fastened through their centers such that)
-    (they can rotate relative to each other.)
-    /paragraph
-    (We have one slide chart, which has windows in its top sheet which reveal symbols)
-    (on the bottom; the rest of our volvelles are slide rules, which have all symbols)
-    (visible on both top and bottom, and arrows mapping between them.)
+    /subsection (II.1. Tables or Volvelles) /endsubsection
+    /dropcap (H) (Hand computation for the procedures in this document can be)
+    (performed either by using the Principal Tables to look up values, or by)
+    (using volvelle wheels to look up values. While the volvelle wheels take)
+    (time to cut out and assemble, they are generally easier to use than the)
+    (tables when available.)
 
-    /subsection (II.2. Data Encoding) /endsubsection
-    /dropcap (T) (o store 128-bit secrets, we round 128 up to 130, so that the secret can be)
-    (represented by 26 bech32 characters. We prefix this with the 3 characters)
-    (`ms1` and a 6-character header, and suffix it with a 13-character checksum:)
+    /subsection (II.2. Share Format) /endsubsection
+    /dropcap (F) (or 128-bit secret seeds, each share is 48 characters long.)
+    (Shares begin with the three character prefix `MS1`. This is followed by a)
+    (six character header. The next 26-characters is the data portion. The last)
+    (13-characters are the checksum.)
+    /paragraph
+    (The header consists of:)
+    /startlist
+    /listitem* (The *threshold* which is the value $k$, a digit between)
+    (`2` and `9` inclusive, however Module 0 only supports $k$ < 3. When)
+    (secret splitting is not used, the a `0` digit is placed here instead.)
+    /endlistitem
+    /listitem* (The *identifier* which is four bech32 characters.) /endlistitem
+    /listitem* (The *share index* which is any bech32 character except for)
+    (`S`. The `S` index is the *secret* *index*. The data portion of the)
+    (secret index contains the secret seed.) /endlistitem
+    /paragraph
+    (Shares of one secret all have the same threshold and identifiers. If you)
+    (have multiple secrets, you should use distinct identifiers for each secret)
+    (so as not to mix-up shares of different secrets with each other. The)
+    (identifiers are not considered secret themselves.)
 
-    /paragraph
-    /paragraph
-    /paragraph
-    /paragraph
 %| Human-readable Part | Threshold | Secret ID | Share Index | Secret data | Checksum |
 %|---------------|--------|---------|--------|----------|----------|
 %| 3 characters (`ms1`) | 1 character | 4 characters | 1 character | 26 characters | 13 characters |
@@ -163,155 +334,153 @@
     (she should use the same format, but with the digit `0` for the threshold value)
     (and `S` for the share index.)
   ] [ % pagebreak
-    /subsection (II.3. Secret Splitting) /endsubsection
-    /dropcap (S) (secret splitting is divided into two parts: generating the initial)
-    (shares, which are random and independent from each other, and generating the)
-    (*derived* shares, which are constructed from the initial ones.)
-
+    /subsection (II.3. New Secret Seed) /endsubsection
+    /dropcap (G) (enerating a $k$-of-$n$ scheme for a new random secret is most)
+    (easily done by generating fresh random shares directly. This process generates)
+    (a new random secret seed without directly revealing it.)
     /paragraph
-    (If the user is not planning to use SSSS, and only wishes to checksum a single)
-    (secret, she may also use these instructions, except that she should generate)
-    (the single share `S` rather than $k$ initial shares, and set the)
-    (threshold value in the header to `0`.)
-
-    /paragraph
-    (In the case that the user has an existing secret in the form of BIP39 words,)
-    (a similar but more complicated process is required, which is covered in Module 1.)
-    (We do not discuss it here.)
-
-    /subsubsection (II.3.a. Initial Share Generation) /endsubsubsection
-
-    (To generate a split secret, the first step is to choose your threshold $k$. We)
-    (require that it be between 2 and 9 inclusive, so that it can be represented by)
-    (the bech32 characters `2` through `9`. Then take)
-    (the $k$ initial characters from the bech32 alphabet \(`A`, `C`, `D`, and so)
-    (on\), and create an initial share for each one:)
-    /paragraph
-    (Start by constructing the 6-chracter header, as described above, with the)
-    (initial character as the share index. Then generate 26 random characters,)
-    (as follows:)
     /startlist
-    /listitem1 (Obtain five distinguishable dice. Label each of the five tracks)
-      (on the following page with the name of each die.) /endlistitem
-    /listitem1 (Roll all five dice, and set a marker on each track indicating)
-      (the value on each die.) /endlistitem
-    /listitem1 (Roll all five dice again, and set the die on the track according)
-      (to its value.) /endlistitem
-    /listitem1 (Redo both rolls for any dice that produced the same value twice.)
-      /endlistitem
-    /listitem1 (Follow the tree according to each track, moving left if the die)
-      (is to the left of the marker, and moving right if the die is to the right)
-      (of the marker.) /endlistitem
-   % (insert page for dice tracks)
+    /listitem1 (Choose a threshold $k$ and total number of shares $n$ that suits)
+    (your needs. The threshold $k$ must be 3 or less and $n$ must be 31 or less.)
+    /endlistitem
+    /listitem1 (Choose a 4 character identifier for your new secret seed. The)
+    (identifier can be anything as long as it only uses the Bech32 character set.)
+    (The identifier itself is not secret. However, the identifier should be)
+    (unique for each secret seed.) /endlistitem
+    /listitem1 (Follow Section II.3.a to generate the first $k$ shares.) /endlistitem
+    /listitem1 (Follow Section II.3.b to generate the remaining $n$ - $k$ shares.) /endlistitem
+    /listitem1 (Load your shares into your BIP-???? compliant wallet or use the)
+    (Recover Secret Seed procedure in Section II.4 to access your new secret seed)
+    (value.) /endlistitem
+    /listitem1 (Copy and distribute your $n$ shares into safe and secure locations.)
+    (Remember that you will need to recover at least $k$ of these shares to)
+    (recover your secret seed. Also remember that anyone else who recovers $k$ of)
+    (these shares can also recover your secret seed.) /endlistitem
+    /listitem1 (Securely dispose of all worksheets you used in the generation)
+    (procedure. If these worksheets are not securely disposed of, the could be)
+    (used to recover your secret seed.) /endlistitem
+
+    /subsubsection (II.3.a. New Secret Seed: Stage 1) /endsubsubsection
+
+    (Make 2$k$ copies of the Checksum Worksheet and save half of them for later.)
+    /paragraph
+    (Fill out the header portion of $k$ many Checksum Worksheets with your chosen)
+    (threshold $k$ and chosen ID. Place a unique share index on each worksheet)
+    (starting with share `A` on the first worksheet, `C` on the second worksheet,)
+    (and so on through the $k$ first characters from the Bech32 character set.)
+    (\(Note that `B` and `I` are not part of the Bech32 character set and are)
+    (omitted\). However, if you are not splitting your secret, \(i.e. $k$ = 1\))
+    (see the special instructions below.)
+    /paragraph
+    (Fill out the 26 character data portion of each Checksum Worksheet with random)
+    (characters. Use the Random Character Worksheet to generate each random)
+    (character.)
+    /paragraph
+    (Follow the Checksum Worksheet instructions to generate a checksum for each)
+    (worksheet.)
+    /paragraph
+    (*Critical Step:* Verify your checksum by copying each of the 48 characters)
+    (of theshare onto an empty worksheet that you saved earlier. Follow the)
+    (checksum verification instructions to verify each checksum. If any checksum)
+    (fails to verify then make more copies of the Checksum worksheet and redo the)
+    (checksum generation and checksum verification steps again.)
+    /paragraph
+    (*Failure to verify each checksum may lead to irrecoverable loss of)
+    (the secret seed and funds.)
+    /paragraph
+    (*Special rules for $k$=1:* If you are not splitting your secret, then use)
+    (a `0` digit in the threshold place, and use the `S` character in the share)
+    (index place. Follow the same instructions for generating the data portion)
+    (and the checksum.)
   ] [ % pagebreak
-  ] [ % pagebreak
+    /subsubsection (II.3.b. New Secret Seed: Stage 2) /endsubsubsection
+    (The remaining $n$ - $k$ are derived from the first $k$ shares using the)
+    (addition worksheet corresponding to the $k$ value you have chosen. Label)
+    (the entries of the addition worksheet with the share indices that you will)
+    (be using. We recommend following the Bech32 character order following the)
+    (last index you generated in Stage 1.)
+    /paragraph
+    (Use the following procedure to derive a new share:)
+    /startlist
+    /listitem1 (Make a copy of the Addition Worksheet for the value of $k$ that)
+    (you are using and label the shares with the share indices from the shares)
+    (you have already generated, `A`, `C` and `D` if $k$=3. Label the Final)
+    (Share Index with the new share index you want to derive.) /endlistitem
+    /listitem1 (In the derivation table for your value of $k$, find the column)
+    (corresponding to the new share index you want to derive. Fill in the symbols)
+    (on the Addition Worksheet with the symbols from that column next to the)
+    (share index for each row.) /endlistitem
+    /listitem1 (Follow the Translation Worksheet instructions to derive the new share.)
+    /endlistitem
+
+    /notoc /subsubsection (Derivation Table) /endsubsubsection /toc
+    (Derivation tables for $k$ = 4 through 9 can be found in Module XX.)
+    /paragraph
+    /paragraph
+    /paragraph %% derivation table
+    /paragraph
+    /paragraph
+
+    /subsection (II.4. Recover Secret Seed) /endsubsection
+
+    /dropcap (N) (ormally you would not recover a secret seed yourself, and)
+    (instead load shares into a BIP-???? compliant wallet. However, you can)
+    (recover the secret seed by hand if no compatible wallets are available)
+    (or whatever other reason you might have.)
+    /paragraph
+    (The recovery procedure uses exactly $k$ many shares. If you have more than $k$)
+    (many shares, you can select any $k$ of them and set the other shares aside.)
+    /paragraph
+    (Use the following procedure to recover the share:)
+    /startlist
+    /listitem1 (For each share, fill in a Checksum Worksheet and verify the checksum.)
+    (If a checksum fails to verify, you may have made an error on your worksheet,)
+    (or there may be an error in your share data. If there is an error in your)
+    (share data, you can try substituting the share with a different one.)
+    (Otherwise you will need to perform the Error Correction Procedure on your)
+    (share, which will involve the assistance of a digital computer.) /endlistitem
+    /listitem1 (Make a copy of the Addition Worksheet for the value of $k$ that you)
+    (are using and label the shares with the share indices from the shares you)
+    (have selected to recover from, and label the Final Share Index as `S`) /endlistitem
+    /listitem1 (You can fill in the symbols for each share on the Addition)
+    (Worksheet using either the table lookup, or the volvelle lookup:)
+] [ % pagebreak
+    /listitem1 /endlistitem
+    /listitem1 /endlistitem
+    /listitem1
     /startText
-    (Finally, generate a 13-character checksum on the header and random data, by)
-    (following copying everything onto a fresh Checksum Worksheet and following.)
-    (its instructions.)
+    ($Table lookup $k$ = 2:$ Fill in the symbol from the Recover table by)
+    (finding the column with the associated share, and the row for the other)
+    (share.)
     /paragraph
-    (The checksum worksheet is likely to take 30-90 minutes, depending on user proficiency)
-    (with the Addition volvelle. Even though this is a long time, we strongly recommend)
-    (doing it twice, because mistakes made during checksum computation cannot be)
-    (corrected after the fact.)
-
-    /subsubsection (II.3.b. Derived Share Generation) /endsubsubsection
-    (The $k$ initial shares together actually form a set of $k$-of-$k$ SSSS shares. However,)
-    (the user likely would like a $k$-of-$n$ scheme where $n$ is bigger than $k$. In this case,)
-    (the user needs to create \($n$ - $k$\) additional "derived" shares. These are not generated)
-    (randomly but instead derived from the initial shares.)
+    ($Volvelle lookup $k$ = 2:$ Turn the Recovery Volvelle to point to the)
+    (share being considered. Find the symbol pointed to under the other share)
+    (index on the wheel and fill in that symbol next to the share we are)
+    (considering on the Addition Worksheet.)
     /paragraph
-    (The steps are as follows:)
-    /startlist
-    /listitem1 (Choose the appropriate table based on your $k$ value. \(Tables for higher $k$)
-      (values are provided in an appendix.\)) % TODO add this appendix
-      (For each of your initial shares, look up its translation symbol in that table.) /endlistitem
-    /listitem1 (Translate the share, using the Translation volvelle with that symbol.) /endlistitem
-    /listitem1 (Then add all the translated shares using the Addition volvelle.) /endlistitem
-    5 { /paragraph } repeat % tables here
-    (The result will be a new share, miraculously with a well-formed)
-    (header and a valid checksum. To validate this checksum, fill out a fresh)
-    (Checksum Worksheet with the new share.)
+    ($Table lookup $k$ = 3:$ Finding the column with the associated share.)
+    (Lookup the two symbols from the two rows corresponding to the two other)
+    (shares. Make a note of these two symbols on a scrap piece of paper. Use the)
+    (multiplication table to multiply the the two symbols and fill in that)
+    (share's symbol on the Addition Worksheet with the resulting product.)
     /paragraph
-    (It is very likely that you will make mistakes during this process, resulting in a bad)
-    (checksum. Mistakes during the translation step are correctable, but the error correction)
-    (process involves computers and is not necessary here since the user has all the data)
-    (she needs. Further, a bad checksum is just as likely to have resulted from incorrect)
-    (computations in the Checksum Worksheet, which the error correction process cannot handle.)
+    ($Volvelle lookup $k$ = 3:$ Turn the Recovery Volvelle to point to the)
+    (share being considered. Find the two symbol pointed to under the other share)
+    (indices on the wheel. Turn the multiplication wheel to the first of these)
+    (two symbols. Find the second symbol on the lower ring, and lookup the symbol)
+    (it is pointing to. Fill that symbol next to the share we are considering on)
+    (the Addition Worksheet.)
+    /endlistitem
+    /listitem1 (Repeat step 3 for each share on the Addition worksheet.)
     /paragraph
-    (The most straightforward way to handle a wrong checksum is to redo the entire share)
-    (derivation step, checking each calculation against the first time you did it.)
-    /paragraph
-    (There is a less demoralizing, but more time-consuming, way to do the share derivation)
-    (process:)
-
-    /startlist
-    /listitem1 (Before beginning, make sure you have complete Checksum Worksheets for)
-      (all of your initial shares \(if you just generated these, the worksheets should)
-      (be readily available\).) /endlistitem
-    /listitem1 (Copy your translated share into the bold boxes of a fresh Checksum Worksheet)
-      (as usual.) /endlistitem
-    /listitem1 (Repeat the translation-and-adding process, this time taking the)
-      (*bottom diagonal squares* from the initial Checksum Worksheets and)
-      (combining these. Copy the result into the bottom diagonal of the new)
-      (Checksum Worksheet.) /endlistitem
-    /listitem1 (Write the target residue `SECRETSHARE32` at the bottom)
-      (of the Checksum Worksheet.) /endlistitem
-  ] [ % pagebreak
-    /startText
-    (Then fill in the rest of the Checksum Worksheet as usual. If at any point)
-    (you compute a value that doesn't match one of the pre-filled squares, redo)
-    (the computations for *just that column*.)
-    /subsubsection (II.3.c. Distribution) /endsubsubsection
-    (Once the shares have been generated, there is no difference between the initial and)
-    (derived shares. Distribute these as you wish.)
-    /paragraph
-    (You can generate up to 31 total shares before running out of available letters for)
-    (share indices. You can make multiple copies of shares, but of course remember that)
-    (only one copy counts during recovery: you need $k$ *distinct* shares to recover)
-    (your secret.)
-
-    /subsection (II.4. Recovery) /endsubsection
-    /dropcap (O) (nce you have generated and \(distributed\) your shares, you may like to)
-    (recover your secret. In the future, we hope that hardware wallets will accept)
-    (input of shares and do the recovery themselves, but we assume for this section)
-    (that you want to recover your secret by hand.)
-    /paragraph
-    (First, make sure you have $k$ shares available. Exactly $k$ are needed; if you have)
-    (more, then just set the extras aside.)
-    /paragraph
-    (The process is then very similar to the process for share derivation, except that)
-    (rather than looking up symbols in a provided table, you use the Recovery Wheel)
-    (volvelle to compute them as follows:)
-    /startlist
-    /listitem1 (Complete Checksum Worksheets for the $k$ shares you are using. \(This)
-      (is not strictly necessary, but if any mistakes happen during the recovery)
-      (process it's helpful to be confident in your original shares' correctness.\))
-      /endlistitem
-    /listitem1 (For each share that you have,) /endlistitem
-    /startsublist
-    /sublistitem1 (Spin the Recovery slide chart so its pointer is at its share)
-      (index. Read the symbol corresponding to *each other share*.)
-      /endsublistitem
-    /sublistitem1 (Multiply each of these symbols together using the Multiplication)
-      (volvelle, by turning the pointer to one symbol, looking up the next, then)
-      (spinning the wheel to the position you just looked up. \(For $k$ = 2 you will)
-      (have only one symbol, so this step is trivial: just spin the Multiplication)
-      (slide chart to that symbol.\)) /endsublistitem
-    /sublistitem1 (Leave the Multiplication volvelle pointed at the result of)
-      (the previous step, and flip it over. It is now the Translation slide chart.)
-      /endsublistitem
-    /sublistitem1 (Translate the share, character by character.) /endsublistitem
-    /listitem1 (Add the translated shares. The result will magically have a valid)
-      (header and share index `S`. This is your secret. Keep it safe.)
-      /endlistitem
-    /listitem1 (Complete a Checksum Worksheet for the derived secret.) /endlistitem
-
-    /paragraph
-    (As during share derivation, if you use the checksum worksheets for your input shares,)
-    (and repeat the translate-and-add process for the cells in the bottom diagonal, you)
-    (can identify mistakes as soon as they happen, avoiding the need to repeat tons of)
-    (work if you mess up.)
+    ($Tip:$ For $k$ = 2 the two symbols will always be opposite each other on the)
+    (Recovery Volvelle and are connected by a grey line.)
+    /endlistitem
+    /listitem1 (Follow the Translation Worksheet instructions recover the secret)
+    (share.) /endlistitem
+%    /listitem1 (After completing the checksum verification you may run the Binary)
+%    (Worksheet on the secret share to convert the secret seed into binary format.)
+%    /endlistitem
   ] [ % pagebreak
     /section (Volvelles) /endsection
   5 { ] [ } repeat % lol postscript
@@ -1517,6 +1686,90 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
 325 720 showShareTable
 50 720 showShareTable
 } bind def
+
+%******************
+%* Dice Worksheet
+%*
+%* Functionality for the dice worksheet - the tree and dice pads
+%*
+
+/drawDiceRow {
+  10 dict begin
+  % Characteristic size of the pads: equal to a side length for the square
+  % pads, and 5/9 the side length for the hexagonal ones. (There is no good
+  % mathematical reason for 5/9, it just fit the space requirements.)
+  /sz 54 def
+
+  gsave
+    % Font for the numeric labels on the dice pads
+    /Helvetica-Bold findfont 14 scalefont setfont
+
+    % Draw label line
+    gsave
+      -4 sz 2 sqrt div add sz 2 sqrt div rmoveto
+      -40 sz 2 sqrt div sub 0 rlineto stroke
+    grestore
+    % Draw six squares
+    1 1 6 {
+      /idx exch def
+      /sz2 sz 2 sqrt div def
+
+      % square
+      gsave
+        sz2 sz2 rlineto
+        sz2 sz2 neg rlineto
+        sz2 neg sz2 neg rlineto
+        closepath gsave 0.95 setgray fill grestore stroke
+      grestore
+      % label
+      gsave sz2 -5 rmoveto idx 2 string cvs centreshow grestore
+      % move to origin for next iteration
+      idx 2 mod 0 eq {
+        sz2 sz2 neg rmoveto
+        2 -2 rmoveto % add small gap
+      } {
+        sz2 sz2 rmoveto
+        2 2 rmoveto % add small gap
+      } ifelse
+    } for
+
+    % offset origin before starting hexagons, in an ad-hoc way
+    sz2 2.5 div 2 sub dup neg 7 sub rmoveto
+
+    % Draw 14 hexagons
+    7 1 20 {
+      /idx exch def
+      /sz2 sz 1.8 div def % ad-hoc size adjustment
+
+      % hexagon
+      gsave
+        0 sz2 rlineto
+        sz2 3 sqrt mul 2 div sz2 2 div rlineto
+        sz2 3 sqrt mul 2 div sz2 2 div neg rlineto
+        0 sz2 neg rlineto
+        sz2 3 sqrt mul 2 div neg sz2 2 div neg rlineto
+        closepath gsave 0.95 setgray fill grestore stroke
+      grestore
+      % label
+      gsave
+        sz2 3 sqrt mul 2 div sz2 2 div 5 sub rmoveto
+        idx 2 string cvs centreshow
+      grestore
+      % move to origin for next iteration
+      idx 2 mod 0 eq {
+        0 sz2 neg rmoveto
+        sz2 3 sqrt mul 2 div sz2 2 div neg rmoveto
+0 -8 rmoveto
+      } {
+        0 sz2 rmoveto
+        sz2 3 sqrt mul 2 div sz2 2 div rmoveto
+0 8 rmoveto
+      } ifelse
+    } for
+  grestore
+  end
+} bind def
+
 %******************
 %* Checksum Worksheet
 %*
@@ -2257,8 +2510,6 @@ pgsave restore showpage
 /pgsave save def
 %%EndPageSetup
 72 pgsize aload pop 36 sub exch pop allPageContent 2 get drawPageContent
-
-72 320 drawDataFormat
 pgsave restore showpage
 
 %%Page: 4 9
@@ -2266,141 +2517,15 @@ pgsave restore showpage
 /pgsave save def
 %%EndPageSetup
 72 pgsize aload pop 36 sub exch pop allPageContent 3 get drawPageContent
-
-% Dice Worksheet
-50 50 translate
-10 dict begin
-% tree
-  /radius 0.705 72 mul 7 div def
-  /spacing 50 def
-  /coord { % i j -- x y
-     1 index 2 exch exp exch 0.5 add mul 2 mul 1.1 radius mul mul
-     exch 0.5 add spacing mul
-  } bind def
-  /trimedline { % x1 y1 x2 y2 --
-  10 dict begin
-    { /y2 /x2 /y1 /x1 } {exch def} forall
-    /dx x2 x1 sub def
-    /dy y2 y1 sub def
-    /l dx dup mul dy dup mul add sqrt def
-    x1 y1 moveto 0 dup dx mul exch dy mul rmoveto
-    1 2 0 mul sub dup dx mul exch dy mul rlineto
-  end
-  } bind def
-  1 1 5 {
-    /i exch def
-    0 1 2 5 i sub exp 1 sub {
-      /j exch def
-      /x 2 i exp j 0.5 add mul 2 mul 1.1 radius mul mul def
-      i j coord moveto radius 5 div neg 0 rmoveto
-      i j coord radius 5 div -180 180 arc
-    } for
-  } for
-  thick line stroke
-  0 1 4 {
-    /i exch def
-    0 1 2 5 i sub exp 1 sub {
-      /j exch def
-      /x 2 i exp j 0.5 add mul 2 mul 1.1 radius mul mul def
-      i j coord i 1 add j 2 idiv coord trimedline
-    } for
-  } for
-  thin line stroke
-  /fontsz 20 def
-  0 1 31 {
-    /j exch def
-    /x 1.1 radius mul 2 j mul 1 add mul def
-    x spacing 2 div fontsz 0.3 mul sub 5 sub moveto
-    code j get fontsz centrecodexshow
-  } for
-end
 pgsave restore showpage
 
 %%Page: 5 10
-%%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-90 rotate
+72 pgsize aload pop 36 sub exch pop allPageContent 4 get drawPageContent
 
-% Font for the numeric labels on the dice pads
-/Helvetica-Bold findfont 14 scalefont setfont
-% Characteristic size of the pads: equal to a side length for the square
-% pads, and 5/9 the side length for the hexagonal ones. (There is no good
-% mathematical reason for 5/9, it just fit the space requirements.)
-/sz 54 def
-
-86 -108 moveto
-1 1 5 {
-  /dieIdx exch def
-
-  gsave
-    % Draw label line
-    gsave
-      -4 sz 2 sqrt div add sz 2 sqrt div rmoveto
-      -40 sz 2 sqrt div sub 0 rlineto stroke
-    grestore
-    % Draw six squares
-    1 1 6 {
-      /idx exch def
-      /sz2 sz 2 sqrt div def
-
-      % square
-      gsave
-        sz2 sz2 rlineto
-        sz2 sz2 neg rlineto
-        sz2 neg sz2 neg rlineto
-        closepath gsave 0.95 setgray fill grestore stroke
-      grestore
-      % label
-      gsave sz2 -6 rmoveto idx 2 string cvs centreshow grestore
-      % move to origin for next iteration
-      idx 2 mod 0 eq {
-        sz2 sz2 neg rmoveto
-        2 -2 rmoveto % add small gap
-      } {
-        sz2 sz2 rmoveto
-        2 2 rmoveto % add small gap
-      } ifelse
-    } for
-
-    % offset origin before starting hexagons, in an ad-hoc way
-    sz2 2.5 div dup neg rmoveto
-
-    % Draw 14 hexagons
-    7 1 20 {
-      /idx exch def
-      /sz2 sz 1.8 div def % ad-hoc size adjustment
-
-      % hexagon
-      gsave
-        0 sz2 rlineto
-        sz2 3 sqrt mul 2 div sz2 2 div rlineto
-        sz2 3 sqrt mul 2 div sz2 2 div neg rlineto
-        0 sz2 neg rlineto
-        sz2 3 sqrt mul 2 div neg sz2 2 div neg rlineto
-        closepath gsave 0.95 setgray fill grestore stroke
-      grestore
-      % label
-      gsave
-        sz2 3 sqrt mul 2 div sz2 2 div 8 sub rmoveto
-        idx 2 string cvs centreshow
-      grestore
-      % move to origin for next iteration
-      idx 2 mod 0 eq {
-        0 sz2 neg rmoveto
-        sz2 3 sqrt mul 2 div sz2 2 div neg rmoveto
-      } {
-        0 sz2 rmoveto
-        sz2 3 sqrt mul 2 div sz2 2 div rmoveto
-      } ifelse
-    } for
-  grestore
-
-  % Move to next row
-  0 -105 rmoveto
-} for
-
+72 310 drawDataFormat
 pgsave restore showpage
 
 %%Page: 6 11
@@ -2408,6 +2533,14 @@ pgsave restore showpage
 /pgsave save def
 %%EndPageSetup
 72 pgsize aload pop 36 sub exch pop allPageContent 5 get drawPageContent
+
+pgsave restore showpage
+
+%%Page: 7 12
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+72 pgsize aload pop 36 sub exch pop allPageContent 6 get drawPageContent
 
 % EDITME
 % Edit these values to draw tables for larger k. Be warned that the total work to recover
@@ -2461,13 +2594,6 @@ mink 1 maxk {
 } for
 pgsave restore showpage
 
-%%Page: 7 12
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-72 pgsize aload pop 36 sub exch pop allPageContent 6 get drawPageContent
-pgsave restore showpage
-
 %%Page: 8 13
 %%BeginPageSetup
 /pgsave save def
@@ -2475,7 +2601,16 @@ pgsave restore showpage
 72 pgsize aload pop 36 sub exch pop allPageContent 7 get drawPageContent
 pgsave restore showpage
 
+%%% Random Character Worksheet
 %%Page: 9 14
+%%PageOrientation: Landscape
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+72 pgsize aload pop 36 sub exch pop allPageContent 8 get drawPageContent
+pgsave restore showpage
+
+%%Page: 10 15
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2483,7 +2618,7 @@ pgsave restore showpage
 
 pgsave restore
 showpage
-%%Page: 10 15
+%%Page: 11 16
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2491,7 +2626,7 @@ showTopWheelPage
 
 pgsave restore
 showpage
-%%Page: 11 16
+%%Page: 12 17
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2544,7 +2679,7 @@ pgsize aload pop 2 div exch 2 div exch translate
 end
 pgsave restore
 showpage
-%%Page: 12 17
+%%Page: 13 18
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2606,7 +2741,7 @@ end
 
 pgsave restore
 showpage
-%%Page: 13 18
+%%Page: 14 19
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2735,7 +2870,7 @@ end
 
 pgsave restore
 showpage
-%%Page: 14 19
+%%Page: 15 20
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -2863,7 +2998,7 @@ false {
 
 pgsave restore
 showpage
-%%Page: 15 20
+%%Page: 16 21
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -2991,7 +3126,7 @@ false {
 
 pgsave restore
 showpage
-%%Page: 16 21
+%%Page: 17 22
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3126,7 +3261,7 @@ perm 2 index get gf32add code exch get glyphshow
 pgsave restore
 showpage
 
-%%Page: 17 22
+%%Page: 18 23
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3191,7 +3326,7 @@ end
 pgsave restore
 showpage
 
-%%Page: 18 23
+%%Page: 19 24
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3260,7 +3395,7 @@ end
 pgsave restore
 showpage
 
-%%Page: 19 24
+%%Page: 20 25
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3328,7 +3463,7 @@ end
 pgsave restore
 showpage
 
-%%Page: 20 25
+%%Page: 21 26
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3480,7 +3615,7 @@ end
 pgsave restore
 showpage
 
-%%Page: 21 26
+%%Page: 22 27
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3607,7 +3742,7 @@ moveto (BIP-39 Conversion Worksheet) centreshow
 pgsave restore
 showpage
 
-%%Page: 22 27
+%%Page: 23 28
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3623,7 +3758,7 @@ showpage
 pgsave restore
 showpage
 
-%%Page: 23 28
+%%Page: 24 29
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3639,7 +3774,7 @@ showpage
 pgsave restore
 showpage
 
-%%Page: 24 29
+%%Page: 25 30
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3655,7 +3790,7 @@ showpage
 pgsave restore
 showpage
 
-%%Page: 25 30
+%%Page: 26 31
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3671,7 +3806,7 @@ showpage
 pgsave restore
 showpage
 
-%%Page: 26 31
+%%Page: 27 32
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3681,7 +3816,7 @@ showpage
 pgsave restore
 showpage
 
-%%Page: 27 32
+%%Page: 28 33
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3689,7 +3824,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 28 33
+%%Page: 29 34
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3697,7 +3832,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 29 34
+%%Page: 30 35
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3705,7 +3840,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 30 35
+%%Page: 31 36
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3713,7 +3848,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 31 36
+%%Page: 32 37
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3721,7 +3856,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 32 37
+%%Page: 33 38
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3729,7 +3864,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 33 38
+%%Page: 34 39
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3737,7 +3872,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 34 39
+%%Page: 35 40
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup

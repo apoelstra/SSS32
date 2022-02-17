@@ -1,6 +1,6 @@
 
 %%Orientation: Portrait
-%%Pages: 40
+%%Pages: 41
 %%EndComments
 %%BeginSetup
 [(Shamir's Secret) (Sharing Codex)]
@@ -482,6 +482,9 @@
 %    (Worksheet on the secret share to convert the secret seed into binary format.)
 %    /endlistitem
   ] [ % pagebreak
+    /section (Random Character Worksheet) /endsection
+  ] [ % pagebreak
+  ] [ % pagebreak
     /section (Volvelles) /endsection
   5 { ] [ } repeat % lol postscript
     /section (Checksum Table) /endsection
@@ -686,7 +689,8 @@ end
 %*
 %* Data and functions related to the error-correcting code.
 %*
-/polymodulus [31 5 3 28 0 31 31 31 9 5 30 2 2] def % coefficents from c12 to c0
+%/polymodulus [31 5 3 28 0 31 31 31 9 5 30 2 2] def % coefficents from c12 to c0
+/polymodulus [7 20 12 11 0 7 7 7 13 20 3 8 8] def % new non-swearing code
 /checksum [16 25 24 3 25 11 16 23 29 3 25 17 10] def
 /checksumstring { polymodulus length array checksum 0 1 polymodulus length 1 sub {3 copy exch 1 index get code exch 1 getinterval putinterval pop } for pop } bind def
 
@@ -846,7 +850,16 @@ end
     exch codexshow
 } bind def
 
+/underlineshow {
+    dup dup /six eq exch /nine eq or { % if the string is (6) or (9)
+        gsave /underscore glyphshow grestore % draw an underline
+    } if
+    glyphshow
+} bind def
+
 /centreshow {dup stringwidth pop 2 div neg 0 rmoveto show} bind def
+
+/centreglyphshow {dup glyphwidth pop 2 div neg 0 rmoveto underlineshow} bind def
 
 /centrecodexshow {2 copy codexwidth pop 2 div neg 0 rmoveto underlinecodexshow} bind def
 
@@ -1331,11 +1344,16 @@ end
    grestore
    outerperm {0 38 sqrt 40 mul moveto outercode exch get 18 centrecodexshow angle rotate} forall
    % Draw inside contents
-   180 rotate
    0 1 31 { % Draw 32 circles of increasing radius
-       magic rotate
+       dup 1 add magic mul
+       /theta exch def
        outerperm {
-           0 2 index 2 add sqrt 40 mul moveto % move to 0, 2.5 + 40*sqrt(outer index + 2)
+           1 index 2 add sqrt 40 mul 2.5 add
+           /lam exch def
+           lam theta sin mul
+           lam theta cos mul neg
+           moveto
+           0 -3 rmoveto
            1 index 31 exch sub % 31 - inner index
            permV exch get binop % apply binary operation to the permuted letter and the inner index
            innercode exch get 12 centrecodexshow % display the result
@@ -1369,12 +1387,14 @@ end
    % Draw indicator arrow
    newpath 0 6 40 mul moveto 10 -20 rlineto -20 0 rlineto closepath fill
    % Draw text
-   180 rotate
    0 1 31 {
-       magic rotate
+       dup 1 add magic mul
+       /theta exch def
        dup 2 add sqrt 40 mul 2.5 add % lam = 2.5 + 40*sqrt(idx + 2)
+       /lam exch def
        newpath
-       0 exch % set midpoint: 0 lam
+       lam theta sin mul
+       lam theta cos mul neg
        2 copy moveto
        12 centresquare % draw square
        moveto % return to midpoint
@@ -2607,18 +2627,161 @@ pgsave restore showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-72 pgsize aload pop 36 sub exch pop allPageContent 8 get drawPageContent
+
+
+% Dice Worksheet
+90 rotate
+
+60 -40 allPageContent 8 get drawPageContent
+
+%% Instructions
+%/Helvetica-Bold findfont 18 scalefont setfont
+%60 -72 moveto (Random Character Worksheet) show
+
+60 -88 moveto
+/Helvetica-bold findfont 12 scalefont setfont
+(You will need: ) show
+/Helvetica findfont 12 scalefont setfont
+(five distinct dice, five markers, this and the following page) show
+
+60 -120 moveto
+(1. Label each Die Track to indicate which die it corresponds to.) show
+/Helvetica-bold findfont 12 scalefont setfont
+74 -134 moveto
+0.7 0 0 setrgbcolor
+(Do not otherwise mark these two pages.) show
+/Helvetica findfont 12 scalefont setfont
+0 setgray
+60 -153 moveto
+(2. Roll all five dice and set markers on each Die Pad) show
+74 -167 moveto
+(indicating their values.) show
+
+60 -186 moveto
+(3. Roll all five dice again and set the dice on each Die) show
+74 -200 moveto
+(Track indicating their second values.) show
+
+60 -219 moveto
+(4. Repeat steps 2 and 3 for each die that showed) show
+74 -233 moveto
+(the same value twice.) show
+
+60 -252 moveto
+(5. Using your finger, follow the tree to the right) show
+74 -266 moveto
+(using the results indicated on the Die Tracks:) show
+74 -280 moveto
+(take the first left branch if the first die is to the) show
+74 -294 moveto
+(left of its marker, the right branch if it is to the) show
+74 -308 moveto
+(right. Similarly, take the second branch based) show
+74 -322 moveto
+(on the results on the second Die Track, and) show
+74 -336 moveto
+(so on, until the bottom of the tree.) show
+
+60 -355 moveto
+(6. Repeat Steps 2-5 to generate more characters.) show
+
+gsave
+325 -390 translate
+%% Tree
+10 dict begin
+% tree
+  /radius 0.705 72 mul 8.5 div def
+  /spacing 60 def
+  /coord { % i j -- x y
+     1 index 2 exch exp exch 0.5 add mul 2 mul 1.1 radius mul mul
+     exch 0.5 add spacing mul
+  } bind def
+  /trimedline { % x1 y1 x2 y2 --
+  10 dict begin
+    { /y2 /x2 /y1 /x1 } {exch def} forall
+    /dx x2 x1 sub def
+    /dy y2 y1 sub def
+    /l dx dup mul dy dup mul add sqrt def
+    x1 y1 moveto 0 dup dx mul exch dy mul rmoveto
+    1 2 0 mul sub dup dx mul exch dy mul rlineto
+  end
+  } bind def
+  1 1 5 {
+    /i exch def
+    0 1 2 5 i sub exp 1 sub {
+      /j exch def
+      /x 2 i exp j 0.5 add mul 2 mul 1.1 radius mul mul def
+      i j coord moveto radius 5 div neg 0 rmoveto
+      i j coord radius 5 div -180 180 arc
+    } for
+  } for
+  thick line stroke
+  0 1 4 {
+    /i exch def
+    0 1 2 5 i sub exp 1 sub {
+      /j exch def
+      /x 2 i exp j 0.5 add mul 2 mul 1.1 radius mul mul def
+      i j coord i 1 add j 2 idiv coord trimedline
+    } for
+  } for
+  thin line stroke
+  /fontsz 16 def
+  /Codex findfont fontsz scalefont setfont
+  0 1 31 {
+    /j exch def
+    /x 1.1 radius mul 2 j mul 1 add mul def
+    x spacing 2 div fontsz 0.3 mul sub 5 sub moveto
+    code j get centreglyphshow
+  } for
+end
+grestore
+
+% Labels for the dice pad rows
+/Helvetica-Bold findfont 18 scalefont setfont
+60 -395 moveto
+(Die Tracks) show
+newpath 36 -399 moveto 736 -399 lineto stroke
+
+/Helvetica findfont 14 scalefont setfont
+60 -428 moveto
+(Label) show
+newpath 80 -445 32.5 140 220 arc -10 10 rlineto 10 -10 rmoveto -1 11 rlineto  stroke
+
+220 -428 moveto
+(Die Pads) show
+
+500 -428 moveto
+(Die Pads \(d7+\)) show
+
+% Draw a single dice pad row at the bottom
+100 -518 moveto
+drawDiceRow
 pgsave restore showpage
 
 %%Page: 10 15
+%%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
+90 rotate
+
+100 -118 moveto
+4 { drawDiceRow 0 -135 rmoveto } repeat
+
+pgsave restore
+showpage
+
+%% Volvelles
+%%Page: 11 16
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+72 pgsize aload pop 36 sub exch pop allPageContent 10 get drawPageContent
 {xor} (Addition) code dup perm drawBottomWheelPage
 
 pgsave restore
 showpage
-%%Page: 11 16
+%%Page: 12 17
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2626,7 +2789,7 @@ showTopWheelPage
 
 pgsave restore
 showpage
-%%Page: 12 17
+%%Page: 13 18
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2679,7 +2842,7 @@ pgsize aload pop 2 div exch 2 div exch translate
 end
 pgsave restore
 showpage
-%%Page: 13 18
+%%Page: 14 19
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2741,7 +2904,7 @@ end
 
 pgsave restore
 showpage
-%%Page: 14 19
+%%Page: 15 20
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -2870,7 +3033,7 @@ end
 
 pgsave restore
 showpage
-%%Page: 15 20
+%%Page: 16 21
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -2892,9 +3055,9 @@ moveto (ms32 Checksum Table) centreshow
   % alternating 4-cell-height white/gray for the content background
   x y moveto
   0 1 31 {
-    dup 0 eq { 0.8 } {
-      8 mod 4 lt { 0.8 } { 1 } ifelse
-    } ifelse setgray
+    dup 0 eq { 0.808 0.923 0.953 } {
+      8 mod 4 lt { 0.808 0.923 0.953 } { 1 1 1 } ifelse
+    } ifelse setrgbcolor
 
     gsave
       tWidth 0 rlineto
@@ -2998,7 +3161,7 @@ false {
 
 pgsave restore
 showpage
-%%Page: 16 21
+%%Page: 17 22
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3007,7 +3170,7 @@ showpage
 
 /Helvetica-Bold findfont 10 scalefont setfont
 pgsize aload pop exch pop 2 div 700
-moveto (ms32 Checksum Table) centreshow
+moveto (Checksum Table) centreshow
 
 /drawTable {
   10 dict begin
@@ -3020,9 +3183,10 @@ moveto (ms32 Checksum Table) centreshow
   % alternating 4-cell-height white/gray for the content background
   x y moveto
   0 1 31 {
-    dup 0 eq { 0.8 } {
-      8 mod 4 lt { 0.8 } { 1 } ifelse
-    } ifelse setgray
+    dup 0 eq { 0.808 0.923 0.953 } {
+%      8 mod 4 lt { 0.8 } { 1 } ifelse
+      8 mod 4 lt { 0.808 0.923 0.953 } { 1 1 1 } ifelse
+    } ifelse setrgbcolor
 
     gsave
       tWidth 0 rlineto
@@ -3126,7 +3290,7 @@ false {
 
 pgsave restore
 showpage
-%%Page: 17 22
+%%Page: 18 23
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3261,7 +3425,7 @@ perm 2 index get gf32add code exch get glyphshow
 pgsave restore
 showpage
 
-%%Page: 18 23
+%%Page: 19 24
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3326,7 +3490,7 @@ end
 pgsave restore
 showpage
 
-%%Page: 19 24
+%%Page: 20 25
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3395,7 +3559,7 @@ end
 pgsave restore
 showpage
 
-%%Page: 20 25
+%%Page: 21 26
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3463,13 +3627,14 @@ end
 pgsave restore
 showpage
 
-%%Page: 21 26
-%%PageOrientation: Landscape
+%%Page: 22 27
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-90 rotate 0 -750 translate
-/hrp (bip39_24) def
+
+%90 rotate 0 -750 translate
+
+/hrp (bip39_24w) def
 /thick 1 def
 /thin 0.2 def
 /box {
@@ -3501,18 +3666,18 @@ showpage
   end
 } bind def
 /Helvetica-Bold findfont 10 scalefont setfont
-pgsize aload pop exch pop 2 div 700
-moveto (bip39_24 Checksum Worksheet) centreshow
+pgsize aload pop pop 2 div 740
+moveto (bip39_24w Checksum Worksheet) centreshow
 
 /Courier findfont 15 scalefont setfont
 
-346 680
+136 720
 % [10 29 19 13 4 16 20 8 16 7 4 13 6 8 27 31 28 14 17 21 31 25 19 15 1 3 13 29 22 5 8 31 9 17 15 30 19 15 21 16 19 26 16 22 31]
-[ 31 {32} repeat ]
+[ 72 {32} repeat ]
 10 dict begin
 { /codeword /y /x } {exch def} forall
-x y moveto hrp (1) concatstrings dup stringwidth pop neg 3 sub 0 rmoveto show
 /odd polymodulus length codeword length add 2 mod def
+x y moveto hrp (1) concatstrings dup stringwidth pop neg 3 sub odd 1 eq { arraySpace add } if 0 rmoveto show
 /edge codeword length polymodulus length sub hrp length add 2 add def
 /gaps [ 0 1 codeword length { 4 mod 1 eq {gapSpace} {arraySpace} ifelse } for ] def
 /k polymodulus length odd sub def
@@ -3520,91 +3685,43 @@ x y moveto hrp (1) concatstrings dup stringwidth pop neg 3 sub 0 rmoveto show
 /y y 14 sub def
 /reduction [hrp polymodhrp aload pop k {0} repeat ] polymod0 def
   {reduction length thin box} x arraySpace odd mul add y moveto reduction gaps 1 k getinterval odd showArrayBox
+  gsave
+    /Helvetica findfont 9 scalefont setfont
+    x y moveto
+    odd 1 eq { arraySpace 0 rmoveto } if
+    (+) dup stringwidth pop 2 add neg 2 rmoveto show
+  grestore
 /y y 15 sub def
 /residue reduction [1 odd eq {0} if codeword 0 k getinterval aload pop ] gf32addarray def
 
 {
-  k codeword length ge {exit} if
-  { codeword length k sub 100 add thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
-  {edge 100 add 0 labeledbox} codeword gaps k 1 add 2 getinterval k showArrayBox
-  /x x gaps k 1 add reduction length sub 2 getinterval aload pop add add def
-  /y y 14 sub def
-  /reduction residue 0 2 getinterval aload pop polymodshift2 def
-  {reduction length thin box} x y moveto reduction gaps k 1 add reduction length 2 sub sub reduction length getinterval 0 showArrayBox
-  /y y 15 sub def
-  /residue reduction [residue 2 polymodulus length 2 sub getinterval aload pop codeword k 2 getinterval aload pop] gf32addarray def
-  /k k 2 add def
-} loop
-
-%gsave 0.85 setgray x y moveto checksum gaps k 1 add residue length sub residue length getinterval 0 showArray grestore
-{residue length thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
-
-end
-
-176 585
-% [10 29 19 13 4 16 20 8 16 7 4 13 6 8 27 31 28 14 17 21 31 25 19 15 1 3 13 29 22 5 8 31 9 17 15 30 19 15 21 16 19 26 16 22 31]
-[ 35 {32} repeat ]
-10 dict begin
-{ /codeword /y /x } {exch def} forall
-%x y moveto hrp (1) concatstrings 0 16 rmoveto show
-/odd polymodulus length codeword length add 2 mod def
-/edge codeword length polymodulus length sub hrp length add 2 add def
-/gaps [ 0 1 codeword length { 4 mod 1 eq {gapSpace} {arraySpace} ifelse } for ] def
-/k polymodulus length odd sub def
-%  {edge 37 labeledbox} x arraySpace odd mul add y moveto codeword gaps 1 k getinterval 0 showArrayBox
-%/y y 14 sub def
-/reduction [k 13 add {32} repeat ] polymod0 def
-%  {reduction length thin box} x arraySpace odd mul add y moveto reduction gaps 1 k getinterval odd showArrayBox
-%/y y 15 sub def
-/residue reduction [1 odd eq {0} if codeword 0 k getinterval aload pop ] gf32addarray def
-
-{
-  k codeword length ge {exit} if
-  { codeword length k sub 100 add thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
-  {edge 100 add 18 labeledbox} codeword gaps k 1 add 2 getinterval k showArrayBox
-  /x x gaps k 1 add reduction length sub 2 getinterval aload pop add add def
-  /y y 14 sub def
-  /reduction residue 0 2 getinterval aload pop polymodshift2 def
-  {reduction length thin box} x y moveto reduction gaps k 1 add reduction length 2 sub sub reduction length getinterval 0 showArrayBox
-  /y y 15 sub def
-  /residue reduction [residue 2 polymodulus length 2 sub getinterval aload pop codeword k 2 getinterval aload pop] gf32addarray def
-  /k k 2 add def
-} loop
-
-%gsave 0.85 setgray x y moveto checksum gaps k 1 add residue length sub residue length getinterval 0 showArray grestore
-{residue length thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
-
-end
-
-
-36 480
-% [10 29 19 13 4 16 20 8 16 7 4 13 6 8 27 31 28 14 17 21 31 25 19 15 1 3 13 29 22 5 8 31 9 17 15 30 19 15 21 16 19 26 16 22 31]
-[ 35 {32} repeat ]
-10 dict begin
-{ /codeword /y /x } {exch def} forall
-%x y moveto hrp (1) concatstrings 0 16 rmoveto show
-/odd polymodulus length codeword length add 2 mod def
-/edge codeword length polymodulus length sub hrp length add 2 add def
-/gaps [ 0 1 codeword length { 4 mod 1 eq {gapSpace} {arraySpace} ifelse } for ] def
-/k polymodulus length odd sub def
-%  {edge 37 labeledbox} x arraySpace odd mul add y moveto codeword gaps 1 k getinterval 0 showArrayBox
-%/y y 14 sub def
-/reduction [k 13 add {32} repeat ] polymod0 def
-%  {reduction length thin box} x arraySpace odd mul add y moveto reduction gaps 1 k getinterval odd showArrayBox
-%/y y 15 sub def
-/residue reduction [1 odd eq {0} if codeword 0 k getinterval aload pop ] gf32addarray def
-
-{
+  gsave
+    /Helvetica findfont 9 scalefont setfont
+    x y moveto (=) dup stringwidth pop 2 add neg 2 rmoveto show
+  grestore
   k codeword length ge {exit} if
   { codeword length k sub thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
-  {edge 40 labeledbox} codeword gaps k 1 add 2 getinterval k showArrayBox
+  {edge 0 labeledbox} codeword gaps k 1 add 2 getinterval k showArrayBox
   /x x gaps k 1 add reduction length sub 2 getinterval aload pop add add def
   /y y 14 sub def
+
+  gsave
+    /Helvetica findfont 9 scalefont setfont
+    x y moveto (+) dup stringwidth pop 2 add neg 2 rmoveto show
+  grestore
+
   /reduction residue 0 2 getinterval aload pop polymodshift2 def
-  {reduction length thin box} x y moveto reduction gaps k 1 add reduction length 2 sub sub reduction length getinterval 0 showArrayBox
+  {codeword length k sub 2 sub thin box} x y moveto reduction gaps k 1 add reduction length 2 sub sub reduction length getinterval 0 showArrayBox
   /y y 15 sub def
   /residue reduction [residue 2 polymodulus length 2 sub getinterval aload pop codeword k 2 getinterval aload pop] gf32addarray def
   /k k 2 add def
+
+  % mod 14: 4-split
+  % mod 22 3-split
+  k 10 gt k 10 sub 22 mod 0 eq and {
+      /x x 335 sub def
+      /y y 105 add def
+  } if
 } loop
 
 gsave 0.85 setgray x y moveto checksum gaps k 1 add residue length sub residue length getinterval 0 showArray grestore
@@ -3615,7 +3732,7 @@ end
 pgsave restore
 showpage
 
-%%Page: 22 27
+%%Page: 23 28
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3742,7 +3859,7 @@ moveto (BIP-39 Conversion Worksheet) centreshow
 pgsave restore
 showpage
 
-%%Page: 23 28
+%%Page: 24 29
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3758,7 +3875,7 @@ showpage
 pgsave restore
 showpage
 
-%%Page: 24 29
+%%Page: 25 30
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3774,7 +3891,7 @@ showpage
 pgsave restore
 showpage
 
-%%Page: 25 30
+%%Page: 26 31
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3790,7 +3907,7 @@ showpage
 pgsave restore
 showpage
 
-%%Page: 26 31
+%%Page: 27 32
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
@@ -3806,7 +3923,7 @@ showpage
 pgsave restore
 showpage
 
-%%Page: 27 32
+%%Page: 28 33
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3816,7 +3933,7 @@ showpage
 pgsave restore
 showpage
 
-%%Page: 28 33
+%%Page: 29 34
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3824,7 +3941,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 29 34
+%%Page: 30 35
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3832,7 +3949,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 30 35
+%%Page: 31 36
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3840,7 +3957,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 31 36
+%%Page: 32 37
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3848,7 +3965,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 32 37
+%%Page: 33 38
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3856,7 +3973,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 33 38
+%%Page: 34 39
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3864,7 +3981,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 34 39
+%%Page: 35 40
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -3872,7 +3989,7 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 35 40
+%%Page: 36 41
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup

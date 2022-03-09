@@ -226,7 +226,7 @@
     (even "trivial" risks add up to become very serious.)
     /paragraph
     (Unlike electronic computers, paper cannot remember or leak secrets, at least)
-    (when handled correctly, and this can be easily seen without special skills)
+    (when handled correctly and disposed of securely, and this can be easily seen without special skills)
     (or equipment. In this document, we have provided a paper-based means to)
     /startlist
     /listitem* (Securely generate random data from potentially biased dice or coin flips) /endlistitem
@@ -257,13 +257,13 @@
     (hand.)
     /paragraph
     (SLIP39, by contrast, can detect up to 3 errors and correct up to one error)
-    (100% of the time, and will fail to detect other random errors with probability)
-    (roughly one in a billion. However, the SLIP39 checksum is also quite difficult)
-    (to compute or verify by hand.)
+    (100% of the time, and will fail to detect other random errors with extremely)
+    (low probability. However, the SLIP39 checksum is also quite difficult to)
+    (compute or verify by hand.)
     /paragraph
     (In the Codex, we introduce a new checksum, *codex32*, which can detect up to 8)
-    (errors, correct up to 4, and has probability less than one in a million million)
-    (million of failing to detect other random errors. Further, codex32 checksums)
+    (errors, correct up to 4, and has even lower probability than SLIP39 of failing)
+    (to detect other random errors. Most importantly \(for us\), codex32 checksums)
     (can be computed and verified entirely by hand.)
 
     /subsection (Bech32 and the Alphabet) /endsubsection
@@ -327,8 +327,8 @@
      (threshold is, and should be a digit between `2` and `9`)
      (inclusive. Higher threshold values are not supported.) /endlistitem
     /listitem* (The *identifier* is four arbitrary bech32 characters.)
-     (They should be the same for all shares of a given secret, but distinct)
-     (between secrets.) /endlistitem
+     (All shares of a given secret will have the same identifier, but distinct)
+     (secrets should have distinct IDs.) /endlistitem
     /listitem* (The *share index* indicates which share this is,)
      (and may be any bech32 character except `S`. *The* *secret* *itself* *will*)
      (*have* *share* *index* `S`.) /endlistitem

@@ -1596,8 +1596,12 @@ end
   /decorateTopDisc {
 -45 rotate
 0.8 setgray
--142 -140 translate
-0.75 0.75 scale
+% Potion fits into 0 0 380 380, but has rays going to the outside
+% of the bounding box, so we shrink it further
+0.85 0.85 scale
+innerRadius 2 mul 380 div
+innerRadius 2 mul 380 div scale
+-380 2 div -380 2 div translate
 drawPotion
 } def
 end
@@ -1610,9 +1614,11 @@ multiplicationDisc dup maxlength dict copy dup /translationDisc exch def begin
   /handlePointerSz 0 def
   /decorateTopDisc {
 gsave
+% sun fits into 0 0 385 385
 0.8 setgray
--175 -174 translate
-0.91 0.91 scale
+innerRadius 2 mul 385 div
+innerRadius 2 mul 385 div scale
+-385 2 div -385 2 div translate
 drawSun
 grestore
     [/Q /arrowboth /Q]
@@ -1639,10 +1645,12 @@ multiplicationDisc dup maxlength dict copy dup /recoveryDisc exch def begin
   } bind def
   /innerPointerSz 0 def
   /decorateTopDisc {
--45 rotate
+% Orb fits into 0 0 395 396, but for some reason needs some fine-tuning
+-40 rotate
 0.8 setgray
--169 -170.5 translate
-0.86 0.86 scale
+innerRadius 2 mul 395 div
+innerRadius 2 mul 395 div scale
+-395 2 div -395 2 div translate
 drawOrb
 %     /littleR 1 def
  %    /bigR innerRadius innerPointerSz sub innerglyphSz sub littleR sub def
@@ -51347,9 +51355,10 @@ showpage
    grestore
 
 gsave
+  % Original dragon fit into 0 0 354 354. Our inner circle has a 240 radius.
   pgsize aload pop 2 div exch 2 div exch translate
   -240 -240 translate
-  1.36 1.36 scale
+  480 354 div dup scale
   0.85 setgray
   drawDragon
 grestore

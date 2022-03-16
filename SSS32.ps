@@ -36,15 +36,6 @@
 (or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.)
 ()
 ]
-(WARNING:)
-[
-(Seriously, this is a work in progress, and it is only a concept right now.)
-(If you try to use this for your valuable data, I promise you will lose your data.)
-(You will lose this document and come back here only to find that I have made)
-(incompatible changes, and your data is lost forever. Even if you don't lose)
-(this document, there is no warranty or guarantee of any kind that you will be)
-(able to recover successfully recover your data.)
-]
 %************************************************************************
 %************************************************************************
 %*
@@ -58,7 +49,6 @@
 %*
 %* Define variables for the preceeding front matter text.
 %*
-/warning [ 4 2 roll exch [ exch ] exch ] def
 /MIT exch def
 /ver exch def
 /title exch def
@@ -49407,8 +49397,6 @@ showpage
 40 750 moveto
 MIT {gsave ((c)) search {show pop /copyright glyphshow} if show grestore 0 -12 rmoveto} forall
 /Helvetica findfont 14 scalefont setfont
-0 -16 rmoveto
-468 14 warning showParagraphs
 pgsave restore
 showpage
 

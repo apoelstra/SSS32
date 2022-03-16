@@ -1,26 +1,30 @@
 <?php
 
-$current_page = 1;
-$current_page_disp = 6;
-$current_page_cont = 6;
-function new_page() {
-    echo '%%Page: 1 6';
-    echo '%%BeginPageSetup';
-    echo '/pgsave save def';
-    echo '%%EndPageSetup';
+function new_page($landscape = false) {
+    static $current_page = 1;
+    static $current_page_disp = 6;
 
-    $current_page += 1;
-    $current_page_disp += 1;
+    echo "%%Page: $current_page $current_page_disp\n";
+    if ($landscape) {
+        echo "%%PageOrientation: Landscape\n";
+    }
+    echo "%%BeginPageSetup\n";
+    echo "/pgsave save def\n";
+    echo "%%EndPageSetup\n";
+
+    $current_page++;
+    $current_page_disp++;
 }
 
 function end_page() {
-    echo 'pgsave restore showpage';
+    echo "pgsave restore showpage\n";
 }
 
 function content_page() {
+    static $current_page_cont = 0;
     new_page();
-    echo '72 pgsize aload pop 36 sub exch pop allPageContent 0 get drawPageContent';
-    end_page();
+    echo "72 pgsize aload pop 36 sub exch pop allPageContent $current_page_cont get drawPageContent\n";
+    $current_page_cont++;
 }
 
 ?>
@@ -49747,46 +49751,24 @@ showpage
 %*
 %****************************************************************
 <?php
-    content_page();
-    content_page();
+    content_page(); end_page();
+    content_page(); end_page();
+    content_page(); end_page();
     content_page();
 ?>
-
-%%Page: 4 9
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-72 pgsize aload pop 36 sub exch pop allPageContent 3 get drawPageContent
-
 216 156 moveto
 /Times-Italic findfont 12 scalefont setfont (Keep it secret. Keep it safe.) show
 306 140 moveto gsave 0 3.5 rmoveto 10 0 rlineto 0.2 setlinewidth stroke grestore 12 0 rmoveto
 /Times findfont 12 scalefont setfont (Gandalf) show
+<?php end_page(); ?>
 
-pgsave restore showpage
-
-%%Page: 5 10
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-72 pgsize aload pop 36 sub exch pop allPageContent 4 get drawPageContent
-
+<?php content_page(); ?>
 72 310 drawDataFormat
-pgsave restore showpage
+<?php end_page(); ?>
 
-%%Page: 6 11
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-72 pgsize aload pop 36 sub exch pop allPageContent 5 get drawPageContent
+<?php content_page(); end_page(); ?>
 
-pgsave restore showpage
-
-%%Page: 7 12
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-72 pgsize aload pop 36 sub exch pop allPageContent 6 get drawPageContent
+<?php content_page(); ?>
 
 % EDITME
 % Edit these values to draw tables for larger k. Be warned that the total work to recover
@@ -49838,24 +49820,13 @@ mink 1 maxk {
   } for % vertical loop
   /y y 20 sub def
 } for
-pgsave restore showpage
 
-%%Page: 8 13
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-72 pgsize aload pop 36 sub exch pop allPageContent 7 get drawPageContent
-pgsave restore showpage
+<?php end_page(); ?>
+
+<?php content_page(); end_page(); ?>
 
 %%% Random Character Worksheet
-%%Page: 9 14
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-
-
-% Dice Worksheet
+<?php new_page(true); ?>
 90 rotate
 
 60 -40 allPageContent 8 get drawPageContent
@@ -49979,27 +49950,15 @@ newpath 80 -445 32.5 140 220 arc -10 10 rlineto 10 -10 rmoveto -1 11 rlineto  st
 0.2 setlinewidth
 100 -518 moveto
 drawDiceRow
-pgsave restore showpage
 
-%%Page: 10 15
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(true); ?>
 90 rotate
 
 0.2 setlinewidth
 100 -118 moveto
 4 { drawDiceRow 0 -135 rmoveto } repeat
 
-pgsave restore
-showpage
-
-%%Page: 11 16
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(true); ?>
 90 rotate 0 -750 translate
 
 /Helvetica-Bold findfont 10 scalefont setfont
@@ -50121,13 +50080,7 @@ false {
 } for
 } if
 
-pgsave restore
-showpage
-%%Page: 12 17
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(true); ?>
 90 rotate 0 -750 translate
 
 /Helvetica-Bold findfont 10 scalefont setfont
@@ -50250,13 +50203,7 @@ false {
 } for
 } if
 
-pgsave restore
-showpage
-%%Page: 13 18
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(true); ?>
 90 rotate 0 -750 translate
 /hrp (ms) def
 
@@ -50384,14 +50331,7 @@ perm exch get
 perm 2 index get gf32add code exch get glyphshow
 } for pop } for
 
-pgsave restore
-showpage
-
-%%Page: 14 19
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(true); ?>
   10 dict begin
   gsave
 
@@ -50449,14 +50389,7 @@ showpage
   } repeat
 end
 
-pgsave restore
-showpage
-
-%%Page: 15 20
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(true); ?>
   10 dict begin
   gsave
 
@@ -50518,14 +50451,7 @@ showpage
   } repeat
 end
 
-pgsave restore
-showpage
-
-%%Page: 16 21
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(true); ?>
   10 dict begin
   gsave
 
@@ -50586,24 +50512,12 @@ showpage
   } repeat
 end
 
-pgsave restore
-showpage
-
 %% Volvelles
-%%Page: 17 22
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(); ?>
 72 pgsize aload pop 36 sub exch pop allPageContent 10 get drawPageContent
 {xor} (Addition) code dup perm drawBottomWheelPage
 
-pgsave restore
-showpage
-%%Page: 18 23
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-
+<?php end_page(); new_page(); ?>
    % Draw gray "handle" and white interior circle
    gsave
    pgsize aload pop 2 div exch 2 div exch translate
@@ -50624,12 +50538,7 @@ gsave
 grestore
 showTopWheelPage
 
-pgsave restore
-showpage
-%%Page: 19 24
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(); ?>
 % gsave verythin line marginpath stroke grestore
 recoveryDisc begin
 % Draw assembly diagram
@@ -50678,13 +50587,7 @@ pgsize aload pop 2 div exch 2 div exch translate
   drawTopDisc
 end
 
-
-pgsave restore
-showpage
-%%Page: 20 25
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(); ?>
 % gsave verythin line marginpath stroke grestore
 % Draw assembly diagram
 gsave
@@ -50741,12 +50644,7 @@ translationDisc begin
    drawBottomDisc
 end
 
-pgsave restore
-showpage
-%%Page: 21 26
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(); ?>
 % gsave verythin line marginpath stroke grestore
 % Draw assembly diagram
 gsave
@@ -50870,90 +50768,36 @@ translationDisc begin
   drawTopDisc
 end
 
-pgsave restore
-showpage
-
-%%Page: 22 27
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-
+<?php end_page(); new_page(); ?>
 /Helvetica findfont 14 scalefont setfont
 100 100 moveto (Module 1: share booklet. Instructions for using the booklet go here) show
 100 200 moveto (\(This section is nonessential and can be safely ignored for now.\)) show
-pgsave restore
-showpage
 
-%%Page: 23 28
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(); ?>
 29 24 13 25 showShareTablePage
 
-pgsave restore
-showpage
-%%Page: 24 29
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(); ?>
 9 8 23 18 showShareTablePage
 
-pgsave restore
-showpage
-%%Page: 25 30
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(); ?>
 22 31 27 19 showShareTablePage
 
-pgsave restore
-showpage
-%%Page: 26 31
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(); ?>
 1 0 3 16 showShareTablePage
 
-pgsave restore
-showpage
-%%Page: 27 32
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(); ?>
 11 28 12 14 showShareTablePage
 
-pgsave restore
-showpage
-%%Page: 28 33
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(); ?>
 6 4 2 15 showShareTablePage
 
-pgsave restore
-showpage
-%%Page: 29 34
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(); ?>
 10 17 21 20 showShareTablePage
 
-pgsave restore
-showpage
-%%Page: 30 35
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(); ?>
 26 30 7 5 showShareTablePage
 
-pgsave restore
-showpage
-
-%%Page: 31 36
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-
+<?php end_page(); new_page(); ?>
 /Helvetica findfont 14 scalefont setfont
 100 700 moveto (Module 39: BIP-39 Support) show
 /Times findfont 12 scalefont setfont
@@ -50979,16 +50823,7 @@ showpage
 
 100 260 moveto (We encourage users to move away from BIP-39 to avoid this extra inconvenience.) show
 
-pgsave restore
-showpage
-
-%%Page: 32 37
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-
-%90 rotate 0 -750 translate
-
+<?php end_page(); new_page(); ?>
 /hrp (bip39_12w) def
 /thick 1 def
 /thin 0.2 def
@@ -51084,16 +50919,7 @@ gsave 0.85 setgray x y moveto checksum gaps k 1 add residue length sub residue l
 
 end
 
-pgsave restore
-showpage
-
-%%Page: 33 38
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-
-%90 rotate 0 -750 translate
-
+<?php end_page(); new_page(); ?>
 /hrp (bip39_24w) def
 /thick 1 def
 /thin 0.2 def
@@ -51189,14 +51015,7 @@ gsave 0.85 setgray x y moveto checksum gaps k 1 add residue length sub residue l
 
 end
 
-pgsave restore
-showpage
-
-%%Page: 34 39
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-
+<?php end_page(); new_page(); ?>
 /Helvetica-bold findfont 10 scalefont setfont
 pgsize aload pop pop 2 div 740
 moveto (BIP-39 Conversion Worksheet) centreshow
@@ -51315,15 +51134,7 @@ moveto (BIP-39 Conversion Worksheet) centreshow
 350 15 false showbinaries
 430 31 false showbinaries
 
-
-pgsave restore
-showpage
-
-%%Page: 35 40
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(true); ?>
 90 rotate
 1 1 8 {
     dup
@@ -51332,14 +51143,7 @@ showpage
     false showbinaries39
 } for
 
-pgsave restore
-showpage
-
-%%Page: 36 41
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(true); ?>
 90 rotate
 1 1 8 {
     dup
@@ -51348,14 +51152,7 @@ showpage
     false showbinaries39
 } for
 
-pgsave restore
-showpage
-
-%%Page: 37 42
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(true); ?>
 90 rotate
 1 1 8 {
     dup
@@ -51364,14 +51161,7 @@ showpage
     false showbinaries39
 } for
 
-pgsave restore
-showpage
-
-%%Page: 38 43
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
+<?php end_page(); new_page(true); ?>
 90 rotate
 1 1 8 {
     dup
@@ -51380,8 +51170,6 @@ showpage
     false showbinaries39
 } for
 
-pgsave restore
-showpage
-
+<?php end_page(); ?>
 
 %%EOF

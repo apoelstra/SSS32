@@ -2137,7 +2137,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
   } for
 
   % Draw headings above/below braces
-  /Helvetica findfont 12 scalefont setfont
+  /Times findfont 12 scalefont setfont
   x y moveto
   3.5 boxW mul -32 rmoveto
   gsave
@@ -49396,7 +49396,6 @@ showpage
 /Courier findfont 10 scalefont setfont
 40 750 moveto
 MIT {gsave ((c)) search {show pop /copyright glyphshow} if show grestore 0 -12 rmoveto} forall
-/Helvetica findfont 14 scalefont setfont
 pgsave restore
 showpage
 
@@ -49410,7 +49409,7 @@ showpage
 /pgsave save def
 %%EndPageSetup
 
-/Helvetica-Bold findfont 16 scalefont setfont
+/Times-Bold findfont 20 scalefont setfont
 pgsize aload pop 48 sub exch 2 div exch
 moveto (Principal Tables) centreshow
 
@@ -49424,7 +49423,7 @@ pgsize aload pop
 
   % Top 16 pts are title
   x y moveto
-  /Helvetica findfont 12 scalefont setfont
+  /Times findfont 14 scalefont setfont
   tWidth 2 div -12 rmoveto title centreshow
 
   % Remainder is split into the table (one extra row and column for heading)
@@ -49507,13 +49506,13 @@ pgsize aload pop
 } bind def
 
 % top-left
-28 tHeight tHeight 56 add add
+28 tHeight tHeight 46 add add
 {gf32add} (Addition) code perm code perm code drawTable
 % top-right
-tWidth 44 add tHeight tHeight 56 add add
+tWidth 44 add tHeight tHeight 46 add add
 {gf32mul} (Translation) code perm code2 permId 1 31 getinterval code drawTable
 % bot-left
-28 tHeight 48 add
+28 tHeight 38 add
 { 10 dict begin
   /in exch def
   /out exch def
@@ -49523,7 +49522,7 @@ tWidth 44 add tHeight tHeight 56 add add
 }
 (Recovery) code permS 1 31 getinterval code permS 1 31 getinterval code2 drawTable
 % bot-right
-tWidth 44 add tHeight 48 add
+tWidth 44 add tHeight 38 add
 {gf32mul} (Multiplication) code2 permId 1 31 getinterval code2 permId 1 31 getinterval code2 drawTable
 
 pgsave restore
@@ -49558,7 +49557,7 @@ showpage
 % Header/data format
 %
 
-/Helvetica-Bold findfont 16 scalefont setfont
+/Times-Bold findfont 20 scalefont setfont
 0.5 0 position moveto (Data Format) centreshow
 
 0 0.05 position drawDataFormat
@@ -49567,7 +49566,7 @@ showpage
 % bech32->binary chart
 %
 0.50 0.20 position moveto
-/Helvetica-Bold findfont 16 scalefont setfont
+/Times-Bold findfont 20 scalefont setfont
 (Bech32 to Binary Conversion) centreshow
 /Courier findfont 12 scalefont setfont
 
@@ -49587,7 +49586,7 @@ showpage
 } repeat pop
 
 0.50 0.45 position moveto
-/Helvetica-Bold findfont 16 scalefont setfont
+/Times-Bold findfont 20 scalefont setfont
 (Binary to Bech32 Conversion) centreshow
 /Courier findfont 12 scalefont setfont
 
@@ -49608,7 +49607,7 @@ showpage
 %
 % Symbol pronunciation
 %
-/Helvetica-Bold findfont 16 scalefont setfont
+/Times-Bold findfont 20 scalefont setfont
 0.5 0.72 position moveto
 (Symbols) centreshow
 
@@ -49631,7 +49630,7 @@ gsave
   code2 exch get
   12 codexshow ( ) show
   gsave
-    /Helvetica findfont 12 scalefont setfont
+    /Times findfont 12 scalefont setfont
     code2 exch get pronunciation exch get show
   grestore
   90 0 rmoveto
@@ -49654,12 +49653,12 @@ showpage
 /pgsave save def
 %%EndPageSetup
 
-/Helvetica-Bold findfont 18 scalefont setfont
+/Times-Bold findfont 20 scalefont setfont
 pgsize aload pop 72 sub exch 2 div exch
 moveto (Table of Contents) centreshow
 
 [1 4] 0 setdash
-/Helvetica findfont 14 scalefont setfont
+/Times findfont 16 scalefont setfont
 /pagenum 1 def
 
 <<
@@ -49851,23 +49850,19 @@ pgsave restore showpage
 
 60 -40 allPageContent 8 get drawPageContent
 
-%% Instructions
-%/Helvetica-Bold findfont 18 scalefont setfont
-%60 -72 moveto (Random Character Worksheet) show
-
 60 -88 moveto
-/Helvetica-bold findfont 12 scalefont setfont
+/Times-bold findfont 12 scalefont setfont
 (You will need: ) show
-/Helvetica findfont 12 scalefont setfont
+/Times findfont 12 scalefont setfont
 (five distinct dice, five markers, this and the following page) show
 
 60 -120 moveto
 (1. Label each Die Track to indicate which die it corresponds to.) show
-/Helvetica-bold findfont 12 scalefont setfont
+/Times-bold findfont 12 scalefont setfont
 74 -134 moveto
 0.7 0 0 setrgbcolor
 (Do not otherwise mark these two pages.) show
-/Helvetica findfont 12 scalefont setfont
+/Times findfont 12 scalefont setfont
 0 setgray
 60 -153 moveto
 (2. Roll all five dice and set markers on each Die Pad) show

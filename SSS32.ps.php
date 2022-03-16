@@ -1,4 +1,29 @@
+<?php
 
+$current_page = 1;
+$current_page_disp = 6;
+$current_page_cont = 6;
+function new_page() {
+    echo '%%Page: 1 6';
+    echo '%%BeginPageSetup';
+    echo '/pgsave save def';
+    echo '%%EndPageSetup';
+
+    $current_page += 1;
+    $current_page_disp += 1;
+}
+
+function end_page() {
+    echo 'pgsave restore showpage';
+}
+
+function content_page() {
+    new_page();
+    echo '72 pgsize aload pop 36 sub exch pop allPageContent 0 get drawPageContent';
+    end_page();
+}
+
+?>
 %%Orientation: Portrait
 %%Pages: 43
 %%EndComments
@@ -49721,26 +49746,11 @@ showpage
 %* Main Content
 %*
 %****************************************************************
-%%Page: 1 6
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-72 pgsize aload pop 36 sub exch pop allPageContent 0 get drawPageContent
-pgsave restore showpage
-
-%%Page: 2 7
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-72 pgsize aload pop 36 sub exch pop allPageContent 1 get drawPageContent
-pgsave restore showpage
-
-%%Page: 3 8
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-72 pgsize aload pop 36 sub exch pop allPageContent 2 get drawPageContent
-pgsave restore showpage
+<?php
+    content_page();
+    content_page();
+    content_page();
+?>
 
 %%Page: 4 9
 %%BeginPageSetup

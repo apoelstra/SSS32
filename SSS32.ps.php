@@ -304,7 +304,7 @@ function content_page() {
   ] [ % pagebreak
     /section (Part II: Detailed Instructions) /endsection
     /subsection (II.1. Tables or Volvelles) /endsubsection
-    /dropcap (H) (Hand computation for the procedures in this document can be)
+    /dropcap (H) (and computation for the procedures in this document can be)
     (performed either by using the Principal Tables to look up values, or by)
     (using volvelle wheels to look up values. While the volvelle wheels take)
     (time to cut out and assemble, they are generally easier to use than the)
@@ -950,7 +950,7 @@ circtextdict begin
     radius 0 translate
     90 rotate
     char stringwidth pop 2 div neg 0 moveto
-    char show
+    char gsave dup false charpath 1 setlinewidth stroke grestore 1 setgray show
    grestore
    halfangle 2 mul rotate
  } def
@@ -1665,6 +1665,10 @@ multiplicationDisc dup maxlength dict copy dup /recoveryDisc exch def begin
   } bind def
   /innerPointerSz 0 def
   /decorateTopDisc {
+/Helvetica findfont 8 scalefont setfont
+0 154 moveto (share to) centreshow
+0 146 moveto (translate) centreshow
+0 160 moveto /arrowup 16 centrecodexshow
 % Orb fits into 0 0 395 396, but for some reason needs some fine-tuning
 0.85 0.85 scale %% scale to match potion
 -40 rotate
@@ -49641,20 +49645,20 @@ showpage
 (Symbols) centreshow
 
 /pronunciation <<
-  /multiply (cross)   /aleph  (aleph)  /alpha   (alpha)   /beta (beta)
-  /Gamma    (gamma)   /Delta  (delta)  /epsilon (epsilon) /eta  (eta)
-  /Theta    (theta)   /Lambda (lambda) /mu      (mu)      /Xi   (xi)
-  /Pi       (pi)      /rho    (rho)    /Sigma   (sigma)   /Phi  (phi)
-  /Psi      (psi)     /Omega  (omega)  /at      (at)      /numbersign (hash)
-  /percent  (percent) /cent   (cent)   /yen     (yen)     /Euro (euro)
-  /currency (dollar)  /circleplus (oplus)     /dagger (dagger)   /daggerdbl (double-dagger)
-  /section  (section) /paragraph  (paragraph) /diamond (diamond) /heart (heart)
+  /aleph       (Aleph)      /alpha    (Alpha)    /beta        (Beta)           /Gamma     (Gamma)
+  /Delta       (Delta)      /epsilon  (Epsilon)  /eta         (Eta)            /Theta     (Theta)
+  /Lambda      (Lambda)     /mu       (Mu)       /Xi          (Xi)             /Pi        (Pi)
+  /rho         (Rho)        /Sigma    (Sigma)    /Phi         (Phi)            /Psi       (Psi)
+  /Omega       (Omega)      /at       (At)       /numbersign  (Hash)           /percent   (Percent)
+  /cent        (Cent)       /yen      (Yen)      /Euro        (Euro)           /currency  (Scarab)
+  /circleplus  (Earth)      /dagger   (Dagger)   /daggerdbl   (Double-dagger)  /section   (Section)
+  /paragraph   (Paragraph)  /diamond  (Diamond)  /heart       (Heart)
 >> def
 
 0.5 0.75 position moveto
 4 string stringwidth pop 90 2 mul add neg 0 rmoveto % goofy centering logic
 gsave
-0 1 31 {
+1 1 31 {
   dup dup
   code2 exch get
   12 codexshow ( ) show
@@ -49664,7 +49668,7 @@ gsave
   grestore
   90 0 rmoveto
 
-  4 mod 3 eq {
+  4 mod 0 eq {
     grestore 0 -20 rmoveto gsave
   } if
 } for

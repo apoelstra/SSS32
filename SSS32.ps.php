@@ -28,6 +28,7 @@ function content_page() {
 }
 
 ?>
+%!PS-Adobe-3.0
 %%Orientation: Portrait
 %%Pages: 43
 %%EndComments
@@ -111,11 +112,11 @@ function content_page() {
     /listitem1 (Attach the discs with a brass fastener through the centre holes.) /endlistitem
 
     /subsection (Initial \(First $k$\) Share Creation) /endsubsection
-    (*You will need::*: Addition Volvelle, Dice Worksheet, Checksum Worksheet, pencil and eraser)
+    (*You will need::*: Addition Volvelle, Random Character Worksheet, Checksum Worksheet, pencil and eraser)
     /linebreak
     (For each of your initial $k$ shares, you should)
     /startlist
-    /listitem1 (Generate random data by rolling dice, following the instructions on the Dice Worksheet.) /endlistitem
+    /listitem1 (Generate random data by rolling dice, following the instructions on the Random Character Worksheet.) /endlistitem
     /listitem1 (Follow the instructions on the Checksum Worksheet to affix a checksum.) /endlistitem
 
     /subsection (Derived \(Remaining\) Share Creation) /endsubsection

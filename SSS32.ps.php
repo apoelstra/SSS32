@@ -489,16 +489,13 @@ function content_page() {
     (share's symbol on the Translation Worksheet with the resulting product.)
     /paragraph
     ($Volvelle lookup $k$ = 3:$ Turn the Recovery Volvelle to point to the)
-    (share being considered. Find the two symbol pointed to under the other share)
+    (share being considered. Find the two symbols pointed to under the other share)
     (indices on the wheel. Turn the multiplication wheel to the first of these)
     (two symbols. Find the second symbol on the lower ring, and lookup the symbol)
     (it is pointing to. Fill that symbol next to the share we are considering on)
     (the Translation Worksheet.)
     /endlistitem
     /listitem1 (Repeat step 3 for each share on the Addition worksheet.)
-    /paragraph
-    ($Tip:$ For $k$ = 2 the two symbols will always be opposite each other on the)
-    (Recovery Volvelle and are connected by a grey line.)
     /endlistitem
     /listitem1 (Follow the Translation Worksheet instructions recover the secret)
     (share.) /endlistitem
@@ -796,7 +793,7 @@ end
 
 /polymodhrp % string -> [ c5 c4 c3 c2 c1 c0 ]
  {
-   [ exch 1 exch dup { 32 idiv exch } forall 0 exch { 31 and } forall ] polymod0
+   [ exch 1 exch dup { dup dup 65 ge exch 90 le exch and { 32 add } if 32 idiv exch } forall 0 exch { 31 and } forall ] polymod0
  } bind def
 
 %************************************************************************
@@ -2309,6 +2306,10 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
     /drawTranslationSymbol exch def
     /drawShareIndex exch def
     gsave
+      hrplen 1 add 44 sharelen 1 sub {
+        /starti exch def
+        /endi starti 43 add sharelen 1 sub min def
+
       /Courier findfont 3 scalefont setfont
       thick line
       % Draw share index & translation symbol
@@ -2317,18 +2318,21 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
 
       % Draw main row contents
       thin line
-      hrplen 1 add 1 sharelen hrplen add 1 add {
+      starti 1 endi {
         /i exch def
-        i 0 offset 2 copy xsize ysize rectstroke moveto
+        i starti sub 3 add 0 offset 2 copy xsize ysize rectstroke moveto
         % upper-right index
         xsize 4.5 sub -3 rmoveto
         /n i 1 add def
         n 10 lt { ( ) show } if n 2 string cvs show
         % lower-left index
-        i 0 offset ysize add moveto 1 1 rmoveto
+        i starti sub 3 add 0 offset ysize add moveto 1 1 rmoveto
         /idx i hrplen sub 1 sub def
         idx 26 gt { botalphabet idx 26 idiv 1 sub 1 getinterval show } if
         botalphabet idx 26 mod 1 getinterval show
+      } for
+
+0 nrows 2 mul offset translate
       } for
     grestore
   } bind def
@@ -2393,7 +2397,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
       0 1 checksumlen 1 sub {
         hrplen add j add 1 sub odd sub /i exch def
         thin line
-        i j sub 2 le { % draw bottom-left numbers
+        i j sub hrplen odd sub le { % draw bottom-left numbers
           i j offset ysize add moveto 1 1 rmoveto
           /idx i 2 idiv j 2 idiv add 2 sub def
           idx 26 gt { botalphabet idx 26 idiv 1 sub 1 getinterval show } if
@@ -2523,6 +2527,18 @@ ladder dup 30 dict copy dup /bip3924ladder exch def begin
   /firstrowlen sharelen hrplen sub 1 sub numsteps 2 mul sub def
   /odd checksumlen firstrowlen sub def
   /initresidue [hrp polymodhrp aload pop firstrowlen {0} repeat ] polymod0 def
+
+  /resetPos {
+      dup
+      20 ge { -340 120 translate } if
+      42 ge { -330 100 translate } if
+  } bind def
+
+  /unresetPos {
+      dup
+      20 ge { 340 -120 translate } if
+      42 ge { 330 -100 translate } if
+  } bind def
 end
 
 % bip3912ladder is a copy of ladder
@@ -2537,7 +2553,6 @@ ladder dup 30 dict copy dup /bip3912ladder exch def begin
   /unresetPos {
       18 ge { 300 -50 translate } if
   } bind def
-
 
   /sharelen 56 def
   /numsteps sharelen hrplen sub checksumlen sub 2 idiv def
@@ -51529,113 +51544,69 @@ end
 <?php end_page(); new_page(); ?>
 % FIXME will draw all this text using the general-purpose content drawing logic
 /Times-Roman findfont 32 scalefont setfont
-260 680 moveto (Checksum Worksheet) show
-305 650 moveto (\(BIP39, 2 words\)) show
+450 680 moveto (BIP39) show
+410 650 moveto (12 words) show
 
 gsave
-48 680 translate
+48 630 translate
 bip3912ladder begin
  drawgrid
- (                                                ) true false false false true fillgrid
+% (                                                ) true false false false true fillgrid
 end
 grestore
 
 
 <?php end_page(); new_page(); ?>
-/hrp (bip39_24w) def
-/thick 1 def
-/thin 0.2 def
-/box {
-  10 dict begin
-  { /width /beginred /n } {exch def} forall
-  -1.2 -1.9 rmoveto
-  0 14 rlineto
-  arraySpace 0 rlineto
-  0 -14 rlineto
-  closepath
-  width setlinewidth
-  n beginred ge { gsave 1 0.9 0.9 setrgbcolor fill grestore } if
-  stroke
-  end
-} bind def
+% FIXME will draw all this text using the general-purpose content drawing logic
+/Times-Roman findfont 32 scalefont setfont
+450 700 moveto (BIP39) show
+410 670 moveto (24 words) show
 
-/labeledbox {
-  10 dict begin
-  { /offset /beginred /n } {exch def} forall
-  /n n hrp length add 2 add def
-  gsave
-    n beginred thick box
-  grestore
-  gsave
-    arraySpace 6 sub 14 5 sub rmoveto
-    /Courier findfont 3 scalefont setfont
-    n offset add 10 lt { ( ) show } if n offset add 2 string cvs show
-  grestore
-  end
-} bind def
-/Helvetica-Bold findfont 10 scalefont setfont
-pgsize aload pop pop 2 div 740
-moveto (bip39_24w Checksum Worksheet) centreshow
-
-/Courier findfont 15 scalefont setfont
-
-136 720
-% [10 29 19 13 4 16 20 8 16 7 4 13 6 8 27 31 28 14 17 21 31 25 19 15 1 3 13 29 22 5 8 31 9 17 15 30 19 15 21 16 19 26 16 22 31]
-[ 72 {32} repeat ]
-10 dict begin
-{ /codeword /y /x } {exch def} forall
-/odd polymodulus length codeword length add 2 mod def
-x y moveto hrp (1) concatstrings dup stringwidth pop neg 3 sub odd 1 eq { arraySpace add } if 0 rmoveto show
-/edge codeword length polymodulus length sub hrp length add 2 add def
-/gaps [ 0 1 codeword length { 4 mod 1 eq {gapSpace} {arraySpace} ifelse } for ] def
-/k polymodulus length odd sub def
-  {edge 0 labeledbox} x arraySpace odd mul add y moveto codeword gaps 1 k getinterval 0 showArrayBox
-/y y 14 sub def
-/reduction [hrp polymodhrp aload pop k {0} repeat ] polymod0 def
-  {reduction length thin box} x arraySpace odd mul add y moveto reduction gaps 1 k getinterval odd showArrayBox
-  gsave
-    /Helvetica findfont 9 scalefont setfont
-    x y moveto
-    odd 1 eq { arraySpace 0 rmoveto } if
-    (+) dup stringwidth pop 2 add neg 2 rmoveto show
-  grestore
-/y y 15 sub def
-/residue reduction [1 odd eq {0} if codeword 0 k getinterval aload pop ] gf32addarray def
-
-{
-  gsave
-    /Helvetica findfont 9 scalefont setfont
-    x y moveto (=) dup stringwidth pop 2 add neg 2 rmoveto show
-  grestore
-  k codeword length ge {exit} if
-  { codeword length k sub thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
-  {edge 0 labeledbox} codeword gaps k 1 add 2 getinterval k showArrayBox
-  /x x gaps k 1 add reduction length sub 2 getinterval aload pop add add def
-  /y y 14 sub def
-
-  gsave
-    /Helvetica findfont 9 scalefont setfont
-    x y moveto (+) dup stringwidth pop 2 add neg 2 rmoveto show
-  grestore
-
-  /reduction residue 0 2 getinterval aload pop polymodshift2 def
-  {codeword length k sub 2 sub thin box} x y moveto reduction gaps k 1 add reduction length 2 sub sub reduction length getinterval 0 showArrayBox
-  /y y 15 sub def
-  /residue reduction [residue 2 polymodulus length 2 sub getinterval aload pop codeword k 2 getinterval aload pop] gf32addarray def
-  /k k 2 add def
-
-  % mod 14: 4-split
-  % mod 22 3-split
-  k 10 gt k 10 sub 22 mod 0 eq and {
-      /x x 335 sub def
-      /y y 105 add def
-  } if
-} loop
-
-gsave 0.85 setgray x y moveto checksum gaps k 1 add residue length sub residue length getinterval 0 showArray grestore
-{residue length thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
-
+gsave
+48 730 translate
+bip3924ladder begin
+ drawgrid
+% (                                                ) true false false false true fillgrid
 end
+grestore
+
+<?php end_page(); new_page(true); ?>
+90 rotate
+0 -750 translate
+% FIXME will draw all this text using the general-purpose content drawing logic
+/Times-Roman findfont 32 scalefont setfont
+48 680 moveto (Translation Worksheet) show
+
+gsave
+48 670 translate
+
+4 {
+bip3924ladder begin
+  2 drawrow
+  0 ysize 8.1 mul translate
+end
+} repeat
+grestore
+
+<?php end_page(); new_page(true); ?>
+90 rotate
+0 -750 translate
+% FIXME will draw all this text using the general-purpose content drawing logic
+/Times-Roman findfont 32 scalefont setfont
+48 680 moveto (Translation Worksheet) show
+
+gsave
+48 670 translate
+
+1 0.95 scale
+
+3 {
+bip3924ladder begin
+  3 drawrow
+  0 ysize 12.8 mul translate
+end
+} repeat
+grestore
 
 <?php end_page(); new_page(); ?>
 /Helvetica-bold findfont 10 scalefont setfont

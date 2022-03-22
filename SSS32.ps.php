@@ -558,6 +558,12 @@ function content_page() {
    atan
 } bind def
 
+% arccos: x h -- arccos(x/h)
+/arccos {
+   dup mul 1 index dup mul sub sqrt
+   exch atan
+} bind def
+
 % Given a rod of length 2r, what angle does it fit inside a w by h sized box so that
 % the ends of the rod are equaldistant from the two sides making a corner with the box.
 /angleinbox {
@@ -708,6 +714,67 @@ end
 /code [/Q /P /Z /R /Y /nine /X /eight /G /F /two /T /V /D /W /zero /S /three /J /N /five /four /K /H /C /E /six /M /U /A /seven /L /space] def
 /code2 [/multiply /aleph /alpha /beta /Gamma /Delta /epsilon /eta /Theta /Lambda /mu /Xi /Pi /rho /Sigma /Phi /Psi /Omega /at /numbersign /percent /cent /yen /Euro /currency /circleplus /dagger /daggerdbl /section /paragraph /diamond /heart /space ] def
 
+/decode {
+ [ exch { <<
+113 0
+81 0
+112 1
+80 1
+122 2
+90 2
+114 3
+82 3
+121 4
+89 4
+57 5
+120 6
+88 6
+56 7
+103 8
+71 8
+102 9
+70 9
+50 10
+116 11
+84 11
+118 12
+86 12
+100 13
+68 13
+119 14
+87 14
+48 15
+115 16
+83 16
+51 17
+106 18
+74 18
+110 19
+78 19
+53 20
+52 21
+107 22
+75 22
+104 23
+72 23
+99 24
+67 24
+101 25
+69 25
+54 26
+109 27
+77 27
+117 28
+85 28
+97 29
+65 29
+55 30
+108 31
+76 31
+32 32
+ >> exch get } forall ]
+} bind def
+
 %******************
 %* BCH
 %*
@@ -818,6 +885,13 @@ end } bind def
 /thick 0.8 def
 /verythick 1.2 def
 
+/pen {
+  50 setlinewidth
+  1 setlinecap
+  1 setlinejoin
+  [] 0 setdash
+} bind def
+
 % Runs stroke under a uniformly scaled matrix.
 % ps2pdf doesn't seem to handle strokes under a non-uniformly scaled matrix properly.
 /resetstroke {
@@ -831,6 +905,7 @@ setmatrix
 } bind def
 
 /brass { 0.7098 0.651 0.2588 } def
+/pink { 1 0.9 0.9 } def
 
 /substitute <<
   /Omega /uni03A9
@@ -853,6 +928,309 @@ setmatrix
 end
 } bind def
 
+/withcrosses true def
+% draftingshow : /glyph size --
+/draftingshow {
+gsave
+10 dict begin
+  currentpoint translate
+  1000 div dup scale
+  [1 0 10 tan 1 -100 -100] concat
+  <<
+  /space { }
+  /A { newpath
+         100 100 moveto
+         400 700 lineto
+         700 100 lineto
+         200 300 moveto
+         600 300 lineto
+       pen stroke }
+  /C { newpath
+         400 400 300 2 3 arccos -2 3 arccos 180 add arc
+       pen stroke }
+  /D { newpath
+         100 100 moveto
+         300 400 300 270 90 arc
+         100 700 lineto
+         closepath
+       pen stroke }
+  /E { newpath
+         600 700 moveto
+         100 700 lineto
+         100 100 lineto
+         600 100 lineto
+         100 400 moveto
+         400 400 lineto
+       pen stroke }
+  /F { newpath
+         600 700 moveto
+         100 700 lineto
+         100 100 lineto
+         100 400 moveto
+         400 400 lineto
+       pen stroke }
+  /G { newpath
+         400 400 300 2 3 arccos -2 3 arccos 180 add arc
+         600 400 lineto
+         400 400 lineto
+       pen stroke }
+  /H { newpath
+         600 700 moveto
+         600 100 lineto
+         100 700 moveto
+         100 100 lineto
+         100 400 moveto
+         600 400 lineto
+       pen stroke }
+  /J { newpath
+         600 700 moveto
+         matrix currentmatrix
+         100 100 translate
+         1 4 5 div scale
+         250 250 250 0 180 arcn
+         setmatrix
+       pen stroke }
+  /L { newpath
+         100 700 moveto
+         100 100 lineto
+         600 100 lineto
+       pen stroke }
+  /K { newpath
+         600 700 moveto
+         100 300 lineto
+         100 700 moveto
+         100 100 lineto
+         300 460 moveto
+         600 100 lineto
+       pen stroke }
+  /M { newpath
+         100 100 moveto
+         100 700 lineto
+         400 100 lineto
+         700 700 lineto
+         700 100 lineto
+       pen stroke }
+  /N { newpath
+         600 700 moveto
+         600 100 lineto
+         100 700 lineto
+         100 100 lineto
+       pen stroke }
+  /P { newpath
+         100 400 moveto
+         450 550 150 270 90 arc
+         100 700 lineto
+         100 100 lineto
+       pen stroke }
+  /Q { newpath
+         400 400 300 0 360 arc
+         500 250 moveto
+         600 100 lineto
+       pen stroke }
+  /R { newpath
+         100 400 moveto
+         450 550 150 270 90 arc
+         100 700 lineto
+         100 100 lineto
+         400 400 moveto
+         600 100 lineto
+       pen stroke }
+  /S { newpath
+         matrix currentmatrix
+         100 100 translate
+         5 3 div 1 scale
+         150 150 150 -90 1 3 arccos sub 90 arc
+         setmatrix
+         matrix currentmatrix
+         150 400 translate
+         4 3 div 1 scale
+         150 150 150 270 90 1 3 arccos sub arcn
+         setmatrix
+         withcrosses {
+          350 50 moveto
+          350 750 lineto
+         } if
+       pen stroke }
+  /T { newpath
+         100 700 moveto
+         700 700 lineto
+         400 700 moveto
+         400 100 lineto
+       pen stroke }
+  /U { newpath
+         600 700 moveto
+         matrix currentmatrix
+         100 100 translate
+         1 4 5 div scale
+         250 250 250 0 180 arcn
+         setmatrix
+         100 700 lineto
+       pen stroke }
+  /V { newpath
+         100 700 moveto
+         400 100 lineto
+         700 700 lineto
+       pen stroke }
+  /W { newpath
+         100 700 moveto
+         300 100 lineto
+         500 700 lineto
+         700 100 lineto
+         900 700 lineto
+       pen stroke }
+  /X { newpath
+         100 100 moveto
+         650 700 lineto
+         150 700 moveto
+         700 100 lineto
+       pen stroke }
+  /Y { newpath
+         100 700 moveto
+         400 400 lineto
+         700 700 lineto
+         400 400 moveto
+         400 100 lineto
+       pen stroke }
+  /Z { newpath
+         100 700 moveto
+         600 700 lineto
+         100 100 lineto
+         600 100 lineto
+         withcrosses {
+          200 400 moveto
+          500 400 lineto
+         } if
+       pen stroke }
+  /zero { newpath
+         matrix currentmatrix
+         100 100 translate
+         5 6 div 1 scale
+         300 300 300 0 360 arc
+         setmatrix
+         withcrosses {
+          100 100 moveto
+          600 700 lineto
+         } if
+       pen stroke }
+  /two { newpath
+         matrix currentmatrix
+         150 400 translate
+         4 3 div 1 scale
+         150 150 150 90 1 3 arccos add -90 arcn
+         setmatrix
+         matrix currentmatrix
+         100 -200 translate
+         5 6 div 1 scale
+         300 300 300 90 180 arc
+         setmatrix
+         600 100 lineto
+       pen stroke }
+  /three { newpath
+         matrix currentmatrix
+         100 100 translate
+         5 3 div 1 scale
+         150 150 150 -90 1 3 arccos sub 90 arc
+         setmatrix
+         matrix currentmatrix
+         150 400 translate
+         4 3 div 1 scale
+         150 150 150 -90 90 1 3 arccos add arc
+         setmatrix
+       pen stroke }
+  /four { newpath
+         500 100 moveto
+         500 700 lineto
+         100 250 lineto
+         600 250 lineto
+       pen stroke }
+  /five { newpath
+         matrix currentmatrix
+         100 100 translate
+         5 4 div 1 scale
+         200 200 200 -90 1 2 arccos sub 180 4 5 arccos sub arc
+         setmatrix
+         150 700 lineto
+         550 700 lineto
+       pen stroke }
+  /six { newpath
+         matrix currentmatrix
+         100 100 translate
+         5 6 div 1 scale
+         300 300 300 90 2 3 arccos sub 270 arc
+         setmatrix
+         matrix currentmatrix
+         100 100 translate
+         5 4 div 1 scale
+         200 200 200 -90 90 arc
+         setmatrix
+       pen stroke
+         newpath
+         matrix currentmatrix
+         100 100 translate
+         5 6 div 1 scale
+         300 300 300 0 360 arc
+         setmatrix
+         clip
+         newpath
+         matrix currentmatrix
+         100 100 translate
+         5 4 div 1 scale
+         200 200 200 90 180 arc
+         setmatrix
+       stroke }
+  /seven { newpath
+         100 700 moveto
+         600 700 lineto
+         400 400 300 300 300 100 curveto
+         withcrosses {
+          300 400 moveto
+          500 400 lineto
+         } if
+       pen stroke }
+  /eight { newpath
+         matrix currentmatrix
+         100 100 translate
+         5 3 div 1 scale
+         150 150 150 90 450 arc
+         setmatrix
+         matrix currentmatrix
+         150 400 translate
+         4 3 div 1 scale
+         150 150 150 -90 270 arc
+         setmatrix
+       pen stroke }
+  /nine { newpath
+         matrix currentmatrix
+         100 100 translate
+         5 6 div 1 scale
+         300 300 300 -90 2 3 arccos sub 90 arc
+         setmatrix
+         matrix currentmatrix
+         100 300 translate
+         5 4 div 1 scale
+         200 200 200 90 -90 arc
+         setmatrix
+       pen stroke
+         newpath
+         matrix currentmatrix
+         100 100 translate
+         5 6 div 1 scale
+         300 300 300 0 360 arc
+         setmatrix
+         clip
+         newpath
+         matrix currentmatrix
+         100 300 translate
+         5 4 div 1 scale
+         200 200 200 -90 0 arc
+         setmatrix
+       stroke }
+  >>
+  exch get exec
+end
+grestore
+} bind def
+
 /glyphwidth {
   gsave
   nulldevice newpath 0 0 moveto glyphshow currentpoint
@@ -863,6 +1241,48 @@ end
   gsave
   nulldevice newpath 0 0 moveto codexshow currentpoint
   grestore
+} bind def
+
+/draftingwidth {
+  exch
+32 dict begin
+  /M 800 def
+  /N 700 def
+  /W 1000 def
+  /A M def
+  /C N def
+  /D N def
+  /E N def
+  /F N def
+  /G N def
+  /H N def
+  /J N def
+  /K N def
+  /L N def
+  /P N def
+  /Q M def
+  /R N def
+  /S N def
+  /T M def
+  /U N def
+  /V M def
+  /X M def
+  /Y M def
+  /Z N def
+  /zero N def
+  /two N def
+  /three N def
+  /four N def
+  /five N def
+  /six N def
+  /seven N def
+  /eight N def
+  /nine N def
+  /space N def
+  load
+end
+  mul 1000 div
+  0
 } bind def
 
 /underlinecodexshow {
@@ -887,6 +1307,8 @@ end
 /centrecodexshow {2 copy codexwidth pop 2 div neg 0 rmoveto underlinecodexshow} bind def
 
 /centresquare {dup neg 2 div dup rmoveto dup 0 rlineto dup 0 exch rlineto neg 0 rlineto closepath stroke} bind def
+
+/centredraftingshow {2 copy draftingwidth pop 2 div neg 0 rmoveto draftingshow} bind def
 
 % From BLUEBOOK Program #10
 /outsidecircletext
@@ -1854,6 +2276,213 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
 %* Functionality for the checksum, addition, bit conversion, etc., worksheets,
 %* to assist user manipulation of long bech32 strings
 %*
+/botalphabet (abcdefghijklmnopqrstuvwxyz) def
+
+30 dict dup /ladder exch def begin
+  /hrp (MS) def
+  /sharelen 48 def
+  /xsize 13 def
+  /xgap 2 def
+  /ysize -14 def
+  /ygap -1 def
+  /fsize 15 def
+  /fgap 2.5 def
+  /hrplen hrp length def
+  /checksumlen checksum length def
+  /numsteps sharelen hrplen sub checksumlen sub 2 idiv def
+  /firstrowlen sharelen hrplen sub 1 sub numsteps 2 mul sub def
+  /odd checksumlen firstrowlen sub def
+  /initresidue [hrp polymodhrp aload pop firstrowlen {0} repeat ] polymod0 def
+  /offset {
+    dup ysize mul exch 2 idiv ygap mul add exch
+    dup xsize mul exch 4 idiv xgap mul add exch
+  } bind def
+
+  /drawrow {
+  10 dict begin
+  /drawTranslationSymbol exch def
+  /drawShareIndex exch def
+  gsave
+    /Courier findfont 3 scalefont setfont
+    thick line
+    % Draw share index & translation symbol
+    drawShareIndex { 0 0 offset xsize ysize rectstroke } if
+    drawTranslationSymbol { 1 0 offset exch xgap 3 mul add exch xsize ysize rectstroke } if
+
+    % Draw main row contents
+    thin line
+    hrplen 1 add 1 sharelen hrplen add 1 add {
+      /i exch def
+      i 0 offset 2 copy xsize ysize rectstroke moveto
+      % upper-right index
+      xsize 4.5 sub -3 rmoveto
+      /n i 1 add def
+      n 10 lt { ( ) show } if n 2 string cvs show
+      % lower-left index
+      i 0 offset ysize add moveto 1 1 rmoveto
+      /idx i hrplen sub 1 sub def
+      idx 26 gt { botalphabet idx 26 idiv 1 sub 1 getinterval show } if
+      botalphabet idx 26 mod 1 getinterval show
+    } for
+  grestore
+  end
+  } bind def
+
+  /drawgrid {
+  10 dict begin
+  gsave
+    pink setrgbcolor
+    0 2 checksumlen {
+      /j exch def
+      0 1 j checksumlen 2 mod add 1 sub {
+        /i exch def
+        i sharelen checksumlen sub add j numsteps 2 mul checksumlen 2 idiv 2 mul sub add offset xsize ysize rectfill
+      } for
+    } for
+  grestore
+  gsave
+    /Courier findfont 3 scalefont setfont
+    % First (input) row
+    thick line
+    0 1 firstrowlen hrplen add {
+      /i exch def
+      i 0 offset 2 copy xsize ysize rectstroke moveto
+      xsize 4.5 sub -3 rmoveto
+      /n i 1 add def
+      n 10 lt { ( ) show } if n 2 string cvs show
+    } for
+
+    % Second row (first non-input row)
+    thin line
+    0 1 firstrowlen 1 sub {
+      hrplen 1 add add 1 offset xsize ysize rectstroke
+    } for
+
+    % Bottom-most row
+    0 1 checksumlen 1 sub {
+      sharelen checksumlen sub add /i exch def
+      thin line
+      i numsteps 1 add 2 mul offset xsize ysize rectstroke
+    } for
+
+    1 1 numsteps {
+      2 mul /j exch def
+      0 1 checksumlen 1 sub {
+        hrplen add j add 1 sub odd sub /i exch def
+        thin line
+        i j sub 2 le { % draw bottom-left numbers
+          i j offset ysize add moveto 1 1 rmoveto
+          /idx i 2 idiv j 2 idiv add 2 sub def
+          idx 26 gt { botalphabet idx 26 idiv 1 sub 1 getinterval show } if
+          botalphabet idx 26 mod 1 getinterval show
+        } if
+        i j offset xsize ysize rectstroke
+        i 2 add j 1 add offset xsize ysize rectstroke
+      } for
+      thick line
+      i 1 add j offset 2 copy xsize ysize rectstroke moveto
+      xsize 4.5 sub -3 rmoveto
+      /Courier findfont 3 scalefont setfont
+      /n i 2 add def
+      n 10 lt { ( ) show } if n 2 string cvs show
+      i 2 add j offset 2 copy xsize ysize rectstroke moveto
+      xsize 4.5 sub -3 rmoveto
+      /n i 3 add def
+      n 10 lt { ( ) show } if n 2 string cvs show
+    } for
+
+    /Helvetica-Bold findfont 10 scalefont setfont
+    1 1 numsteps 1 add {
+      2 mul /j exch def
+      j j offset moveto xsize 0.7 mul 5 rmoveto (+) centreshow
+      j j 1 add offset moveto xsize 0.7 mul 5 rmoveto (=) centreshow
+    } for
+
+    /Courier findfont fsize scalefont setfont
+    0 1 hrplen 1 sub {
+      dup 0 offset moveto xsize 2 div ysize fgap add rmoveto hrp exch 1 getinterval centreshow
+    } for
+    hrplen 0 offset moveto xsize 2 div ysize fgap add rmoveto (1) centreshow
+    0 1 checksumlen 1 sub {
+      /i exch def
+      i hrplen add 1 add odd sub 1 0 i eq {odd add} if offset moveto xsize 2 div ysize fgap add rmoveto initresidue i get code exch get fsize centrecodexshow
+    } for
+    0.85 setgray
+    0 1 checksumlen 1 sub {
+      /i exch def
+      i sharelen checksumlen sub add numsteps 1 add 2 mul offset moveto xsize 2 div ysize fgap add rmoveto checksum i get code exch get fsize centrecodexshow
+    } for
+  grestore
+  end
+  } bind def % end /drawgrid
+
+  /fillgrid {
+  10 dict begin
+  gsave
+    /drawResidue exch def
+    /drawBotDiag exch def
+    /drawMiddle exch def
+    /drawPink exch def
+    /drawTopDiag exch def
+
+    /data exch decode def
+    /fsize fsize 2 sub def
+    0 1 firstrowlen 1 sub {
+     /i exch def
+     i hrplen add 1 add 0 offset moveto xsize 2 div ysize fgap add rmoveto
+     code data i get get fsize centredraftingshow
+    } for
+    /residue
+      data 0 firstrowlen getinterval polymod0
+      initresidue gf32addarray
+    def
+    0 2 numsteps 1 sub 2 mul {
+      /y exch def
+      /residue
+      [ residue polymod0 aload pop
+        data firstrowlen y add get
+        data firstrowlen y add 1 add get
+      ] def
+      0 1 checksumlen 1 add {
+        /i exch def
+        /ispink i y add sharelen checksumlen sub hrplen sub 1 sub ge def
+        i hrplen add y add 1 add odd sub 2 y add offset moveto xsize 2 div ysize fgap add rmoveto
+        i 2 lt drawBotDiag and
+        i checksumlen ge drawTopDiag and
+        drawMiddle
+        or or ispink { drawPink and } if {
+          odd 1 eq 0 i eq and 0 y eq and not {code residue i get get fsize centredraftingshow} if
+        } if
+      } for
+      /addrow residue 0 get residue 1 get polymodshift2 def
+      0 1 checksumlen 1 sub {
+        /i exch def
+        i hrplen add y add 3 add odd sub 3 y add offset moveto xsize 2 div ysize fgap add rmoveto
+        drawMiddle {
+          code addrow i get get fsize centredraftingshow
+        } if
+      } for
+    } for
+    drawResidue {
+      /residue residue polymod0 def
+      0 1 checksumlen 1 sub {
+        /i exch def
+        i hrplen add numsteps 2 mul add 1 add 2 numsteps 2 mul add offset moveto xsize 2 div ysize fgap add rmoveto
+        code residue i get get fsize centredraftingshow
+      } for
+    } if
+  grestore
+  end
+  } bind def
+end
+
+% exampleladder is a copy of ladder
+ladder dup 30 dict copy dup /exampleladder exch def begin
+  /sharelen 32 def
+  /numsteps sharelen hrplen sub checksumlen sub 2 idiv def
+  /firstrowlen sharelen hrplen sub 1 sub numsteps 2 mul sub def
+end
+
 
 /arraySpace 13 def
 /gapSpace arraySpace 2 add def
@@ -50209,252 +50838,272 @@ false {
 } if
 
 <?php end_page(); new_page(true); ?>
-90 rotate 0 -750 translate
-/hrp (ms) def
+90 rotate
 
-/labeledbox {
-  10 dict begin
-  { /beginred /n } {exch def} forall
-  /n n hrp length add 2 add def
-  gsave
-    n beginred thick box
-  grestore
-  gsave
-    arraySpace 6 sub 14 5 sub rmoveto
-    /Courier findfont 3 scalefont setfont
-    n 10 le { ( ) show } if n 2 string cvs show
-  grestore
-  end
-} bind def
-/Helvetica-Bold findfont 10 scalefont setfont
-pgsize aload pop exch pop 2 div 700
-moveto (MS32 Checksum Worksheet) centreshow
+% 0 pgsize aload pop pop neg translate
+0 -750 translate
 
+% FIXME will draw all this text using the general-purpose content drawing logic
+/Times-Roman findfont 32 scalefont setfont
+48 680 moveto (Checksum Worksheet) show
 
-120 670
-% [10 29 19 13 4 16 20 8 16 7 4 13 6 8 27 31 28 14 17 21 31 25 19 15 1 3 13 29 22 5 8 31 9 17 15 30 19 15 21 16 19 26 16 22 31]
-[ 45 {32} repeat ]
-10 dict begin
-{ /codeword /y /x } {exch def} forall
-/Courier findfont 15 scalefont setfont
-x y moveto hrp (1) concatstrings dup stringwidth pop neg 3 sub 0 rmoveto show
-/odd polymodulus length codeword length add 2 mod def
-/edge codeword length polymodulus length sub hrp length add 2 add def
-/gaps [ 0 1 codeword length { 4 mod 1 eq {gapSpace} {arraySpace} ifelse } for ] def
-/k polymodulus length odd sub def
-  {edge labeledbox} x arraySpace odd mul add y moveto codeword gaps 1 k getinterval 0 showArrayBox
-/y y 14 sub def
-/reduction [hrp polymodhrp aload pop k {0} repeat ] polymod0 def
-  {reduction length thin box} x arraySpace odd mul add y moveto reduction gaps 1 k getinterval odd showArrayBox
-/y y 15 sub def
-/residue reduction [1 odd eq {0} if codeword 0 k getinterval aload pop ] gf32addarray def
+/Times-Roman findfont 12 scalefont setfont
+48 650 moveto (The Checksum Worksheet is used to generate and verify checksums. It is the most frequently used and important worksheet of this codex.) show
+/Times-Bold findfont 12 scalefont setfont
+48 635 moveto (You will need: ) show
+/Times-Roman findfont 12 scalefont setfont
+(Checksum Worksheet, Checksum Table, Addition Wheel) show
 
-{
-  k codeword length ge {exit} if
-  { codeword length k sub thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
-  {edge labeledbox} codeword gaps k 1 add 2 getinterval k showArrayBox
-  /x x gaps k 1 add reduction length sub 2 getinterval aload pop add add def
-  /y y 14 sub def
-  /reduction residue 0 2 getinterval aload pop polymodshift2 def
-  {reduction length thin box} x y moveto reduction gaps k 1 add reduction length 2 sub sub reduction length getinterval 0 showArrayBox
-  /y y 15 sub def
-  /residue reduction [residue 2 polymodulus length 2 sub getinterval aload pop codeword k 2 getinterval aload pop] gf32addarray def
-  /k k 2 add def
-} loop
+48 600 moveto (Generating a checksem:) show
+82 585 moveto (1.) stringwidth pop neg 0 rmoveto
+(1. Fill in the top diagonal squares with your random data; you should have enough to fill the non-pink bolded squares) show
+82 570 moveto (2a.) stringwidth pop neg 0 rmoveto
+(2a. Add the first row to the second to fill in the third row, using the Addition Wheel.) show
+82 555 moveto (2b.) stringwidth pop neg 0 rmoveto
+(2b. Look up the two leftmost underhanging hanging symbols from the third row in the Checksum Table to fill in the fourth row.) show
+82 540 moveto (2c.) stringwidth pop neg 0 rmoveto
+(2c. Repeat the above two steps, adding the third and fourth row, looking up the fourth to fill in the fifth, and so on.) show
+82 525 moveto (3.) stringwidth pop neg 0 rmoveto
+(3. To complete the worksheet, work from the bottom up, adding each row to the one above it until all the pink squares are filled.) show
 
-gsave 0.85 setgray x y moveto checksum gaps k 1 add residue length sub residue length getinterval 0 showArray grestore
-{residue length thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
+48 500 moveto (The completed share can now be read from the top diagonal, including the checksum.) show
 
+gsave
+48 440 translate 0.75 0.8 scale
+exampleladder begin
+ /Helvetica-Bold findfont 15 scalefont setfont
+ firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (1) centreshow
 
+ drawgrid
+ (2NAMES50PRDAK9GLSVNL067VQVEX0) true false false false true fillgrid
 end
+grestore
 
-100 420 moveto
-/Helvetica-Bold findfont 10 scalefont setfont
-(Verifying Checksums) show
-100 400 moveto
-/Helvetica findfont 9 scalefont setfont
-(Write out the 45 character data portion in the) show
-100 390 moveto
-(bold boxes, two at a time, starting on the top) show
-100 380 moveto
-(row.  Working from the top row down, look up) show
-100 370 moveto
-(the first two characters of each odd row in the) show
-100 360 moveto
-(MS32 Checksum Table and write the ) polymodulus length 10 string cvs concatstrings show
-100 350 moveto
-(character word into the even row below it.  Fill) show
-100 340 moveto
-(in the odd rows by adding the two characters) show
-100 330 moveto
-(above each cell.  You may use either the) show
-100 320 moveto
-(addition wheel table.  The first few boxes are) show
-100 310 moveto
-(already filled in for you.  The last row will sum) show
-100 300 moveto
-(to ) show checksumstring {glyphshow} forall ( if the checksum is valid.) show
-100 260 moveto
-/Helvetica-Bold findfont 10 scalefont setfont
-(Creating Checksums) show
-100 240 moveto
-/Helvetica findfont 9 scalefont setfont
-(Follow the "Verifying Checksums" instructions) show
-100 230 moveto
-(to fill in everything but the shaded cells. To fill in) show
-100 220 moveto
-(the shaded cells, write ) show checksumstring {glyphshow} forall ( into the bottom) show
-100 210 moveto
-(row.  Working from the bottom up, fill in the) show
-100 200 moveto
-(shaded cells by adding the two characters below) show
-100 190 moveto
-(each cell.  The ) polymodulus length 10 string cvs ( characters in the bold shaded) concatstrings concatstrings show
-100 180 moveto
-(boxes will be the checksum.) show
+gsave
+238 440 translate 0.75 0.8 scale
+exampleladder begin
+ /Helvetica-Bold findfont 15 scalefont setfont
+ firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (2) centreshow
 
-450 650
-/offsety exch def
-/offsetx exch def
-/Courier findfont 10 scalefont setfont
-20 offsetx add offsety moveto (Addition Table) show
-/Courier-Bold findfont 8 scalefont setfont
-0 1 31 {
-dup 2 add 7 mul offsetx add offsety 10 sub moveto
-perm exch get
-code exch get glyphshow
-} for
+ drawgrid
+ (2NAMES50PRDAK9GLSVNL067VQVEX0) true false true true true fillgrid
+end
+grestore
 
-0 1 31 {
-/Courier-Bold findfont 8 scalefont setfont
-offsetx 34.5 7 mul add offsety 20 sub 2 index 8 mul sub moveto
-dup code exch perm exch get get glyphshow
-/Courier findfont 8 scalefont setfont
-dup 1 31 {
-dup 2 add 7 mul offsetx add offsety 20 sub 3 index 8 mul sub moveto
-perm exch get
-perm 2 index get gf32add code exch get glyphshow
-} for pop } for
+gsave
+428 440 translate 0.75 0.8 scale
+exampleladder begin
+ /Helvetica-Bold findfont 15 scalefont setfont
+ firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (3) centreshow
+
+ drawgrid
+ (2NAMES50PRDAK9GLSVNL067VQVEX0) true true true true true fillgrid
+end
+grestore
 
 <?php end_page(); new_page(true); ?>
-  10 dict begin
-  gsave
+90 rotate
 
-  90 rotate 0 -750 translate
-  /Helvetica-Bold findfont 10 scalefont setfont
-  pgsize aload pop exch pop 2 div 700
-  moveto (Translation Worksheet \(k = 2\)) centreshow
+% 0 pgsize aload pop pop neg translate
+0 -750 translate
 
-  /labeledbox {
-    10 dict begin
-    /n exch 1 add def
-    gsave
-      n 1000 0.2 box
-    grestore
-    gsave
-      arraySpace 6 sub 14 5 sub rmoveto
-     /Courier findfont 3 scalefont setfont
-      n 10 le { ( ) show } if n 2 string cvs show
-    grestore
-    end
-  } bind def
+% FIXME will draw all this text using the general-purpose content drawing logic
+/Times-Roman findfont 32 scalefont setfont
+48 680 moveto (Checksum Worksheet) show
 
-  /drawRow {
-    10 dict begin
-    { /hrp /y /x } { exch def } forall
-      x y moveto hrp dup stringwidth pop neg 3 sub 0 rmoveto show
-      /k 3 def
+/Times-Roman findfont 12 scalefont setfont
+48 650 moveto (Verifying a checksum:) show
+82 635 moveto (1.) stringwidth pop neg 0 rmoveto
+(1. Fill in the top diagonal with your share data; you should have enough to fill all the bolded squares) show
+82 620 moveto (2.) stringwidth pop neg 0 rmoveto
+(2. \(Optional.\) Fill the bottom diagonal, if you have access to this data. It will help you catch mistakes.) show
+82 605 moveto (3.) stringwidth pop neg 0 rmoveto
+(3. Fill in the rest of the worksheet as you did when generating a checksum. If your final row does not match SECRETSHARE32,) show
+82 590 moveto
+( or if any of your computed bottom diagonal values don't match the expected values, there is a mistake in the worksheet or your) show
+82 575 moveto
+( data has been corrupted.) show
 
-      /init k k 4 mod sub 4 add k sub def
-      {labeledbox} x y moveto [] [] init showBox
-%      /x x init 0.25 add arraySpace mul add def
-      /k k init add def
-      {
-        k 48 ge {exit} if
+82 550 moveto
+( In case of error, first recompute every value in the bad column; then check that you copied all the share data correctly; then) show
+82 535 moveto
+( try redoing the worksheet entirely. If the checksum is consistently bad your data is corrupt and you need to attempt the online) show
+82 520 moveto
+( recovery process. \(Under construction; but try contacting Pearlwort for help.\)) show
 
-        {labeledbox} x y moveto [] [ 4 {arraySpace} repeat ] k 1 sub showBox
+gsave
+48 440 translate 0.75 0.8 scale
+exampleladder begin
+ /Helvetica-Bold findfont 15 scalefont setfont
+ firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (1) centreshow
 
-        /x x 4.25 arraySpace mul add def
-        /k k 4 add def
-    } loop
-    end
-  } bind def
-
-  /x 96 def
-  /y 675 def
-  % Every other row-pair
-  8 {
-  % Initial row-pair which includes the "ms1" text
-  x y (ms1) drawRow
-  /y y 14 sub def
-  x y (+ ms1) drawRow
- /y y 20 sub def
-    x y (= ms1) drawRow
-    /y y 32 sub def
-  } repeat
+ drawgrid
+ (2NAMES50PRDAK9GLSVNL067VQVEX0) true true false false false fillgrid
 end
+grestore
+
+gsave
+238 440 translate 0.75 0.8 scale
+exampleladder begin
+ /Helvetica-Bold findfont 15 scalefont setfont
+ firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (2) centreshow
+
+ drawgrid
+ (2NAMES50PRDAK9GLSVNL067VQVEX0) true true false true false fillgrid
+end
+grestore
+
+gsave
+428 440 translate 0.75 0.8 scale
+exampleladder begin
+ /Helvetica-Bold findfont 15 scalefont setfont
+ firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (3) centreshow
+
+ drawgrid
+ (2NAMES50PRDAK9GLSVNL067VQVEX0) true true true true true fillgrid
+end
+grestore
+<?php end_page(); new_page(true); ?>
+90 rotate
+
+% 0 pgsize aload pop pop neg translate
+0 -750 translate
+
+% FIXME will draw all this text using the general-purpose content drawing logic
+/Times-Roman findfont 32 scalefont setfont
+450 680 moveto (Checksum Worksheet) show
+
+%% EDITME
+%% This code can be used to compute and verify checksums, which will be rendered using
+%% the example handwriting font. This can be used for debugging, sanity checking, or
+%% (in principle) to use an airgapped Postscript printer as a sort of hardware wallet.
+%%
+%% To verify a checksum, replace the above all-spaces string with your actual share
+%% data, in all caps.
+%%
+%% To compute a checksum, do the same, and add SECRETSHARE32 to the end of the data.
+%% On the rendered worksheet, the correct checksum will appear in the final row (where
+%% SECRETSHARE32 *would* appear on a hand-completed worksheet).
+%%
+
+gsave
+48 680 translate
+ladder begin
+ drawgrid
+ (                                                ) true false false false true fillgrid
+end
+grestore
+
 
 <?php end_page(); new_page(true); ?>
-  10 dict begin
-  gsave
+90 rotate
+0 -750 translate
+% FIXME will draw all this text using the general-purpose content drawing logic
+/Times-Roman findfont 32 scalefont setfont
+48 680 moveto (Translation Worksheet) show
 
-  90 rotate 0 -750 translate
-  /Helvetica-Bold findfont 10 scalefont setfont
-  pgsize aload pop exch pop 2 div 700
-  moveto (Translation Worksheet \(k = 3\)) centreshow
+/Times-Roman findfont 12 scalefont setfont
+48 650 moveto (The translation worksheet is used to derive shares, when splitting keys, and during key recovery. In both cases, the process is to translate) show
+48 635 moveto (a set of shares using the Translation Wheel, then to add the translated results using the Addition Wheel.) show
+48 610 moveto (In both cases, the number of shares to combine is your k value, the number of required shares to reconstruct the secret.) show
 
-  /labeledbox {
-    10 dict begin
-    /n exch 1 add def
-    gsave
-      n 1000 0.2 box
-    grestore
-    gsave
-      arraySpace 6 sub 14 5 sub rmoveto
-     /Courier findfont 3 scalefont setfont
-      n 10 le { ( ) show } if n 2 string cvs show
-    grestore
-    end
-  } bind def
+48 585 moveto (In both cases, the process is) show
+82 570 moveto (1.) stringwidth pop neg 0 rmoveto
+(1. Make sure that you have completed checksum worksheets for all input shares.) show
+82 555 moveto (2.) stringwidth pop neg 0 rmoveto
+(2. Look up the translation symbols for each share, either in tables or using the Recovery Wheel and Multiplication Wheel.) show
+82 540 moveto (3.) stringwidth pop neg 0 rmoveto
+(3. Mark down each share's index \(the sixth character of its header\) and translation symbol in the appropriate squares.) show
+82 525 moveto (4.) stringwidth pop neg 0 rmoveto
+(4. Character by character, translate each share from its Checksum Worksheet to its row, using the Translation Wheel.) show
+82 510 moveto (5.) stringwidth pop neg 0 rmoveto
+(5. Using the Addition Wheel, add all rows together.) show
 
-  /drawRow {
-    10 dict begin
-    { /hrp /y /x } { exch def } forall
-      x y moveto hrp dup stringwidth pop neg 3 sub 0 rmoveto show
-      /k 3 def
+48 480 moveto (Notice that the resulting share will automatically have the correct share index in its header.) show
 
-      /init k k 4 mod sub 4 add k sub def
-      {labeledbox} x y moveto [] [] init showBox
-%      /x x init 0.25 add arraySpace mul add def
-      /k k init add def
-      {
-        k 48 ge {exit} if
 
-        {labeledbox} x y moveto [] [ 4 {arraySpace} repeat ] k 1 sub showBox
+/Times-Roman findfont 16 scalefont setfont
+48 415 moveto (k=2 Example) show
+48 280 moveto (k=3 Example) show
 
-        /x x 4.25 arraySpace mul add def
-        /k k 4 add def
-    } loop
-    end
-  } bind def
+/Helvetica findfont 10 scalefont setfont
+60 398 moveto (Share) centreshow
+60 388 moveto (Index) centreshow
 
-  /x 96 def
-  /y 675 def
-  % Every other row-pair
-  5 {
-  % Initial row-pair which includes the "ms1" text
-  x y (ms1) drawRow
-  /y y 14 sub def
-  x y (+ ms1) drawRow
-  /y y 20 sub def
-    x y (= ms1) drawRow
-  /y y 14 sub def
-  x y (+ ms1) drawRow
- /y y 20 sub def
-    x y (= ms1) drawRow
-    /y y 32 sub def
-  } repeat
+110 398 moveto (Translation) centreshow
+110 388 moveto (Symbol) centreshow
+thin line
+newpath 60 385 moveto -5 -10 rlineto 6 5 rlineto -6 -5 rmoveto -1 5 rlineto stroke
+
+newpath 110 385 moveto -28 -11 rlineto 6 0 rlineto -6 0 rmoveto 3 5 rlineto stroke
+
+newpath 110 395 90 305 238 arcn 10 -2 rlineto -10 2 rmoveto 7 -7 rlineto  stroke
+
+% 2-of-n
+gsave
+48 370 translate
+ladder begin
+  true true drawrow %(A) /at (ABCD) fillrow
+  0 ysize translate true true drawrow
+  0 ysize ygap 3 mul add translate true false drawrow
+  0 ysize 1.8 mul translate
 end
+grestore
+
+% 3-of-n
+gsave
+48 270 translate
+ladder begin
+  true true drawrow %(A) /at (ABCD) fillrow
+  0 ysize translate true true drawrow
+  0 ysize ygap 3 mul add translate false false drawrow
+  0 ysize translate true true drawrow
+  0 ysize ygap 3 mul add translate true false drawrow
+  0 ysize 1.8 mul translate
+end
+grestore
+
+<?php end_page(); new_page(true); ?>
+90 rotate
+0 -750 translate
+% FIXME will draw all this text using the general-purpose content drawing logic
+/Times-Roman findfont 32 scalefont setfont
+48 680 moveto (Translation Worksheet) show
+
+gsave
+48 670 translate
+
+9 {
+ladder begin
+  true true drawrow
+  0 ysize translate true true drawrow
+  0 ysize ygap 3 mul add translate true false drawrow
+  0 ysize 1.8 mul translate
+end
+} repeat
+grestore
+
+<?php end_page(); new_page(true); ?>
+90 rotate
+0 -750 translate
+% FIXME will draw all this text using the general-purpose content drawing logic
+/Times-Roman findfont 32 scalefont setfont
+48 680 moveto (Translation Worksheet) show
+
+gsave
+48 670 translate
+
+5 {
+ladder begin
+  true true drawrow
+  0 ysize translate true true drawrow
+  0 ysize ygap 3 mul add translate true false drawrow
+  0 ysize translate true true drawrow
+  0 ysize ygap 3 mul add translate true false drawrow
+  0 ysize 1.8 mul translate
+end
+} repeat
+grestore
 
 <?php end_page(); new_page(true); ?>
   10 dict begin

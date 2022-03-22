@@ -2298,33 +2298,51 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
     dup xsize mul exch 4 idiv xgap mul add exch
   } bind def
 
+  /resetPos { pop } bind def
+  /unresetPos { pop } bind def
+
   /drawrow {
   10 dict begin
-  /drawTranslationSymbol exch def
-  /drawShareIndex exch def
-  gsave
-    /Courier findfont 3 scalefont setfont
-    thick line
-    % Draw share index & translation symbol
-    drawShareIndex { 0 0 offset xsize ysize rectstroke } if
-    drawTranslationSymbol { 1 0 offset exch xgap 3 mul add exch xsize ysize rectstroke } if
+  /nrows exch def
 
-    % Draw main row contents
-    thin line
-    hrplen 1 add 1 sharelen hrplen add 1 add {
-      /i exch def
-      i 0 offset 2 copy xsize ysize rectstroke moveto
-      % upper-right index
-      xsize 4.5 sub -3 rmoveto
-      /n i 1 add def
-      n 10 lt { ( ) show } if n 2 string cvs show
-      % lower-left index
-      i 0 offset ysize add moveto 1 1 rmoveto
-      /idx i hrplen sub 1 sub def
-      idx 26 gt { botalphabet idx 26 idiv 1 sub 1 getinterval show } if
-      botalphabet idx 26 mod 1 getinterval show
+  /drawSingleRow {
+    /drawTranslationSymbol exch def
+    /drawShareIndex exch def
+    gsave
+      /Courier findfont 3 scalefont setfont
+      thick line
+      % Draw share index & translation symbol
+      drawShareIndex { 0 0 offset xsize ysize rectstroke } if
+      drawTranslationSymbol { 1 0 offset exch xgap 3 mul add exch xsize ysize rectstroke } if
+
+      % Draw main row contents
+      thin line
+      hrplen 1 add 1 sharelen hrplen add 1 add {
+        /i exch def
+        i 0 offset 2 copy xsize ysize rectstroke moveto
+        % upper-right index
+        xsize 4.5 sub -3 rmoveto
+        /n i 1 add def
+        n 10 lt { ( ) show } if n 2 string cvs show
+        % lower-left index
+        i 0 offset ysize add moveto 1 1 rmoveto
+        /idx i hrplen sub 1 sub def
+        idx 26 gt { botalphabet idx 26 idiv 1 sub 1 getinterval show } if
+        botalphabet idx 26 mod 1 getinterval show
+      } for
+    grestore
+  } bind def
+
+  gsave
+    true true drawSingleRow
+    0 ysize translate true true drawSingleRow
+    3 1 nrows {
+      0 ysize ygap 3 mul add translate false false drawSingleRow
+      0 ysize translate true true drawSingleRow
     } for
+    0 ysize ygap 3 mul add translate true false drawSingleRow
   grestore
+
   end
   } bind def
 
@@ -2334,10 +2352,12 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
     pink setrgbcolor
     0 2 checksumlen {
       /j exch def
+      sharelen j add resetPos
       0 1 j checksumlen 2 mod add 1 sub {
         /i exch def
         i sharelen checksumlen sub add j numsteps 2 mul checksumlen 2 idiv 2 mul sub add offset xsize ysize rectfill
       } for
+      sharelen j add unresetPos
     } for
   grestore
   gsave
@@ -2359,14 +2379,17 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
     } for
 
     % Bottom-most row
+    numsteps 2 mul resetPos
     0 1 checksumlen 1 sub {
       sharelen checksumlen sub add /i exch def
       thin line
       i numsteps 1 add 2 mul offset xsize ysize rectstroke
     } for
+    numsteps 2 mul unresetPos
 
     1 1 numsteps {
       2 mul /j exch def
+      j resetPos
       0 1 checksumlen 1 sub {
         hrplen add j add 1 sub odd sub /i exch def
         thin line
@@ -2389,15 +2412,22 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
       xsize 4.5 sub -3 rmoveto
       /n i 3 add def
       n 10 lt { ( ) show } if n 2 string cvs show
+      j unresetPos
     } for
 
     /Helvetica-Bold findfont 10 scalefont setfont
     1 1 numsteps 1 add {
       2 mul /j exch def
-      j j offset moveto xsize 0.7 mul 5 rmoveto (+) centreshow
-      j j 1 add offset moveto xsize 0.7 mul 5 rmoveto (=) centreshow
+      j 1 sub resetPos
+      j hrplen add 3 sub j offset moveto xsize 0.7 mul 5 rmoveto (+) centreshow
+      j 1 sub unresetPos
+      j resetPos
+      j hrplen add 3 sub j 1 add offset moveto xsize 0.7 mul 5 rmoveto (=) centreshow
+      j unresetPos
     } for
 
+    numsteps 2 mul resetPos
+    numsteps 2 mul unresetPos
     /Courier findfont fsize scalefont setfont
     0 1 hrplen 1 sub {
       dup 0 offset moveto xsize 2 div ysize fgap add rmoveto hrp exch 1 getinterval centreshow
@@ -2481,6 +2511,39 @@ ladder dup 30 dict copy dup /exampleladder exch def begin
   /sharelen 32 def
   /numsteps sharelen hrplen sub checksumlen sub 2 idiv def
   /firstrowlen sharelen hrplen sub 1 sub numsteps 2 mul sub def
+end
+
+% bip3924ladder is a copy of ladder
+ladder dup 30 dict copy dup /bip3924ladder exch def begin
+  /hrp (BIP39_24W) def
+  /hrplen hrp length def
+
+  /sharelen 82 def
+  /numsteps sharelen hrplen sub checksumlen sub 2 idiv def
+  /firstrowlen sharelen hrplen sub 1 sub numsteps 2 mul sub def
+  /odd checksumlen firstrowlen sub def
+  /initresidue [hrp polymodhrp aload pop firstrowlen {0} repeat ] polymod0 def
+end
+
+% bip3912ladder is a copy of ladder
+ladder dup 30 dict copy dup /bip3912ladder exch def begin
+  /hrp (BIP39_12W) def
+  /hrplen hrp length def
+
+  /resetPos {
+      18 ge { -300 50 translate } if
+  } bind def
+
+  /unresetPos {
+      18 ge { 300 -50 translate } if
+  } bind def
+
+
+  /sharelen 56 def
+  /numsteps sharelen hrplen sub checksumlen sub 2 idiv def
+  /firstrowlen sharelen hrplen sub 1 sub numsteps 2 mul sub def
+  /odd checksumlen firstrowlen sub def
+  /initresidue [hrp polymodhrp aload pop firstrowlen {0} repeat ] polymod0 def
 end
 
 
@@ -51043,10 +51106,7 @@ newpath 110 395 90 305 238 arcn 10 -2 rlineto -10 2 rmoveto 7 -7 rlineto  stroke
 gsave
 48 370 translate
 ladder begin
-  true true drawrow %(A) /at (ABCD) fillrow
-  0 ysize translate true true drawrow
-  0 ysize ygap 3 mul add translate true false drawrow
-  0 ysize 1.8 mul translate
+  2 drawrow %(A) /at (ABCD) fillrow
 end
 grestore
 
@@ -51054,12 +51114,7 @@ grestore
 gsave
 48 270 translate
 ladder begin
-  true true drawrow %(A) /at (ABCD) fillrow
-  0 ysize translate true true drawrow
-  0 ysize ygap 3 mul add translate false false drawrow
-  0 ysize translate true true drawrow
-  0 ysize ygap 3 mul add translate true false drawrow
-  0 ysize 1.8 mul translate
+  3 drawrow %(A) /at (ABCD) fillrow
 end
 grestore
 
@@ -51075,10 +51130,8 @@ gsave
 
 9 {
 ladder begin
-  true true drawrow
-  0 ysize translate true true drawrow
-  0 ysize ygap 3 mul add translate true false drawrow
-  0 ysize 1.8 mul translate
+  2 drawrow
+  0 ysize 4.1 mul translate
 end
 } repeat
 grestore
@@ -51095,12 +51148,8 @@ gsave
 
 5 {
 ladder begin
-  true true drawrow
-  0 ysize translate true true drawrow
-  0 ysize ygap 3 mul add translate true false drawrow
-  0 ysize translate true true drawrow
-  0 ysize ygap 3 mul add translate true false drawrow
-  0 ysize 1.8 mul translate
+  3 drawrow
+  0 ysize 6.8 mul translate
 end
 } repeat
 grestore
@@ -51478,100 +51527,19 @@ end
 100 260 moveto (We encourage users to move away from BIP-39 to avoid this extra inconvenience.) show
 
 <?php end_page(); new_page(); ?>
-/hrp (bip39_12w) def
-/thick 1 def
-/thin 0.2 def
-/box {
-  10 dict begin
-  { /width /beginred /n } {exch def} forall
-  -1.2 -1.9 rmoveto
-  0 14 rlineto
-  arraySpace 0 rlineto
-  0 -14 rlineto
-  closepath
-  width setlinewidth
-  n beginred ge { gsave 1 0.9 0.9 setrgbcolor fill grestore } if
-  stroke
-  end
-} bind def
+% FIXME will draw all this text using the general-purpose content drawing logic
+/Times-Roman findfont 32 scalefont setfont
+260 680 moveto (Checksum Worksheet) show
+305 650 moveto (\(BIP39, 2 words\)) show
 
-/labeledbox {
-  10 dict begin
-  { /offset /beginred /n } {exch def} forall
-  /n n hrp length add 2 add def
-  gsave
-    n beginred thick box
-  grestore
-  gsave
-    arraySpace 6 sub 14 5 sub rmoveto
-    /Courier findfont 3 scalefont setfont
-    n offset add 10 lt { ( ) show } if n offset add 2 string cvs show
-  grestore
-  end
-} bind def
-/Helvetica-Bold findfont 10 scalefont setfont
-pgsize aload pop pop 2 div 740
-moveto (bip39_12w Checksum Worksheet) centreshow
-
-/Courier findfont 15 scalefont setfont
-
-136 720
-% [10 29 19 13 4 16 20 8 16 7 4 13 6 8 27 31 28 14 17 21 31 25 19 15 1 3 13 29 22 5 8 31 9 17 15 30 19 15 21 16 19 26 16 22 31]
-[ 46 {32} repeat ]
-10 dict begin
-{ /codeword /y /x } {exch def} forall
-/odd polymodulus length codeword length add 2 mod def
-x y moveto hrp (1) concatstrings dup stringwidth pop neg 3 sub odd 1 eq { arraySpace add } if 0 rmoveto show
-/edge codeword length polymodulus length sub hrp length add 2 add def
-/gaps [ 0 1 codeword length { 4 mod 1 eq {gapSpace} {arraySpace} ifelse } for ] def
-/k polymodulus length odd sub def
-  {edge 0 labeledbox} x arraySpace odd mul add y moveto codeword gaps 1 k getinterval 0 showArrayBox
-/y y 14 sub def
-/reduction [hrp polymodhrp aload pop k {0} repeat ] polymod0 def
-  {reduction length thin box} x arraySpace odd mul add y moveto reduction gaps 1 k getinterval odd showArrayBox
-  gsave
-    /Helvetica findfont 9 scalefont setfont
-    x y moveto
-    odd 1 eq { arraySpace 0 rmoveto } if
-    (+) dup stringwidth pop 2 add neg 2 rmoveto show
-  grestore
-/y y 15 sub def
-/residue reduction [1 odd eq {0} if codeword 0 k getinterval aload pop ] gf32addarray def
-
-{
-  gsave
-    /Helvetica findfont 9 scalefont setfont
-    x y moveto (=) dup stringwidth pop 2 add neg 2 rmoveto show
-  grestore
-  k codeword length ge {exit} if
-  { codeword length k sub thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
-  {edge 0 labeledbox} codeword gaps k 1 add 2 getinterval k showArrayBox
-  /x x gaps k 1 add reduction length sub 2 getinterval aload pop add add def
-  /y y 14 sub def
-
-  gsave
-    /Helvetica findfont 9 scalefont setfont
-    x y moveto (+) dup stringwidth pop 2 add neg 2 rmoveto show
-  grestore
-
-  /reduction residue 0 2 getinterval aload pop polymodshift2 def
-  {codeword length k sub 2 sub thin box} x y moveto reduction gaps k 1 add reduction length 2 sub sub reduction length getinterval 0 showArrayBox
-  /y y 15 sub def
-  /residue reduction [residue 2 polymodulus length 2 sub getinterval aload pop codeword k 2 getinterval aload pop] gf32addarray def
-  /k k 2 add def
-
-  % mod 14: 4-split
-  % mod 22 3-split
-  k 10 gt k 10 sub 22 mod 0 eq and {
-      /x x 335 sub def
-      /y y 105 add def
-  } if
-} loop
-
-gsave 0.85 setgray x y moveto checksum gaps k 1 add residue length sub residue length getinterval 0 showArray grestore
-{residue length thin box} x y moveto residue gaps k 1 add residue length sub residue length getinterval 0 showArrayBox
-
+gsave
+48 680 translate
+bip3912ladder begin
+ drawgrid
+ (                                                ) true false false false true fillgrid
 end
+grestore
+
 
 <?php end_page(); new_page(); ?>
 /hrp (bip39_24w) def

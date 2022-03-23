@@ -2306,9 +2306,9 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
     /drawTranslationSymbol exch def
     /drawShareIndex exch def
     gsave
-      hrplen 1 add 44 sharelen 1 sub {
+      hrplen 1 add 48 sharelen 1 sub {
         /starti exch def
-        /endi starti 43 add sharelen 1 sub min def
+        /endi starti 47 add sharelen 1 sub min def
 
       /Courier findfont 3 scalefont setfont
       thick line

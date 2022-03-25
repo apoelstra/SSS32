@@ -1,7 +1,11 @@
 <?php
 
+$current_page = 1;
+$current_page_cont = -1;
+
 function new_page($landscape = false) {
-    static $current_page = 1;
+    GLOBAL $current_page;
+    GLOBAL $current_page_cont;
     static $current_page_disp = 6;
 
     echo "%%Page: $current_page $current_page_disp\n";
@@ -13,6 +17,7 @@ function new_page($landscape = false) {
     echo "%%EndPageSetup\n";
 
     $current_page++;
+    $current_page_cont++;
     $current_page_disp++;
 }
 
@@ -20,11 +25,16 @@ function end_page() {
     echo "pgsave restore showpage\n";
 }
 
-function content_page() {
-    static $current_page_cont = 0;
-    new_page();
-    echo "72 pgsize aload pop 36 sub exch pop allPageContent $current_page_cont get drawPageContent\n";
-    $current_page_cont++;
+function content_page($landscape = false) {
+    GLOBAL $current_page_cont;
+    new_page($landscape);
+    if ($landscape) {
+        echo "90 rotate\n";
+        echo "/maxX 725 def\n";
+        echo "60 -40 allPageContent $current_page_cont get drawPageContent\n";
+    } else {
+        echo "72 pgsize aload pop 36 sub exch pop allPageContent $current_page_cont get drawPageContent\n";
+    }
 }
 
 ?>
@@ -438,7 +448,7 @@ function content_page() {
     /endlistitem
 
     /notoc /subsubsection (Derivation Table) /endsubsubsection /toc
-    (Derivation tables for $k$ = 4 through 9 can be found in Module XX.)
+    (Derivation tables for $k$ = 4 through 9 can be found in Module 2.)
     /paragraph
     /paragraph
     /paragraph %% derivation table
@@ -504,30 +514,152 @@ function content_page() {
 %    /endlistitem
   ] [ % pagebreak
     /section (Random Character Worksheet) /endsection
-  ] [ % pagebreak
-  ] [ % pagebreak
-    /section (Module 0: Volvelles) /endsection
-  5 { ] [ } repeat % lol postscript
-    /section (Checksum Table) /endsection
-  ] [ % pagebreak
-  ] [ % pagebreak
+  4 { ] [ } repeat % lol postscript
     /section (Checksum Worksheet) /endsection
+    /notoc %% don't put all the checksum worksheets into the ToC
+    (The Checksum Worksheet is used to generate and verify checksums. It is the)
+    (most frequently used and important worksheet of this codex.)
+    /linebreak
+    (*You will need:* Checksum Worksheet, Checksum Table, Addition Wheel)
+    /linebreak
+    (Generating a checksum:)
+    /startlist
+    /listitem1 (Fill in the top diagonal squares with your random data; you should)
+      (have enough to fill the non-pink bolded squares) /endlistitem
+    /listitem1 (Add the first row to the second to fill in the third row, using the)
+      (Addition Wheel.) /endlistitem
+    /listitem1 (Look up the two leftmost underhanging hanging symbols from the third)
+      (row in the Checksum Table to fill in the fourth row.) /endlistitem
+    /listitem1 (Repeat the above two steps, adding the third and fourth row, looking)
+      (up the fourth to fill in the fifth, and so on. You will be able to complete)
+      (the entire sheet except for the pink squares this way.) /endlistitem
+    /listitem1 (To complete the pink squares, work from the bottom up, adding each row)
+      (to the one above it until all the squares are filled.) /endlistitem
+    /linebreak
+    /linebreak
+    (The completed share can now be read from the top diagonal, including the checksum.)
+  ] [
+    /section (Checksum Worksheet) /endsection
+    (Verifying a checksum:)
+    /startlist
+    /listitem1 (Fill in the top diagonal with your share data; you should have enough)
+      (to fill all the bolded squares) /endlistitem
+    /listitem1 (\(Optional.\) Fill the bottom diagonal, if you have access to this)
+      (data. It will help you catch mistakes.) /endlistitem
+    /listitem1 (Fill in the rest of the worksheet as you did when generating a checksum.)
+      (If your final row does not match `SECRETSHARE32`, or if any of your computed)
+      (bottom diagonal values don't match the expected values, there is a mistake in)
+      (the worksheet or your data has been corrupted.)
+      /endlistitem
+    /linebreak /linebreak
+    (In case of error, first recompute every value in the bad column; then check)
+    (that you copied all the share data correctly; then try redoing the worksheet)
+    (entirely. If the checksum is consistently bad your data is corrupt and you)
+    (need to attempt the online recovery process. \(Under construction; but try)
+    (contacting Pearlwort for help.\))
+  2 { ] [ } repeat
+    /toc
+    /section (Translation Worksheet) /endsection
+    /notoc %% don't put all the translation worksheets into the ToC
+    (The translation worksheet is used to derive shares, when splitting keys, and)
+    (during key recovery. In both cases, the process is to translate a set of shares)
+    (using the Translation Wheel, then to add the translated results using the)
+    (Addition Wheel.)
+    /linebreak
+    /linebreak
+    (*You will need:* Translation Worksheet, Translation/Multiplication Wheel, Addition Wheel)
+    /linebreak
+    /linebreak
+    (In both cases, the number of shares to combine is your k value, the number of)
+    (required shares to reconstruct the secret. The process is:) 
+    /startlist
+    /listitem1 (Make sure that you have completed checksum worksheets for all input shares.) /endlistitem
+    /listitem1 (Look up the translation symbols for each share, either in tables or)
+      (using the Recovery Wheel and Multiplication Wheel.) /endlistitem
+    /listitem1 (Mark down each share's index \(the sixth character of its header\))
+      (and translation symbol in the appropriate squares.) /endlistitem
+    /listitem1 (Character by character, translate each share from its Checksum Worksheet)
+      (to its row, using the Translation Wheel.) /endlistitem
+    /listitem1 (Using the Addition Wheel, add all rows together.) /endlistitem
+    /linebreak
+    /linebreak
+    (Notice that the resulting share will automatically have the correct share index in its header.)
+  3 { ] [ } repeat
+    /toc
+    /section (Module 0: Volvelles) /endsection
+  5 { ] [ } repeat
+    /section (Module 1: Share Booklet) /endsection
+
+    (In the common case that your threshold value k is 2, there is a much faster)
+    (way to generate shares rather than using the Translation Worksheet and the)
+    (volvelles.)
+    /paragraph
+    (In this case, your two initially generated shares will be `S` and `A`. To)
+    (generate further shares, go through the characters of your `S` share one by)
+    (one. For each character, find the table labeled by the character; then find)
+    (the row labeled by the corresponding character of your `A` share.)
+  9 { ] [ } repeat
+    /section (Module 2: Share Generation Tables) /endsection
+    (The main instructional section contains share derivation tables for $k$ values of)
+    (2 or 3, assuming that initially generated shares are `A`, `C`, and \(sometimes\))
+    (`D`. This page provides tables for higher $k$ values; the next provides tables)
+    (for the case where your `S` share is an initial one.)
+    /paragraph
+    (Even higher values of $k$ can be obtained by editing the PostScript source of)
+    (this document. Search for the text `EDITME` to find the right section.)
+    /paragraph
+    (We caution users that higher $k$ values, in our view, are a bad trade-off between)
+    (usability and robustness \(which are damaged\) and security \(which is improved\).)
+  ] [
+    /startText
+    (These tables allow you to generate shares in the case that your `S` share is)
+    (an initial share. Ordinarily, you would generate the first few shares randomly,)
+    (and infer your `S` share form those; but in some cases, for example when using)
+    (and existing seed with this scheme, you need to generate the `S` share first.)
+    /paragraph
+    (In particular, BIP-39 users will need to use this table.)
+  ] [
+    /section (Module 39: BIP-39 Support) /endsection
+    (BIP-39 users can use the following pages to convert their seed words into bech32)
+    (format and attach checksums. These seed words will be encoded in the same way that)
+    (ordinary secrets are, other than having a different length; the process for share)
+    (splitting and recovery is the same.)
+    /paragraph
+    (The additional steps are as follows:)
+    /startlist
+    /listitem1 (Using the BIP-39 Conversion worksheet and the following four)
+      (pages of binary conversion tables, convert your 12- or 24-word seedphrase)
+      (to bech32.)
+      /paragraph
+      (Set your threshold and share ID as usual. *Set the share index of the)
+      (coverted data to* `S`.)
+    /endlistitem
+    /listitem1 (For a 12-word secret, checksum the bech32 data using the `BIP39_12w`)
+      (checksum worksheet. For a 24-word secret, use the `BIP39_24W` worksheet. The)
+      (instructions are essentially the same as for the ordinary `MS1` checksum)
+      (worksheet, although some rows have been moved to fit everything onto one)
+      (page.) /endlistitem
+    /listitem1 (Split your secret. The instructions are essentially the same as in)
+      (the standard setup, with two minor adjustments:)
+      /startsublist
+      /sublistitem1 (First, your data will not fit in the standard Translation)
+        (Worksheet; we have provided an extended one in this module.) /endsublistitem
+      /sublistitem1 (More importantly, your `S` share will be an initial share)
+        (rather than a derived share. The standard derivation tables assumes)
+        (otherwise. We have provided an alternate set of derivation tables in)
+        (Module 2.) /endsublistitem
+      /endlistitem
+    /listitem1 (Similarly, recover your secret as usual.) /endlistitem
+    /listitem1 (Convert the recovered secret back to seed words, again using the)
+      (BIP-39 Conversion Worksheet. The same table will work for converting)
+      (bits-to-words as for words-to-bits, since the binary and alphabetical ordering)
+      (is the same.) /endlistitem
+
+    /paragraph
+    (We encourage users to move away from BIP-39 to avoid this extra inconvenience.)
   ] [ % pagebreak
-    /section (Translation Worksheets) /endsection
   ] [ % pagebreak
   ] [ % pagebreak
-  ] [ % pagebreak
-    /section (Bip39 Stuff) /endsection
-    /subsection (Checksum Worksheet) /endsubsection
-  ] [ % pagebreak
-    /subsection (Conversion Worksheet) /endsubsection
-  ] [ % pagebreak
-    /subsection (Conversion Wordlist) /endsubsection
-  ] [ % pagebreak
-  ] [ % pagebreak
-  ] [ % pagebreak
-  ] [ % pagebreak
-    /section (Module Z: 2-of-n Share Booklet) /endsection
   ]
 ] def
 
@@ -1513,6 +1645,7 @@ end
 } bind def
 
 % Takes as input a single page's contents and draws it
+/maxX 540 def % FIXME
 /drawPageContent { % x y [page content] -> nothing
   20 dict begin
   {/pagecontent /yorigin /xorigin} { exch def } forall
@@ -1529,7 +1662,6 @@ end
     /y yorigin
     /dropcapWidth 0
     /dropcapHeight 0
-    /maxX 540 % FIXME
     /wordBuffer 100 array
     /wordN 0
     /totalKern 0
@@ -2423,10 +2555,10 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
     1 1 numsteps 1 add {
       2 mul /j exch def
       j 1 sub resetPos
-      j hrplen add 3 sub j offset moveto xsize 0.7 mul 5 rmoveto (+) centreshow
+      j hrplen add odd sub 2 sub j offset moveto xsize 0.7 mul 5 rmoveto (+) centreshow
       j 1 sub unresetPos
       j resetPos
-      j hrplen add 3 sub j 1 add offset moveto xsize 0.7 mul 5 rmoveto (=) centreshow
+      j hrplen add odd sub 2 sub j 1 add offset moveto xsize 0.7 mul 5 rmoveto (=) centreshow
       j unresetPos
     } for
 
@@ -50431,11 +50563,13 @@ moveto (Table of Contents) centreshow
       /endsubsubsection -3
     >> exch 2 copy known {
       get
-      % For top-level sections bump y down an extra space
-      dup 1 eq { /y y 15 sub store } if
-      % For all sections just adjust x accordingly
-      /x 1 index 20 mul x add store
-      /displaying exch 0 gt store
+      tocOn {
+        % For top-level sections bump y down an extra space
+        dup 1 eq { /y y 15 sub store } if
+        % For all sections just adjust x accordingly
+        /x 1 index 20 mul x add store
+        /displaying exch 0 gt store
+      } if
     } {
       dup
       /notoc eq { /tocOn false store } if
@@ -50454,39 +50588,31 @@ allPageContent { % forall pages
 
 end
 
-pgsave restore
-showpage
-
 %****************************************************************
 %*
 %* Main Content
 %*
 %****************************************************************
 <?php
-    content_page(); end_page();
-    content_page(); end_page();
-    content_page(); end_page();
-    content_page();
+  end_page(); content_page();
+  end_page(); content_page();
+  end_page(); content_page();
+  end_page(); content_page();
 ?>
 216 156 moveto
 /Times-Italic findfont 12 scalefont setfont (Keep it secret. Keep it safe.) show
 306 140 moveto gsave 0 3.5 rmoveto 10 0 rlineto 0.2 setlinewidth stroke grestore 12 0 rmoveto
 /Times findfont 12 scalefont setfont (Gandalf) show
-<?php end_page(); ?>
-
-<?php content_page(); ?>
+<?php
+  end_page(); content_page();
+?>
 72 310 drawDataFormat
-<?php end_page(); ?>
 
-<?php content_page(); end_page(); ?>
+<?php
+  end_page(); content_page();
+  end_page(); content_page();
+?>
 
-<?php content_page(); ?>
-
-% EDITME
-% Edit these values to draw tables for larger k. Be warned that the total work to recover
-% a secret from k shares will be on the other of (48 + k - 1)k volvelle applications. For
-% k = 8 this is already over 250. And this is not even considering the logistics of keeping
-% eight distributed shares intact and available..
 /mink 2 def
 /maxk 3 def
 
@@ -50533,15 +50659,10 @@ mink 1 maxk {
   /y y 20 sub def
 } for
 
-<?php end_page(); ?>
-
-<?php content_page(); end_page(); ?>
+<?php end_page(); content_page(); ?>
 
 %%% Random Character Worksheet
-<?php new_page(true); ?>
-90 rotate
-
-60 -40 allPageContent 8 get drawPageContent
+<?php end_page(); content_page(true); ?>
 
 60 -88 moveto
 /Times-bold findfont 12 scalefont setfont
@@ -50915,36 +51036,8 @@ false {
 } for
 } if
 
-<?php end_page(); new_page(true); ?>
-90 rotate
-
-% 0 pgsize aload pop pop neg translate
+<?php end_page(); content_page(true); ?>
 0 -750 translate
-
-% FIXME will draw all this text using the general-purpose content drawing logic
-/Times-Roman findfont 32 scalefont setfont
-48 680 moveto (Checksum Worksheet) show
-
-/Times-Roman findfont 12 scalefont setfont
-48 650 moveto (The Checksum Worksheet is used to generate and verify checksums. It is the most frequently used and important worksheet of this codex.) show
-/Times-Bold findfont 12 scalefont setfont
-48 635 moveto (You will need: ) show
-/Times-Roman findfont 12 scalefont setfont
-(Checksum Worksheet, Checksum Table, Addition Wheel) show
-
-48 600 moveto (Generating a checksem:) show
-82 585 moveto (1.) stringwidth pop neg 0 rmoveto
-(1. Fill in the top diagonal squares with your random data; you should have enough to fill the non-pink bolded squares) show
-82 570 moveto (2a.) stringwidth pop neg 0 rmoveto
-(2a. Add the first row to the second to fill in the third row, using the Addition Wheel.) show
-82 555 moveto (2b.) stringwidth pop neg 0 rmoveto
-(2b. Look up the two leftmost underhanging hanging symbols from the third row in the Checksum Table to fill in the fourth row.) show
-82 540 moveto (2c.) stringwidth pop neg 0 rmoveto
-(2c. Repeat the above two steps, adding the third and fourth row, looking up the fourth to fill in the fifth, and so on.) show
-82 525 moveto (3.) stringwidth pop neg 0 rmoveto
-(3. To complete the worksheet, work from the bottom up, adding each row to the one above it until all the pink squares are filled.) show
-
-48 500 moveto (The completed share can now be read from the top diagonal, including the checksum.) show
 
 gsave
 48 440 translate 0.75 0.8 scale
@@ -50961,7 +51054,7 @@ gsave
 238 440 translate 0.75 0.8 scale
 exampleladder begin
  /Helvetica-Bold findfont 15 scalefont setfont
- firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (2) centreshow
+ firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (2 - 4) centreshow
 
  drawgrid
  (2NAMES50PRDAK9GLSVNL067VQVEX0) true false true true true fillgrid
@@ -50979,35 +51072,8 @@ exampleladder begin
 end
 grestore
 
-<?php end_page(); new_page(true); ?>
-90 rotate
-
-% 0 pgsize aload pop pop neg translate
+<?php end_page(); content_page(true); ?>
 0 -750 translate
-
-% FIXME will draw all this text using the general-purpose content drawing logic
-/Times-Roman findfont 32 scalefont setfont
-48 680 moveto (Checksum Worksheet) show
-
-/Times-Roman findfont 12 scalefont setfont
-48 650 moveto (Verifying a checksum:) show
-82 635 moveto (1.) stringwidth pop neg 0 rmoveto
-(1. Fill in the top diagonal with your share data; you should have enough to fill all the bolded squares) show
-82 620 moveto (2.) stringwidth pop neg 0 rmoveto
-(2. \(Optional.\) Fill the bottom diagonal, if you have access to this data. It will help you catch mistakes.) show
-82 605 moveto (3.) stringwidth pop neg 0 rmoveto
-(3. Fill in the rest of the worksheet as you did when generating a checksum. If your final row does not match SECRETSHARE32,) show
-82 590 moveto
-( or if any of your computed bottom diagonal values don't match the expected values, there is a mistake in the worksheet or your) show
-82 575 moveto
-( data has been corrupted.) show
-
-82 550 moveto
-( In case of error, first recompute every value in the bad column; then check that you copied all the share data correctly; then) show
-82 535 moveto
-( try redoing the worksheet entirely. If the checksum is consistently bad your data is corrupt and you need to attempt the online) show
-82 520 moveto
-( recovery process. \(Under construction; but try contacting Pearlwort for help.\)) show
 
 gsave
 48 440 translate 0.75 0.8 scale
@@ -51073,32 +51139,8 @@ end
 grestore
 
 
-<?php end_page(); new_page(true); ?>
-90 rotate
+<?php end_page(); content_page(true); ?>
 0 -750 translate
-% FIXME will draw all this text using the general-purpose content drawing logic
-/Times-Roman findfont 32 scalefont setfont
-48 680 moveto (Translation Worksheet) show
-
-/Times-Roman findfont 12 scalefont setfont
-48 650 moveto (The translation worksheet is used to derive shares, when splitting keys, and during key recovery. In both cases, the process is to translate) show
-48 635 moveto (a set of shares using the Translation Wheel, then to add the translated results using the Addition Wheel.) show
-48 610 moveto (In both cases, the number of shares to combine is your k value, the number of required shares to reconstruct the secret.) show
-
-48 585 moveto (In both cases, the process is) show
-82 570 moveto (1.) stringwidth pop neg 0 rmoveto
-(1. Make sure that you have completed checksum worksheets for all input shares.) show
-82 555 moveto (2.) stringwidth pop neg 0 rmoveto
-(2. Look up the translation symbols for each share, either in tables or using the Recovery Wheel and Multiplication Wheel.) show
-82 540 moveto (3.) stringwidth pop neg 0 rmoveto
-(3. Mark down each share's index \(the sixth character of its header\) and translation symbol in the appropriate squares.) show
-82 525 moveto (4.) stringwidth pop neg 0 rmoveto
-(4. Character by character, translate each share from its Checksum Worksheet to its row, using the Translation Wheel.) show
-82 510 moveto (5.) stringwidth pop neg 0 rmoveto
-(5. Using the Addition Wheel, add all rows together.) show
-
-48 480 moveto (Notice that the resulting share will automatically have the correct share index in its header.) show
-
 
 /Times-Roman findfont 16 scalefont setfont
 48 415 moveto (k=2 Example) show
@@ -51169,70 +51211,8 @@ end
 } repeat
 grestore
 
-<?php end_page(); new_page(true); ?>
-  10 dict begin
-  gsave
-
-  90 rotate 0 -750 translate
-  /Helvetica-Bold findfont 10 scalefont setfont
-  pgsize aload pop exch pop 2 div 700
-  moveto (Translation Worksheet \(extra\)) centreshow
-
-  /labeledbox {
-    10 dict begin
-    /n exch 1 add def
-    gsave
-      n 1000 0.2 box
-    grestore
-    gsave
-      arraySpace 6 sub 14 5 sub rmoveto
-     /Courier findfont 3 scalefont setfont
-      n 10 le { ( ) show } if n 2 string cvs show
-    grestore
-    end
-  } bind def
-
-  /drawRow {
-    10 dict begin
-    { /hrp /y /x } { exch def } forall
-      x y moveto hrp dup stringwidth pop neg 3 sub 0 rmoveto show
-      /k 3 def
-
-      /init k k 4 mod sub 4 add k sub def
-      {labeledbox} x y moveto [] [] init showBox
-%      /x x init 0.25 add arraySpace mul add def
-      /k k init add def
-      {
-        k 48 ge {exit} if
-
-        {labeledbox} x y moveto [] [ 4 {arraySpace} repeat ] k 1 sub showBox
-
-        /x x 4.25 arraySpace mul add def
-        /k k 4 add def
-    } loop
-    end
-  } bind def
-
-  /x 96 def
-  /y 675 def
-
-  x y (ms1) drawRow
-  /y y 14 sub def
-  x y ( ) drawRow
-  /y y 20 sub def
-  % Every other row-pair
-  14 {
-  % Initial row-pair which includes the "ms1" text
-  x y ( ) drawRow
-  /y y 14 sub def
-  x y ( ) drawRow
-  /y y 20 sub def
-  } repeat
-end
-
 %% Volvelles
-<?php end_page(); new_page(); ?>
-72 pgsize aload pop 36 sub exch pop allPageContent 10 get drawPageContent
+<?php end_page(); content_page(); ?>
 {xor} (Addition) code dup perm drawBottomWheelPage
 
 <?php end_page(); new_page(); ?>
@@ -51486,10 +51466,7 @@ translationDisc begin
   drawTopDisc
 end
 
-<?php end_page(); new_page(); ?>
-/Helvetica findfont 14 scalefont setfont
-100 100 moveto (Module 1: share booklet. Instructions for using the booklet go here) show
-100 200 moveto (\(This section is nonessential and can be safely ignored for now.\)) show
+<?php end_page(); content_page(); ?>
 
 <?php end_page(); new_page(); ?>
 29 24 13 25 showShareTablePage
@@ -51515,32 +51492,117 @@ end
 <?php end_page(); new_page(); ?>
 26 30 7 5 showShareTablePage
 
-<?php end_page(); new_page(); ?>
-/Helvetica findfont 14 scalefont setfont
-100 700 moveto (Module 39: BIP-39 Support) show
-/Times findfont 12 scalefont setfont
-100 660 moveto (BIP-39 users can use the following pages to convert their seed words into bech32) show
-100 640 moveto (format and attach checksums. These seed words will be encoded in the same way that) show
-100 620 moveto (ordinary secrets are, other than having a different length; the process for share) show
-100 600 moveto (splitting and recovery is the same.) show
+<?php end_page(); content_page(); ?>
 
-100 560 moveto (The additional steps are as follows:) show
-120 540 moveto (1. Using the BIP-39 Conversion worksheet and the following four pages of binary) show
-135 520 moveto (conversion tables, convert your 12- or 24-word seedphrase to bech32.) show
-120 500 moveto (2. For a 12-word secret, checksum the bech32 data using the bip39_12w checksum) show
-135 480 moveto (worksheet. For a 24-word secret, use the bip39_24w worksheet. The instructions) show
-135 460 moveto (are essentially the same as for the ordinary ms1 checksum worksheet, although) show
-135 440 moveto (some rows have been moved to fit everything onto one page.) show
-120 420 moveto (3. Split your secret as usual. You will now need to use multiple rows of the) show
-135 400 moveto (Translation Worksheet at a time; a future version of this document will have) show
-135 380 moveto (new BIP-39-specific versions of the Translation worksheet.) show
-120 360 moveto (4. Similarly, recover your secret as usual.) show
-120 340 moveto (5. Convert the recovered secret back to seed words, again using the BIP-39) show
-135 320 moveto (Conversion Worksheet. The same table will work for converting bits-to-words) show
-135 300 moveto (as for words-to-bits, since the binary and alphabetical ordering is the same.) show
+% EDITME
+% Edit these two values to draw tables for high k. For example, for k=9, set both
+% mink and maxk to 9. (For values of 10+ you can only fit one table on the page
+% at once, so you need to set mink == maxk).
+%
+% These are the A/C/D/... tables, not the S/A/C/D/... ones
+/mink 4 def
+/maxk 8 def
 
-100 260 moveto (We encourage users to move away from BIP-39 to avoid this extra inconvenience.) show
+/x 104 def
+/y 560 def
+/rowtitle 6 string def
+mink 1 maxk {
+  /k exch def
 
+  0 1 k {
+    /rowidx exch def
+    x y moveto
+    /Courier-Bold findfont 12 scalefont setfont
+    rowidx 0 eq {
+      % First row (heading)
+      k (k =   ) rowtitle copy 4 2 getinterval cvs pop
+      rowtitle show
+
+      k mink sub { 12 0 rmoveto } repeat
+      k 1 31 {
+        perm exch get code exch get gsave glyphshow grestore
+        12 0 rmoveto
+      } for % horizontal loop
+    } {
+      % Symbol rows
+      /xinterp rowidx 1 sub def % x coord to interpolate at
+      (  ) show
+      perm xinterp get code exch get glyphshow
+      (   ) show
+
+      k mink sub { 12 0 rmoveto } repeat
+      k 1 31 {
+        perm exch get  % x coord to evaluate at
+        perm xinterp get % x coord to interpolate at
+        perm 0 k getinterval % x coords to interpolate at
+        lagrange % symbol
+        code2 exch get gsave 12 codexshow grestore % print symbol
+        12 0 rmoveto
+      } for % horizontal loop
+    } ifelse
+
+    /y y 11 sub def
+  } for % vertical loop
+  /y y 20 sub def
+} for
+
+<?php end_page(); content_page(); ?>
+
+% EDITME
+% Edit these two values to draw tables for high k. For example, for k=9, set both
+% mink and maxk to 9. (For values of 10+ you can only fit one table on the page
+% at once, so you need to set mink == maxk).
+%
+% These are the S/A/C/D/... tables, not the A/C/D/... ones.
+/mink 2 def
+/maxk 8 def
+
+/x 104 def
+/y 640 def
+/rowtitle 6 string def
+mink 1 maxk {
+  /k exch def
+
+  0 1 k {
+    /rowidx exch def
+    x y moveto
+    /Courier-Bold findfont 12 scalefont setfont
+    rowidx 0 eq {
+      % First row (heading)
+      k (k =   ) rowtitle copy 4 2 getinterval cvs pop
+      rowtitle show
+
+      k mink sub { 12 0 rmoveto } repeat
+      k 1 31 {
+        permS exch get code exch get gsave glyphshow grestore
+        12 0 rmoveto
+      } for % horizontal loop
+    } {
+      % Symbol rows
+      /xinterp rowidx 1 sub def % x coord to interpolate at
+      (  ) show
+      permS xinterp get code exch get glyphshow
+      (   ) show
+
+      k mink sub { 12 0 rmoveto } repeat
+      k 1 31 {
+        permS exch get  % x coord to evaluate at
+        permS xinterp get % x coord to interpolate at
+        permS 0 k getinterval % x coords to interpolate at
+        lagrange % symbol
+        code2 exch get gsave 12 codexshow grestore % print symbol
+        12 0 rmoveto
+      } for % horizontal loop
+    } ifelse
+
+    /y y 11 sub def
+  } for % vertical loop
+  /y y 20 sub def
+} for
+
+% ** BIP 39 **
+
+<?php end_page(); content_page(); ?>
 <?php end_page(); new_page(); ?>
 % FIXME will draw all this text using the general-purpose content drawing logic
 /Times-Roman findfont 32 scalefont setfont

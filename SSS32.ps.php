@@ -1,7 +1,7 @@
 <?php
 
 $current_page = 1;
-$current_page_cont = -1;
+$current_page_cont = 0;
 
 function new_page($landscape = false) {
     GLOBAL $current_page;
@@ -22,19 +22,22 @@ function new_page($landscape = false) {
 }
 
 function end_page() {
-    echo "pgsave restore showpage\n";
+    echo "end pgsave restore showpage\n";
 }
 
-function content_page($landscape = false) {
+function content_page($landscape = false, $override_margin = false) {
     GLOBAL $current_page_cont;
     new_page($landscape);
     if ($landscape) {
-        echo "90 rotate\n";
-        echo "/maxX 725 def\n";
-        echo "60 -40 allPageContent $current_page_cont get drawPageContent\n";
+        echo "landscapePage";
     } else {
-        echo "72 pgsize aload pop 36 sub exch pop allPageContent $current_page_cont get drawPageContent\n";
+        echo "portraitPage";
     }
+    echo " begin $current_page_cont ";
+    if ($override_margin) {
+        echo "/marginX2 marginX2 1.75 div def ";
+    }
+    echo "drawPageContent\n";
 }
 
 ?>
@@ -97,6 +100,7 @@ function content_page($landscape = false) {
 %* Main text content
 %*
 /allPageContent [
+  [ ] % dummy so we can 1-index the array
   [
     /section (Overview / Cheatsheet) /endsection
     /notoc % turn off table of contents indexing
@@ -122,7 +126,7 @@ function content_page($landscape = false) {
     /listitem1 (Attach the discs with a brass fastener through the centre holes.) /endlistitem
 
     /subsection (Initial \(First $k$\) Share Creation) /endsubsection
-    (*You will need::*: Addition Volvelle, Random Character Worksheet, Checksum Worksheet, pencil and eraser)
+    (*You will need*: Addition Volvelle, Random Character Worksheet, Checksum Worksheet, pencil and eraser)
     /linebreak
     (For each of your initial $k$ shares, you should)
     /startlist
@@ -514,6 +518,25 @@ function content_page($landscape = false) {
 %    /endlistitem
   ] [ % pagebreak
     /section (Random Character Worksheet) /endsection
+    (*You will need:* five distinct dice, five markets, this and the following page)
+    /startlist
+    /listitem1 (Label each Die Track to indicate which die it corresponds to.)
+      /linebreak /linebreak
+      (*Do* *not* *otherwise* *mark* *these* *two* *pages.*) /endlistitem
+    /listitem1 (Roll all five dice. Set markers on each Die Pad indicating)
+      (their values.) /endlistitem
+    /listitem1 (Roll all five dice again and set the dice on each Die Track)
+      (indicating) /linebreak (their second values.) /endlistitem
+    /listitem1 (Repeat steps 2 and 3 for each die that showed the same value)
+      /linebreak (twice.) /endlistitem
+    /listitem1 (Using your finger, follow the tree to the right using the results)
+      /linebreak (indicated on the Die Tracks: take the first left branch if the)
+      /linebreak (first die is to the left of its marker, the right branch if it is)
+      /linebreak (to the right. Similarly, take the second branch based on)
+      /linebreak (the results on the second Die Track, and)
+      (so on, until) /linebreak (the bottom of the tree.) /endlistitem
+    /listitem1 (Repeat Steps 2-5 to generate more characters.) /endlistetim
+
   4 { ] [ } repeat % lol postscript
     /section (Checksum Worksheet) /endsection
     /notoc %% don't put all the checksum worksheets into the ToC
@@ -658,8 +681,7 @@ function content_page($landscape = false) {
     /paragraph
     (We encourage users to move away from BIP-39 to avoid this extra inconvenience.)
   ] [ % pagebreak
-  ] [ % pagebreak
-  ] [ % pagebreak
+  10 { ] [ } repeat  % add a bunch of trailing pages to avoid overflow
   ]
 ] def
 
@@ -987,6 +1009,70 @@ end
     [611.842163 791.842163] % letter size
   } ifelse
 def
+
+20 dict dup /portraitPage exch def begin
+  pgsize aload pop [ /pageH /pageW ] { exch def } forall
+  /centerX pageW 2 div def
+  /centerY pageH 2 div def
+  /marginX1 36 def
+  /marginX2 pageW 36 sub def
+  /marginY1 pageH 48 sub def
+  /marginY2 48 def
+  /marginW marginX2 marginX1 sub def
+  /marginH marginY2 marginY1 sub def
+
+  % Draw a line indicating where the margins of the page are; can be used
+  % for debugging graphical output
+  /drawMargin {
+    gsave
+      0 setgray thin line
+      marginX1 marginY1 marginW marginH rectstroke
+    grestore
+  } bind def
+
+  % Draw the page number and any (TODO) content in the page content array
+  % Takes the pagenum as a numeric value
+  /drawPageContent {
+    10 dict begin
+    /pagenum exch def
+    % Page content
+    gsave
+      allPageContent pagenum get drawPageContentInner
+    grestore
+    % Footer
+    gsave
+      /Times-Roman findfont 12 scalefont setfont
+      centerX marginY2 moveto
+      pagenum pagenum 10 lt { 1 } { 2 } ifelse string cvs show
+      % version
+      /Courier findfont 8 scalefont setfont
+      marginX1 marginY2 moveto
+      (03-31-alpha) show
+    grestore
+    end
+  } bind def
+end
+
+% landscapePage is a modified copy of portraitPage
+portraitPage dup 20 dict copy dup /landscapePage exch def begin
+  pgsize aload pop exch [ /pageH /pageW ] { exch def } forall
+  /centerX pageW 2 div def
+  /centerY pageH 2 div def
+  /marginX1 36 def
+  /marginX2 pageW 36 sub def
+  /marginY1 pageH 48 sub def
+  /marginY2 48 def
+  /marginW marginX2 marginX1 sub def
+  /marginH marginY1 marginY2 sub def
+
+  /drawPageContent {
+    90 rotate
+    0 pageH neg translate
+    portraitPage /drawPageContent get exec
+  } bind def
+end
+
+% line : width --
 
 /marginpath {
 10 dict begin
@@ -1586,9 +1672,9 @@ end
 % Displays a single word on the current device with the current font
 % Returns the number of points before the end of the line, which will be
 % negative in case of an overrun
-/showWord { % word kernX maxX -> distance to maxX
+/showWord { % word kernX -> distance to marginX2
   10 dict begin
-  {/actuallyDraw /maxX /kernX /word} { exch def } forall
+  {/actuallyDraw /kernX /word} { exch def } forall
 
   <<
     /nametype {
@@ -1635,7 +1721,7 @@ end
             } ifelse
           } ifelse
         } for
-        maxX currentpoint pop sub % compute return value prior to trailing space
+        marginX2 currentpoint pop sub % compute return value prior to trailing space
         ( ) show % print a space so that copy/paste has a hope of working
       } { 0 } ifelse
     }
@@ -1645,12 +1731,11 @@ end
 } bind def
 
 % Takes as input a single page's contents and draws it
-/maxX 540 def % FIXME
-/drawPageContent { % x y [page content] -> nothing
+/drawPageContentInner { % x y [page content] -> nothing
   20 dict begin
-  {/pagecontent /yorigin /xorigin} { exch def } forall
+  /pagecontent exch def
 
-  xorigin yorigin moveto
+  marginX1 marginY1 moveto
 
   % state machine
   /buffer 200 string def
@@ -1658,8 +1743,8 @@ end
     % state
     /state /buffering
     /currentFont nullFont
-    /x xorigin
-    /y yorigin
+    /x marginX1
+    /y marginY1
     /dropcapWidth 0
     /dropcapHeight 0
     /wordBuffer 100 array
@@ -1699,7 +1784,7 @@ end
       /word exch def
 
       % Simulate writing the word, to see if it causes an overrun. If so...
-      word 0 maxX false showWord dup 0 lt {
+      word 0 false showWord dup 0 lt {
         % ...dump the previous line, with kerning
         totalKern wordN 1 gt { wordN 1 sub div } if dumpLastLine
         currentFont /yDisp get neg offsetY
@@ -1717,9 +1802,9 @@ end
     /dumpLastLine {
       x y moveto
       wordN 0 gt {
-        wordBuffer 0 get 0 maxX true showWord pop
+        wordBuffer 0 get 0 true showWord pop
         wordBuffer 1 wordN 1 sub getinterval {
-          1 index maxX true showWord pop
+          1 index true showWord pop
         } forall
       } if
       pop
@@ -2898,7 +2983,7 @@ end
 
     0 1 63 {
         dup
-        8 mul 560 sub xstart exch moveto
+        8 mul 60 add xstart exch moveto
 
         offset exch sub
         dup 256 mod 0 eq {
@@ -50593,6 +50678,7 @@ end
 %* Main Content
 %*
 %****************************************************************
+10 dict begin %% dummy
 <?php
   end_page(); content_page();
   end_page(); content_page();
@@ -50662,57 +50748,10 @@ mink 1 maxk {
 <?php end_page(); content_page(); ?>
 
 %%% Random Character Worksheet
-<?php end_page(); content_page(true); ?>
-
-60 -88 moveto
-/Times-bold findfont 12 scalefont setfont
-(You will need: ) show
-/Times findfont 12 scalefont setfont
-(five distinct dice, five markers, this and the following page) show
-
-60 -120 moveto
-(1. Label each Die Track to indicate which die it corresponds to.) show
-/Times-bold findfont 12 scalefont setfont
-74 -134 moveto
-0.7 0 0 setrgbcolor
-(Do not otherwise mark these two pages.) show
-/Times findfont 12 scalefont setfont
-0 setgray
-60 -153 moveto
-(2. Roll all five dice and set markers on each Die Pad) show
-74 -167 moveto
-(indicating their values.) show
-
-60 -186 moveto
-(3. Roll all five dice again and set the dice on each Die) show
-74 -200 moveto
-(Track indicating their second values.) show
-
-60 -219 moveto
-(4. Repeat steps 2 and 3 for each die that showed) show
-74 -233 moveto
-(the same value twice.) show
-
-60 -252 moveto
-(5. Using your finger, follow the tree to the right) show
-74 -266 moveto
-(using the results indicated on the Die Tracks:) show
-74 -280 moveto
-(take the first left branch if the first die is to the) show
-74 -294 moveto
-(left of its marker, the right branch if it is to the) show
-74 -308 moveto
-(right. Similarly, take the second branch based) show
-74 -322 moveto
-(on the results on the second Die Track, and) show
-74 -336 moveto
-(so on, until the bottom of the tree.) show
-
-60 -355 moveto
-(6. Repeat Steps 2-5 to generate more characters.) show
+<?php end_page(); content_page(true, true); ?>
 
 gsave
-325 -390 translate
+325 190 translate
 %% Tree
 10 dict begin
 % tree
@@ -50752,51 +50791,48 @@ gsave
   } for
   thin line stroke
   /fontsz 16 def
-  /Codex findfont fontsz scalefont setfont
   0 1 31 {
     /j exch def
     /x 1.1 radius mul 2 j mul 1 add mul def
     x spacing 2 div fontsz 0.3 mul sub 5 sub moveto
-    code j get centreglyphshow
+    code j get fontsz centrecodexshow
   } for
 end
 grestore
 
+marginX1 200 translate
 % Labels for the dice pad rows
 /Helvetica-Bold findfont 18 scalefont setfont
-60 -395 moveto
+0 0 moveto
 (Die Tracks) show
-newpath 36 -399 moveto 736 -399 lineto stroke
+newpath 0 -5 moveto marginW 0.75 mul -5 lineto stroke
 
 /Helvetica findfont 14 scalefont setfont
-60 -428 moveto
+0 -23 moveto
 (Label) show
-newpath 80 -445 32.5 140 220 arc -10 10 rlineto 10 -10 rmoveto -1 11 rlineto  stroke
+newpath 20 -40 32.5 140 220 arc -10 10 rlineto 10 -10 rmoveto -1 11 rlineto  stroke
 
-220 -428 moveto
+160 -23 moveto
 (Die Pads) show
 
-500 -428 moveto
+440 -23 moveto
 (Die Pads \(d7+\)) show
 
 % Draw a single dice pad row at the bottom
 0.2 setlinewidth
-100 -518 moveto
+40 -105 moveto
 drawDiceRow
 
-<?php end_page(); new_page(true); ?>
-90 rotate
+<?php end_page(); content_page(true); ?>
 
 0.2 setlinewidth
-100 -118 moveto
+marginX1 40 add marginY1 65 sub moveto
 4 { drawDiceRow 0 -135 rmoveto } repeat
 
-<?php end_page(); new_page(true); ?>
-90 rotate 0 -750 translate
+<?php end_page(); content_page(true); ?>
 
 /Helvetica-Bold findfont 10 scalefont setfont
-pgsize aload pop exch pop 2 div 700
-moveto (MS32 Checksum Table) centreshow
+centerX marginY1 moveto (MS32 Checksum Table) centreshow
 
 /drawTable {
   10 dict begin
@@ -50873,52 +50909,18 @@ moveto (MS32 Checksum Table) centreshow
 } bind def
 
 /Courier findfont 8.5 scalefont setfont
-36 pgsize aload pop exch pop 104 sub
-pgsize aload pop 72 sub exch 108 sub 2 div
+marginX1 marginY1 5 sub
+marginW marginH 2 div 15 sub
 0 drawTable
 
-36 pgsize aload pop exch pop 2 div 32 add
-pgsize aload pop 72 sub exch 108 sub 2 div
+marginX1 marginY1 marginH 2 div sub
+marginW marginH 2 div 15 sub
 8 drawTable
 
-false {
-0 1 15 {
-  /xidx exch def
-  0 1 31 {
-    /yidx exch def
-    yidx 2 mod 0 eq {0.5 0.2 0.0} {0 0 0} ifelse setrgbcolor
-
-    % Position for bold letters
-    xidx 8 mod 90 mul 30 add
-    680 yidx 7.5 mul sub xidx 8 idiv 270 mul sub
-    moveto
-
-    % Display bold letters
-    gsave
-      /Courier-Bold findfont 8.5 scalefont setfont
-      code perm xidx get get glyphshow
-      code perm yidx get get glyphshow
-    grestore
-
-    % Compute and display "checksum table" entry which is checksum of AB00...00
-    12 0 rmoveto
-    perm xidx get perm yidx get polymodshift2
-    % Draw it
-    0 1 polymodulus length 1 sub {
-      1 index exch get % value from polymod
-      code exch get glyphshow
-    } for
-    pop
-  } for
-} for
-} if
-
-<?php end_page(); new_page(true); ?>
-90 rotate 0 -750 translate
+<?php end_page(); content_page(true); ?>
 
 /Helvetica-Bold findfont 10 scalefont setfont
-pgsize aload pop exch pop 2 div 700
-moveto (MS32 Checksum Table) centreshow
+centerX marginY1 moveto (MS32 Checksum Table) centreshow
 
 /drawTable {
   10 dict begin
@@ -50996,51 +50998,18 @@ moveto (MS32 Checksum Table) centreshow
 } bind def
 
 /Courier findfont 8.5 scalefont setfont
-36 pgsize aload pop exch pop 104 sub
-pgsize aload pop 72 sub exch 108 sub 2 div
+marginX1 marginY1 5 sub
+marginW marginH 2 div 15 sub
 16 drawTable
 
-36 pgsize aload pop exch pop 2 div 32 add
-pgsize aload pop 72 sub exch 108 sub 2 div
+marginX1 marginY1 marginH 2 div sub
+marginW marginH 2 div 15 sub
 24 drawTable
 
-false {
-0 1 15 {
-  /xidx exch def
-  0 1 31 {
-    /yidx exch def
-    yidx 2 mod 0 eq {0.5 0.2 0.0} {0 0 0} ifelse setrgbcolor
-
-    % Position for bold letters
-    xidx 8 mod 90 mul 30 add
-    680 yidx 7.5 mul sub xidx 8 idiv 270 mul sub
-    moveto
-
-    % Display bold letters
-    gsave
-      /Courier-Bold findfont 8.5 scalefont setfont
-      code perm xidx get get glyphshow
-      code perm yidx get get glyphshow
-    grestore
-
-    % Compute and display "checksum table" entry which is checksum of AB00...00
-    12 0 rmoveto
-    perm xidx get perm yidx get polymodshift2
-    % Draw it
-    0 1 polymodulus length 1 sub {
-      1 index exch get % value from polymod
-      code exch get glyphshow
-    } for
-    pop
-  } for
-} for
-} if
-
 <?php end_page(); content_page(true); ?>
-0 -750 translate
 
 gsave
-48 440 translate 0.75 0.8 scale
+48 300 translate 0.75 0.8 scale
 exampleladder begin
  /Helvetica-Bold findfont 15 scalefont setfont
  firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (1) centreshow
@@ -51051,7 +51020,7 @@ end
 grestore
 
 gsave
-238 440 translate 0.75 0.8 scale
+238 300 translate 0.75 0.8 scale
 exampleladder begin
  /Helvetica-Bold findfont 15 scalefont setfont
  firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (2 - 4) centreshow
@@ -51062,7 +51031,7 @@ end
 grestore
 
 gsave
-428 440 translate 0.75 0.8 scale
+428 300 translate 0.75 0.8 scale
 exampleladder begin
  /Helvetica-Bold findfont 15 scalefont setfont
  firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (3) centreshow
@@ -51073,10 +51042,9 @@ end
 grestore
 
 <?php end_page(); content_page(true); ?>
-0 -750 translate
 
 gsave
-48 440 translate 0.75 0.8 scale
+48 300 translate 0.75 0.8 scale
 exampleladder begin
  /Helvetica-Bold findfont 15 scalefont setfont
  firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (1) centreshow
@@ -51087,7 +51055,7 @@ end
 grestore
 
 gsave
-238 440 translate 0.75 0.8 scale
+238 300 translate 0.75 0.8 scale
 exampleladder begin
  /Helvetica-Bold findfont 15 scalefont setfont
  firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (2) centreshow
@@ -51098,7 +51066,7 @@ end
 grestore
 
 gsave
-428 440 translate 0.75 0.8 scale
+428 300 translate 0.75 0.8 scale
 exampleladder begin
  /Helvetica-Bold findfont 15 scalefont setfont
  firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (3) centreshow
@@ -51107,15 +51075,9 @@ exampleladder begin
  (2NAMES50PRDAK9GLSVNL067VQVEX0) true true true true true fillgrid
 end
 grestore
-<?php end_page(); new_page(true); ?>
-90 rotate
-
-% 0 pgsize aload pop pop neg translate
-0 -750 translate
-
-% FIXME will draw all this text using the general-purpose content drawing logic
+<?php end_page(); content_page(true); ?>
 /Times-Roman findfont 32 scalefont setfont
-450 680 moveto (Checksum Worksheet) show
+centerX marginY1 30 sub moveto (Checksum Worksheet) show % nb show, not centreshow, to offset
 
 %% EDITME
 %% This code can be used to compute and verify checksums, which will be rendered using
@@ -51131,7 +51093,7 @@ grestore
 %%
 
 gsave
-48 680 translate
+48 555 translate
 ladder begin
  drawgrid
  (                                                ) true false false false true fillgrid
@@ -51140,8 +51102,7 @@ grestore
 
 
 <?php end_page(); content_page(true); ?>
-0 -750 translate
-
+0 -120 translate
 /Times-Roman findfont 16 scalefont setfont
 48 415 moveto (k=2 Example) show
 48 280 moveto (k=3 Example) show
@@ -51175,15 +51136,12 @@ ladder begin
 end
 grestore
 
-<?php end_page(); new_page(true); ?>
-90 rotate
-0 -750 translate
-% FIXME will draw all this text using the general-purpose content drawing logic
-/Times-Roman findfont 32 scalefont setfont
-48 680 moveto (Translation Worksheet) show
+<?php end_page(); content_page(true); ?>
+/Times-Roman findfont 14 scalefont setfont
+marginX1 marginY1 moveto (Translation Worksheet \(k = 2\)) show
 
 gsave
-48 670 translate
+marginX1 pageH 51 sub translate
 
 9 {
 ladder begin
@@ -51193,15 +51151,12 @@ end
 } repeat
 grestore
 
-<?php end_page(); new_page(true); ?>
-90 rotate
-0 -750 translate
-% FIXME will draw all this text using the general-purpose content drawing logic
-/Times-Roman findfont 32 scalefont setfont
-48 680 moveto (Translation Worksheet) show
+<?php end_page(); content_page(true); ?>
+/Times-Roman findfont 14 scalefont setfont
+marginX1 marginY1 moveto (Translation Worksheet \(k = 3\)) show
 
 gsave
-48 670 translate
+marginX1 pageH 61 sub translate
 
 5 {
 ladder begin
@@ -51215,7 +51170,7 @@ grestore
 <?php end_page(); content_page(); ?>
 {xor} (Addition) code dup perm drawBottomWheelPage
 
-<?php end_page(); new_page(); ?>
+<?php end_page(); content_page(); ?>
    % Draw gray "handle" and white interior circle
    gsave
    pgsize aload pop 2 div exch 2 div exch translate
@@ -51236,7 +51191,8 @@ gsave
 grestore
 showTopWheelPage
 
-<?php end_page(); new_page(); ?>
+<?php end_page(); content_page(); ?>
+
 % gsave verythin line marginpath stroke grestore
 recoveryDisc begin
 % Draw assembly diagram
@@ -51285,7 +51241,15 @@ pgsize aload pop 2 div exch 2 div exch translate
   drawTopDisc
 end
 
-<?php end_page(); new_page(); ?>
+<?php end_page(); content_page(); ?>
+
+% special for this page: blank out page number as it overlaps disc
+gsave
+1 setgray
+20 setlinewidth
+centerX 5 sub marginY2 5 add 15 15 rectstroke
+grestore
+
 % gsave verythin line marginpath stroke grestore
 % Draw assembly diagram
 gsave
@@ -51342,7 +51306,7 @@ translationDisc begin
    drawBottomDisc
 end
 
-<?php end_page(); new_page(); ?>
+<?php end_page(); content_page(); ?>
 % gsave verythin line marginpath stroke grestore
 % Draw assembly diagram
 gsave
@@ -51468,28 +51432,28 @@ end
 
 <?php end_page(); content_page(); ?>
 
-<?php end_page(); new_page(); ?>
+<?php end_page(); content_page(); ?>
 29 24 13 25 showShareTablePage
 
-<?php end_page(); new_page(); ?>
+<?php end_page(); content_page(); ?>
 9 8 23 18 showShareTablePage
 
-<?php end_page(); new_page(); ?>
+<?php end_page(); content_page(); ?>
 22 31 27 19 showShareTablePage
 
-<?php end_page(); new_page(); ?>
+<?php end_page(); content_page(); ?>
 1 0 3 16 showShareTablePage
 
-<?php end_page(); new_page(); ?>
+<?php end_page(); content_page(); ?>
 11 28 12 14 showShareTablePage
 
-<?php end_page(); new_page(); ?>
+<?php end_page(); content_page(); ?>
 6 4 2 15 showShareTablePage
 
-<?php end_page(); new_page(); ?>
+<?php end_page(); content_page(); ?>
 10 17 21 20 showShareTablePage
 
-<?php end_page(); new_page(); ?>
+<?php end_page(); content_page(); ?>
 26 30 7 5 showShareTablePage
 
 <?php end_page(); content_page(); ?>
@@ -51603,7 +51567,7 @@ mink 1 maxk {
 % ** BIP 39 **
 
 <?php end_page(); content_page(); ?>
-<?php end_page(); new_page(); ?>
+<?php end_page(); content_page(); ?>
 % FIXME will draw all this text using the general-purpose content drawing logic
 /Times-Roman findfont 32 scalefont setfont
 450 680 moveto (BIP39) show
@@ -51618,50 +51582,43 @@ end
 grestore
 
 
-<?php end_page(); new_page(); ?>
+<?php end_page(); content_page(); ?>
 % FIXME will draw all this text using the general-purpose content drawing logic
 /Times-Roman findfont 32 scalefont setfont
 450 700 moveto (BIP39) show
 410 670 moveto (24 words) show
 
 gsave
-48 730 translate
+48 750 translate
 bip3924ladder begin
  drawgrid
 % (                                                ) true false false false true fillgrid
 end
 grestore
 
-<?php end_page(); new_page(true); ?>
-90 rotate
-0 -750 translate
-% FIXME will draw all this text using the general-purpose content drawing logic
-/Times-Roman findfont 32 scalefont setfont
-48 680 moveto (Translation Worksheet) show
+<?php end_page(); content_page(true); ?>
+/Times-Roman findfont 14 scalefont setfont
+marginX1 marginY1 moveto (Translation Worksheet \(k = 2\)) show
 
 gsave
-48 670 translate
+marginX1 pageH 51 sub translate
 
 4 {
 bip3924ladder begin
   2 drawrow
-  0 ysize 8.1 mul translate
+  0 ysize 9.5 mul translate
 end
 } repeat
 grestore
 
-<?php end_page(); new_page(true); ?>
-90 rotate
-0 -750 translate
-% FIXME will draw all this text using the general-purpose content drawing logic
-/Times-Roman findfont 32 scalefont setfont
-48 680 moveto (Translation Worksheet) show
+<?php end_page(); content_page(true); ?>
+/Times-Roman findfont 14 scalefont setfont
+marginX1 marginY1 moveto (Translation Worksheet \(k = 3\)) show
 
 gsave
-48 670 translate
+marginX1 pageH 51 sub translate
 
 1 0.95 scale
-
 3 {
 bip3924ladder begin
   3 drawrow
@@ -51670,7 +51627,7 @@ end
 } repeat
 grestore
 
-<?php end_page(); new_page(); ?>
+<?php end_page(); content_page(); ?>
 /Helvetica-bold findfont 10 scalefont setfont
 pgsize aload pop pop 2 div 740
 moveto (BIP-39 Conversion Worksheet) centreshow
@@ -51789,8 +51746,7 @@ moveto (BIP-39 Conversion Worksheet) centreshow
 350 15 false showbinaries
 430 31 false showbinaries
 
-<?php end_page(); new_page(true); ?>
-90 rotate
+<?php end_page(); content_page(true); ?>
 1 1 8 {
     dup
     64 mul 1 sub exch
@@ -51798,8 +51754,7 @@ moveto (BIP-39 Conversion Worksheet) centreshow
     false showbinaries39
 } for
 
-<?php end_page(); new_page(true); ?>
-90 rotate
+<?php end_page(); content_page(true); ?>
 1 1 8 {
     dup
     64 mul 511 add exch
@@ -51807,8 +51762,7 @@ moveto (BIP-39 Conversion Worksheet) centreshow
     false showbinaries39
 } for
 
-<?php end_page(); new_page(true); ?>
-90 rotate
+<?php end_page(); content_page(true); ?>
 1 1 8 {
     dup
     64 mul 1023 add exch
@@ -51816,8 +51770,7 @@ moveto (BIP-39 Conversion Worksheet) centreshow
     false showbinaries39
 } for
 
-<?php end_page(); new_page(true); ?>
-90 rotate
+<?php end_page(); content_page(true); ?>
 1 1 8 {
     dup
     64 mul 1535 add exch

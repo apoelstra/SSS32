@@ -498,7 +498,7 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     /listitem1 /endlistitem
     /listitem1
     /startText
-    ($Volvelle lookup $k$ = 2:$ Turn the Recovery Volvelle to point to the)
+    ($Volvelle lookup $k$ = 2:$ Turn the Recovery Wheel to point to the)
     (share being considered. Find the symbol pointed to under the other share)
     (index on the wheel and fill in that symbol next to the share we are)
     (considering on the Translation Worksheet.)
@@ -509,15 +509,15 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     (multiplication table to multiply the the two symbols and fill in that)
     (share's symbol on the Translation Worksheet with the resulting product.)
     /paragraph
-    (For $k$ > 3 the instructions are essentially the same as those for $k$ = 3,)
-    (except that you will have more symbols to multiply.)
-    /paragraph
-    ($Volvelle lookup $k$ = 3:$ Turn the Recovery Volvelle to point to the)
+    ($Volvelle lookup $k$ = 3:$ Turn the Recovery Wheel to point to the)
     (share being considered. Find the two symbols pointed to under the other share)
     (indices on the wheel. Turn the multiplication wheel to the first of these)
     (two symbols. Find the second symbol on the lower ring, and lookup the symbol)
     (it is pointing to. Fill that symbol next to the share we are considering on)
     (the Translation Worksheet.)
+    /paragraph
+    (For $k$ > 3 the instructions are essentially the same as those for $k$ = 3,)
+    (except that you will have more symbols to multiply.)
     /endlistitem
     /listitem1 (Repeat step 3 for each share on the Addition worksheet.)
     /endlistitem

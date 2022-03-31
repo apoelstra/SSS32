@@ -3192,8 +3192,9 @@ pgsize aload pop lineto
 0 pgsize aload pop exch pop lineto
 closepath fill
 
+% %%PageBoundingBox: 22 7 436 589
 1.30 1.30 scale
-32 16 translate
+8.5 5 translate
 drawCover
 -20 -9 translate
 

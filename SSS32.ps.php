@@ -659,8 +659,9 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     (All of the corresponding characters for the `D`, `E`, `F`, etc., shares can)
     (be read off this row in the correspondingly-labeled column.)
     /paragraph
-    (*Warning:* your secret data can be read from the `S` column. Do not generate)
-    (the `S` share from this booklet! A future edition will remove that coulmn.)
+    (We have removed the `S` share from these tables, since this share contains)
+    (your secret data. If you want to generate the `S` share, you must use the)
+    (Recovery process.)
   9 { ] [ } repeat
     /section (Module 2: Share Generation Tables) /endsection
     (The main instructional section contains share derivation tables for $k$ values of)
@@ -2421,8 +2422,9 @@ end
 20 offsetx add offsety moveto (Page: ) show
 /Courier-Bold findfont 8 scalefont setfont
 code page get glyphshow
-2 1 31 {
+2 1 30 {
 dup 7 mul offsetx add offsety 10 sub moveto
+dup 14 gt { 1 add } if % skip S
 perm exch get
 code exch get glyphshow
 } for
@@ -2432,8 +2434,9 @@ code exch get glyphshow
 offsetx offsety 20 sub 2 index 8 mul sub moveto
 dup code exch perm exch get get glyphshow
 /Courier findfont 8 scalefont setfont
-2 1 31 {
+2 1 30 {
 dup 7 mul offsetx add offsety 20 sub 3 index 8 mul sub moveto
+dup 14 gt { 1 add } if % skip S
 perm exch get
 page exch perm 3 index get exch  makeShare code exch get glyphshow
 } for pop } for

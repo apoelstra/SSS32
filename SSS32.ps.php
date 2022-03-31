@@ -614,7 +614,7 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     (entirely. If the checksum is consistently bad your data is corrupt and you)
     (need to attempt the online recovery process. \(Under construction; but try)
     (contacting Pearlwort for help.\))
-  2 { ] [ } repeat
+  1 { ] [ } repeat  % checksum worksheets (not counted)
     /toc
     /section (Translation Worksheet) /endsection
     /notoc %% don't put all the translation worksheets into the ToC
@@ -641,7 +641,7 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     /linebreak
     /linebreak
     (Notice that the resulting share will automatically have the correct share index in its header.)
-  3 { ] [ } repeat
+  1 { ] [ } repeat % translation worksheets (not counted)
     /toc
     /section (Module 0: Volvelles) /endsection
   5 { ] [ } repeat
@@ -3982,6 +3982,7 @@ exampleladder begin
  (2NAMES50PRDAK9GLSVNL067VQVEX0) true true true true true fillgrid
 end
 grestore
+<?php $current_page_cont += 20; for ($i = 0; $i < 1; $i++) { ?>
 <?php end_page(); content_page(true, true); ?>
 /Times-Roman findfont 32 scalefont setfont
 centerX marginY1 30 sub moveto (Checksum Worksheet) show % nb show, not centreshow, to offset
@@ -4006,6 +4007,7 @@ ladder begin
  (                                                ) true false false false true fillgrid
 end
 grestore
+<?php $current_page_cont--; } $current_page_cont -= 20; ?>
 
 
 <?php end_page(); content_page(true); ?>
@@ -4043,6 +4045,7 @@ ladder begin
 end
 grestore
 
+<?php $current_page_cont += 20; for ($i = 0; $i < 1; $i++) { ?>
 <?php end_page(); content_page(true, true); ?>
 /Times-Roman findfont 14 scalefont setfont
 marginX1 marginY1 moveto (Translation Worksheet \(k = 2\)) show
@@ -4060,7 +4063,9 @@ ladder begin
 end
 } repeat
 grestore
+<?php $current_page_cont--; } $current_page_cont -= 20; ?>
 
+<?php $current_page_cont += 20; for ($i = 0; $i < 1; $i++) { ?>
 <?php end_page(); content_page(true, true); ?>
 /Times-Roman findfont 14 scalefont setfont
 marginX1 marginY1 moveto (Translation Worksheet \(k = 3\)) show
@@ -4078,6 +4083,7 @@ ladder begin
 end
 } repeat
 grestore
+<?php $current_page_cont--; } $current_page_cont -= 20; ?>
 
 %% Volvelles
 <?php end_page(); content_page(); ?>
@@ -4482,6 +4488,7 @@ mink 1 maxk {
 % ** BIP 39 **
 
 <?php end_page(); content_page(); ?>
+<?php for ($i = 0; $i < 1; $i++) { ?>
 <?php end_page(); content_page(false, true); ?>
 % FIXME will draw all this text using the general-purpose content drawing logic
 /Times-Roman findfont 32 scalefont setfont
@@ -4496,7 +4503,9 @@ bip3912ladder begin
 end
 grestore
 
+<?php $current_page_cont--; } ?>
 
+<?php for ($i = 0; $i < 1; $i++) { ?>
 <?php end_page(); content_page(false, true); ?>
 % FIXME will draw all this text using the general-purpose content drawing logic
 /Times-Roman findfont 32 scalefont setfont
@@ -4510,7 +4519,9 @@ bip3924ladder begin
 % (                                                ) true false false false true fillgrid
 end
 grestore
+<?php $current_page_cont--; } ?>
 
+<?php for ($i = 0; $i < 1; $i++) { ?>
 <?php end_page(); content_page(true, true); ?>
 /Times-Roman findfont 14 scalefont setfont
 marginX1 marginY1 moveto (Translation Worksheet \(k = 2\)) show
@@ -4528,7 +4539,9 @@ bip3924ladder begin
 end
 } repeat
 grestore
+<?php $current_page_cont--; } ?>
 
+<?php for ($i = 0; $i < 1; $i++) { ?>
 <?php end_page(); content_page(true, true); ?>
 /Times-Roman findfont 14 scalefont setfont
 marginX1 marginY1 moveto (Translation Worksheet \(k = 3\)) show
@@ -4547,7 +4560,9 @@ bip3924ladder begin
 end
 } repeat
 grestore
+<?php $current_page_cont--; } ?>
 
+<?php for ($i = 0; $i < 1; $i++) { ?>
 <?php end_page(); content_page(false, true); ?>
 /Helvetica-bold findfont 10 scalefont setfont
 pgsize aload pop pop 2 div 740
@@ -4666,6 +4681,7 @@ moveto (BIP-39 Conversion Worksheet) centreshow
 
 350 15 false showbinaries
 430 31 false showbinaries
+<?php $current_page_cont--; } ?>
 
 <?php end_page(); content_page(true); ?>
 1 1 8 {

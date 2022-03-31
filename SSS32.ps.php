@@ -409,7 +409,6 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     /listitem1 (Securely dispose of all worksheets you used in the generation)
     (procedure. If these worksheets are not securely disposed of, the could be)
     (used to recover your secret seed.)
-    /linebreak /linebreak (Shredded paper can be reconstructed. Use fire.) /endlistitem
 
     /subsubsection (II.3.a. New Secret Seed: Stage 1) /endsubsubsection
 
@@ -1068,7 +1067,7 @@ def
         gsave
         0.8 0 0 setrgbcolor
         /Times-Bold findfont 12 scalefont setfont
-        (BURN AFTER USE) centreshow
+        (DESTROY AFTER USE) centreshow
         grestore
       } {
         pagenum pagenum 10 lt { 1 } { 2 } ifelse string cvs show

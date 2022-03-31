@@ -117,15 +117,15 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     /paragraph
     (This codex describes a way for users, assisted by paper computers in the)
     (form of slide charts \(volvelles\) and circular slide rules, to perform)
-    (checksums and SSSS on their Bitcoin secrets.)
+    (checksums and SSSS on Bitcoin secrets.)
 
     /subsection (Assembly) /endsubsection
-    (*You will need*: craft knife, cardstock or heavy paper, brass fasteners, disc printouts.) /linebreak
+    (*You will need*: craft knife, scissors, cardstock or heavy paper, brass fasteners, disc printouts) /linebreak
     (Using the printouts from Module 0 \(which have pictographic instructions\),)
     /startlist
     /listitem1 (Cut out each disc with scissors. Cut out the windows on the top discs with the craft knife.) /endlistitem
     /listitem1 (Cut out the small centre circle in each bottom disc.)
-      (Cut a slit along one one of the small lines of the cross in each top disc.) /endlistitem
+      (Cut a slit along one of the small lines of the cross in each top disc.) /endlistitem
     /listitem1 (Attach the discs with a brass fastener through the centre holes.) /endlistitem
 
     /subsection (Initial \(First $k$\) Share Creation) /endsubsection
@@ -137,13 +137,14 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     /listitem1 (Follow the instructions on the Checksum Worksheet to affix a checksum.) /endlistitem
 
     /subsection (Derived \(Remaining\) Share Creation) /endsubsection
-    (*You will need*: Addition Volvelle, Multiplication/Translation Wheel, pencil)
+    (*You will need*: Addition Volvelle, Multiplication/Translation Wheel, Translation Worksheet, pencil)
     /startlist
     /listitem1 (Translate the initial shares using the symbols in the Derived Shares section) /endlistitem
     /listitem1 (Add the translated initial shares to get the new derived share.) /endlistitem
 
     /subsection (Secret Recovery) /endsubsection
-    (*You will need*: Addition Volvelle, Multiplication/Translation Wheel, Recovery Wheel, pencil)
+    (*You will need*: Everything used for Derived Share Creation \(see above\), Recovery Wheel)
+    /linebreak
     (To recover your secret you must have $k$ shares available. Then)
     /startlist
     /listitem1 (Look up their recovery symbols with the Recovery Wheel.) /endlistitem
@@ -263,10 +264,10 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     (even "trivial" risks add up to become very serious.)
     /paragraph
     (Unlike electronic computers, paper cannot remember or leak secrets, at least)
-    (when handled correctly and disposed of securely, and this can be easily seen without special skills)
+    (when handled correctly and disposed of securely, and this can be done without special skills)
     (or equipment. In this document, we have provided a paper-based means to)
     /startlist
-    /listitem* (Securely generate random data from potentially biased dice or coin flips) /endlistitem
+    /listitem* (Securely generate random data from potentially biased dice rolls or coin flips) /endlistitem
     /listitem* (Compute and verify very powerful checksums) /endlistitem
     /listitem* (Split your secret into up to 31 "shares", of which some number are)
       (needed to reconstruct the secret) /endlistitem
@@ -339,14 +340,14 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     /subsection (II.2. Share Format) /endsubsection
     /dropcap (F) (or 128-bit secret seeds, each share is 48 characters long.)
     (Shares begin with the three character prefix `MS1`. This is followed by a)
-    (six character header. The next 26-characters is the data portion. The last)
+    (six character header. The next 26-characters are the data portion. The last)
     (13-characters are the checksum.)
     /paragraph
     (The header consists of:)
     /startlist
     /listitem* (The *threshold* which is the value $k$, a digit between)
-    (`2` and `9` inclusive, although the main document only supports $k$ < 4. When)
-    (secret splitting is not used, the a `0` digit is placed here instead.)
+    (`2` and `9` inclusive, although the main document only supports $k$ values `2` and `3`. When)
+    (secret splitting is not used, a `0` digit is placed here instead.)
     /endlistitem
     /listitem* (The *identifier* which is four bech32 characters.) /endlistitem
     /listitem* (The *share index* which is any bech32 character except for)
@@ -407,7 +408,7 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     (recover your secret seed. Also remember that anyone else who recovers $k$ of)
     (these shares can also recover your secret seed.) /endlistitem
     /listitem1 (Securely dispose of all worksheets you used in the generation)
-    (procedure. If these worksheets are not securely disposed of, the could be)
+    (procedure. If these worksheets are not securely disposed of, they could be)
     (used to recover your secret seed.)
 
     /subsubsection (II.3.a. New Secret Seed: Stage 1) /endsubsubsection
@@ -535,15 +536,15 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
 %    /endlistitem
   ] [ % pagebreak
     /section (Random Character Worksheet) /endsection
-    (*You will need:* five distinct dice, five markets, this and the following page)
+    (*You will need:* five *distinct* dice, five markers, this and the following page)
     /startlist
     /listitem1 (Label each Die Track to indicate which die it corresponds to.)
       /linebreak /linebreak
       (*Do* *not* *otherwise* *mark* *these* *two* *pages.*) /endlistitem
     /listitem1 (Roll all five dice. Set markers on each Die Pad indicating)
       (their values.) /endlistitem
-    /listitem1 (Roll all five dice again and set the dice on each Die Track)
-      (indicating) /linebreak (their second values.) /endlistitem
+    /listitem1 (Re-roll the *same* five dice again and set the dice on each)
+      /linebreak (Die Track indicating their second values.) /endlistitem
     /listitem1 (Repeat steps 2 and 3 for each die that showed the same value)
       /linebreak (twice.) /endlistitem
     /listitem1 (Using your finger, follow the tree to the right using the results)
@@ -562,6 +563,7 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     /linebreak
     (*You will need:* Checksum Worksheet, Checksum Table, Addition Wheel)
     /linebreak
+    /linebreak
     (Generating a checksum:)
     /startlist
     /listitem1 (Fill in the top diagonal squares \(the bold ones\) with your random data; you should)
@@ -571,13 +573,13 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     /listitem1 (Look up the two leftmost underhanging hanging symbols from the third)
       (row in the Checksum Table to fill in the fourth row.) /endlistitem
     /listitem1 (Repeat the above two steps, adding the third and fourth row, looking)
-      (up the fourth to fill in the fifth, and so on. You will be able to complete)
+      (up the fifth to fill in the sixth, and so on. You will be able to complete)
       (the entire sheet except for the pink squares this way.) /endlistitem
     /listitem1 (To complete the pink squares, work from the bottom up, adding each row)
       (to the one above it until all the squares are filled.) /endlistitem
     /linebreak
     /linebreak
-    (The completed share can now be read from the top diagonal, including the checksum.)
+    (The completed share can now be read from the top diagonal, including the checksum \(the pink bolded squares\).)
   ] [
     /section (Checksum Worksheet) /endsection
     (Verifying a checksum:)
@@ -602,15 +604,15 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     /section (Translation Worksheet) /endsection
     /notoc %% don't put all the translation worksheets into the ToC
     (The translation worksheet is used to derive shares, when splitting keys, and)
-    (during key recovery. In both cases, the process is to translate a set of shares)
+    (during key recovery. In all cases, the process is to translate a set of shares)
     (using the Translation Wheel, then to add the translated results using the)
     (Addition Wheel.)
     /linebreak
     /linebreak
-    (*You will need:* Translation Worksheet, Translation/Multiplication Wheel, Addition Wheel)
+    (*You will need:* Translation Worksheet, Translation/Multiplication Wheel, Addition Wheel, Recovery Wheel \(for key recovery\))
     /linebreak
     /linebreak
-    (In both cases, the number of shares to combine is your k value, the number of)
+    (In all cases, the number of shares to combine is your k value, the number of)
     (required shares to reconstruct the secret. The process is:) 
     /startlist
     /listitem1 (Make sure that you have completed checksum worksheets for all input shares.) /endlistitem

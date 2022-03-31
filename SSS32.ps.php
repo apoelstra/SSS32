@@ -506,7 +506,7 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     (finding the column with the associated share, and the row for the other)
     (share.)
     /paragraph
-    ($Volvelle lookup $k$ = 2:$ Turn the Recovery Volvelle to point to the)
+    ($Volvelle lookup $k$ = 2:$ Turn the Recovery Wheel to point to the)
     (share being considered. Find the symbol pointed to under the other share)
     (index on the wheel and fill in that symbol next to the share we are)
     (considering on the Translation Worksheet.)
@@ -520,7 +520,7 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     (For $k$ > 3 the instructions are essentially the same as those for $k$ = 3,)
     (except that you will have more symbols to multiply.)
     /paragraph
-    ($Volvelle lookup $k$ = 3:$ Turn the Recovery Volvelle to point to the)
+    ($Volvelle lookup $k$ = 3:$ Turn the Recovery Wheel to point to the)
     (share being considered. Find the two symbols pointed to under the other share)
     (indices on the wheel. Turn the multiplication wheel to the first of these)
     (two symbols. Find the second symbol on the lower ring, and lookup the symbol)
@@ -536,14 +536,14 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
 %    /endlistitem
   ] [ % pagebreak
     /section (Random Character Worksheet) /endsection
-    (*You will need:* five *distinct* dice, five markers, this and the following page)
+    (*You will need:* five $distinct$ dice, five markers, this and the following page)
     /startlist
     /listitem1 (Label each Die Track to indicate which die it corresponds to.)
       /linebreak /linebreak
       (*Do* *not* *otherwise* *mark* *these* *two* *pages.*) /endlistitem
     /listitem1 (Roll all five dice. Set markers on each Die Pad indicating)
       (their values.) /endlistitem
-    /listitem1 (Re-roll the *same* five dice again and set the dice on each)
+    /listitem1 (Re-roll the $same$ five dice again and set the dice on each)
       /linebreak (Die Track indicating their second values.) /endlistitem
     /listitem1 (Repeat steps 2 and 3 for each die that showed the same value)
       /linebreak (twice.) /endlistitem

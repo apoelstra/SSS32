@@ -4054,6 +4054,9 @@ marginX1 pageH 51 sub translate
 ladder begin
   2 drawrow
   0 ysize 4.1 mul translate
+  gsave 0.6 setgray
+    xsize 3.2 mul ysize -1.1 mul moveto /two 12 draftingshow
+  grestore
 end
 } repeat
 grestore
@@ -4069,6 +4072,9 @@ marginX1 pageH 61 sub translate
 ladder begin
   3 drawrow
   0 ysize 6.8 mul translate
+  gsave 0.6 setgray
+    xsize 3.2 mul ysize -1.6 mul moveto /three 12 draftingshow
+  grestore
 end
 } repeat
 grestore
@@ -4516,6 +4522,9 @@ marginX1 pageH 51 sub translate
 bip3924ladder begin
   2 drawrow
   0 ysize 9.5 mul translate
+  gsave 0.6 setgray
+    xsize 3.2 mul ysize -6.5 mul moveto /two 12 draftingshow
+  grestore
 end
 } repeat
 grestore
@@ -4532,6 +4541,9 @@ marginX1 pageH 51 sub translate
 bip3924ladder begin
   3 drawrow
   0 ysize 12.8 mul translate
+  gsave 0.6 setgray
+    xsize 3.2 mul ysize -7.6 mul moveto /three 12 draftingshow
+  grestore
 end
 } repeat
 grestore

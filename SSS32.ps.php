@@ -25,7 +25,7 @@ function end_page() {
     echo "end pgsave restore showpage\n";
 }
 
-function content_page($landscape = false, $override_margin = false) {
+function content_page($landscape = false, $burn_me = false, $override_margin = false) {
     GLOBAL $current_page_cont;
     new_page($landscape);
     if ($landscape) {
@@ -36,6 +36,9 @@ function content_page($landscape = false, $override_margin = false) {
     echo " begin $current_page_cont ";
     if ($override_margin) {
         echo "/marginX2 marginX2 1.75 div def ";
+    }
+    if ($burn_me) {
+        echo "/burnme true def ";
     }
     echo "drawPageContent\n";
 }
@@ -1019,6 +1022,7 @@ end
   /rgbColor [ 0.820 0.204 0.220 ]
 >> def
 
+/burnme false def % default to not showing "BURN ME"
 
 /pgsize currentpagedevice /PageSize known
   { currentpagedevice /PageSize get
@@ -1060,7 +1064,15 @@ def
     gsave
       /Times-Roman findfont 12 scalefont setfont
       centerX marginY2 moveto
-      pagenum pagenum 10 lt { 1 } { 2 } ifelse string cvs show
+      burnme {
+        gsave
+        0.8 0 0 setrgbcolor
+        /Times-Bold findfont 12 scalefont setfont
+        (BURN AFTER USE) centreshow
+        grestore
+      } {
+        pagenum pagenum 10 lt { 1 } { 2 } ifelse string cvs show
+      } ifelse
       % version
       /Courier findfont 8 scalefont setfont
       marginX1 marginY2 moveto
@@ -3622,7 +3634,7 @@ mink 1 maxk {
 <?php end_page(); content_page(); ?>
 
 %%% Random Character Worksheet
-<?php end_page(); content_page(true, true); ?>
+<?php end_page(); content_page(true, false, true); ?>
 
 gsave
 325 190 translate
@@ -3949,7 +3961,7 @@ exampleladder begin
  (2NAMES50PRDAK9GLSVNL067VQVEX0) true true true true true fillgrid
 end
 grestore
-<?php end_page(); content_page(true); ?>
+<?php end_page(); content_page(true, true); ?>
 /Times-Roman findfont 32 scalefont setfont
 centerX marginY1 30 sub moveto (Checksum Worksheet) show % nb show, not centreshow, to offset
 
@@ -4010,7 +4022,7 @@ ladder begin
 end
 grestore
 
-<?php end_page(); content_page(true); ?>
+<?php end_page(); content_page(true, true); ?>
 /Times-Roman findfont 14 scalefont setfont
 marginX1 marginY1 moveto (Translation Worksheet \(k = 2\)) show
 
@@ -4025,7 +4037,7 @@ end
 } repeat
 grestore
 
-<?php end_page(); content_page(true); ?>
+<?php end_page(); content_page(true, true); ?>
 /Times-Roman findfont 14 scalefont setfont
 marginX1 marginY1 moveto (Translation Worksheet \(k = 3\)) show
 
@@ -4443,7 +4455,7 @@ mink 1 maxk {
 % ** BIP 39 **
 
 <?php end_page(); content_page(); ?>
-<?php end_page(); content_page(); ?>
+<?php end_page(); content_page(false, true); ?>
 % FIXME will draw all this text using the general-purpose content drawing logic
 /Times-Roman findfont 32 scalefont setfont
 450 680 moveto (BIP39) show
@@ -4458,7 +4470,7 @@ end
 grestore
 
 
-<?php end_page(); content_page(); ?>
+<?php end_page(); content_page(false, true); ?>
 % FIXME will draw all this text using the general-purpose content drawing logic
 /Times-Roman findfont 32 scalefont setfont
 450 700 moveto (BIP39) show
@@ -4472,7 +4484,7 @@ bip3924ladder begin
 end
 grestore
 
-<?php end_page(); content_page(true); ?>
+<?php end_page(); content_page(true, true); ?>
 /Times-Roman findfont 14 scalefont setfont
 marginX1 marginY1 moveto (Translation Worksheet \(k = 2\)) show
 
@@ -4487,7 +4499,7 @@ end
 } repeat
 grestore
 
-<?php end_page(); content_page(true); ?>
+<?php end_page(); content_page(true, true); ?>
 /Times-Roman findfont 14 scalefont setfont
 marginX1 marginY1 moveto (Translation Worksheet \(k = 3\)) show
 
@@ -4503,7 +4515,7 @@ end
 } repeat
 grestore
 
-<?php end_page(); content_page(); ?>
+<?php end_page(); content_page(false, true); ?>
 /Helvetica-bold findfont 10 scalefont setfont
 pgsize aload pop pop 2 div 740
 moveto (BIP-39 Conversion Worksheet) centreshow

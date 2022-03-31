@@ -2288,7 +2288,7 @@ end
 
 % /recoveryDisc is a modified copy of multiplicaitonDisc.
 multiplicationDisc dup maxlength dict copy dup /recoveryDisc exch def begin
-  /title (Recovery) def
+  /title () def
   /logbase 10 def
   /outerglyphs {
      [ [ 1 numglyphs 1 sub {dup logbase gf32inv gf32mul} repeat ]
@@ -2304,29 +2304,29 @@ multiplicationDisc dup maxlength dict copy dup /recoveryDisc exch def begin
   } bind def
   /innerPointerSz 0 def
   /decorateTopDisc {
+gsave
 /Helvetica findfont 8 scalefont setfont
 0 154 moveto (share to) centreshow
 0 146 moveto (translate) centreshow
 0 160 moveto /arrowup 16 centrecodexshow
 % Orb fits into 0 0 395 396, but for some reason needs some fine-tuning
 0.85 0.85 scale %% scale to match potion
--40 rotate
 0.8 setgray
-innerRadius 2 mul 184 div
-innerRadius 2 mul 184 div scale
--92 -92 translate
-% %%BoundingBox: 131 224 315 409
-drawOrb
-%     /littleR 1 def
- %    /bigR innerRadius innerPointerSz sub innerglyphSz sub littleR sub def
- %    thin line
-  %   0.8 setgray
-   %  1 1 numglyphs 2 idiv {
-    %   angle mul dup sin bigR mul exch cos bigR mul
-     %  newpath 2 copy littleR -180 180 arc
- %      exch neg exch littleR 0 360 arc
- %      resetstroke
- %    } for
+innerRadius 2 mul 312 div
+innerRadius 2 mul 312 div scale
+-156 -156 translate
+% %%BoundingBox: 0 0 312 312
+drawWheelLock
+grestore
+gsave
+% manually draw some decorations to move text and whiten the cross
+0 16 translate
+       /Helvetica findfont innerTitleSz scalefont setfont
+       (Recovery) innerTitleSz 270 30 insidecircletext
+grestore
+       % Draw centre cross
+1 setgray
+       newpath 0 4.5 moveto 0 -4.5 lineto 4.5 0 moveto -4.5 0 lineto resetstroke
   } bind def
 end
 
@@ -3153,8 +3153,8 @@ end
   drawDragon2
 } bind def
 
-/drawOrb {
-<?php include "orb.php.inc"; ?>
+/drawWheelLock {
+<?php include "wheel-lock.php.inc"; ?>
 } bind def
 
 /drawPotion {

@@ -387,7 +387,7 @@ function content_page($landscape = false, $override_margin = false) {
     (unique for each secret seed.) /endlistitem
     /listitem1 (Follow Section II.3.a to generate the first $k$ shares.) /endlistitem
     /listitem1 (Follow Section II.3.b to generate the remaining $n$ - $k$ shares.) /endlistitem
-    /listitem1 (Load your shares into your BIP-???? compliant wallet or use the)
+    /listitem1 (Load your shares into your BIP-????) /footnotemark (compliant wallet or use the)
     (Recover Secret Seed procedure in Section II.4 to access your new secret seed)
     (value.) /endlistitem
     /listitem1 (Copy and distribute your $n$ shares into safe and secure locations.)
@@ -418,7 +418,7 @@ function content_page($landscape = false, $override_margin = false) {
     (worksheet.)
     /paragraph
     (*Critical Step:* Verify your checksum by copying each of the 48 characters)
-    (of theshare onto an empty worksheet that you saved earlier. Follow the)
+    (of the share onto an empty worksheet that you saved earlier. Follow the)
     (checksum verification instructions to verify each checksum. If any checksum)
     (fails to verify then make more copies of the Checksum worksheet and redo the)
     (checksum generation and checksum verification steps again.)
@@ -430,6 +430,8 @@ function content_page($landscape = false, $override_margin = false) {
     (a `0` digit in the threshold place, and use the `S` character in the share)
     (index place. Follow the same instructions for generating the data portion)
     (and the checksum.)
+    /footnotes
+    /footnotemark (Once we have a BIP number for codex32, we will replace "BIP-????" throughout the document.)
   ] [ % pagebreak
     /subsubsection (II.3.b. New Secret Seed: Stage 2) /endsubsubsection
     (The remaining $n$ - $k$ are derived from the first $k$ shares using the)
@@ -464,7 +466,7 @@ function content_page($landscape = false, $override_margin = false) {
     /dropcap (N) (ormally you would not recover a secret seed yourself, and)
     (instead load shares into a BIP-???? compliant wallet. However, you can)
     (recover the secret seed by hand if no compatible wallets are available)
-    (or whatever other reason you might have.)
+    (or you feel a need to prove your own conjuring ability.)
     /paragraph
     (The recovery procedure uses exactly $k$ many shares. If you have more than $k$)
     (many shares, you can select any $k$ of them and set the other shares aside.)
@@ -476,10 +478,10 @@ function content_page($landscape = false, $override_margin = false) {
     (or there may be an error in your share data. If there is an error in your)
     (share data, you can try substituting the share with a different one.)
     (Otherwise you will need to perform the Error Correction Procedure on your)
-    (share, which will involve the assistance of a digital computer.) /endlistitem
+    (share, which will involve the assistance of a electronic computer.) /endlistitem
     /listitem1 (Make a copy of the Translation Worksheet for the value of $k$ that you)
     (are using and label the shares with the share indices from the shares you)
-    (have selected to recover from, and label the Final Share Index as `S`) /endlistitem
+    (have selected to recover from, and label the Final Share Index as `S`.) /endlistitem
     /listitem1 (You can fill in the symbols for each share on the Addition)
     (Worksheet using either the table lookup, or the volvelle lookup:)
 ] [ % pagebreak
@@ -547,7 +549,7 @@ function content_page($landscape = false, $override_margin = false) {
     /linebreak
     (Generating a checksum:)
     /startlist
-    /listitem1 (Fill in the top diagonal squares with your random data; you should)
+    /listitem1 (Fill in the top diagonal squares \(the bold ones\) with your random data; you should)
       (have enough to fill the non-pink bolded squares) /endlistitem
     /listitem1 (Add the first row to the second to fill in the third row, using the)
       (Addition Wheel.) /endlistitem
@@ -655,7 +657,7 @@ function content_page($landscape = false, $override_margin = false) {
       (to bech32.)
       /paragraph
       (Set your threshold and share ID as usual. *Set the share index of the)
-      (coverted data to* `S`.)
+      (converted data to* `S`.)
     /endlistitem
     /listitem1 (For a 12-word secret, checksum the bech32 data using the `BIP39_12w`)
       (checksum worksheet. For a 24-word secret, use the `BIP39_24W` worksheet. The)

@@ -353,11 +353,6 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     /listitem* (The *share index* which is any bech32 character except for)
     (`S`. The `S` index is the *secret* *index*. The data portion of the)
     (secret index contains the secret seed.) /endlistitem
-    /paragraph
-    (Shares of one secret all have the same threshold and identifiers. If you)
-    (have multiple secrets, you should use distinct identifiers for each secret)
-    (so as not to mix-up shares of different secrets with each other. The)
-    (identifiers are not considered secret themselves.)
 
 %| Human-readable Part | Threshold | Secret ID | Share Index | Secret data | Checksum |
 %|---------------|--------|---------|--------|----------|----------|
@@ -367,28 +362,23 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     /paragraph
     /paragraph
     /paragraph
-    (The components of the header are:)
-    /startlist
-    /listitem* (The *threshold* indicates what the secret sharing)
-     (threshold is, and should be a digit between `2` and `9`)
-     (inclusive. Higher threshold values are not supported.) /endlistitem
-    /listitem* (The *identifier* is four arbitrary bech32 characters.)
-     (All shares of a given secret will have the same identifier, but distinct)
-     (secrets should have distinct IDs.) /endlistitem
-    /listitem* (The *share index* indicates which share this is,)
-     (and may be any bech32 character except `S`. *The* *secret* *itself* *will*)
-     (*have* *share* *index* `S`.) /endlistitem
-
+    /paragraph
+    (Shares of one secret all have the same threshold and identifiers. If you)
+    (have multiple secrets, you should use distinct identifiers for each secret)
+    (so as not to mix-up shares of different secrets with each other. The)
+    (identifiers are not considered secret themselves.)
     /paragraph
     (If the user merely wants to checksum her secret, and not use secret splitting,)
     (she should use the same format, but with the digit `0` for the threshold value)
     (and `S` for the share index.)
-  ] [ % pagebreak
     /subsection (II.3. New Secret Seed) /endsubsection
     /dropcap (G) (enerating a $k$-of-$n$ scheme for a new random secret is most)
     (easily done by generating fresh random shares directly. This process generates)
     (a new random secret seed without directly revealing it.)
     /paragraph
+    (The process for generating a new secret seed is as follows.)
+  ] [ % pagebreak
+    /startText
     /startlist
     /listitem1 (Choose a threshold $k$ and total number of shares $n$ that suits)
     (your needs. The threshold $k$ must be 2 or 3 and $n$ must be 31 or less.)
@@ -409,7 +399,7 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     (these shares can also recover your secret seed.) /endlistitem
     /listitem1 (Securely dispose of all worksheets you used in the generation)
     (procedure. If these worksheets are not securely disposed of, they could be)
-    (used to recover your secret seed.)
+    (used to recover your secret seed.) /endlistitem
 
     /subsubsection (II.3.a. New Secret Seed: Stage 1) /endsubsubsection
 
@@ -443,15 +433,16 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     (a `0` digit in the threshold place, and use the `S` character in the share)
     (index place. Follow the same instructions for generating the data portion)
     (and the checksum.)
-    /footnotes
-    /footnotemark (Once we have a BIP number for codex32, we will replace "BIP-????" throughout the document.)
-  ] [ % pagebreak
     /subsubsection (II.3.b. New Secret Seed: Stage 2) /endsubsubsection
     (The remaining $n$ - $k$ are derived from the first $k$ shares using the)
     (addition worksheet corresponding to the $k$ value you have chosen. Label)
     (the entries of the addition worksheet with the share indices that you will)
     (be using. We recommend following the Bech32 character order following the)
     (last index you generated in Stage 1.)
+    /footnotes
+    /footnotemark (Once we have a BIP number for codex32, we will replace "BIP-????" throughout the document.)
+  ] [ % pagebreak
+    /startText
     /paragraph
     (Use the following procedure to derive a new share:)
     /startlist
@@ -497,15 +488,16 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     (have selected to recover from, and label the final Share Index as `S`.) /endlistitem
     /listitem1 (You can fill in the symbols for each share on the Addition)
     (Worksheet using either the table lookup, or the volvelle lookup:)
+    /paragraph
+    ($Table lookup $k$ = 2:$ Fill in the symbol from the Recover table by)
+    (finding the column with the associated share, and the row for the other)
+    (share.)
 ] [ % pagebreak
+    % get numbering straight
     /listitem1 /endlistitem
     /listitem1 /endlistitem
     /listitem1
     /startText
-    ($Table lookup $k$ = 2:$ Fill in the symbol from the Recover table by)
-    (finding the column with the associated share, and the row for the other)
-    (share.)
-    /paragraph
     ($Volvelle lookup $k$ = 2:$ Turn the Recovery Volvelle to point to the)
     (share being considered. Find the symbol pointed to under the other share)
     (index on the wheel and fill in that symbol next to the share we are)
@@ -536,14 +528,14 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
 %    /endlistitem
   ] [ % pagebreak
     /section (Random Character Worksheet) /endsection
-    (*You will need:* five *distinct* dice, five markers, this and the following page)
+    (*You will need:* five $distinct$ dice, five markers, this and the following page)
     /startlist
     /listitem1 (Label each Die Track to indicate which die it corresponds to.)
       /linebreak /linebreak
       (*Do* *not* *otherwise* *mark* *these* *two* *pages.*) /endlistitem
     /listitem1 (Roll all five dice. Set markers on each Die Pad indicating)
       (their values.) /endlistitem
-    /listitem1 (Re-roll the *same* five dice again and set the dice on each)
+    /listitem1 (Re-roll the $same$ five dice again and set the dice on each)
       /linebreak (Die Track indicating their second values.) /endlistitem
     /listitem1 (Repeat steps 2 and 3 for each die that showed the same value)
       /linebreak (twice.) /endlistitem
@@ -1924,7 +1916,6 @@ end
         }
         /startText {
           textFont setCurrentFont
-          doLineBreak
         }
         /section {
           doLineBreak doLineBreak
@@ -3579,7 +3570,7 @@ end
 <?php
   end_page(); content_page();
 ?>
-72 310 drawDataFormat
+72 350 drawDataFormat
 
 <?php
   end_page(); content_page();
@@ -3590,7 +3581,7 @@ end
 /maxk 3 def
 
 /x 104 def
-/y 450 def
+/y 520 def
 /rowtitle 6 string def
 mink 1 maxk {
   /k exch def

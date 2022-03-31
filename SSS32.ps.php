@@ -3137,8 +3137,20 @@ end
 <?php include "cover.php.inc"; ?>
 } bind def
 
+% Lol, postscript can't handle too large a function apparently so we
+% have to split this into two
+/drawDragon1 {
+% %%BoundingBox: 51 131 406 486
+<?php include "dragon1.php.inc"; ?>
+} bind def
+
+/drawDragon2 {
+<?php include "dragon2.php.inc"; ?>
+} bind def
+
 /drawDragon {
-<?php include "dragon.php.inc"; ?>
+  drawDragon1
+  drawDragon2
 } bind def
 
 /drawOrb {
@@ -4030,9 +4042,11 @@ grestore
 
 gsave
   % Original dragon fit into 0 0 354 354. Our inner circle has a 240 radius.
+  % Original dragon had bbox 51 131 406 486 (355 355)
   pgsize aload pop 2 div exch 2 div exch translate
   -240 -242 translate
-  480 165 div dup scale
+  240 176 div dup scale
+  -52.5 -131 translate
   drawDragon
 grestore
 showTopWheelPage

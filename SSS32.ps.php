@@ -634,13 +634,15 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     (way to generate shares rather than using the Translation Worksheet and the)
     (volvelles.)
     /paragraph
-    (In this case, your two initially generated shares will be `S` and `A`. To)
-    (generate further shares, go through the characters of your `S` share one by)
+    (In this case, your two initially generated shares will be `A` and `C`. To)
+    (generate further shares, go through the characters of your `A` share one by)
     (one. For each character, find the table labeled by the character; then find)
-    (the row labeled by the corresponding character of your `A` share.)
+    (the row labeled by the corresponding character of your `C` share.)
     /paragraph
-    (All of the corresponding characters for the `C`, `D`, `E`, etc., shares can)
-    (be read off this row.)
+    (All of the corresponding characters for the `D`, `E`, `F`, etc., shares can)
+    (be read off this row in the correspondingly-labeled column.)
+    /paragraph
+    (In particular, your secret data can be read from the `S` column.)
   9 { ] [ } repeat
     /section (Module 2: Share Generation Tables) /endsection
     (The main instructional section contains share derivation tables for $k$ values of)
@@ -855,8 +857,8 @@ end
 } bind def
 
 /makeShare % sS sA i -> si
-       { 3 2 roll 1 index permS 0 get permS 0 2 getinterval lagrange gf32mul
-         3 1 roll permS 1 get permS 0 2 getinterval lagrange gf32mul
+       { 3 2 roll 1 index perm 0 get perm 0 2 getinterval lagrange gf32mul
+         3 1 roll perm 1 get perm 0 2 getinterval lagrange gf32mul
          xor
        } bind def
 
@@ -2404,7 +2406,7 @@ end
 code page get glyphshow
 2 1 31 {
 dup 7 mul offsetx add offsety 10 sub moveto
-permS exch get
+perm exch get
 code exch get glyphshow
 } for
 
@@ -2415,7 +2417,7 @@ dup code exch perm exch get get glyphshow
 /Courier findfont 8 scalefont setfont
 2 1 31 {
 dup 7 mul offsetx add offsety 20 sub 3 index 8 mul sub moveto
-permS exch get
+perm exch get
 page exch perm 3 index get exch  makeShare code exch get glyphshow
 } for pop } for
 } bind def

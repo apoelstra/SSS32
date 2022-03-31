@@ -1111,6 +1111,8 @@ portraitPage dup 20 dict copy dup /landscapePage exch def begin
   /marginY2 48 def
   /marginW marginX2 marginX1 sub def
   /marginH marginY1 marginY2 sub def
+  /pageW portraitPage /pageH get def
+  /pageH portraitPage /pageW get def
 
   /drawPageContent {
     90 rotate

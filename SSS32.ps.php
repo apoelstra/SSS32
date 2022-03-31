@@ -336,6 +336,37 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     (using volvelle wheels to look up values. While the volvelle wheels take)
     (time to cut out and assemble, they are generally easier to use than the)
     (tables when available.)
+    /paragraph
+    (There are three volvelles in this codex, which have slightly different usage)
+    (instructions.)
+    /paragraph
+    (*Addition.* To add two characters, turn the Addition Wheel to one of them,)
+    (and look through the window corresponding to the other. It does not matter)
+    (which character is which; addition is symmetric.)
+    /paragraph
+    (*Translation.* A common task is to "translate" share data by a given recovery)
+    (symbol. To do so, turn the Translation/Multiplication Wheel so that the window)
+    (on the Multiplication side is showing the correct symbol. Then turn the wheel)
+    (over; the Translation side will act like a decoder ring, mapping characters)
+    (to characters.)
+    /paragraph
+    (*Multiplication.* Sometimes you will need to translate a share by multiple)
+    (symbols at once. To do this, turn the Multiplication Wheel to the first symbol.)
+    (Find the next symbol on the inner wheel; whatever symbol it is pointing to,)
+    (turn the Multiplication Wheel to that symbol. Repeat for all the symbols you)
+    (need to multiply; the Multiplication Wheel will wind up at the final product.)
+    (You can now turn the Wheel over to translate by this symbol.)
+    /paragraph
+    (As with addition, it does not matter which order you take your original symbols)
+    (in.)
+    /paragraph
+    (*Recovery.* When recovering your secret, you will need to look up "Recovery)
+    (symbols" that will be used to. To do this with the Recovery Wheel, turn the)
+    (wheel to the share you want to translate. Mark down the symbols pointed to)
+    (by the $other$ shares' indices, and multiply these together.)
+    /paragraph
+    ($Important:$ Unlike the other wheels, the Recovery Wheel can easily be used)
+    (in the wrong order. Be careful!)
 
     /subsection (II.2. Share Format) /endsubsection
     /dropcap (F) (or 128-bit secret seeds, each share is 48 characters long.)
@@ -353,12 +384,13 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     /listitem* (The *share index* which is any bech32 character except for)
     (`S`. The `S` index is the *secret* *index*. The data portion of the)
     (secret index contains the secret seed.) /endlistitem
+  ] [ % pagebreak
+    /startText
 
 %| Human-readable Part | Threshold | Secret ID | Share Index | Secret data | Checksum |
 %|---------------|--------|---------|--------|----------|----------|
 %| 3 characters (`ms1`) | 1 character | 4 characters | 1 character | 26 characters | 13 characters |
 
-    /paragraph
     /paragraph
     /paragraph
     /paragraph
@@ -377,7 +409,6 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     (a new random secret seed without directly revealing it.)
     /paragraph
     (The process for generating a new secret seed is as follows.)
-  ] [ % pagebreak
     /startText
     /startlist
     /listitem1 (Choose a threshold $k$ and total number of shares $n$ that suits)
@@ -412,7 +443,10 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     (\(Note that `B` and `I` are not part of the Bech32 character set and are)
     (omitted\). However, if you are not splitting your secret, \(i.e. $k$ = 1\))
     (see the special instructions below.)
-    /paragraph
+    /footnotes
+    /footnotemark (Once we have a BIP number for codex32, we will replace "BIP-????" throughout the document.)
+  ] [ % pagebreak
+    /startText
     (Fill out the 26 character data portion of each Checksum Worksheet with random)
     (characters. Use the Random Character Worksheet to generate each random)
     (character.)
@@ -439,10 +473,6 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     (the entries of the addition worksheet with the share indices that you will)
     (be using. We recommend following the Bech32 character order following the)
     (last index you generated in Stage 1.)
-    /footnotes
-    /footnotemark (Once we have a BIP number for codex32, we will replace "BIP-????" throughout the document.)
-  ] [ % pagebreak
-    /startText
     /paragraph
     (Use the following procedure to derive a new share:)
     /startlist
@@ -458,15 +488,13 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     /endlistitem
 
     /notoc /subsubsection (Derivation Table) /endsubsubsection /toc
-    (Derivation tables for $k$ = 4 through 9 can be found in Module 2.)
-    /paragraph
-    /paragraph
-    /paragraph %% derivation table
-    /paragraph
-    /paragraph
+    (These values are used to translate your initial shares in order to compute)
+    (derived shares. Derivation tables for $k$ from 4 upto 8 can be found in Module 2,)
+    (along with instructions for generating the table for $k$ = 9. We re-iterate that)
+    (we strongly discourage large $k$ values.)
 
+] [ % pagebreak
     /subsection (II.4. Recover Secret Seed) /endsubsection
-
     /dropcap (N) (ormally you would not recover a secret seed yourself, and)
     (instead load shares into a BIP-???? compliant wallet. However, you can)
     (recover the secret seed by hand if no compatible wallets are available)
@@ -492,12 +520,7 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     ($Table lookup $k$ = 2:$ Fill in the symbol from the Recover table by)
     (finding the column with the associated share, and the row for the other)
     (share.)
-] [ % pagebreak
-    % get numbering straight
-    /listitem1 /endlistitem
-    /listitem1 /endlistitem
-    /listitem1
-    /startText
+    /paragraph
     ($Volvelle lookup $k$ = 2:$ Turn the Recovery Wheel to point to the)
     (share being considered. Find the symbol pointed to under the other share)
     (index on the wheel and fill in that symbol next to the share we are)
@@ -636,7 +659,8 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     (All of the corresponding characters for the `D`, `E`, `F`, etc., shares can)
     (be read off this row in the correspondingly-labeled column.)
     /paragraph
-    (In particular, your secret data can be read from the `S` column.)
+    (*Warning:* your secret data can be read from the `S` column. Do not generate)
+    (the `S` share from this booklet! A future edition will remove that coulmn.)
   9 { ] [ } repeat
     /section (Module 2: Share Generation Tables) /endsection
     (The main instructional section contains share derivation tables for $k$ values of)
@@ -3569,11 +3593,11 @@ end
 /Times findfont 12 scalefont setfont (Gandalf) show
 <?php
   end_page(); content_page();
+  end_page(); content_page();
 ?>
-72 350 drawDataFormat
+marginX1 32 add marginY1 24 sub drawDataFormat
 
 <?php
-  end_page(); content_page();
   end_page(); content_page();
 ?>
 
@@ -3581,7 +3605,7 @@ end
 /maxk 3 def
 
 /x 104 def
-/y 520 def
+/y 200 def
 /rowtitle 6 string def
 mink 1 maxk {
   /k exch def

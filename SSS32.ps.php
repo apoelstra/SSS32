@@ -623,6 +623,9 @@ function content_page($landscape = false, $override_margin = false) {
     (generate further shares, go through the characters of your `S` share one by)
     (one. For each character, find the table labeled by the character; then find)
     (the row labeled by the corresponding character of your `A` share.)
+    /paragraph
+    (All of the corresponding characters for the `C`, `D`, `E`, etc., shares can)
+    (be read off this row.)
   9 { ] [ } repeat
     /section (Module 2: Share Generation Tables) /endsection
     (The main instructional section contains share derivation tables for $k$ values of)

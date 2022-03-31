@@ -659,8 +659,6 @@ function content_page($landscape = false, $burn_me = false, $override_margin = f
     (an initial share. Ordinarily, you would generate the first few shares randomly,)
     (and infer your `S` share form those; but in some cases, for example when using)
     (and existing seed with this scheme, you need to generate the `S` share first.)
-    /paragraph
-    (In particular, BIP-39 users will need to use this table.)
   ] [
     /section (Module 39: BIP-39 Support) /endsection
     (BIP-39 users can use the following pages to convert their seed words into bech32)

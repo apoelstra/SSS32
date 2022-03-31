@@ -184,26 +184,26 @@ function content_page($landscape = false, $override_margin = false) {
     (tedium and risk of mistakes, but the procedures are essentially unchanged.)
     /paragraph
     (In general, we encourage you to switch from BIP39 to Satoshi Labs' SLIP39,)
-    (or better, to directly work with 128-bit BIP32 seeds using the Codex.)
+    (or even better, to directly use the Codex to work with 128-bit BIP32 seeds.)
 
     /subsection (Shamir's Secret Sharing Scheme) /endsubsection
     /dropcap (T) (here is an inherent trade-off between the availability of a)
     (secret and its risk of theft. If you make many copies of your seed words,)
-    (one of them may eventually fall into the wrong hands. But if you makes too)
+    (one of them may eventually fall into the wrong hands. But if you make too)
     (few, they may all become lost, destroyed or misplaced. The consequence in)
     (either case is a total loss of funds.)
     /paragraph
     (A more nuanced way to make this trade-off is Shamir's Secret Sharing Scheme)
-    (\(SSSS\), in which you split your secret into $N$ "shares", any $K$ of which)
-    (can be used to reconstruct the original secret. Here $N$ is typically five)
-    (or more, depending on your desire for redundancy, while $K$ is two or three,)
+    (\(SSSS\), in which you split your secret into $n$ "shares", any $k$ of which)
+    (can be used to reconstruct the original secret. Here $n$ is typically five)
+    (or more, depending on your desire for redundancy, while $k$ is two or three,)
     (reflecting your fear of individual shares being compromised.)
     /paragraph
     (Before continuing, we should mention some limitations of SSSS:)
     /startlist
     /listitem* (First, electronic computers or not, SSSS requires that the)
       (complete secret be reconstructed in a single place before it can be used.)
-      (To avoid this, for most use-cases we instead recommend threshold)
+      (To avoid this, for most use-cases we recommend threshold)
       (signatures instead.) /endlistitem
   ] [ % pagebreak
     /startText
@@ -298,18 +298,26 @@ function content_page($landscape = false, $override_margin = false) {
     (In the Codex, we introduce a new checksum, *codex32*, which can detect up to 8)
     (errors, correct up to 4, and has even lower probability than SLIP39 of failing)
     (to detect other random errors. Most importantly \(for us\), codex32 checksums)
-    (can be computed and verified entirely by hand.)
+    (can be computed and verified entirely by hand. It is even possible to $correct$)
+    (errors by hand, but you will need to consult a mathematician since we have not)
+    (found a simple worksheet-based method.)
+    /paragraph
+    (If error correction is needed, a later version of this document will explain)
+    (how to do so, with the assistance of an electronic computer which is never)
+    (given access to secret data.)
 
     /subsection (Bech32 and the Alphabet) /endsubsection
     /dropcap (I) (n order to store 128-bit secrets, we re-use the Bech32 alphabet)
     (which provides 32 5-bit characters. These characters consist of the 26)
     (letters of the Latin alphabet and 10 Arabic numerals, except B \(which looks)
-    (like 8\), O \(which looks like 0\), and I and 1 \(which look like each other\).)
+    (like 8\), O \(which looks like 0\), and I and 1 \(which look like many things,)
+    (including each other\).)
     /paragraph
     (We also use an alternate alphabet, consisting mostly of Greek letters, which)
     (is used for intermediate computations. It is never used for storage, and)
     (nothing represented in this alphabet is ever secret data. We have provided)
-    (a table of pronunciation to help with its use.)
+    (a table of pronunciation, on the Reference page at the beginning of this)
+    (document, to help with its use.)
     /paragraph
     (The remainder of this document provides detailed, but mechanical,)
     (instructions. If you are interested in learning the mathematical theory behind)
@@ -334,7 +342,7 @@ function content_page($landscape = false, $override_margin = false) {
     (The header consists of:)
     /startlist
     /listitem* (The *threshold* which is the value $k$, a digit between)
-    (`2` and `9` inclusive, however Module 0 only supports $k$ < 3. When)
+    (`2` and `9` inclusive, although the main document only supports $k$ < 4. When)
     (secret splitting is not used, the a `0` digit is placed here instead.)
     /endlistitem
     /listitem* (The *identifier* which is four bech32 characters.) /endlistitem
@@ -379,7 +387,8 @@ function content_page($landscape = false, $override_margin = false) {
     /paragraph
     /startlist
     /listitem1 (Choose a threshold $k$ and total number of shares $n$ that suits)
-    (your needs. The threshold $k$ must be 3 or less and $n$ must be 31 or less.)
+    (your needs. The threshold $k$ must be 2 or 3 and $n$ must be 31 or less.)
+    (\(For $k$ > 3 see Module 2, but we do not recommend this.\))
     /endlistitem
     /listitem1 (Choose a 4 character identifier for your new secret seed. The)
     (identifier can be anything as long as it only uses the Bech32 character set.)
@@ -396,7 +405,8 @@ function content_page($landscape = false, $override_margin = false) {
     (these shares can also recover your secret seed.) /endlistitem
     /listitem1 (Securely dispose of all worksheets you used in the generation)
     (procedure. If these worksheets are not securely disposed of, the could be)
-    (used to recover your secret seed.) /endlistitem
+    (used to recover your secret seed.)
+    /linebreak /linebreak (Shredded paper can be reconstructed. Use fire.) /endlistitem
 
     /subsubsection (II.3.a. New Secret Seed: Stage 1) /endsubsubsection
 
@@ -444,7 +454,7 @@ function content_page($landscape = false, $override_margin = false) {
     /startlist
     /listitem1 (Make a copy of the Translation Worksheet for the value of $k$ that)
     (you are using and label the shares with the share indices from the shares)
-    (you have already generated, `A`, `C` and `D` if $k$=3. Label the Final)
+    (you have already generated, e.g. `A`, `C` and `D` if $k$ = 3. Label the final)
     (Share Index with the new share index you want to derive.) /endlistitem
     /listitem1 (In the derivation table for your value of $k$, find the column)
     (corresponding to the new share index you want to derive. Fill in the symbols)
@@ -466,7 +476,7 @@ function content_page($landscape = false, $override_margin = false) {
     /dropcap (N) (ormally you would not recover a secret seed yourself, and)
     (instead load shares into a BIP-???? compliant wallet. However, you can)
     (recover the secret seed by hand if no compatible wallets are available)
-    (or you feel a need to prove your own conjuring ability.)
+    (or you feel a need to demonstrate your conjuring ability.)
     /paragraph
     (The recovery procedure uses exactly $k$ many shares. If you have more than $k$)
     (many shares, you can select any $k$ of them and set the other shares aside.)
@@ -481,7 +491,7 @@ function content_page($landscape = false, $override_margin = false) {
     (share, which will involve the assistance of a electronic computer.) /endlistitem
     /listitem1 (Make a copy of the Translation Worksheet for the value of $k$ that you)
     (are using and label the shares with the share indices from the shares you)
-    (have selected to recover from, and label the Final Share Index as `S`.) /endlistitem
+    (have selected to recover from, and label the final Share Index as `S`.) /endlistitem
     /listitem1 (You can fill in the symbols for each share on the Addition)
     (Worksheet using either the table lookup, or the volvelle lookup:)
 ] [ % pagebreak
@@ -503,6 +513,9 @@ function content_page($landscape = false, $override_margin = false) {
     (shares. Make a note of these two symbols on a scrap piece of paper. Use the)
     (multiplication table to multiply the the two symbols and fill in that)
     (share's symbol on the Translation Worksheet with the resulting product.)
+    /paragraph
+    (For $k$ > 3 the instructions are essentially the same as those for $k$ = 3,)
+    (except that you will have more symbols to multiply.)
     /paragraph
     ($Volvelle lookup $k$ = 3:$ Turn the Recovery Volvelle to point to the)
     (share being considered. Find the two symbols pointed to under the other share)
@@ -662,7 +675,7 @@ function content_page($landscape = false, $override_margin = false) {
       (Set your threshold and share ID as usual. *Set the share index of the)
       (converted data to* `S`.)
     /endlistitem
-    /listitem1 (For a 12-word secret, checksum the bech32 data using the `BIP39_12w`)
+    /listitem1 (For a 12-word secret, checksum the bech32 data using the `BIP39_12W`)
       (checksum worksheet. For a 24-word secret, use the `BIP39_24W` worksheet. The)
       (instructions are essentially the same as for the ordinary `MS1` checksum)
       (worksheet, although some rows have been moved to fit everything onto one)
@@ -673,18 +686,17 @@ function content_page($landscape = false, $override_margin = false) {
       /sublistitem1 (First, your data will not fit in the standard Translation)
         (Worksheet; we have provided an extended one in this module.) /endsublistitem
       /sublistitem1 (More importantly, your `S` share will be an initial share)
-        (rather than a derived share. The standard derivation tables assumes)
-        (otherwise. We have provided an alternate set of derivation tables in)
-        (Module 2.) /endsublistitem
+        (rather than a derived share. To derive shares, you will need to use the)
+        (alternate set of derivation tables from Module 2.) /endsublistitem
       /endlistitem
     /listitem1 (Similarly, recover your secret as usual.) /endlistitem
-    /listitem1 (Convert the recovered secret back to seed words, again using the)
-      (BIP-39 Conversion Worksheet. The same table will work for converting)
+    /listitem1 (After recovering, convert the recovered secret back to seed words,)
+      (again using the BIP-39 Conversion Worksheet. The same table will work for converting)
       (bits-to-words as for words-to-bits, since the binary and alphabetical ordering)
       (is the same.) /endlistitem
 
     /paragraph
-    (We encourage users to move away from BIP-39 to avoid this extra inconvenience.)
+    (We encourage users to move away from BIP-39 to avoid all this extra inconvenience.)
   ] [ % pagebreak
   10 { ] [ } repeat  % add a bunch of trailing pages to avoid overflow
   ]
@@ -1879,7 +1891,7 @@ end
           doLineBreak
           /sublistItemCount sublistItemCount 1 add store
           /y y 4 sub store
-          /x x 48 add store
+          /x x 36 add store
           x y moveto
           -5 0 rmoveto
           sublistItemCount 2 string cvs
@@ -1889,7 +1901,7 @@ end
         }
         /endsublistitem {
           0 dumpLastLine
-          /x x 48 sub store
+          /x x 36 sub store
           x y moveto
         }
         /endlistitem {
@@ -3093,7 +3105,7 @@ end
   % Draw example characters in boxes
   x y moveto
   2 -12 rmoveto % manually center characters in box
-  /sampleString (MS12NAMEA79NT     9Y6AHQ829ZQZVEGNF) def
+  /sampleString (MS12NAMEAXXXX     XXXXCE43R337JKVTZ) def
   0 1 sampleString length 1 sub {
     sampleString exch 1 getinterval gsave show grestore
     boxW 0 rmoveto
@@ -3547,9 +3559,9 @@ end
   end_page(); content_page();
   end_page(); content_page();
 ?>
-216 156 moveto
+216 126 moveto
 /Times-Italic findfont 12 scalefont setfont (Keep it secret. Keep it safe.) show
-306 140 moveto gsave 0 3.5 rmoveto 10 0 rlineto 0.2 setlinewidth stroke grestore 12 0 rmoveto
+306 110 moveto gsave 0 3.5 rmoveto 10 0 rlineto 0.2 setlinewidth stroke grestore 12 0 rmoveto
 /Times findfont 12 scalefont setfont (Gandalf) show
 <?php
   end_page(); content_page();

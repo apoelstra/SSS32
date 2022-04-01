@@ -2577,7 +2577,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
         /starti exch def
         /endi starti 47 add sharelen 1 sub min def
 
-      /Courier findfont 3 scalefont setfont
+      /Courier findfont 4 scalefont setfont
       thick line
       % Draw share index & translation symbol
       drawShareIndex { 0 0 offset xsize ysize rectstroke } if
@@ -2589,7 +2589,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
         /i exch def
         i starti sub 3 add 0 offset 2 copy xsize ysize rectstroke moveto
         % upper-right index
-        xsize 4.5 sub -3 rmoveto
+        xsize 5.5 sub -3.5 rmoveto
         /n i 1 add def
         n 10 lt { ( ) show } if n 2 string cvs show
         % lower-left index
@@ -2632,13 +2632,13 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
     } for
   grestore
   gsave
-    /Courier findfont 3 scalefont setfont
+    /Courier findfont 4 scalefont setfont
     % First (input) row
     thick line
     0 1 firstrowlen hrplen add {
       /i exch def
       i 0 offset 2 copy xsize ysize rectstroke moveto
-      xsize 4.5 sub -3 rmoveto
+      xsize 5.5 sub -3.5 rmoveto
       /n i 1 add def
       n 10 lt { ( ) show } if n 2 string cvs show
     } for
@@ -2676,11 +2676,11 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
       thick line
       i 1 add j offset 2 copy xsize ysize rectstroke moveto
       xsize 4.5 sub -3 rmoveto
-      /Courier findfont 3 scalefont setfont
+      /Courier findfont 4 scalefont setfont
       /n i 2 add def
       n 10 lt { ( ) show } if n 2 string cvs show
       i 2 add j offset 2 copy xsize ysize rectstroke moveto
-      xsize 4.5 sub -3 rmoveto
+      xsize 5.5 sub -3.5 rmoveto
       /n i 3 add def
       n 10 lt { ( ) show } if n 2 string cvs show
       j unresetPos
@@ -4591,8 +4591,8 @@ moveto (BIP-39 Conversion Worksheet) centreshow
   gsave 0.5 box grestore
   % Every 5, write a top-left value
   gsave
-    0 9 rmoveto
-    /Courier findfont 3 scalefont setfont
+    0 8 rmoveto
+    /Courier findfont 4 scalefont setfont
     n 5 mod 0 eq {
          n 5 idiv 16 add 2 string cvs show
     } if

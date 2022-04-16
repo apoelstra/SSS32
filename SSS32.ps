@@ -500,6 +500,26 @@
     /endlistitem
     /listitem1 (Follow the Translation Worksheet instructions recover the secret)
     (share.) /endlistitem
+  ] [ % pagebreak
+    /section (Random Character Worksheet) /endsection
+    (*You will need:* five $distinct$ dice, five markers, this and the following page)
+    /startlist
+    /listitem1 (Label each Die Track to indicate which die it corresponds to.)
+      /linebreak /linebreak
+      (*Do* *not* *otherwise* *mark* *these* *two* *pages.*) /endlistitem
+    /listitem1 (Roll all five dice. Set markers on each Die Pad indicating)
+      (their values.) /endlistitem
+    /listitem1 (Re-roll the $same$ five dice again and set the dice on each)
+      /linebreak (Die Track indicating their second values.) /endlistitem
+    /listitem1 (Repeat steps 2 and 3 for each die that showed the same value)
+      /linebreak (twice. *You must redo both rolls!*) /endlistitem
+    /listitem1 (Using your finger, follow the tree to the right using the results)
+      /linebreak (indicated on the Die Tracks: take the first left branch if the)
+      /linebreak (first die is to the left of its marker, the right branch if it is)
+      /linebreak (to the right. Similarly, take the second branch based on)
+      /linebreak (the results on the second Die Track, and)
+      (so on, until) /linebreak (the bottom of the tree.) /endlistitem
+    /listitem1 (Repeat Steps 2-5 to generate more characters.) /endlistetim
   20 { ] [ } repeat  % add a bunch of empty placeholder pages
   ]
 ] def
@@ -2452,6 +2472,85 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
 } bind def
 
 %******************
+%* Dice Worksheet
+%*
+%* Functionality for the dice worksheet - the tree and dice pads
+%*
+
+/drawDiceRow {
+  10 dict begin
+  % Characteristic size of the pads: equal to a side length for the square
+  % pads, and 5/9 the side length for the hexagonal ones. (There is no good
+  % mathematical reason for 5/9, it just fit the space requirements.)
+  /sz 54 def
+  /gapsz 2 def
+  /sz2 sz 2 sqrt div def
+
+  gsave
+    % Font for the numeric labels on the dice pads
+    /Helvetica-Bold findfont 14 scalefont setfont
+
+    % Draw label line
+    0 0 moveto
+    gsave
+      gapsz neg sz2 gapsz add rmoveto
+      sz2 2 mul 0 rlineto stroke
+    grestore
+
+    % Draw six squares
+    1 1 6 {
+      /idx exch def
+      % find origin
+      sz2 gapsz add idx mul 0 moveto
+      idx 2 mod 0 eq { 0 sz2 gapsz add rmoveto } if
+      % draw square
+      gsave
+        sz2 sz2 rlineto
+        sz2 sz2 neg rlineto
+        sz2 neg sz2 neg rlineto
+        closepath gsave 0.95 setgray fill grestore stroke
+      grestore
+      % draw label
+      gsave sz2 -5 rmoveto idx 2 string cvs centreshow grestore
+    } for
+
+    % Draw 14 hexagons
+    /sz3 sz 3 8 div sqrt mul def
+    % ad-hoc set starting point for the hexagons
+    /originxoffs sz2 2.5 mul def
+    /originyoffs sz3 neg 15 add def
+    % ad-hoc scale our lengths
+    /sz2 sz2 0.8 mul def
+    /sz3 sz3 0.8 mul def
+
+    % Draw 14 hexagons
+    7 1 20 {
+      /idx exch def
+
+      % find origin
+      sz3 gapsz add idx mul originxoffs add originyoffs moveto
+      idx 2 mod 0 eq { 0 sz2 1.5 mul gapsz add rmoveto } if
+
+      % hexagon
+      gsave
+        0 sz2 rlineto
+        sz2 3 sqrt mul 2 div sz2 2 div rlineto
+        sz2 3 sqrt mul 2 div sz2 2 div neg rlineto
+        0 sz2 neg rlineto
+        sz2 3 sqrt mul 2 div neg sz2 2 div neg rlineto
+        closepath gsave 0.95 setgray fill grestore stroke
+      grestore
+      % label
+      gsave
+        sz2 3 sqrt mul 2 div sz2 2 div 5 sub rmoveto
+        idx 2 string cvs centreshow
+      grestore
+    } for
+  grestore
+  end
+} bind def
+
+%******************
 %* Checksum Worksheet
 %*
 %* Functionality for the checksum, addition, bit conversion, etc., worksheets,
@@ -2990,18 +3089,98 @@ end pgsave restore showpage
 portraitPage begin 8 drawPageContent
 end pgsave restore showpage
 
+%%% Random Character Worksheet
 %%Page: 14 14
+%%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 9 drawPageContent
+landscapePage begin 9 drawPageContent
+
+gsave
+325 190 translate
+%% Tree
+10 dict begin
+% tree
+  /radius 0.705 72 mul 8.5 div def
+  /spacing 60 def
+  /coord { % i j -- x y
+     1 index 2 exch exp exch 0.5 add mul 2 mul 1.1 radius mul mul
+     exch 0.5 add spacing mul
+  } bind def
+  /trimedline { % x1 y1 x2 y2 --
+  10 dict begin
+    { /y2 /x2 /y1 /x1 } {exch def} forall
+    /dx x2 x1 sub def
+    /dy y2 y1 sub def
+    /l dx dup mul dy dup mul add sqrt def
+    x1 y1 moveto 0 dup dx mul exch dy mul rmoveto
+    1 2 0 mul sub dup dx mul exch dy mul rlineto
+  end
+  } bind def
+  1 1 5 {
+    /i exch def
+    0 1 2 5 i sub exp 1 sub {
+      /j exch def
+      /x 2 i exp j 0.5 add mul 2 mul 1.1 radius mul mul def
+      i j coord moveto radius 5 div neg 0 rmoveto
+      i j coord radius 5 div -180 180 arc
+    } for
+  } for
+  thick line stroke
+  0 1 4 {
+    /i exch def
+    0 1 2 5 i sub exp 1 sub {
+      /j exch def
+      /x 2 i exp j 0.5 add mul 2 mul 1.1 radius mul mul def
+      i j coord i 1 add j 2 idiv coord trimedline
+    } for
+  } for
+  thin line stroke
+  /fontsz 16 def
+  0 1 31 {
+    /j exch def
+    /x 1.1 radius mul 2 j mul 1 add mul def
+    x spacing 2 div fontsz 0.3 mul sub 5 sub moveto
+    code j get fontsz centrecodexshow
+  } for
+end
+grestore
+
+marginX1 200 translate
+% Labels for the dice pad rows
+/Helvetica-Bold findfont 18 scalefont setfont
+0 0 moveto
+(Die Tracks) show
+newpath 0 -5 moveto marginW 0.75 mul -5 lineto stroke
+
+/Helvetica findfont 14 scalefont setfont
+0 -23 moveto
+(Label) show
+newpath 20 -40 32.5 140 220 arc -10 10 rlineto 10 -10 rmoveto -1 11 rlineto  stroke
+
+160 -23 moveto
+(Die Pads) show
+
+440 -23 moveto
+(Die Pads \(d7+\)) show
+
+% Draw a single dice pad row at the bottom
+0.2 setlinewidth
+0 -105 translate drawDiceRow
 end pgsave restore showpage
 
 %%Page: 15 15
+%%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 10 drawPageContent
+landscapePage begin 10 drawPageContent
+
+0.2 setlinewidth
+marginX1 marginY1 72 sub translate
+4 { drawDiceRow 0 -132 translate } repeat
+
 end pgsave restore showpage
 
 %%Page: 16 16

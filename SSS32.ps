@@ -502,24 +502,25 @@
     (share.) /endlistitem
   ] [ % pagebreak
     /section (Random Character Worksheet) /endsection
-    (*You will need:* five $distinct$ dice, five markers, this and the following page)
+    (*You will need:* five $distinct$ dice, five dice markers \(e.g. pieces of paper, each labeled by)
+      /linebreak (which die it corresponds to\), this and the following page)
     /startlist
-    /listitem1 (Label each Die Track to indicate which die it corresponds to.)
-      /linebreak /linebreak
-      (*Do* *not* *otherwise* *mark* *these* *two* *pages.*) /endlistitem
-    /listitem1 (Roll all five dice. Set markers on each Die Pad indicating)
-      (their values.) /endlistitem
-    /listitem1 (Re-roll the $same$ five dice again and set the dice on each)
-      /linebreak (Die Track indicating their second values.) /endlistitem
-    /listitem1 (Repeat steps 2 and 3 for each die that showed the same value)
-      /linebreak (twice. *You must redo both rolls!*) /endlistitem
-    /listitem1 (Using your finger, follow the tree to the right using the results)
-      /linebreak (indicated on the Die Tracks: take the first left branch if the)
-      /linebreak (first die is to the left of its marker, the right branch if it is)
-      /linebreak (to the right. Similarly, take the second branch based on)
-      /linebreak (the results on the second Die Track, and)
+    /listitem1 (Choose a die track for each die. Place each die's marker on its Free Space.)
+      /endlistitem
+    /listitem1 (Roll all five dice. Move each die's marker to the Die Pad indicating)
+      /linebreak (its value.) /endlistitem
+    /listitem1 (Re-roll the same five dice again and set the $dice$ on the Die Pad)
+      /linebreak (indicating their second values.) /endlistitem
+    /listitem1 (For each die that showed the same value twice, move its marker)
+      /linebreak (back to the free space and repeat steps 2 and 3.)
+      /linebreak (*You must redo both rolls!*) /endlistitem
+    /listitem1 (Using your finger, follow the tree to the right according to)
+      /linebreak (the Die Tracks: take the first left branch if the first die is)
+      /linebreak (to the left of its marker, the right branch if it is to the)
+      /linebreak (right. Similarly, take the second branch based on the)
+      /linebreak (results on the second Die Track, and)
       (so on, until) /linebreak (the bottom of the tree.) /endlistitem
-    /listitem1 (Repeat Steps 2-5 to generate more characters.) /endlistetim
+    /listitem1 (Repeat Steps 1-5 to generate more characters.) /endlistetim
   20 { ] [ } repeat  % add a bunch of empty placeholder pages
   ]
 ] def
@@ -2493,8 +2494,11 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
     % Draw label line
     0 0 moveto
     gsave
-      gapsz neg sz2 gapsz add rmoveto
-      sz2 2 mul 0 rlineto stroke
+      /Times findfont 13 scalefont setfont
+      newpath
+      36 44 30 -180 180 arc stroke
+      36 46 moveto (Free) centreshow
+      36 34 moveto (Space) centreshow
     grestore
 
     % Draw six squares
@@ -3153,11 +3157,6 @@ marginX1 200 translate
 0 0 moveto
 (Die Tracks) show
 newpath 0 -5 moveto marginW 0.75 mul -5 lineto stroke
-
-/Helvetica findfont 14 scalefont setfont
-0 -23 moveto
-(Label) show
-newpath 20 -40 32.5 140 220 arc -10 10 rlineto 10 -10 rmoveto -1 11 rlineto  stroke
 
 160 -23 moveto
 (Die Pads) show

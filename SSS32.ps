@@ -1950,7 +1950,28 @@ end
 pgsave restore
 showpage
 
+%****************************************************************
+%*
+%* Table of Contents
+%*
+%****************************************************************
 %%Page: 5 5
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+portraitPage begin 2 drawPageContent
+
+% Set 0 0 to top-center of page
+centerX marginY1 16 sub translate
+
+/Times-Bold findfont 20 scalefont setfont
+0 0 moveto (Table of Contents) centreshow
+
+end
+pgsave restore
+showpage
+
+%%Page: 6 6
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup

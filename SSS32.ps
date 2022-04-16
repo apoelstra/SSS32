@@ -2858,11 +2858,67 @@ showpage
 %%EndPageSetup
 portraitPage begin
 
-% Set 0 0 to top-center of page
-centerX marginY1 16 sub translate
+gsave
+  % Set 0 0 to top-center of page
+  centerX marginY1 16 sub translate
+  /Times-Bold findfont 20 scalefont setfont
+  0 0 moveto (Table of Contents) centreshow
+grestore
 
-/Times-Bold findfont 20 scalefont setfont
-0 0 moveto (Table of Contents) centreshow
+[1 4] 0 setdash
+/Times findfont 16 scalefont setfont
+/pagenum 0 def % The TOC itself is "page 0"
+<<
+  /x marginX1 def
+  /xnum marginX2 24 sub def
+  /y marginY1 48 sub def
+  /displaying false
+  /tocOn true
+
+  /stringtype {
+    displaying tocOn and {
+      % Section title
+      x y moveto show
+      % Horizontal line
+      % For aligned dots we go out of our way to start the line on the right hand side.
+      currentpoint xnum 5 sub y moveto lineto stroke
+      % Page number
+      xnum y moveto pagenum 2 string cvs show
+      /y y 24 sub store
+    } { pop } ifelse
+  }
+  /nametype {
+    <<
+      /section 1
+      /endsection -1
+      /subsection 2
+      /endsubsection -2
+      /subsubsection 3
+      /endsubsubsection -3
+    >> exch 2 copy known {
+      get
+      tocOn {
+        % For top-level sections bump y down an extra space
+        dup 1 eq { /y y 15 sub store } if
+        % For all sections just adjust x accordingly
+        /x 1 index 20 mul x add store
+        /displaying exch 0 gt store
+      } if
+    } {
+      dup
+      /notoc eq { /tocOn false store } if
+      /toc eq { /tocOn true store } if
+      pop
+    } ifelse
+  }
+>> begin
+
+allPageContent { % forall pages
+  { % forall symbols in page
+    dup type exec
+  } forall
+  /pagenum pagenum 1 add store
+} forall
 
 end
 pgsave restore

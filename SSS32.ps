@@ -565,7 +565,34 @@
     (entirely. If the checksum is consistently bad your data is corrupt and you)
     (need to attempt the online recovery process. \(Under construction; but try)
     (contacting Pearlwort for help.\))
-  3 { ] [ } repeat  % checksum tables and worksheet
+  4 { ] [ } repeat  % checksum tables and worksheet
+    /section (Translation Worksheet Instructions) /endsection
+    /notoc %% don't put all the translation worksheets into the ToC
+    (The translation worksheet is used to derive shares, when splitting keys, and)
+    (during key recovery. In all cases, the process is to translate a set of shares)
+    (using the Translation Wheel, then to add the translated results using the)
+    (Addition Wheel.)
+    /linebreak
+    /linebreak
+    (*You will need:* Translation Worksheet, Translation/Multiplication Wheel, Addition Wheel,)
+    (Recovery Wheel \(for key recovery\), Derivation Table \(page 7, for share derivation\))
+    /linebreak
+    /linebreak
+    (In all cases, the number of shares to combine is your k value, the number of)
+    (required shares to reconstruct the secret. The process is:) 
+    /startlist
+    /listitem1 (Make sure that you have completed checksum worksheets for all input shares.) /endlistitem
+    /listitem1 (Look up the translation symbols for each share, either in the Derivation Table or)
+      (using the Recovery Wheel and Multiplication Wheel.) /endlistitem
+    /listitem1 (Mark down each share's index \(the sixth character of its header\))
+      (and translation symbol in the appropriate squares.) /endlistitem
+    /listitem1 (Character by character, translate each share from its Checksum Worksheet)
+      (to its row, using the Translation Wheel.) /endlistitem
+    /listitem1 (Using the Addition Wheel, add all rows together.) /endlistitem
+    /linebreak
+    /linebreak
+    (Notice that the resulting share will automatically have the correct share index in its header.)
+    (*If not, you have likely misread the instructions.*)
   20 { ] [ } repeat  % add a bunch of empty placeholder pages
   ]
 ] def
@@ -875,11 +902,13 @@ def
       allPageContent pagenum get drawPageContentInner
     grestore
     % Footer
-    gsave
-      /Times-Roman findfont 12 scalefont setfont
-      centerX marginY2 moveto
-      pagenum pagenum 10 lt { 1 } { 2 } ifelse string cvs show
-    grestore
+    pagenum 0 gt {
+      gsave
+        /Times-Roman findfont 12 scalefont setfont
+        centerX marginY2 moveto
+        pagenum pagenum 10 lt { 1 } { 2 } ifelse string cvs show
+      grestore
+    } if
     end
   } bind def
 end
@@ -2622,6 +2651,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
   /drawPink true def
   /drawTopDiag true def
   % end drawing controls (expected to be overridden in examples)
+  /botalphabet (abcdefghijklmnopqrstuvwxyz) def
   /hrplen hrp length def
   /checksumlen checksum length def
   /numsteps sharelen hrplen sub checksumlen sub 2 idiv def
@@ -2632,6 +2662,60 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
     dup ysize mul exch 2 idiv ygap mul add exch
     dup xsize mul exch 4 idiv xgap mul add exch
   } bind def
+
+  /drawrow {
+  10 dict begin
+    /nrows exch def
+
+    /drawSingleRow {
+      gsave
+        /drawTranslationSymbol exch def
+        /drawShareIndex exch def
+
+        hrplen 1 add 48 sharelen 1 sub {
+          /starti exch def
+          /endi starti 47 add sharelen 1 sub min def
+
+          /Courier findfont 4 scalefont setfont
+          thick line
+          % Draw share index & translation symbol
+          drawShareIndex { 0 0 offset xsize ysize rectstroke } if
+          drawTranslationSymbol { 1 0 offset exch xgap 3 mul add exch xsize ysize rectstroke } if
+
+          % Draw main row contents
+          thin line
+          starti 1 endi {
+            /i exch def
+            i starti sub 3 add 0 offset 2 copy xsize ysize rectstroke moveto
+            % upper-right index
+            xsize 5.5 sub -3.5 rmoveto
+            /n i 1 add def
+            n 10 lt { ( ) show } if n 2 string cvs show
+            % lower-left index
+            i starti sub 3 add 0 offset ysize add moveto 1 1 rmoveto
+            /idx i hrplen sub 1 sub def
+            idx 26 gt { botalphabet idx 26 idiv 1 sub 1 getinterval show } if
+            botalphabet idx 26 mod 1 getinterval show
+          } for
+
+          0 nrows 2 mul offset translate
+        } for
+      grestore
+    } bind def
+
+    gsave
+      true true drawSingleRow
+      0 ysize translate true true drawSingleRow
+      3 1 nrows {
+        0 ysize ygap 3 mul add translate false false drawSingleRow
+        0 ysize translate true true drawSingleRow
+      } for
+      0 ysize ygap 3 mul add translate true false drawSingleRow
+    grestore
+
+  end
+  } bind def
+
   /drawgrid {
   10 dict begin
   gsave
@@ -3421,24 +3505,106 @@ pgsave restore
 showpage
 
 %%Page: 21 21
+%%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 16 drawPageContent
+landscapePage begin 16 drawPageContent
+
+0 -120 translate
+/Times-Roman findfont 16 scalefont setfont
+48 410 moveto (k=2 Example) show
+48 275 moveto (k=3 Example) show
+
+/Helvetica findfont 10 scalefont setfont
+60 393 moveto (Share) centreshow
+60 383 moveto (Index) centreshow
+
+110 393 moveto (Translation) centreshow
+110 383 moveto (Symbol) centreshow
+thin line
+% "share index" arrow
+newpath 60 380 moveto -5 -10 rlineto 6 5 rlineto -6 -5 rmoveto -1 5 rlineto stroke
+% "translation symbol arrow
+newpath 110 380 moveto -28 -11 rlineto 6 0 rlineto -6 0 rmoveto 3 5 rlineto stroke
+% two-sided arrow
+newpath
+  113 395 95 305 238 arcn
+  10 -2 rlineto
+  -10 2 rmoveto
+  7 -7 rlineto
+  113 395 95 238 305 arc % draw arc backward
+  -10 -2 rlineto
+  10 2 rmoveto
+  -5 -7 rlineto
+stroke
+
+% 2-of-n
+gsave
+48 365 translate
+ladder begin
+  2 drawrow %(A) /at (ABCD) fillrow
+end
+grestore
+
+% 3-of-n
+gsave
+48 265 translate
+ladder begin
+  3 drawrow %(A) /at (ABCD) fillrow
+end
+grestore
+
 end pgsave restore showpage
 
 %%Page: 22 22
+%%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 17 drawPageContent
+landscapePage begin 0 drawPageContent
+
+/Times-Roman findfont 14 scalefont setfont
+marginX1 marginY1 moveto (Translation Worksheet \(k = 2\)) show
+
+gsave
+marginX1 pageH 51 sub translate
+
+9 {
+ladder begin
+  2 drawrow
+  0 ysize 4.1 mul translate
+  gsave 0.6 setgray
+    xsize 3.2 mul ysize -1.1 mul moveto /two 12 codexshow
+  grestore
+end
+} repeat
+grestore
 end pgsave restore showpage
 
 %%Page: 23 23
+%%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 18 drawPageContent
+landscapePage begin 0 drawPageContent
+
+/Times-Roman findfont 14 scalefont setfont
+marginX1 marginY1 moveto (Translation Worksheet \(k = 3\)) show
+
+gsave
+marginX1 pageH 61 sub translate
+
+5 {
+ladder begin
+  3 drawrow
+  0 ysize 7.4 mul translate
+  gsave 0.6 setgray
+    xsize 3.2 mul ysize -2.2 mul moveto /three 12 codexshow
+  grestore
+end
+} repeat
+grestore
 end pgsave restore showpage
 
 %%Page: 24 24

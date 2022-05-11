@@ -1,6 +1,6 @@
 %!PS-Adobe-3.0
 %%Orientation: Portrait
-%%Pages: 40
+%%Pages: 37
 %%EndComments
 %%BeginSetup
 [(Shamir's Secret) (Sharing Codex)]
@@ -520,7 +520,52 @@
       /linebreak (right. Similarly, take the second branch based on the)
       /linebreak (results on the second Die Track, and)
       (so on, until) /linebreak (the bottom of the tree.) /endlistitem
-    /listitem1 (Repeat Steps 1-5 to generate more characters.) /endlistetim
+    /listitem1 (Repeat Steps 1-5 to generate more characters.) /endlistitem
+  ] [ % blank page -- second page of dice worksheet
+  ] [ % pagebreak
+    /section (Checksum Worksheet \(Generation Instructions\)) /endsection
+    (The Checksum Worksheet is used to generate and verify checksums. It is the)
+    (most frequently used and important worksheet of this codex.)
+    /linebreak
+    (*You will need:* Checksum Worksheet, Checksum Table, Addition Wheel)
+    /linebreak
+    /linebreak
+    (Generating a checksum:)
+    /startlist
+    /listitem1 (Fill in the top diagonal squares \(the bold ones\) with your random data; you should)
+      (have enough to fill the non-pink bolded squares) /endlistitem
+    /listitem1 (Add the first row to the second to fill in the third row, using the)
+      (Addition Wheel.) /endlistitem
+    /listitem1 (Look up the two leftmost underhanging hanging symbols from the third)
+      (row in the Checksum Table \(page 11-12\) to fill in the fourth row.) /endlistitem
+    /listitem1 (Repeat the above two steps, adding the third and fourth row, looking)
+      (up the fifth to fill in the sixth, and so on. You will be able to complete)
+      (the entire sheet except for the pink squares this way.) /endlistitem
+    /listitem1 (To complete the pink squares, work from the bottom up, adding each row)
+      (to the one above it until all the squares are filled.) /endlistitem
+    /linebreak
+    /linebreak
+    (The completed share can now be read from the top diagonal, including the checksum \(the pink bolded squares\).)
+  ] [
+    /section (Checksum Worksheet \(Verification Instructions\)) /endsection
+    (Verifying a checksum:)
+    /startlist
+    /listitem1 (Fill in the top diagonal with your share data; you should have enough)
+      (to fill all the bolded squares) /endlistitem
+    /listitem1 (\(Optional.\) Fill the bottom diagonal, if you have access to this)
+      (data. It will help you catch mistakes.) /endlistitem
+    /listitem1 (Fill in the rest of the worksheet as you did when generating a checksum.)
+      (If your final row does not match `SECRETSHARE32`, or if any of your computed)
+      (bottom diagonal values don't match the expected values, there is a mistake in)
+      (the worksheet or your data has been corrupted.)
+      /endlistitem
+    /linebreak /linebreak
+    (In case of error, first recompute every value in the bad column; then check)
+    (that you copied all the share data correctly; then try redoing the worksheet)
+    (entirely. If the checksum is consistently bad your data is corrupt and you)
+    (need to attempt the online recovery process. \(Under construction; but try)
+    (contacting Pearlwort for help.\))
+  3 { ] [ } repeat  % checksum tables and worksheet
   20 { ] [ } repeat  % add a bunch of empty placeholder pages
   ]
 ] def
@@ -2570,6 +2615,13 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
   /ygap -1 def
   /fsize 15 def
   /fgap 2.5 def
+  % Drawing controls (expected to be overridden in examples)
+  /drawResidue true def
+  /drawBotDiag true def
+  /drawMiddle true def
+  /drawPink true def
+  /drawTopDiag true def
+  % end drawing controls (expected to be overridden in examples)
   /hrplen hrp length def
   /checksumlen checksum length def
   /numsteps sharelen hrplen sub checksumlen sub 2 idiv def
@@ -2682,28 +2734,43 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
       ] def
       0 1 checksumlen 1 add {
         /i exch def
+        /ispink i y add sharelen checksumlen sub hrplen sub 1 sub ge def
         i hrplen add y add 1 add odd sub 2 y add offset moveto xsize 2 div ysize fgap add rmoveto
-        odd 1 eq 0 i eq and 0 y eq and not {code residue i get get fsize centredraftingshow} if
+        i 2 lt drawBotDiag and
+        i checksumlen ge drawTopDiag and
+        drawMiddle
+        or or ispink { drawPink and } if {
+          odd 1 eq 0 i eq and 0 y eq and not {code residue i get get fsize centredraftingshow} if
+        } if
       } for
       /addrow residue 0 get residue 1 get polymodshift2 def
       0 1 checksumlen 1 sub {
         /i exch def
         i hrplen add y add 3 add odd sub 3 y add offset moveto xsize 2 div ysize fgap add rmoveto
-        code addrow i get get fsize centredraftingshow
+        drawMiddle {
+          code addrow i get get fsize centredraftingshow
+        } if
       } for
     } for
-    /residue residue polymod0 def
-    0 1 checksumlen 1 sub {
-      /i exch def
-      i hrplen add numsteps 2 mul add 1 add 2 numsteps 2 mul add offset moveto xsize 2 div ysize fgap add rmoveto
-      code residue i get get fsize centredraftingshow
-    } for
+    drawResidue {
+      /residue residue polymod0 def
+      0 1 checksumlen 1 sub {
+        /i exch def
+        i hrplen add numsteps 2 mul add 1 add 2 numsteps 2 mul add offset moveto xsize 2 div ysize fgap add rmoveto
+        code residue i get get fsize centredraftingshow
+      } for
+    } if
   grestore
   end
   } bind def
 end
 
-/arraySpace 13 def
+% exampleladder is a copy of ladder
+ladder dup 30 dict copy dup /exampleladder exch def begin
+  /sharelen 32 def
+  /numsteps sharelen hrplen sub checksumlen sub 2 idiv def
+  /firstrowlen sharelen hrplen sub 1 sub numsteps 2 mul sub def
+end
 
 /showParagraphs {
   10 dict begin
@@ -3182,40 +3249,176 @@ marginX1 marginY1 72 sub translate
 
 end pgsave restore showpage
 
+%%% Checksum Worksheet (generation instructions)
 %%Page: 16 16
+%%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 11 drawPageContent
+landscapePage begin 11 drawPageContent
+gsave
+48 300 translate 0.75 0.8 scale
+exampleladder begin 5 dict begin
+  /Helvetica-Bold findfont 15 scalefont setfont
+  firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (1) centreshow
+
+  /drawBotDiag false def
+  /drawMiddle false def
+  /drawPink false def
+  drawgrid
+  (2NAMEA50PRDAK9GLEGUP6CE3Y6NH9) fillgrid
+end end
+grestore
+
+gsave
+238 300 translate 0.75 0.8 scale
+exampleladder begin 5 dict begin
+  /Helvetica-Bold findfont 15 scalefont setfont
+  firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (2 - 4) centreshow
+
+  /drawPink false def
+  drawgrid
+  (2NAMEA50PRDAK9GLEGUP6CE3Y6NH9) fillgrid
+end end
+grestore
+
+gsave
+428 300 translate 0.75 0.8 scale
+exampleladder begin
+ /Helvetica-Bold findfont 15 scalefont setfont
+ firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (5) centreshow
+
+ drawgrid
+ (2NAMEA50PRDAK9GLEGUP6CE3Y6NH9) fillgrid
+end
+grestore
+
 end pgsave restore showpage
 
+%%% Checksum Worksheet (verification instructions)
 %%Page: 17 17
+%%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 12 drawPageContent
+landscapePage begin 12 drawPageContent
+
+gsave
+48 300 translate 0.75 0.8 scale
+exampleladder begin 5 dict begin
+  /Helvetica-Bold findfont 15 scalefont setfont
+  firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (1) centreshow
+
+  /drawMiddle false def
+  /drawResidue false def
+  /drawBotDiag false def
+  drawgrid
+  (2NAMEA50PRDAK9GLEGUP6CE3Y6NH9) fillgrid
+end end
+grestore
+
+gsave
+238 300 translate 0.75 0.8 scale
+exampleladder begin 5 dict begin
+  /Helvetica-Bold findfont 15 scalefont setfont
+  firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (2) centreshow
+
+  /drawMiddle false def
+  /drawResidue false def
+  drawgrid
+  (2NAMEA50PRDAK9GLEGUP6CE3Y6NH9) fillgrid
+end end
+grestore
+
+gsave
+428 300 translate 0.75 0.8 scale
+exampleladder begin
+ /Helvetica-Bold findfont 15 scalefont setfont
+ firstrowlen hrplen add 0 offset 8 add exch 2 div exch moveto (3) centreshow
+
+ drawgrid
+ (2NAMEA50PRDAK9GLEGUP6CE3Y6NH9) fillgrid
+end
+grestore
+
 end pgsave restore showpage
 
+%%% Checksum Worksheet (table pg1)
 %%Page: 18 18
+%%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 13 drawPageContent
+landscapePage begin 13 drawPageContent
+10 dict begin
+pgsize aload pop
+/pageW exch def
+/pageH exch def
+
+/Times-Bold findfont 10 scalefont setfont
+pageW 2 div pageH 48 sub moveto (MS32 Checksum Table) centreshow
+
+/Courier findfont 8.5 scalefont setfont
+36 pageH 58 sub  % x y
+pageW 64 sub pageH 144 sub 2 div % w h
+0 drawChecksumTable
+
+36 pageH 2 div 10 sub % x y
+pageW 64 sub pageH 144 sub 2 div % w h
+8 drawChecksumTable
+
 end pgsave restore showpage
 
+%%% Checksum Worksheet (table pg2)
 %%Page: 19 19
+%%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 14 drawPageContent
+landscapePage begin 14 drawPageContent
+10 dict begin
+pgsize aload pop
+/pageW exch def
+/pageH exch def
+
+/Times-Bold findfont 10 scalefont setfont
+pageW 2 div pageH 48 sub moveto (MS32 Checksum Table) centreshow
+
+/Courier findfont 8.5 scalefont setfont
+36 pageH 58 sub  % x y
+pageW 64 sub pageH 144 sub 2 div % w h
+16 drawChecksumTable
+
+36 pageH 2 div 10 sub % x y
+pageW 64 sub pageH 144 sub 2 div % w h
+24 drawChecksumTable
+
 end pgsave restore showpage
 
 %%Page: 20 20
+%%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 15 drawPageContent
-end pgsave restore showpage
+90 rotate
+
+% 0 pgsize aload pop pop neg translate
+0 -750 translate
+
+/Helvetica-Bold findfont 10 scalefont setfont
+pgsize aload pop exch pop 2 div 700
+moveto (ms32 Checksum Worksheet) centreshow
+
+gsave
+50 680 translate
+ladder begin
+ drawgrid
+% (2NAMES5GS8YDXGMLUW34LEN0PRDAK9GLF307N04SN6SKL) fillgrid
+end
+grestore
+
+pgsave restore
+showpage
 
 %%Page: 21 21
 %%BeginPageSetup
@@ -3652,155 +3855,5 @@ showpage
 
 pgsave restore
 showpage
-%%Page: 38 38
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-90 rotate
-10 dict begin
-pgsize aload pop
-/pageW exch def
-/pageH exch def
 
-0 pageH neg translate
-
-/Times-Bold findfont 10 scalefont setfont
-pageW 2 div pageH 48 sub moveto (MS32 Checksum Table) centreshow
-
-/Courier findfont 8.5 scalefont setfont
-36 pageH 64 sub  % x y
-pageW 64 sub pageH 144 sub 2 div % w h
-0 drawChecksumTable
-
-36 pageH 2 div 16 sub % x y
-pageW 64 sub pageH 144 sub 2 div % w h
-8 drawChecksumTable
-
-end
-pgsave restore
-showpage
-
-%%Page: 39 39
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-90 rotate
-10 dict begin
-pgsize aload pop
-/pageW exch def
-/pageH exch def
-
-0 pageH neg translate
-
-/Times-Bold findfont 10 scalefont setfont
-pageW 2 div pageH 48 sub moveto (MS32 Checksum Table) centreshow
-
-/Courier findfont 8.5 scalefont setfont
-36 pageH 64 sub  % x y
-pageW 64 sub pageH 144 sub 2 div % w h
-16 drawChecksumTable
-
-36 pageH 2 div 16 sub % x y
-pageW 64 sub pageH 144 sub 2 div % w h
-24 drawChecksumTable
-
-end
-pgsave restore
-showpage
-
-%%Page: 40 40
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-90 rotate
-
-% 0 pgsize aload pop pop neg translate
-0 -750 translate
-
-/Helvetica-Bold findfont 10 scalefont setfont
-pgsize aload pop exch pop 2 div 700
-moveto (ms32 Checksum Worksheet) centreshow
-
-gsave
-50 680 translate
-ladder begin
- drawgrid
-% (2NAMES5GS8YDXGMLUW34LEN0PRDAK9GLF307N04SN6SKL) fillgrid
-% (2NAMES5GS8YDXGMLUW34LEN0PRDAK9GL             ) fillgrid
-end
-grestore
-
-100 420 moveto
-/Helvetica-Bold findfont 10 scalefont setfont
-(Verifying Checksums) show
-100 400 moveto
-/Helvetica findfont 9 scalefont setfont
-(Write out the 45 character data portion in the) show
-100 390 moveto
-(bold boxes, two at a time, starting on the top) show
-100 380 moveto
-(row.  Working from the top row down, look up) show
-100 370 moveto
-(the first two characters of each odd row in the) show
-100 360 moveto
-(ms32 Checksum Table and write the ) polymodulus length 10 string cvs concatstrings show
-100 350 moveto
-(character word into the even row below it.  Fill) show
-100 340 moveto
-(in the odd rows by adding the two characters) show
-100 330 moveto
-(above each cell.  You may use either the) show
-100 320 moveto
-(addition wheel table.  The first few boxes are) show
-100 310 moveto
-(already filled in for you.  The last row will sum) show
-100 300 moveto
-(to ) show checksumstring {glyphshow} forall ( if the checksum is valid.) show
-100 260 moveto
-/Helvetica-Bold findfont 10 scalefont setfont
-(Creating Checksums) show
-100 240 moveto
-/Helvetica findfont 9 scalefont setfont
-(Follow the "Verifying Checksums" instructions) show
-100 230 moveto
-(to fill in everything but the shaded cells. To fill in) show
-100 220 moveto
-(the shaded cells, write ) show checksumstring {glyphshow} forall ( into the bottom) show
-100 210 moveto
-(row.  Working from the bottom up, fill in the) show
-100 200 moveto
-(shaded cells by adding the two characters below) show
-100 190 moveto
-(each cell.  The ) polymodulus length 10 string cvs ( characters in the bold shaded) concatstrings concatstrings show
-100 180 moveto
-(boxes will be the checksum.) show
-
-450 650
-/offsety exch def
-/offsetx exch def
-/Courier findfont 10 scalefont setfont
-20 offsetx add offsety moveto (Addition Table) show
-/Courier-Bold findfont 8 scalefont setfont
-0 1 31 {
-dup 2 add 7 mul offsetx add offsety 10 sub moveto
-perm exch get
-code exch get glyphshow
-} for
-
-0 1 31 {
-/Courier-Bold findfont 8 scalefont setfont
-offsetx 34.5 7 mul add offsety 20 sub 2 index 8 mul sub moveto
-dup code exch perm exch get get glyphshow
-/Courier findfont 8 scalefont setfont
-dup 1 31 {
-dup 2 add 7 mul offsetx add offsety 20 sub 3 index 8 mul sub moveto
-perm exch get
-perm 2 index get gf32add code exch get glyphshow
-} for pop } for
-
-pgsave restore
-showpage
 %%EOF

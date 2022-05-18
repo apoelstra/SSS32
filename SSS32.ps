@@ -593,6 +593,8 @@
     /linebreak
     (Notice that the resulting share will automatically have the correct share index in its header.)
     (*If not, you have likely misread the instructions.*)
+  3 { ] [ } repeat  % add a bunch of empty placeholder pages
+    /section (Module 0: Volvelles) /endsection
   20 { ] [ } repeat  % add a bunch of empty placeholder pages
   ]
 ] def
@@ -3607,28 +3609,33 @@ end
 grestore
 end pgsave restore showpage
 
+%******************
+%* Volvelles
+%*
 %%Page: 24 24
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
 portraitPage begin 19 drawPageContent
-{xor} (Addition) code dup perm drawBottomWheelPage
+showTopWheelPage
 
-pgsave restore
+end pgsave restore
 showpage
 %%Page: 25 25
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
 portraitPage begin 20 drawPageContent
-showTopWheelPage
+{xor} (Addition) code dup perm drawBottomWheelPage
 
-pgsave restore
+end pgsave restore
 showpage
 %%Page: 26 26
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
+portraitPage begin 21 drawPageContent
+
 recoveryDisc begin
 % Draw assembly diagram
 10 dict begin
@@ -3669,7 +3676,7 @@ pgsize aload pop 2 div exch 2 div exch translate
   90 pageangle sub rotate
   drawTopDisc
 end
-pgsave restore
+end pgsave restore
 showpage
 %%Page: 27 27
 %%BeginPageSetup
@@ -3736,6 +3743,7 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
+portraitPage begin 22 drawPageContent
 % Draw assembly diagram
 gsave
   60 700 translate
@@ -3858,7 +3866,7 @@ translationDisc begin
   drawTopDisc
 end
 
-pgsave restore
+end pgsave restore
 showpage
 %%Page: 29 29
 %%BeginPageSetup

@@ -53,6 +53,10 @@
 /ver exch def
 /title exch def
 
+% PHP detection
+/phpOn false def
+% <?php echo "\n/phpOn true def"; ?>
+
 %******************
 %* Main text content
 %*
@@ -2071,6 +2075,9 @@ end
       0 0 4.5 360 0 arcn
   } bind def
 
+  /drawArtwork {
+  } bind def
+
   /drawBottomDisc {
      % Draw white interior circle
      newpath
@@ -2147,6 +2154,7 @@ end
        /Times findfont innerTitleSz scalefont setfont
        title innerTitleSz 270 30 insidecircletext
      grestore
+     drawArtwork
      % Draw letters
      innerglyphs {
         0 innerRadius innerglyphSz 0.8 mul sub innerPointerSz sub moveto innerglyphSz centrecodexshow
@@ -2192,7 +2200,7 @@ multiplicationDisc dup maxlength dict copy dup /recoveryDisc exch def begin
      /littleR 1 def
      /bigR innerRadius innerPointerSz sub innerglyphSz sub littleR sub def
      thin line
-     0.8 setgray
+     phpOn { 1 } { 0.8 } ifelse setgray % when PHP art is on, draw these lines in invisible white-on-white
      1 1 numglyphs 2 idiv {
        angle mul dup sin bigR mul exch cos bigR mul
        newpath 2 copy littleR -180 180 arc
@@ -2204,6 +2212,10 @@ multiplicationDisc dup maxlength dict copy dup /recoveryDisc exch def begin
      0 154 moveto (share to) centreshow
      0 146 moveto (translate) centreshow
      0 160 moveto /arrowup 16 centrecodexshow
+  } bind def
+
+  /drawArtwork {
+    drawWheelLock
   } bind def
 end
 
@@ -2929,6 +2941,29 @@ end
 %************************************************************************
 /drawCover {
 % <?php echo "\n"; require_once("cover.php.inc"); ?>
+} bind def
+
+/drawWheelLock {
+  gsave
+  0.85 0.85 scale %% scale to not fill whole wheel
+  innerRadius 2 mul 312 div
+  innerRadius 2 mul 312 div scale
+  -156 -156 translate
+% <?php echo "\n"; require_once("wheel-lock.php.inc"); ?>
+  grestore
+  % manually draw some decorations to move text and whiten the cross
+  phpOn {
+  gsave
+    1 setgray
+    % Draw centre cross
+    thin line
+    newpath 0 4.5 moveto 0 -4.5 lineto 4.5 0 moveto -4.5 0 lineto resetstroke
+    % Draw title
+    0 16 translate
+    /Helvetica findfont innerTitleSz scalefont setfont
+    (Recovery) innerTitleSz 270 30 insidecircletext
+  grestore
+  } if
 } bind def
 
 %************************************************************************

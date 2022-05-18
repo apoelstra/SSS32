@@ -1,3 +1,14 @@
+% added manually by ASP to color entire background
+0.827451 0.772549 0.623529 setrgbcolor
+0 0 moveto
+pgsize aload pop pop 0 lineto
+pgsize aload pop lineto
+0 pgsize aload pop exch pop lineto
+closepath fill
+% manual adjustments
+1.30 1.30 scale
+8.5 5 translate
+% content start
 50 dict begin
 /q { gsave } bind def
 /Q { grestore } bind def

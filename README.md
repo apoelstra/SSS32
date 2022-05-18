@@ -25,3 +25,13 @@ Generating 4-of-n and higher schemes may also be possible, but would require eve
 
 Maybe this scheme is workable for the subset of people that this would appeal to.
 In anycase, my document is open source and available for those who want to tinker with it.
+
+# Full Color Version #
+
+To obtain the full color version, which increases the source file size by nearly 50x, by including machine-generated and largely-unauditable code, run the source file through PHP:
+
+    php SSS32.ps > color-SSS32.ps
+
+This works using a PHP-PostScript [polyglot](https://en.wikipedia.org/wiki/Polyglot_(computing)), wherein PHP `require()` instructions are embedded in Postscript comments.
+These instructions, when run through PHP, include extra code (provided in the `.php.inc` files in this repository) and embed them in the PostScript.
+

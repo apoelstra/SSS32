@@ -1,6 +1,6 @@
 %!PS-Adobe-3.0
 %%Orientation: Portrait
-%%Pages: 37
+%%Pages: 39
 %%EndComments
 %%BeginSetup
 [(Shamir's Secret) (Sharing Codex)]
@@ -613,6 +613,24 @@
     (We have removed the `S` share from these tables, since this share contains)
     (your secret data. If you want to generate the `S` share, you must use the)
     (Recovery process.)
+  9 { ] [ } repeat
+    /section (Module 2: Share Generation Tables) /endsection
+    (The main instructional section contains share derivation tables for $k$ values of)
+    (2 or 3, assuming that initially generated shares are `A`, `C`, and \(sometimes\))
+    (`D`. This page provides tables for higher $k$ values; the next provides tables)
+    (for the case where your `S` share is an initial one.)
+    /paragraph
+    (Even higher values of $k$ can be obtained by editing the PostScript source of)
+    (this document. Search for the text `EDITME` to find the right section.)
+    /paragraph
+    (We caution users that higher $k$ values, in our view, are a bad trade-off between)
+    (usability and robustness \(which are damaged\) and security \(which is improved\).)
+  ] [
+    /startText
+    (These tables allow you to generate shares in the case that your `S` share is)
+    (an initial share. Ordinarily, you would generate the first few shares randomly,)
+    (and infer your `S` share form those; but in some cases, for example when using)
+    (and existing seed with this scheme, you need to generate the `S` share first.)
   20 { ] [ } repeat  % add a bunch of empty placeholder pages
   ]
 ] def
@@ -3966,4 +3984,39 @@ portraitPage begin 31 drawPageContent
 end pgsave restore
 showpage
 
+%%Page: 38 38
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+portraitPage begin 32 drawPageContent
+
+% EDITME
+% Edit the 4 and 8 (min/max k) to draw tables for high k. For example, for k=9, set
+% both values to 9. (For values of 10+ you can only fit one table on the page at
+% once, so you need mink == maxk).
+%
+% These are the A/C/D/... tables, not the S/A/C/D/... ones
+104 560 translate
+4 8 perm drawDerivationTable
+
+end pgsave restore
+showpage
+
+%%Page: 39 39
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+portraitPage begin 33 drawPageContent
+
+% EDITME
+% Edit the 4 and 8 (min/max k) to draw tables for high k. For example, for k=9, set
+% both values to 9. (For values of 10+ you can only fit one table on the page at
+% once, so you need mink == maxk).
+%
+% These are the S/A/C/D/... tables, not the A/C/D/... ones.
+104 680 translate
+2 8 permS drawDerivationTable
+
+end pgsave restore
+showpage
 %%EOF

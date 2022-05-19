@@ -2177,6 +2177,10 @@ multiplicationDisc dup maxlength dict copy dup /translationDisc exch def begin
     dup 0 exch {outerglyphSz 2 mul codexwidth pop add} forall -2 div outerglyphSz 2 mul moveto
     {outerglyphSz 2 mul codexshow} forall
   } bind def
+
+  /drawArtwork {
+    drawSun
+  } bind def
 end
 
 % /recoveryDisc is a modified copy of multiplicaitonDisc.
@@ -2960,6 +2964,28 @@ end
     newpath 0 4.5 moveto 0 -4.5 lineto 4.5 0 moveto -4.5 0 lineto resetstroke
     % Draw title
     0 16 translate
+    /Helvetica findfont innerTitleSz scalefont setfont
+    (Recovery) innerTitleSz 270 30 insidecircletext
+  grestore
+  } if
+} bind def
+
+/drawSun {
+  gsave
+  0.85 0.85 scale %% scale to not fill whole wheel
+  innerRadius 2 mul 178 div
+  innerRadius 2 mul 178 div scale
+  -178 2 div -178 2 div translate
+% <?php echo "\n"; require_once("sun.php.inc"); ?>
+  grestore
+  % manually draw some decorations to move text and whiten the cross
+  phpOn {
+  gsave
+    0 setgray
+    % Draw centre cross
+    thin line
+    newpath 0 4.5 moveto 0 -4.5 lineto 4.5 0 moveto -4.5 0 lineto resetstroke
+    % Draw title
     /Helvetica findfont innerTitleSz scalefont setfont
     (Recovery) innerTitleSz 270 30 insidecircletext
   grestore

@@ -2180,6 +2180,11 @@ multiplicationDisc dup maxlength dict copy dup /translationDisc exch def begin
 
   /drawArtwork {
     drawSun
+    gsave
+      0.75 0.75 scale
+      0 240 translate
+      decorateTopDisc
+    grestore
   } bind def
 end
 

@@ -2076,6 +2076,7 @@ end
   } bind def
 
   /drawArtwork {
+    drawPotion
   } bind def
 
   /drawBottomDisc {
@@ -2993,6 +2994,30 @@ end
     % Draw title
     /Helvetica findfont innerTitleSz scalefont setfont
     (Recovery) innerTitleSz 270 30 insidecircletext
+  grestore
+  } if
+} bind def
+
+/drawPotion {
+  gsave
+  -45 rotate
+  0.85 0.85 scale %% scale to not fill whole wheel
+  innerRadius 2 mul 177 div
+  innerRadius 2 mul 177 div scale
+  -177 2 div -177 2 div translate
+% <?php echo "\n"; require_once("potion.php.inc"); ?>
+  grestore
+  % manually draw some decorations to move text and whiten the cross
+  phpOn {
+  gsave
+    1 setgray
+    % Draw centre cross
+    thin line
+    newpath 0 4.5 moveto 0 -4.5 lineto 4.5 0 moveto -4.5 0 lineto resetstroke
+    % Draw title
+    0 36 translate
+    /Helvetica findfont innerTitleSz scalefont setfont
+    (Multiplication) innerTitleSz 270 60 insidecircletext
   grestore
   } if
 } bind def

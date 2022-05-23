@@ -39,4 +39,12 @@ This repository is actively being developed and does not cointain the latest exp
 * The mathematical companion can be found in [a separate repo](https://github.com/apoelstra/volvelle-math-companion)
 * The official website is at [not yet hosted]
 
+# Full Color Version #
+
+To obtain the full color version, which increases the source file size by nearly 50x, by including machine-generated and largely-unauditable code, run the source file through PHP:
+
+    php SSS32.ps > color-SSS32.ps
+
+This works using a PHP-PostScript [polyglot](https://en.wikipedia.org/wiki/Polyglot_(computing)), wherein PHP `require()` instructions are embedded in Postscript comments.
+These instructions, when run through PHP, include extra code (provided in the `.php.inc` files in this repository) and embed them in the PostScript.
 

@@ -2702,7 +2702,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
 
 30 dict dup /ladder exch def begin
   /hrp (MS) def
-  /sharelen 48 def
+  /sharelen 32 def
   /xsize 14 def
   /xgap 2 def
   /ysize -14 def
@@ -3629,24 +3629,32 @@ pageW 64 sub pageH 144 sub 2 div % w h
 end pgsave restore showpage
 
 %%Page: 20 20
-%%PageOrientation: Landscape
+% %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-90 rotate
+%90 rotate
 
 % 0 pgsize aload pop pop neg translate
-0 -750 translate
+%0 -750 translate
 
 /Helvetica-Bold findfont 10 scalefont setfont
-pgsize aload pop exch pop 2 div 700
-moveto (ms32 Checksum Worksheet) centreshow
+pgsize aload pop pop 2 div 720
+moveto (ms32 Checksum Worksheet \(2022-06 Workshop\)) centreshow
 
 gsave
-50 680 translate
+72 680 translate
 ladder begin
  drawgrid
-% (2NAMES5GS8YDXGMLUW34LEN0PRDAK9GLF307N04SN6SKL) fillgrid
+ (2NAMEA                        ) fillgrid
+end
+grestore
+
+gsave
+72 380 translate
+ladder begin
+ drawgrid
+ (2NAMEC                        ) fillgrid
 end
 grestore
 
@@ -3654,72 +3662,52 @@ pgsave restore
 showpage
 
 %%Page: 21 21
-%%PageOrientation: Landscape
+% %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-landscapePage begin 16 drawPageContent
+%90 rotate
 
-0 -120 translate
-/Times-Roman findfont 16 scalefont setfont
-48 410 moveto (k=2 Example) show
-48 275 moveto (k=3 Example) show
+% 0 pgsize aload pop pop neg translate
+%0 -750 translate
 
-/Helvetica findfont 10 scalefont setfont
-60 393 moveto (Share) centreshow
-60 383 moveto (Index) centreshow
+/Helvetica-Bold findfont 10 scalefont setfont
+pgsize aload pop pop 2 div 720
+moveto (ms32 Checksum Worksheet \(2022-06 Workshop\)) centreshow
 
-110 393 moveto (Translation) centreshow
-110 383 moveto (Symbol) centreshow
-thin line
-% "share index" arrow
-newpath 60 380 moveto -5 -10 rlineto 6 5 rlineto -6 -5 rmoveto -1 5 rlineto stroke
-% "translation symbol arrow
-newpath 110 380 moveto -28 -11 rlineto 6 0 rlineto -6 0 rmoveto 3 5 rlineto stroke
-% two-sided arrow
-newpath
-  113 395 95 305 238 arcn
-  10 -2 rlineto
-  -10 2 rmoveto
-  7 -7 rlineto
-  113 395 95 238 305 arc % draw arc backward
-  -10 -2 rlineto
-  10 2 rmoveto
-  -5 -7 rlineto
-stroke
-
-% 2-of-n
 gsave
-48 365 translate
+72 680 translate
 ladder begin
-  2 drawrow %(A) /at (ABCD) fillrow
+ drawgrid
+ (                              ) fillgrid
 end
 grestore
 
-% 3-of-n
 gsave
-48 265 translate
+72 380 translate
 ladder begin
-  3 drawrow %(A) /at (ABCD) fillrow
+ drawgrid
+ (                              ) fillgrid
 end
 grestore
 
-end pgsave restore showpage
+pgsave restore
+showpage
 
 %%Page: 22 22
-%%PageOrientation: Landscape
+% %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-landscapePage begin 0 drawPageContent
+portraitPage begin 0 drawPageContent
 
 /Times-Roman findfont 14 scalefont setfont
-marginX1 marginY1 moveto (Translation Worksheet \(k = 2\)) show
+marginX1 32 add marginY1 moveto (Translation Worksheet \(k = 2\) \(2022-06 Workshop\)) show
 
 gsave
-marginX1 pageH 51 sub translate
+marginX1 32 add pageH 61 sub translate
 
-9 {
+12 {
 ladder begin
   2 drawrow
   0 ysize 4.1 mul translate

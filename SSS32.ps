@@ -631,10 +631,16 @@
     (usability and robustness \(which are damaged\) and security \(which is improved\).)
   ] [
     /startText
-    (These tables allow you to generate shares in the case that your `S` share is)
-    (an initial share. Ordinarily, you would generate the first few shares randomly,)
-    (and infer your `S` share form those; but in some cases, for example when using)
-    (and existing seed with this scheme, you need to generate the `S` share first.)
+%    (These tables allow you to generate shares in the case that your `S` share is)
+%    (an initial share. Ordinarily, you would generate the first few shares randomly,)
+%    (and infer your `S` share form those; but in some cases, for example when using)
+%    (and existing seed with this scheme, you need to generate the `S` share first.)
+    (These tables are used to derive shares. This page was laid out for the workshop)
+    (but they are the same as the tables included inline in the standard booklet.)
+    /paragraph
+    (For the workshop, we have chosen $k$ = 2. To generate new shares, generate the)
+    (`A` and `C` shares, then find the column in the $k$ = 2-table corresponding to)
+    (the share you want to generate.)
   20 { ] [ } repeat  % add a bunch of empty placeholder pages
   ]
 ] def
@@ -986,8 +992,7 @@ end
 
 /verythin 0.2 def
 /thin 0.4 def
-/thick 0.8 def
-/verythick 1.2 def
+/thick 1.4 def
 
 /pen {
   50 setlinewidth
@@ -1009,7 +1014,7 @@ setmatrix
 } bind def
 
 /brass { 0.7098 0.651 0.2588 } def
-/pink { 1 0.9 0.9 } def
+/pink { 1 0.8 0.8 } def
 
 /substitute <<
   /Omega /uni03A9
@@ -3646,7 +3651,7 @@ gsave
 72 680 translate
 ladder begin
  drawgrid
- (2NAMEA                        ) fillgrid
+ (2NAMEA                       ) fillgrid
 end
 grestore
 
@@ -3654,7 +3659,7 @@ gsave
 72 380 translate
 ladder begin
  drawgrid
- (2NAMEC                        ) fillgrid
+ (2NAMEC                       ) fillgrid
 end
 grestore
 
@@ -4113,8 +4118,8 @@ portraitPage begin 33 drawPageContent
 % once, so you need mink == maxk).
 %
 % These are the S/A/C/D/... tables, not the A/C/D/... ones.
-104 680 translate
-2 8 permS drawDerivationTable
+104 660 translate
+2 8 perm drawDerivationTable
 
 end pgsave restore
 showpage

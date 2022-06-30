@@ -63,7 +63,7 @@
 /allPageContent [
   [ ] % dummy so we can 1-index the array
   [
-    /section (Overview / Cheatsheet) /endsection
+    /section (Overview / Cheatsheet) /endsection 
     /notoc % turn off table of contents indexing
     /dropcap (C) (ryptography is the art of hiding information. In particular, Shamir's)
     (Secret Sharing Scheme (SSSS) is used to hide secrets in a distributed way.)
@@ -583,7 +583,7 @@
     /linebreak
     /linebreak
     (In all cases, the number of shares to combine is your k value, the number of)
-    (required shares to reconstruct the secret. The process is:) 
+    (required shares to reconstruct the secret. The process is:)
     /startlist
     /listitem1 (Make sure that you have completed checksum worksheets for all input shares.) /endlistitem
     /listitem1 (Look up the translation symbols for each share, either in the Derivation Table or)
@@ -3623,133 +3623,133 @@ pageW 64 sub pageH 144 sub 2 div % w h
 
 end pgsave restore showpage
 
-%%Page: 20 20
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-90 rotate
-
-% 0 pgsize aload pop pop neg translate
-0 -750 translate
-
-/Helvetica-Bold findfont 10 scalefont setfont
-pgsize aload pop exch pop 2 div 700
-moveto (ms32 Checksum Worksheet) centreshow
-
-gsave
-50 680 translate
-ladder begin
- drawgrid
-% (2NAMES5GS8YDXGMLUW34LEN0PRDAK9GLF307N04SN6SKL) fillgrid
-end
-grestore
-
-pgsave restore
-showpage
-
-%%Page: 21 21
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-landscapePage begin 16 drawPageContent
-
-0 -120 translate
-/Times-Roman findfont 16 scalefont setfont
-48 410 moveto (k=2 Example) show
-48 275 moveto (k=3 Example) show
-
-/Helvetica findfont 10 scalefont setfont
-60 393 moveto (Share) centreshow
-60 383 moveto (Index) centreshow
-
-110 393 moveto (Translation) centreshow
-110 383 moveto (Symbol) centreshow
-thin line
-% "share index" arrow
-newpath 60 380 moveto -5 -10 rlineto 6 5 rlineto -6 -5 rmoveto -1 5 rlineto stroke
-% "translation symbol arrow
-newpath 110 380 moveto -28 -11 rlineto 6 0 rlineto -6 0 rmoveto 3 5 rlineto stroke
-% two-sided arrow
-newpath
-  113 395 95 305 238 arcn
-  10 -2 rlineto
-  -10 2 rmoveto
-  7 -7 rlineto
-  113 395 95 238 305 arc % draw arc backward
-  -10 -2 rlineto
-  10 2 rmoveto
-  -5 -7 rlineto
-stroke
-
-% 2-of-n
-gsave
-48 365 translate
-ladder begin
-  2 drawrow %(A) /at (ABCD) fillrow
-end
-grestore
-
-% 3-of-n
-gsave
-48 265 translate
-ladder begin
-  3 drawrow %(A) /at (ABCD) fillrow
-end
-grestore
-
-end pgsave restore showpage
-
-%%Page: 22 22
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-landscapePage begin 0 drawPageContent
-
-/Times-Roman findfont 14 scalefont setfont
-marginX1 marginY1 moveto (Translation Worksheet \(k = 2\)) show
-
-gsave
-marginX1 pageH 51 sub translate
-
-9 {
-ladder begin
-  2 drawrow
-  0 ysize 4.1 mul translate
-  gsave 0.6 setgray
-    xsize 3.2 mul ysize -1.1 mul moveto /two 12 codexshow
-  grestore
-end
-} repeat
-grestore
-end pgsave restore showpage
-
-%%Page: 23 23
-%%PageOrientation: Landscape
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-landscapePage begin 0 drawPageContent
-
-/Times-Roman findfont 14 scalefont setfont
-marginX1 marginY1 moveto (Translation Worksheet \(k = 3\)) show
-
-gsave
-marginX1 pageH 61 sub translate
-
-5 {
-ladder begin
-  3 drawrow
-  0 ysize 7.4 mul translate
-  gsave 0.6 setgray
-    xsize 3.2 mul ysize -2.2 mul moveto /three 12 codexshow
-  grestore
-end
-} repeat
-grestore
-end pgsave restore showpage
+% %%Page: 20 20
+% %%PageOrientation: Landscape
+% %%BeginPageSetup
+% /pgsave save def
+% %%EndPageSetup
+% 90 rotate
+%
+% % 0 pgsize aload pop pop neg translate
+% 0 -750 translate
+%
+% /Helvetica-Bold findfont 10 scalefont setfont
+% pgsize aload pop exch pop 2 div 700
+% moveto (ms32 Checksum Worksheet) centreshow
+%
+% gsave
+% 50 680 translate
+% ladder begin
+%  drawgrid
+% % (2NAMES5GS8YDXGMLUW34LEN0PRDAK9GLF307N04SN6SKL) fillgrid
+% end
+% grestore
+%
+% pgsave restore
+% showpage
+%
+% %%Page: 21 21
+% %%PageOrientation: Landscape
+% %%BeginPageSetup
+% /pgsave save def
+% %%EndPageSetup
+% landscapePage begin 16 drawPageContent
+%
+% 0 -120 translate
+% /Times-Roman findfont 16 scalefont setfont
+% 48 410 moveto (k=2 Example) show
+% 48 275 moveto (k=3 Example) show
+%
+% /Helvetica findfont 10 scalefont setfont
+% 60 393 moveto (Share) centreshow
+% 60 383 moveto (Index) centreshow
+%
+% 110 393 moveto (Translation) centreshow
+% 110 383 moveto (Symbol) centreshow
+% thin line
+% % "share index" arrow
+% newpath 60 380 moveto -5 -10 rlineto 6 5 rlineto -6 -5 rmoveto -1 5 rlineto stroke
+% % "translation symbol arrow
+% newpath 110 380 moveto -28 -11 rlineto 6 0 rlineto -6 0 rmoveto 3 5 rlineto stroke
+% % two-sided arrow
+% newpath
+%   113 395 95 305 238 arcn
+%   10 -2 rlineto
+%   -10 2 rmoveto
+%   7 -7 rlineto
+%   113 395 95 238 305 arc % draw arc backward
+%   -10 -2 rlineto
+%   10 2 rmoveto
+%   -5 -7 rlineto
+% stroke
+%
+% % 2-of-n
+% gsave
+% 48 365 translate
+% ladder begin
+%   2 drawrow %(A) /at (ABCD) fillrow
+% end
+% grestore
+%
+% % 3-of-n
+% gsave
+% 48 265 translate
+% ladder begin
+%   3 drawrow %(A) /at (ABCD) fillrow
+% end
+% grestore
+%
+% end pgsave restore showpage
+%
+% %%Page: 22 22
+% %%PageOrientation: Landscape
+% %%BeginPageSetup
+% /pgsave save def
+% %%EndPageSetup
+% landscapePage begin 0 drawPageContent
+%
+% /Times-Roman findfont 14 scalefont setfont
+% marginX1 marginY1 moveto (Translation Worksheet \(k = 2\)) show
+%
+% gsave
+% marginX1 pageH 51 sub translate
+%
+% 9 {
+% ladder begin
+%   2 drawrow
+%   0 ysize 4.1 mul translate
+%   gsave 0.6 setgray
+%     xsize 3.2 mul ysize -1.1 mul moveto /two 12 codexshow
+%   grestore
+% end
+% } repeat
+% grestore
+% end pgsave restore showpage
+%
+% %%Page: 23 23
+% %%PageOrientation: Landscape
+% %%BeginPageSetup
+% /pgsave save def
+% %%EndPageSetup
+% landscapePage begin 0 drawPageContent
+%
+% /Times-Roman findfont 14 scalefont setfont
+% marginX1 marginY1 moveto (Translation Worksheet \(k = 3\)) show
+%
+% gsave
+% marginX1 pageH 61 sub translate
+%
+% 5 {
+% ladder begin
+%   3 drawrow
+%   0 ysize 7.4 mul translate
+%   gsave 0.6 setgray
+%     xsize 3.2 mul ysize -2.2 mul moveto /three 12 codexshow
+%   grestore
+% end
+% } repeat
+% grestore
+% end pgsave restore showpage
 
 %******************
 %* Volvelles

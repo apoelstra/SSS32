@@ -1969,11 +1969,21 @@ end
        2 copy moveto
        12 centresquare % draw square
        moveto % return to midpoint
-       -26 -3 rmoveto % Move to the left
+       -22 -3 rmoveto % Move to the left
        31 exch sub % 31 - loop index
        permV exch get code exch get % Permute index and extract 1-char substring of alphabet
        12 codexshow % ...and draw it
-       /Symbol findfont 12 scalefont setfont /arrowright glyphshow % Draw a right arrow
+       0 2.5 rmoveto
+       thin setlinewidth
+       gsave
+         8 0 rmoveto -2 -2 rlineto 0 4 rlineto 2 -2 rlineto
+         -8 0 rmoveto 2 -2 rlineto 0 4 rlineto -2 -2 rlineto
+         closepath
+         fill
+       grestore
+       2 0 rmoveto 4 0 rlineto stroke
+%       /Symbol findfont 12 scalefont setfont /arrowright glyphshow % Draw a right arrow
+%       /Symbol findfont 12 scalefont setfont /arrowleft glyphshow % Draw a right arrow
    } for
  } bind def
 

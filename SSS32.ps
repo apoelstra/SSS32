@@ -63,53 +63,55 @@
 /allPageContent [
   [ ] % dummy so we can 1-index the array
   [
-    /section (Overview / Cheatsheet) /endsection 
+    /section (Overview / Cheatsheet) /endsection
     /notoc % turn off table of contents indexing
     /dropcap (C) (ryptography is the art of hiding information. In particular, Shamir's)
-    (Secret Sharing Scheme (SSSS) is used to hide secrets in a distributed way.)
-    (A secret is split into multiple parts, called shares, that can be given)
+    (*Secret Sharing Scheme (SSSS)* is used to hide secrets in a distributed way.)
+    (A *secret* is split into multiple parts, each called a *share*, which can be given)
     (to different people or kept in separate places. The)
-    (shares can then be  used to reconstruct the original secret. For the)
-    (wizards in the Bitcoin community, SSSS can be use to hide the single BIP32 master)
-    (seed from which all their private keys are derived.)
+    (shares can then be used to reconstruct the original secret.)
+    (Codex32 describes a way for users, assisted by paper computers in the form)
+    (of slide charts (i.e., volvelles) and circular slide rules,)
+    (to perform checksums and SSSS on Bitcoin secrets.)
     /paragraph
-    (This codex describes a way for users, assisted by paper computers in the)
-    (form of slide charts \(volvelles\) and circular slide rules, to perform)
-    (checksums and SSSS on Bitcoin secrets.)
+    (If you are ready to begin, jump to page ??? to cut out the volvelles)
+    (following the cheatsheet below. Alternatively, if you would like a)
+    (more in-depth primer regarding this scheme, continue to page ???)
+    (for more detailed instructions.)
 
-    /subsection (Assembly) /endsubsection
-    (*You will need*: craft knife, scissors, cardstock or heavy paper, brass fasteners, disc printouts) /linebreak
-    (Using the printouts from Module 0 \(which have pictographic instructions\),)
+    /subsection (Volvelle Assembly) /endsubsection
+    (*You will need*: a craft knife, scissors, card stock, brass fasteners,)
+    (and the volvelle printouts from Module 0.)
     /startlist
-    /listitem1 (Cut out each disc with scissors. Cut out the windows on the top discs with the craft knife.) /endlistitem
-    /listitem1 (Cut out the small centre circle in each bottom disc.)
-      (Cut a slit along one of the small lines of the cross in each top disc.) /endlistitem
-    /listitem1 (Attach the discs with a brass fastener through the centre holes.) /endlistitem
+    /listitem1 (Cut out each disc with scissors. Then, cut out the windows on the top discs with the craft knife.) /endlistitem
+    /listitem1 (Cut out the small center circle in each bottom disc.)
+    (Cut a slit along one of the small lines of the cross in each top disc.) /endlistitem
+    /listitem1 (Attach the discs with a brass fastener through the center holes.) /endlistitem
 
     /subsection (Initial \(First $k$\) Share Creation) /endsubsection
-    (*You will need*: Addition Volvelle, Random Character Worksheet, Checksum Worksheet, pencil and eraser)
+    (*You will need*: the addition volvelle, de-biasing worksheet, checksum worksheet, pencil, and eraser.)
     /linebreak
-    (For each of your initial $k$ shares, you should)
+    (For each of your initial k shares, you should:)
     /startlist
-    /listitem1 (Generate random data by rolling dice, following the instructions on the Random Character Worksheet.) /endlistitem
-    /listitem1 (Follow the instructions on the Checksum Worksheet to affix a checksum.) /endlistitem
+    /listitem1 (Generate random data by rolling dice, following the instructions on the de-biasing worksheet.) /endlistitem
+    /listitem1 (Follow the instructions on the checksum worksheet to affix a checksum.) /endlistitem
 
     /subsection (Derived \(Remaining\) Share Creation) /endsubsection
-    (*You will need*: Addition Volvelle, Multiplication/Translation Wheel, Translation Worksheet, pencil)
+    (*You will need*: the addition volvelle, multiplication/translation wheel, translation worksheet, and pencil.)
     /startlist
-    /listitem1 (Translate the initial shares using the symbols in the Derived Shares section) /endlistitem
+    /listitem1 (Translate the initial shares using the symbols in the derived shares section.) /endlistitem
     /listitem1 (Add the translated initial shares to get the new derived share.) /endlistitem
 
     /subsection (Secret Recovery) /endsubsection
-    (*You will need*: Everything used for Derived Share Creation \(see above\), Recovery Wheel)
+    (*You will need*: the recovery wheel, and everything used for derived share creation (see above).)
     /linebreak
-    (To recover your secret you must have $k$ shares available. Then)
+    (To recover your secret, you must have $k$ shares available. Then:)
     /startlist
-    /listitem1 (Look up their recovery symbols with the Recovery Wheel.) /endlistitem
-    /listitem1 (Multiply all the symbols for each share with the Multiplication Wheel to get)
-    (a single symbol for each share.) /endlistitem
+    /listitem1 (Look up their recovery symbols with the recovery wheel.) /endlistitem
+    /listitem1 (Multiply all of the symbols for each share with the multiplication wheel to get)
+    (a symbol for each share.) /endlistitem
     /listitem1 (Translate the share by that symbol.) /endlistitem
-    /listitem1 (Add all the translated shares to get your secret.) /endlistitem
+    /listitem1 (Add all of the translated shares to get your secret.) /endlistitem
     /toc % turn off table of contents indexing
   ] [ % pagebreak
     /section (Part I: High-Level Introduction) /endsection

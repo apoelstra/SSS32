@@ -285,39 +285,72 @@
     (for enforcing a signing policy.)
 
     /subsection (Checksumming and Error Correction) /endsubsection
-    /dropcap (W) (hen you copy or transfer keys, or especially when you are doing)
-    (hand-computations on them, it is possible that errors may arise. Errors)
-    (might also crop up during long-term storage, for example if Cryptosteel)
-    (tiles are subjected to extreme heat which makes some letters unclear, or)
-    (if printer paper suffers water damage.)
+    /dropcap (W) (When you copy or transfer keys, and especially when)
+    (you are conducting hand-computations on them, it is possible that)
+    (errors may arise. A checksum is a technique used to determine the)
+    (authenticity of received data, to detect whether there was an error)
+    (in transmission, storage, or copying. Errors might also)
+    (crop up during long-term storage \(e.g., if Cryptosteel tiles are)
+    (subjected to extreme heat, which makes some letters unclear, or)
+    (if printer paper suffers water damage\).)
+
+    /linebreak
+    /linebreak
+    /linebreak
+    /linebreak
+    /linebreak
+    /linebreak
+    /linebreak
+    ([make image of damaged crypto steel ???]])
+    /linebreak
+    /linebreak
+    /linebreak
+    /linebreak
+    /linebreak
+    /linebreak
+    /linebreak
 
     /paragraph
-    (Both BIP39 and SLIP39, in addition to encoding the raw cryptographic data,)
-    (also store a checksum, which is a small amount of extra redundant data used)
-    (to detect such errors. BIP39's checksum is less than one word long, may fail)
-    (to detect even a single incorrect word, and is practically impossible to)
-    (compute by hand. Its primary effects are to cause your key data to be an)
-    (awkward length, and to prevent you from verifying your data's integrity by)
-    (hand.)
+    (When using mnemonic codes users have two options: BIP39 and)
+    (SLIP39. The BIP39 checksum is less than one word long, and may)
+    (fail to detect even a single incorrect word, and is practically)
+    (impossible to compute by hand. Its primary effects are to cause)
+    (your key data to be an awkward length, and to prevent you from)
+    (verifying your data’s integrity by hand. In contrast, SLIP39)
+    (can detect up to three errors and correct up to one error 100% of)
+    (the time. Additionally, it will fail to detect other random errors)
+    (with extremely low probability. However, the SLIP39 checksum is)
+    (also quite difficult to compute or verify by hand.)
 
     /paragraph
-    (SLIP39, by contrast, can detect up to 3 errors and correct up to one error)
-    (100% of the time, and will fail to detect other random errors with extremely)
-    (low probability. However, the SLIP39 checksum is also quite difficult to)
-    (compute or verify by hand.)
+    (In Codex32, we introduce a new checksum also titled codex32,)
+    (which can *detect up to eight errors and correct up to four*.)
+    (Moreover, it has an even lower probability than SLIP39 of failing)
+    (to detect other random errors. Most importantly (for us),)
+    (codex32 checksums can be computed and verified entirely by hand.)
+    (It’s even possible to correct errors by hand, but you will need to)
+    (consult a wizard mathematician because we have not yet found)
+    (simple worksheet-based method.)
+
+    /subsection (Bitcoin and Seed Values) /endsubsection
+    /dropcap (B) (IP???? assumes that your secret is a 128-bit BIP32)
+    (master seed.  Many users interact with BIP32 master seeds)
+    (indirectly \(e.g., by storing a set of 12 or 24 BIP39 seed words\))
+    (. These seed words represent a 132-bit or 264-bit secret, which is)
+    (converted to a large master human-readable seed in the BIP39)
+    (protocol, by means of a complicated and irreversible process.)
+    (BIP32 128-bit seeds are enough to derive an effectively unlimited)
+    (number of addresses from a single secret value, thus eliminating)
+    (the need for frequent backups.)
+
+    /toc % turn on table of contents indexing
+  ] [ % pagebreak
+    /startText
 
     /paragraph
-    (In the Codex, we introduce a new checksum, *codex32*, which can detect up to 8)
-    (errors, correct up to 4, and has even lower probability than SLIP39 of failing)
-    (to detect other random errors. Most importantly \(for us\), codex32 checksums)
-    (can be computed and verified entirely by hand. It is even possible to $correct$)
-    (errors by hand, but you will need to consult a mathematician since we have not)
-    (found a simple worksheet-based method.)
-
-    /paragraph
-    (If error correction is needed, a later version of this document will explain)
-    (how to do so, with the assistance of an electronic computer which is never)
-    (given access to secret data.)
+    (If your coins are stored using BIP39, there is module to assist)
+    (in converting the seed words to binary (and back) so they can be) (used in Codex32 in lieu of a master seed available online. The) (longer data greatly increases the tedium and risk of mistakes;) (however, the procedures remain essentially unchanged. In general,) (it’s advised that users to switch from BIP39 to Satoshi Labs’) (SLIP39, or even better, to directly use Codex32 to work with)
+    (128-bit BIP32 seeds.)
 
     /subsection (Bech32 and the Alphabet) /endsubsection
     /dropcap (I) (n order to store 128-bit secrets, we re-use the Bech32 alphabet)

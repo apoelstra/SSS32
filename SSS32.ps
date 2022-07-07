@@ -65,179 +65,224 @@
   [
     /section (Overview / Cheatsheet) /endsection
     /notoc % turn off table of contents indexing
-    /dropcap (C) (ryptography is the art of hiding information. In particular, Shamir's)
-    (*Secret Sharing Scheme (SSSS)* is used to hide secrets in a distributed way.)
-    (A *secret* is split into multiple parts, each called a *share*, which can be given)
-    (to different people or kept in separate places. The)
-    (shares can then be used to reconstruct the original secret.)
-    (Codex32 describes a way for users, assisted by paper computers in the form)
-    (of slide charts (i.e., volvelles) and circular slide rules,)
-    (to perform checksums and SSSS on Bitcoin secrets.)
+
+    /dropcap (C) (ryptography is the art of hiding information. In)
+    (particular, Shamir's *Secret Sharing Scheme (SSSS)* is used to)
+    (hide secrets in a distributed way. A *secret* is split into)
+    (multiple parts, each called a *share*, which can be given to)
+    (different people or kept in separate places. The shares can then)
+    (be used to reconstruct the original secret. *Codex32* describes a)
+    (way for users, assisted by paper computers in the form of slide)
+    (charts (i.e., volvelles) and circular slide rules, to perform)
+    (checksums and SSSS on Bitcoin secrets.)
+
     /paragraph
-    (If you are ready to begin, jump to page ??? to cut out the volvelles)
-    (following the cheatsheet below. Alternatively, if you would like a)
-    (more in-depth primer regarding this scheme, continue to page ???)
-    (for more detailed instructions.)
+    (If you are ready to begin, jump to page ??? to cut out the)
+    (volvelles following the cheatsheet below. Alternatively, if you)
+    (would like a more in-depth primer regarding this scheme, continue)
+    (to page ??? for more detailed instructions.)
 
     /subsection (Volvelle Assembly) /endsubsection
-    (*You will need*: a craft knife, scissors, card stock, brass fasteners,)
-    (and the volvelle printouts from Module 0.)
+    (*You will need*: a craft knife, scissors, card stock, brass)
+    (fasteners, and the volvelle printouts from Module 0.)
     /startlist
-    /listitem1 (Cut out each disc with scissors. Then, cut out the windows on the top discs with the craft knife.) /endlistitem
-    /listitem1 (Cut out the small center circle in each bottom disc.)
-    (Cut a slit along one of the small lines of the cross in each top disc.) /endlistitem
-    /listitem1 (Attach the discs with a brass fastener through the center holes.) /endlistitem
+    /listitem1 (Cut out each disc with scissors. Then, use a craft)
+      (knife for the following more detailed pieces.) /endlistitem
+    /listitem1 (Cut out the center circle in each bottom/white disc.)
+      (Then, cut along the cross in each top disc with artwork.) /endlistitem
+    /listitem1 (Cut the viewing windows out of each top disk and and)
+      (white boxes on the dragon disc.) /endlistitem
+    /listitem1 (Attach the discs with a brass fastener through the)
+      (center holes.) /endlistitem
 
     /subsection (Initial \(First $k$\) Share Creation) /endsubsection
-    (*You will need*: the addition volvelle, de-biasing worksheet, checksum worksheet, pencil, and eraser.)
+    (*You will need*: the addition volvelle, de-biasing worksheet,)
+    (checksum worksheet, pencil, and eraser.)
     /linebreak
-    (For each of your initial k shares, you should:)
+    (For each of your initial $k$ shares, you should:)
     /startlist
-    /listitem1 (Generate random data by rolling dice, following the instructions on the de-biasing worksheet.) /endlistitem
-    /listitem1 (Follow the instructions on the checksum worksheet to affix a checksum.) /endlistitem
+    /listitem1 (Generate random data by rolling dice, following the)
+      (instructions on the de-biasing worksheet.) /endlistitem
+    /listitem1 (Follow the instructions on the checksum worksheet to)
+      (affix a checksum.) /endlistitem
 
     /subsection (Derived \(Remaining\) Share Creation) /endsubsection
-    (*You will need*: the addition volvelle, multiplication/translation wheel, translation worksheet, and pencil.)
+    (*You will need*: the addition volvelle, multiplication/translation)
+    (wheel, translation worksheet, and pencil.)
     /startlist
-    /listitem1 (Translate the initial shares using the symbols in the derived shares section.) /endlistitem
-    /listitem1 (Add the translated initial shares to get the new derived share.) /endlistitem
+    /listitem1 (Translate the initial shares using the symbols in the)
+      (derived shares section.) /endlistitem
+    /listitem1 (Add the translated initial shares to get the new)
+      (derived share.) /endlistitem
 
     /subsection (Secret Recovery) /endsubsection
-    (*You will need*: the recovery wheel, and everything used for derived share creation (see above).)
+    (*You will need*: the recovery wheel, and everything used for)
+      (derived share creation (see above).)
     /linebreak
     (To recover your secret, you must have $k$ shares available. Then:)
+
     /startlist
     /listitem1 (Look up their recovery symbols with the recovery wheel.) /endlistitem
-    /listitem1 (Multiply all of the symbols for each share with the multiplication wheel to get)
-    (a symbol for each share.) /endlistitem
+    /listitem1 (Multiply all of the symbols for each share with the)
+      (multiplication wheel to get a symbol for each share.) /endlistitem
     /listitem1 (Translate the share by that symbol.) /endlistitem
     /listitem1 (Add all of the translated shares to get your secret.) /endlistitem
+
     /toc % turn off table of contents indexing
   ] [ % pagebreak
-    /section (Part I: High-Level Introduction) /endsection
-    /notoc % turn off table of contents indexing
-    /dropcap (T) (he SSSS Codex describes a way, using circular paper computers)
-    (\(volvelles\), to perform checksumming and Shamir Secret Sharing on their)
-    (Bitcoin secrets. It defines an error-correcting code, *codex32*, and a)
-    (complete scheme for generating, checksumming, splitting and reconstructing)
-    (secret data.)
-    /paragraph
-    (Hand-computation comes with some practical limits: to generate random values)
-    (we rely on series of (de-biased) dice rolls. We do not support passphrases)
-    (or key hardening, so our security rests solely on the strength of this)
-    (randomness. With that said, assuming you can generate strong randomness,)
-    (you will find no cryptographic compromise in the design or implementation)
-    (of the Codex.)
-    /paragraph
-    (If you prefer the added security of passphrase-based key hardening, you)
-    (should instead use the more-popular SLIP39, which requires the use of electronic)
-    (computers.)
 
-    /subsection (Bitcoin and Seed Values) /endsubsection
-    /dropcap (W) (e assume that your secret is a 128-bit BIP32 master seed. Such)
-    (seeds are used to derive an effectively unlimited number of addresses from a)
-    (single secret value, eliminating the need for frequent backups.)
-    /paragraph
-    (Many users interact with BIP32 master seeds indirectly, for example by storing)
-    (a set of 12 or 24 BIP39 seed words. These seed words represent a 132- or)
-    (264-bit secret, which is converted in the BIP39 protocol to a pointlessly)
-    (large master seed by means of a needlessly complicated and irreversible)
-    (process. If your coins are stored using BIP39, we have provided a module to)
-    (assist converting the seed words to binary \(and back\) so they can be used)
-    (in the Codex in lieu of a master seed. The longer data greatly increases the)
-    (tedium and risk of mistakes, but the procedures are essentially unchanged.)
-    /paragraph
-    (In general, we encourage you to switch from BIP39 to Satoshi Labs' SLIP39,)
-    (or even better, to directly use the Codex to work with 128-bit BIP32 seeds.)
+    /section (Part I: High-Level Introduction)/endsection
 
-    /subsection (Shamir's Secret Sharing Scheme) /endsubsection
-    /dropcap (T) (here is an inherent trade-off between the availability of a)
-    (secret and its risk of theft. If you make many copies of your seed words,)
-    (one of them may eventually fall into the wrong hands. But if you make too)
-    (few, they may all become lost, destroyed or misplaced. The consequence in)
-    (either case is a total loss of funds.)
+    /subsection (Shamir Secret Sharing Scheme)/endsubsection
+    /dropcap (T) (he *Shamir Secret Sharing Scheme* \(SSSS\), splits a)
+    (*secret* (s) into $n$ *shares*, where any $k$ of which can be used)
+    (to reconstruct the original secret.)
+
+    /linebreak
+    /linebreak
+    /linebreak
+    /linebreak
+    /linebreak
+    ([Come back and add visual illustration of SSSS ???])
+    /linebreak
+    /linebreak
+    /linebreak
+    /linebreak
+    /linebreak
+
     /paragraph
-    (A more nuanced way to make this trade-off is Shamir's Secret Sharing Scheme)
-    (\(SSSS\), in which you split your secret into $n$ "shares", any $k$ of which)
-    (can be used to reconstruct the original secret. Here $n$ is typically five)
-    (or more, depending on your desire for redundancy, while $k$ is two or three,)
-    (reflecting your fear of individual shares being compromised.)
+    (Here $n$ is typically five or more, depending on your desire for)
+    (redundancy, while $k$ is two or three, reflecting your fear of)
+    (individual shares being compromised. There is an inherent)
+    (trade-off between the availability of a secret and its risk of)
+    (theft. If you make many copies of your seed words, one of them may)
+    (eventually fall into the wrong hands. However, if you make too few)
+    (, they could all become lost,destroyed, or misplaced. The)
+    (consequence in either case is a complete and total loss of funds.)
+
     /paragraph
-    (Before continuing, we should mention some limitations of SSSS:)
+    (Shamir's Secret Sharing Scheme was first proposed in the 1970s,)
+    (and has historically required the use of computers to generate)
+    (secrets and shares.)
+
+    /linebreak
+    (This codex outlines a novel and magical way of secret sharing)
+    (that can be done entirely on paper.)
+
+    /subsection (Codex32)/endsubsection
+    /dropcap (U) (sing the circular paper computers)
+    (\(i.e., volvelles \) this codex shows how to perform checksumming)
+    (and Shamir Secret Sharing on Bitcoin secrets. This document also)
+    (defines an error-correcting code and complete scheme for)
+    (generating, checksumming, splitting, and reconstructing secret)
+    (data.)
+
+    /paragraph
+    /linebreak
+    (The function of this codex is to provide a paper-based means to:)
     /startlist
-    /listitem* (First, electronic computers or not, SSSS requires that the)
-      (complete secret be reconstructed in a single place before it can be used.)
-      (To avoid this, for most use-cases we recommend threshold)
-      (signatures instead.) /endlistitem
+    /listitem* (Securely generate random data from  (potentially)
+      (biased) dice rolls or coin flips.) /endlistitem
+    /listitem* (Compute and verify very powerful checksums to check)
+      (that that have been copied correctly.) /endlistitem
+    /listitem* (Split a secret into up to 31 shares, of which some)
+      (number of thme are needed to reconstruct the secret.) /endlistitem
+    /listitem* (Recombine your shares into your original secret.) /endlistitem
+
   ] [ % pagebreak
     /startText
-    /listitem* (SSSS requires the generation of extra random data beyond the)
-      (original secret, which must be generated securely. If any share is corrupted,)
-      (the reconstructed secret will be wrong and it is impossible to determine)
-      (which share \(or how many shares\) was responsible.) /endlistitem
-    /paragraph
-    (We have addressed the latter issue by the clever use of error-correcting codes,)
-    (inspired by SLIP39, but the fact remains that SSSS involves a single point of)
-    (failure at the time that the secret key material is actually used. We emphasize)
-    (that SSSS is a *mechanism* *for* *storing* *backups* and not a mechanism for enforcing)
-    (a signing policy.)
-
-    /subsection (Computers and Trust) /endsubsection
-    /dropcap (I) (t is infeasible to sign Bitcoin transactions without the aid of)
-    (electronic computers. To do this, these computers need access to secret key)
-    (material, which puts you in an uncomfortable position: key material, if)
-    (misused or badly generated, can be used to steal all of your coins. And)
-    (there is no way to be assured of how, exactly, an electronic computer is)
-    (manipulating your keys.)
 
     /paragraph
-    (General-purpose computers are so complex and exposed to adversarial input)
-    (\(in the form of Internet connections, arbitrary programs, and human beings\))
-    (that standard advice is to never expose your key material to such machines.)
-    (Instead, you should provide your keys only to hardware wallets, which)
-    (interact with general-purpose computers only through a narrow interface that)
-    (never exposes secret key data in any form.)
-    /paragraph
-    (However, even hardware wallets are opaque and inscrutable:)
+    (Hand-computation comes with some practical limits: to generate)
+    (random values, we rely on a series of (de-biased) dice rolls.)
+    (This scheme does not support passphrases or key hardening, so)
+    (security rests solely on the strength of this randomness.)
+    (Nevertheless, assuming that you can generate strong randomness,)
+    (you will find no cryptographic compromise in the design or)
+    (implementation of the codex.)
 
+    /paragraph
+    (If you prefer the added security of passphrase-based key hardening)
+    (, you should instead use the more-popular SLIP39. SLIP39 is a)
+    (non-paper-based Shamir's Secret Sharing Scheme for mnemonic codes)
+    (that requires the use of electronic computers.)
+
+    /subsection (Computers and Trust)/endsubsection
+    /dropcap (I) (t's impossible to sign a Bitcoin transaction without)
+    (giving an electronic computer access to secret key data, which)
+    (puts the user in an uncomfortable position. If misused or badly)
+    (generated, private key data, can be used to steal all of your)
+    (coins. To make matters worse, there is no way to know how exactly)
+    (an electronic computer is interacting with your keys.)
+
+    /paragraph
+    (General-purpose computers are so complex and exposed to an)
+    (adversarial environment \(i.e., in the form of Internet)
+    (connections, arbitrary programs, and human beings\).)
+    (The standard advice is to never expose your key material to such)
+    (machines. Instead, you should provide your keys only to hardware)
+    (wallets, which interact with general-purpose computers narrowly,)
+    (through an interface that does not expose your secret key data.)
+    (This introduces additional questions, such as how can the hardware)
+    (wallet be sure that it's communicating with the correct user, and)
+    (under correct circumstances?)
+
+    /paragraph
+    ($Ultimately, there is no hardware wallet we can trust fully.$)
+
+    /paragraph
+    (Even hardware wallets are opaque and imperfect:)
     /startlist
-    /listitem* (they may have bugs which cause key leakage, either now or as a)
-      (consequence of some future firmware update;) /endlistitem
-    /listitem* (they store key material in physical form which can be extracted)
-      (by an attacker with physical access, even if it the wallet has "deleted")
-      (it;) /endlistitem
-    /listitem* (they may expose data through sidechannels, such as the)
-      (electromagnetic waves emitted by processor activity, or by the varying)
-      (power draw from a USB hub;) /endlistitem
-    /listitem* (if tasked with generating random data, they may do so insecurely.) /endlistitem
+    /listitem* (If tasked with generating random data, they may do so)
+      (insecurely.) /endlistitem
+    /listitem* (It may have bugs that cause key leakage, either now or)
+      (as a consequence of some future software update.) /endlistitem
+    /listitem* (It stores key material in physical form, which can be)
+      (extracted by an attacker with physical access, even if the)
+      (wallet has "deleted" it.)/endlistitem
+    /listitem* (It may expose secret data through side channels, such)
+      (as the electromagnetic waves emitted by processor activity, or)
+      (by the varying power draw from a USB hub.) /endlistitem
 
     /paragraph
-    (Furthermore, when working with secret shares, it is necessary to directly)
-    (export share data, violating the usual "never expose secret data" maxim.)
-    (This introduces more questions: how can the hardware wallet be sure that)
-    (it is communicating only with the correct user, and under correct)
-    (circumstances? It cannot.)
+    (These risks have varying degrees of plausibility; however, the)
+    (fact is that no matter how trustworthy the hardware wallet or its)
+    (manufacturer, over the lifetime of a Bitcoin secret (which may,)
+    (perhaps, exceed any one persons lifetime), even "trivial" risks)
+    (add up to become very serious. With hardware wallets, coins)
+    (that don't need to be frequently spent may have their secure)
+    (storage refreshed or reorganized an unlimited number of times,)
+    (without ever introducing the uncertainty)
+    (and risk associated with electronic computers.)
+
     /paragraph
-    (These risks have varying degrees of plausibility, but the fact is that no)
-    (matter how trustworthy the hardware or its manufacturer, over the lifetime)
-    (of a Bitcoin secret \(which may, perhaps, exceed any one human's lifetime\),)
-    (even "trivial" risks add up to become very serious.)
-    /paragraph
-    (Unlike electronic computers, paper cannot remember or leak secrets, at least)
-    (when handled correctly and disposed of securely, and this can be done without special skills)
-    (or equipment. In this document, we have provided a paper-based means to)
+    (Unlike electronic computers, paper cannot remember or leak)
+    (secrets. When handled correctly and disposed of securely, and)
+    (this can be done without special skills or equipment. On one)
+    (hand, electronic computers aren't perfectly secure. But on the)
+    (other hand, neither is paper. Some of the limitations of SSSS)
+    (include:)
     /startlist
-    /listitem* (Securely generate random data from potentially biased dice rolls or coin flips) /endlistitem
-    /listitem* (Compute and verify very powerful checksums) /endlistitem
-    /listitem* (Split your secret into up to 31 "shares", of which some number are)
-      (needed to reconstruct the secret) /endlistitem
-    /listitem* (Recombine your secret, perhaps to redo the splitting if some old)
-      (shares are compromised) /endlistitem
+    /listitem* (SSSS requires that the complete secret be reconstructed)
+      (in a single place before it can be used. To avoid this, for)
+      (most use cases it is recommend threshold that you use signatures)
+      (instead.) /endlistitem
+    /listitem* (SSSS requires the generation of additional random)
+      (data beyond the original secret, which must be generated)
+      (securely. If any share is corrupted, the reconstructed secret)
+      (will be wrong, and it's impossible to determine which share was)
+      (responsible, or how many.) /endlistitem
+
   ] [ % pagebreak
     /startText
-    (In this way, coins which do not need to be frequently spent may have their)
-    (secure storage refreshed or reorganized an unlimited number of times, without)
-    (ever introducing the uncertainty and risk associated with electronic computers.)
+
+    /paragraph
+    (We have addressed the latter issue through the clever use of)
+    (error-correcting codes, inspired by SLIP39. However, the fact)
+    (remains that SSSS involves a single point of failure at the time)
+    (that the secret key material is used. It is important to emphasize)
+    (that *SSSS is a mechanism for storing backups* and not a mechanism)
+    (for enforcing a signing policy.)
 
     /subsection (Checksumming and Error Correction) /endsubsection
     /dropcap (W) (hen you copy or transfer keys, or especially when you are doing)
@@ -245,6 +290,7 @@
     (might also crop up during long-term storage, for example if Cryptosteel)
     (tiles are subjected to extreme heat which makes some letters unclear, or)
     (if printer paper suffers water damage.)
+
     /paragraph
     (Both BIP39 and SLIP39, in addition to encoding the raw cryptographic data,)
     (also store a checksum, which is a small amount of extra redundant data used)
@@ -253,11 +299,13 @@
     (compute by hand. Its primary effects are to cause your key data to be an)
     (awkward length, and to prevent you from verifying your data's integrity by)
     (hand.)
+
     /paragraph
     (SLIP39, by contrast, can detect up to 3 errors and correct up to one error)
     (100% of the time, and will fail to detect other random errors with extremely)
     (low probability. However, the SLIP39 checksum is also quite difficult to)
     (compute or verify by hand.)
+
     /paragraph
     (In the Codex, we introduce a new checksum, *codex32*, which can detect up to 8)
     (errors, correct up to 4, and has even lower probability than SLIP39 of failing)
@@ -265,6 +313,7 @@
     (can be computed and verified entirely by hand. It is even possible to $correct$)
     (errors by hand, but you will need to consult a mathematician since we have not)
     (found a simple worksheet-based method.)
+
     /paragraph
     (If error correction is needed, a later version of this document will explain)
     (how to do so, with the assistance of an electronic computer which is never)
@@ -408,7 +457,7 @@
   ] [ % pagebreak
     /startText
     (Fill out the 26 character data portion of each Checksum Worksheet with random)
-    (characters. Use the De-biasing Worksheet to generate each random)
+    (characters. Use the Di-biasing Worksheet to generate each random)
     (character.)
     /paragraph
     (Follow the Checksum Worksheet instructions to generate a checksum for each)

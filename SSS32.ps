@@ -143,7 +143,11 @@
     /linebreak
     /linebreak
     /linebreak
+    /linebreak
+    /linebreak
+    /linebreak
     ([Come back and add visual illustration of SSSS ???])
+    /linebreak
     /linebreak
     /linebreak
     /linebreak
@@ -228,7 +232,9 @@
     (under correct circumstances?)
 
     /paragraph
+    /linebreak
     ($Ultimately, there is no hardware wallet we can trust fully.$)
+    /linebreak
 
     /paragraph
     (Even hardware wallets are opaque and imperfect:)
@@ -260,8 +266,13 @@
     (secrets. When handled correctly and disposed of securely, and)
     (this can be done without special skills or equipment. On one)
     (hand, electronic computers aren't perfectly secure. But on the)
-    (other hand, neither is paper. Some of the limitations of SSSS)
-    (include:)
+    (other hand, neither is paper.)
+
+  ] [ % pagebreak
+    /startText
+
+    /paragraph
+    (Some of the limitations of SSSS include:)
     /startlist
     /listitem* (SSSS requires that the complete secret be reconstructed)
       (in a single place before it can be used. To avoid this, for)
@@ -272,9 +283,6 @@
       (securely. If any share is corrupted, the reconstructed secret)
       (will be wrong, and it's impossible to determine which share was)
       (responsible, or how many.) /endlistitem
-
-  ] [ % pagebreak
-    /startText
 
     /paragraph
     (We have addressed the latter issue through the clever use of)
@@ -287,13 +295,14 @@
     /subsection (Checksumming and Error Correction) /endsubsection
     /dropcap (W) (When you copy or transfer keys, and especially when)
     (you are conducting hand-computations on them, it is possible that)
-    (errors may arise. A checksum is a technique used to determine the)
+    (errors may arise. A *checksum* is a technique used to determine the)
     (authenticity of received data, to detect whether there was an error)
     (in transmission, storage, or copying. Errors might also)
     (crop up during long-term storage \(e.g., if Cryptosteel tiles are)
     (subjected to extreme heat, which makes some letters unclear, or)
     (if printer paper suffers water damage\).)
 
+    /linebreak
     /linebreak
     /linebreak
     /linebreak
@@ -328,9 +337,13 @@
     (Moreover, it has an even lower probability than SLIP39 of failing)
     (to detect other random errors. Most importantly (for us),)
     (codex32 checksums can be computed and verified entirely by hand.)
-    (It’s even possible to correct errors by hand, but you will need to)
+    (It's even possible to correct errors by hand, but you will need to)
     (consult a wizard mathematician because we have not yet found)
     (simple worksheet-based method.)
+
+    /toc % turn on table of contents indexing
+  ] [ % pagebreak
+    /startText
 
     /subsection (Bitcoin and Seed Values) /endsubsection
     /dropcap (B) (IP???? assumes that your secret is a 128-bit BIP32)
@@ -343,38 +356,56 @@
     (number of addresses from a single secret value, thus eliminating)
     (the need for frequent backups.)
 
-    /toc % turn on table of contents indexing
-  ] [ % pagebreak
-    /startText
-
     /paragraph
     (If your coins are stored using BIP39, there is module to assist)
-    (in converting the seed words to binary (and back) so they can be) (used in Codex32 in lieu of a master seed available online. The) (longer data greatly increases the tedium and risk of mistakes;) (however, the procedures remain essentially unchanged. In general,) (it’s advised that users to switch from BIP39 to Satoshi Labs’) (SLIP39, or even better, to directly use Codex32 to work with)
+    (in converting the seed words to binary (and back) so they can be)
+    (used in Codex32 in lieu of a master seed available online. The)
+    (longer data greatly increases the tedium and risk of mistakes;)
+    (however, the procedures remain essentially unchanged. In general,)
+    (it's advised that users to switch from BIP39 to Satoshi Labs')
+    (SLIP39, or even better, to directly use Codex32 to work with)
     (128-bit BIP32 seeds.)
 
-    /subsection (Bech32 and the Alphabet) /endsubsection
-    /dropcap (I) (n order to store 128-bit secrets, we re-use the Bech32 alphabet)
-    (which provides 32 5-bit characters. These characters consist of the 26)
-    (letters of the Latin alphabet and 10 Arabic numerals, except B \(which looks)
-    (like 8\), O \(which looks like 0\), and I and 1 \(which look like many things,)
-    (including each other\).)
+    /subsection (Bech32 and Alternative Alphabets) /endsubsection
+    /dropcap (C) (odex32 inherits its name from the Bech32 alphabet.)
+    (In order to store 128-bit secrets, we re-use the Bech32 alphabet,)
+    (which provides 32 5-bit characters. These characters consist of)
+    (the 26 letters of the Latin alphabet and 10 Arabic numerals.)
+    (Except B, because it looks like too much 8, and O, because it)
+    (looks too much like 0. As well as I and 1, which look like many)
+    (things, including each other.)
+
     /paragraph
-    (We also use an alternate alphabet, consisting mostly of Greek letters, which)
-    (is used for intermediate computations. It is never used for storage, and)
-    (nothing represented in this alphabet is ever secret data. We have provided)
-    (a table of pronunciation, on the Reference page at the beginning of this)
-    (document, to help with its use.)
+    ([Draw a table for this ???]])
+    /linebreak
+    (0, 1, 2, 3, 4, 5, 6, 5, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31)
+    /linebreak
+    (q, p, z, r, y, 9, x, 8, g, f, 2, t, v, d, w, 0, s, 3, j, n, 5, 4, k, h, c, e, 6, m, u, a, 7, l)
+
     /paragraph
-    (The remainder of this document provides detailed, but mechanical,)
-    (instructions. If you are interested in learning the mathematical theory behind)
-    (this all, we encourage you to check out the mathematical companion, or to)
-    (contact Pearlwort at `pearlwort@wpsoftware.net`.)
+    (Parts of this process also use an alternate alphabet, consisting)
+    (mostly of Greek letters, which is used for intermediate)
+    (computations. It is never used for storage, and nothing)
+    (represented in this alphabet is ever secret data. A table of)
+    (pronunciation is provided on the Reference page at the beginning)
+    (of this document, to help with its use.)
+
+    /paragraph
+    ([Add a table for greek symbols here as well ???]])
+
+    /paragraph
+    (The remainder of this document provides detailed mechanical)
+    (instructions. If you are interested in learning the mathematical)
+    (theory behind this all, users are encouraged to check out the)
+    (mathematical companion or contact Pearlwort at)
+    (`pearlwort@wpsoftware.net`. xxx)
+
     /toc % turn on table of contents indexing
   ] [ % pagebreak
+
     /section (Part II: Detailed Instructions) /endsection
-    /subsection (II.1. Tables or Volvelles) /endsubsection
-    /dropcap (H) (and computation for the procedures in this document can be)
-    (performed either by using the Principal Tables to look up values, or by)
+    /subsection (II.1. Tables and/or Volvelles) /endsubsection
+    /dropcap (H) (and computation for the procedures in this document can be performed either by using the Principal Tables to look up values, or by)
     (using volvelle wheels to look up values. While the volvelle wheels take)
     (time to cut out and assemble, they are generally easier to use than the)
     (tables when available.)

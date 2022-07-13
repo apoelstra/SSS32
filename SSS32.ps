@@ -1950,6 +1950,7 @@ end
      0 setgray
      newpath 0 0 6 40 mul 0 360 arc stroke
    grestore
+   drawDragon
    % Draw centre cross
    gsave verythin line
      newpath 0 6 moveto 0 -6 lineto stroke
@@ -1958,6 +1959,7 @@ end
    % Draw indicator arrow
    newpath 0 6 40 mul moveto 10 -20 rlineto -20 0 rlineto closepath fill
    % Draw text
+   thin setlinewidth
    0 1 31 {
        dup 1 add magic mul 24 add
        /theta exch def
@@ -1966,6 +1968,14 @@ end
        newpath
        lam theta sin mul
        lam theta cos mul neg
+       phpOn {
+         2 copy moveto
+         7 7 rmoveto
+         -30 0 rlineto
+         0 -14 rlineto
+         30 0 rlineto
+         closepath gsave 1 setgray fill grestore stroke
+       } if
        2 copy moveto
        12 centresquare % draw square
        moveto % return to midpoint
@@ -1974,7 +1984,6 @@ end
        permV exch get code exch get % Permute index and extract 1-char substring of alphabet
        12 codexshow % ...and draw it
        0 2.5 rmoveto
-       thin setlinewidth
        gsave
          8 0 rmoveto -2 -2 rlineto 0 4 rlineto 2 -2 rlineto
          -8 0 rmoveto 2 -2 rlineto 0 4 rlineto -2 -2 rlineto
@@ -2960,6 +2969,22 @@ end
 %************************************************************************
 /drawCover {
 % <?php echo "\n"; require_once("cover.php.inc"); ?>
+} bind def
+
+/drawDragon1 {
+% <?php echo "\n"; require_once("dragon1.php.inc"); ?>
+} bind def
+/drawDragon2 {
+% <?php echo "\n"; require_once("dragon2.php.inc"); ?>
+} bind def
+/drawDragon {
+  gsave
+    -309 -417 translate
+    240 2 mul 355 div
+    240 2 mul 355 div scale
+    drawDragon1
+    drawDragon2
+  grestore
 } bind def
 
 /drawWheelLock {

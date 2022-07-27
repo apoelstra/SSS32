@@ -8,33 +8,45 @@
 [
 (MIT License)
 ()
-(Copyright (c) 2020 Blockstream)
+(Copyright (c) 2022 Blockstream)
 ()
-(Permission is hereby granted, free of charge, to any person obtaining a copy)
-(of this software and associated documentation files (the "Software"), to deal)
-(in the Software without restriction, including without limitation the rights)
-(to use, copy, modify, merge, publish, distribute, sublicense, and/or sell)
-(copies of the Software, and to permit persons to whom the Software is)
-(furnished to do so, subject to the following conditions:)
+(Permission is hereby granted, free of charge, to any person obtaining a copy of)
+(this software and associated documentation files (the "Software"), to deal in the)
+(Software without restriction, including without limitation the rights to use,)
+(copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the)
+(Software, and to permit persons to whom the Software is furnished to do so,)
+(subject to the following conditions:)
 ()
 (The above copyright notice and this permission notice shall be included in all)
 (copies or substantial portions of the Software.)
 ()
-(THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR)
-(IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,)
-(FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE)
-(AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER)
-(LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,)
-(OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE)
-(SOFTWARE.)
-]
-[
+(THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,)
+(INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A)
+(PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT)
+(HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION)
+(OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE)
+(SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.)
+()
 (WARNING: Seriously, this is a work in progress, and it is only a concept right now.)
 (If you try to use this for your valuable data, I promise you will lose your data.)
-(You will lose this document and come back here only to find that I have made incompatible changes,)
-(and your data is lost forever. Even if you don't lose this document, there is no warranty or)
-(guarantee of any kind that you will be able to recover successfully recover your data.)
+(You will lose this document and come back here only to find that I have made)
+(incompatible changes, and your data is lost forever. Even if you don't lose this)
+(document, there is no warranty or guarantee of any kind that you will be able to)
+(recover successfully recover your data.)
+()
+(Produced in the United States of America)
+()
+(10 9 8 7 6 5 4 3 2 1)
+()
+(ISBN 978-1-7338712-2-8 (Paperback))
+()
 ]
+[
+(Cover and Vovelle illustrations by Micaela Paez)
+(Illuminated letters and inline illustrations by M. Lutfi' As'ad)
+(Edited & Produced by Arri Isak Beck)
+]
+
 %************************************************************************
 %************************************************************************
 %*
@@ -63,80 +75,26 @@
 /allPageContent [
   [ ] % dummy so we can 1-index the array
   [
-    /section (Overview / Cheatsheet) /endsection
-    /notoc % turn off table of contents indexing
+    /section (Part I: High-Level Introduction)/endsection
 
     /dropcap (C) (ryptography is the art of hiding information. In)
     (particular, Shamir's *Secret Sharing Scheme (SSSS)* is used to)
-    (hide secrets in a distributed way. A *secret* is split into)
-    (multiple parts, each called a *share*, which can be given to)
-    (different people or kept in separate places. The shares can then)
-    (be used to reconstruct the original secret. *Codex32* describes a)
-    (way for users, assisted by paper computers in the form of slide)
-    (charts (i.e., volvelles) and circular slide rules, to perform)
-    (checksums and SSSS on Bitcoin secrets.)
-
-    /paragraph
-    (If you are ready to begin, jump to page ??? to cut out the)
-    (volvelles following the cheatsheet below. Alternatively, if you)
-    (would like a more in-depth primer regarding this scheme, continue)
-    (to page ??? for more detailed instructions.)
-
-    /subsection (Volvelle Assembly) /endsubsection
-    (*You will need*: a craft knife, scissors, card stock, brass)
-    (fasteners, and the volvelle printouts from Module 0.)
-    /startlist
-    /listitem1 (Cut out each disc with scissors. Then, use a craft)
-      (knife for the following more detailed pieces.) /endlistitem
-    /listitem1 (Cut out the center circle in each bottom/white disc.)
-      (Then, cut along the cross in each top disc with artwork.) /endlistitem
-    /listitem1 (Cut the viewing windows out of each top disk and and)
-      (white boxes on the dragon disc.) /endlistitem
-    /listitem1 (Attach the discs with a brass fastener through the)
-      (center holes.) /endlistitem
-
-    /subsection (Initial \(First $k$\) Share Creation) /endsubsection
-    (*You will need*: the addition volvelle, de-biasing worksheet,)
-    (checksum worksheet, pencil, and eraser.)
-    /linebreak
-    (For each of your initial $k$ shares, you should:)
-    /startlist
-    /listitem1 (Generate random data by rolling dice, following the)
-      (instructions on the de-biasing worksheet.) /endlistitem
-    /listitem1 (Follow the instructions on the checksum worksheet to)
-      (affix a checksum.) /endlistitem
-
-    /subsection (Derived \(Remaining\) Share Creation) /endsubsection
-    (*You will need*: the addition volvelle, multiplication/translation)
-    (wheel, translation worksheet, and pencil.)
-    /startlist
-    /listitem1 (Translate the initial shares using the symbols in the)
-      (derived shares section.) /endlistitem
-    /listitem1 (Add the translated initial shares to get the new)
-      (derived share.) /endlistitem
-
-    /subsection (Secret Recovery) /endsubsection
-    (*You will need*: the recovery wheel, and everything used for)
-      (derived share creation (see above).)
-    /linebreak
-    (To recover your secret, you must have $k$ shares available. Then:)
-
-    /startlist
-    /listitem1 (Look up their recovery symbols with the recovery wheel.) /endlistitem
-    /listitem1 (Multiply all of the symbols for each share with the)
-      (multiplication wheel to get a symbol for each share.) /endlistitem
-    /listitem1 (Translate the share by that symbol.) /endlistitem
-    /listitem1 (Add all of the translated shares to get your secret.) /endlistitem
-
-    /toc % turn off table of contents indexing
-  ] [ % pagebreak
-
-    /section (Part I: High-Level Introduction)/endsection
+    (hide secrets in a distributed way. *Codex32* describes a way for)
+    (users, assisted by paper computers in the form of slide charts)
+    (\(i.e., volvelles\) and circular slide rules to perform checksums)
+    (and SSSS on Bitcoin secrets. If you are ready to begin utilizing)
+    (this process, jump to page ??? to follow the cheatsheet.)
+    (Alternatively, if you would like a more in-depth primer regarding)
+    (this scheme continue reading the high-level introduction below.)
 
     /subsection (Shamir Secret Sharing Scheme)/endsubsection
     /dropcap (T) (he *Shamir Secret Sharing Scheme* \(SSSS\), splits a)
     (*secret* (s) into $n$ *shares*, where any $k$ of which can be used)
-    (to reconstruct the original secret.)
+    (to reconstruct the original secret. Shares can be kept in separate)
+    (places. The shares can later be used to reconstruct the original)
+    (secret. It is important to emphasize that SSSS is a mechanism for)
+    (storing backups, and not a mechanism for enforcing a signing)
+    (policy as is done with multisig.)
 
     /linebreak
     /linebreak
@@ -146,7 +104,11 @@
     /linebreak
     /linebreak
     /linebreak
-    ([Come back and add visual illustration of SSSS ???])
+    /linebreak
+    /linebreak
+    ([Come back and add visual illustration of SSSS / vs multisig ???])
+    /linebreak
+    /linebreak
     /linebreak
     /linebreak
     /linebreak
@@ -155,67 +117,65 @@
     /linebreak
 
     /paragraph
-    (Here $n$ is typically five or more, depending on your desire for)
-    (redundancy, while $k$ is two or three, reflecting your fear of)
+    (With SSSS, $n$ is typically five or more, depending on your desire)
+    (for redundancy. While $k$ is two or three, reflecting your fear of)
     (individual shares being compromised. There is an inherent)
     (trade-off between the availability of a secret and its risk of)
     (theft. If you make many copies of your seed words, one of them may)
-    (eventually fall into the wrong hands. However, if you make too few)
-    (, they could all become lost,destroyed, or misplaced. The)
+    (eventually fall into the wrong hands. However, if you make too few,)
+    (they could all become lost, destroyed, or misplaced. The)
     (consequence in either case is a complete and total loss of funds.)
+    (Something we would like to avoid.)
 
     /paragraph
     (Shamir's Secret Sharing Scheme was first proposed in the 1970s,)
     (and has historically required the use of computers to generate)
-    (secrets and shares.)
+    (secrets and shares. Instead, this codex outlines a novel method)
+    (of secret sharing, that can be done entirely on paper.)
 
-    /linebreak
-    (This codex outlines a novel and magical way of secret sharing)
-    (that can be done entirely on paper.)
+  ] [ % pagebreak
+    /startText
 
     /subsection (Codex32)/endsubsection
-    /dropcap (U) (sing the circular paper computers)
-    (\(i.e., volvelles \) this codex shows how to perform checksumming)
-    (and Shamir Secret Sharing on Bitcoin secrets. This document also)
-    (defines an error-correcting code and complete scheme for)
-    (generating, checksumming, splitting, and reconstructing secret)
-    (data.)
+    /dropcap (U) (sing the circular paper computers \(i.e., volvelles\))
+    (this codex illustrates a method for Shamir Secret Sharing Bitcoin)
+    (secrets. This document also defines an error-correcting code and)
+    (complete scheme for generating, checksumming, splitting, and)
+    (reconstructing secret data.)
 
     /paragraph
     /linebreak
     (The function of this codex is to provide a paper-based means to:)
     /startlist
-    /listitem* (Securely generate random data from  (potentially)
-      (biased) dice rolls or coin flips.) /endlistitem
-    /listitem* (Compute and verify very powerful checksums to check)
-      (that that have been copied correctly.) /endlistitem
+    /listitem* (Securely generate random data from  potentially)
+      (biased dice rolls or coin flips to create shares.) /endlistitem
     /listitem* (Split a secret into up to 31 shares, of which some)
       (number of thme are needed to reconstruct the secret.) /endlistitem
+    /listitem* (Compute and verify very powerful checksums)
+      (as part of each share.) /endlistitem
     /listitem* (Recombine your shares into your original secret.) /endlistitem
 
-  ] [ % pagebreak
-    /startText
-
     /paragraph
-    (Hand-computation comes with some practical limits: to generate)
-    (random values, we rely on a series of (de-biased) dice rolls.)
     (This scheme does not support passphrases or key hardening, so)
     (security rests solely on the strength of this randomness.)
-    (Nevertheless, assuming that you can generate strong randomness,)
+    (Because of this, it is extremely important to to generate)
+    (truly random numbers. This document provides a dice de-biasing)
+    (worksheet to generate random values from dice rolls by hand.)
+    (Assuming that you can generate strong randomness,)
     (you will find no cryptographic compromise in the design or)
     (implementation of the codex.)
 
     /paragraph
     (If you prefer the added security of passphrase-based key hardening)
-    (, you should instead use the more-popular SLIP39. SLIP39 is a)
-    (non-paper-based Shamir's Secret Sharing Scheme for mnemonic codes)
-    (that requires the use of electronic computers.)
+    (, you should instead use SLIP39. SLIP39 is a non-paper-based)
+    (Shamir's Secret Sharing Scheme for mnemonic codes that however,)
+    (does require the use of electronic computers.)
 
     /subsection (Computers and Trust)/endsubsection
     /dropcap (I) (t's impossible to sign a Bitcoin transaction without)
     (giving an electronic computer access to secret key data, which)
-    (puts the user in an uncomfortable position. If misused or badly)
-    (generated, private key data, can be used to steal all of your)
+    (puts the user in an unfortunate position. If misused or badly)
+    (generated, private key data can be used to steal all of your)
     (coins. To make matters worse, there is no way to know how exactly)
     (an electronic computer is interacting with your keys.)
 
@@ -227,57 +187,57 @@
     (machines. Instead, you should provide your keys only to hardware)
     (wallets, which interact with general-purpose computers narrowly,)
     (through an interface that does not expose your secret key data.)
-    (This introduces additional questions, such as how can the hardware)
-    (wallet be sure that it's communicating with the correct user, and)
-    (under correct circumstances?)
+    (But this introduces additional questions, how can the hardware)
+    (wallet be sure that it's communicating with the correct user,)
+    (and under correct circumstances?)
 
     /paragraph
     /linebreak
-    ($Ultimately, there is no hardware wallet we can trust fully.$)
+    ($Ultimately, there is no hardware wallet a wizard can fully trust.$)
     /linebreak
-
-    /paragraph
-    (Even hardware wallets are opaque and imperfect:)
-    /startlist
-    /listitem* (If tasked with generating random data, they may do so)
-      (insecurely.) /endlistitem
-    /listitem* (It may have bugs that cause key leakage, either now or)
-      (as a consequence of some future software update.) /endlistitem
-    /listitem* (It stores key material in physical form, which can be)
-      (extracted by an attacker with physical access, even if the)
-      (wallet has "deleted" it.)/endlistitem
-    /listitem* (It may expose secret data through side channels, such)
-      (as the electromagnetic waves emitted by processor activity, or)
-      (by the varying power draw from a USB hub.) /endlistitem
-
-    /paragraph
-    (These risks have varying degrees of plausibility; however, the)
-    (fact is that no matter how trustworthy the hardware wallet or its)
-    (manufacturer, over the lifetime of a Bitcoin secret (which may,)
-    (perhaps, exceed any one persons lifetime), even "trivial" risks)
-    (add up to become very serious. With hardware wallets, coins)
-    (that don't need to be frequently spent may have their secure)
-    (storage refreshed or reorganized an unlimited number of times,)
-    (without ever introducing the uncertainty)
-    (and risk associated with electronic computers.)
-
-    /paragraph
-    (Unlike electronic computers, paper cannot remember or leak)
-    (secrets. When handled correctly and disposed of securely, and)
-    (this can be done without special skills or equipment. On one)
-    (hand, electronic computers aren't perfectly secure. But on the)
-    (other hand, neither is paper.)
 
   ] [ % pagebreak
     /startText
 
     /paragraph
+    (Even hardware wallets are opaque and imperfect:)
+    /startlist
+    /listitem* (If tasked with generating random data, it may do so)
+      (insecurely.) /endlistitem
+    /listitem* (It may have bugs that cause key leakage, either now or)
+      (as a consequence of some future software update.) /endlistitem
+    /listitem* (Key material stored in physical form, can be)
+      (extracted by an attacker with physical access, even if the)
+      (wallet has "deleted" it.)/endlistitem
+    /listitem* (It may expose secret data through side channels, such)
+      (as the electromagnetic waves emitted by processor activity, or)
+      (by the varying power draw from a USB hub.) /endlistitem
+    /listitem* (Coins that don't need to be frequently spent may have)
+      (their secure storage refreshed or reorganized an unlimited)
+      (number of times.) /endlistitem
+
+    /paragraph
+    (These risks have varying degrees of plausibility, but for a)
+    (Bitcoin secret which may, exceed any one person lifetime, even)
+    ("trivial" risks add up to become very serious.)
+
+    /paragraph
+    (The good news is that unlike electronic computers, paper cannot)
+    (remember or leak secrets! When handled correctly and disposed)
+    (of securely, and this can be done without special skills,)
+    (equipment, or magic. On one hand, electronic computers aren't)
+    (perfectly secure. But on the other hand, perfect security is not)
+    (an achievable standard for paper computers either.)
+
+    /paragraph
     (Some of the limitations of SSSS include:)
     /startlist
     /listitem* (SSSS requires that the complete secret be reconstructed)
-      (in a single place before it can be used. To avoid this, for)
-      (most use cases it is recommend threshold that you use signatures)
-      (instead.) /endlistitem
+      (in a single-place before it can be used. If the shares)
+      (created were initially distributed among different individuals)
+      (in a group, the party that brings together the shares to)
+      (recreate the secret has the opportunity to spend funds,)
+      (even if their single-party authority was not intended.)/endlistitem
     /listitem* (SSSS requires the generation of additional random)
       (data beyond the original secret, which must be generated)
       (securely. If any share is corrupted, the reconstructed secret)
@@ -286,14 +246,18 @@
 
     /paragraph
     (We have addressed the latter issue through the clever use of)
-    (error-correcting codes, inspired by SLIP39. However, the fact)
-    (remains that SSSS involves a single point of failure at the time)
-    (that the secret key material is used. It is important to emphasize)
-    (that *SSSS is a mechanism for storing backups* and not a mechanism)
-    (for enforcing a signing policy.)
+    (error-correcting codes, inspired by SLIP39. However, there is)
+    (nothing much that can be done about the fact that SSSS)
+    (involves a single point of failure at the time that the secret)
+    (key material is used. Which is why this scheme is only to be)
+    (used for backups, and not for enforcing a signing policy.)
+
+    /toc % turn on table of contents indexing
+  ] [ % pagebreak
+    /startText
 
     /subsection (Checksumming and Error Correction) /endsubsection
-    /dropcap (W) (When you copy or transfer keys, and especially when)
+    /dropcap (W) (hen you copy or transfer keys, and especially when)
     (you are conducting hand-computations on them, it is possible that)
     (errors may arise. A *checksum* is a technique used to determine the)
     (authenticity of received data, to detect whether there was an error)
@@ -310,7 +274,7 @@
     /linebreak
     /linebreak
     /linebreak
-    ([make image of damaged crypto steel ???]])
+    ([make image of damaged crypto steel ???])
     /linebreak
     /linebreak
     /linebreak
@@ -320,30 +284,30 @@
     /linebreak
 
     /paragraph
-    (When using mnemonic codes users have two options: BIP39 and)
-    (SLIP39. The BIP39 checksum is less than one word long, and may)
-    (fail to detect even a single incorrect word, and is practically)
-    (impossible to compute by hand. Its primary effects are to cause)
-    (your key data to be an awkward length, and to prevent you from)
-    (verifying your data’s integrity by hand. In contrast, SLIP39)
-    (can detect up to three errors and correct up to one error 100% of)
-    (the time. Additionally, it will fail to detect other random errors)
-    (with extremely low probability. However, the SLIP39 checksum is)
-    (also quite difficult to compute or verify by hand.)
+    (Although this scheme does not support BIP39 mnemonic codes, it is)
+    (currently the most popular way of storing private key backups.)
+    (Users should note that the BIP39 checksum is less than one word)
+    (long, and may fail to detect even a single incorrect word.)
+    (Its primary effects are to cause your key data to be an awkward)
+    (length, and to prevent you from verifying your datas integrity)
+    (by hand.)
 
     /paragraph
-    (In Codex32, we introduce a new checksum also titled codex32,)
-    (which can *detect up to eight errors and correct up to four*.)
-    (Moreover, it has an even lower probability than SLIP39 of failing)
-    (to detect other random errors. Most importantly (for us),)
-    (codex32 checksums can be computed and verified entirely by hand.)
-    (It's even possible to correct errors by hand, but you will need to)
-    (consult a wizard mathematician because we have not yet found)
-    (simple worksheet-based method.)
+    (In contrast, The SLIP39 Shamir's Secret-Sharing for Mnemonic Codes)
+    (, can detect up to three errors and correct up to one error 100%)
+    (of the time. Additionally, it will fail to detect other random)
+    (errors with extremely low probability. However, the SLIP39)
+    (checksum is also quite difficult to compute or verify by hand.)
+
+    /paragraph
+    (In Codex32, we introduce the codex32 checksum, which can detect up)
+    (to eight errors and correct up to four. Codex32, has an even)
+    (higher probability than SLIP39 of successfully detecting random)
+    (errors. And most importantly, codex32 checksums can be computed)
+    (and verified entirely by hand.)
 
     /toc % turn on table of contents indexing
   ] [ % pagebreak
-    /startText
 
     /subsection (Bitcoin and Seed Values) /endsubsection
     /dropcap (B) (IP???? assumes that your secret is a 128-bit BIP32)
@@ -356,15 +320,12 @@
     (number of addresses from a single secret value, thus eliminating)
     (the need for frequent backups.)
 
-    /paragraph
-    (If your coins are stored using BIP39, there is module to assist)
-    (in converting the seed words to binary (and back) so they can be)
-    (used in Codex32 in lieu of a master seed available online. The)
-    (longer data greatly increases the tedium and risk of mistakes;)
-    (however, the procedures remain essentially unchanged. In general,)
-    (it's advised that users to switch from BIP39 to Satoshi Labs')
-    (SLIP39, or even better, to directly use Codex32 to work with)
-    (128-bit BIP32 seeds.)
+    /linebreak
+    /linebreak
+    /linebreak
+    ([Image?])
+    /linebreak
+    /linebreak
 
     /subsection (Bech32 and Alternative Alphabets) /endsubsection
     /dropcap (C) (odex32 inherits its name from the Bech32 alphabet.)
@@ -376,7 +337,9 @@
     (things, including each other.)
 
     /paragraph
-    ([Draw a table for this ???]])
+    /linebreak
+    ([Draw a table for this ???])
+    /linebreak
     /linebreak
     (0, 1, 2, 3, 4, 5, 6, 5, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31)
     /linebreak
@@ -391,365 +354,556 @@
     (of this document, to help with its use.)
 
     /paragraph
-    ([Add a table for greek symbols here as well ???]])
+    /linebreak
+    /linebreak
+    ([Add a table for greek symbols here as well ???])
+    /linebreak
 
     /paragraph
     (The remainder of this document provides detailed mechanical)
     (instructions. If you are interested in learning the mathematical)
     (theory behind this all, users are encouraged to check out the)
     (mathematical companion or contact Pearlwort at)
-    (`pearlwort@wpsoftware.net`. xxx)
+    (`pearlwort@wpsoftware.net`.)
 
     /toc % turn on table of contents indexing
   ] [ % pagebreak
 
-    /section (Part II: Detailed Instructions) /endsection
-    /subsection (II.1. Tables and/or Volvelles) /endsubsection
-    /dropcap (H) (and computation for the procedures in this document can be performed either by using the Principal Tables to look up values, or by)
-    (using volvelle wheels to look up values. While the volvelle wheels take)
-    (time to cut out and assemble, they are generally easier to use than the)
-    (tables when available.)
-    /paragraph
-    (There are three volvelles in this codex, which have slightly different usage)
-    (instructions.)
-    /paragraph
-    (*Addition.* To add two characters, turn the Addition Wheel to one of them,)
-    (and look through the window corresponding to the other. It does not matter)
-    (which character is which; addition is symmetric.)
-    /paragraph
-    (*Translation.* A common task is to "translate" share data by a given recovery)
-    (symbol. To do so, turn the Translation/Multiplication Wheel so that the window)
-    (on the Multiplication side is showing the correct symbol. Then turn the wheel)
-    (over; the Translation side will act like a decoder ring, mapping characters)
-    (to characters.)
-    /paragraph
-    (*Multiplication.* Sometimes you will need to translate a share by multiple)
-    (symbols at once. To do this, turn the Multiplication Wheel to the first symbol.)
-    (Find the next symbol on the inner wheel; whatever symbol it is pointing to,)
-    (turn the Multiplication Wheel to that symbol. Repeat for all the symbols you)
-    (need to multiply; the Multiplication Wheel will wind up at the final product.)
-    (You can now turn the Wheel over to translate by this symbol.)
-    /paragraph
-    (As with addition, it does not matter which order you take your original symbols)
-    (in.)
-    /paragraph
-    (*Recovery.* When recovering your secret, you will need to look up "Recovery)
-    (symbols" that will be used to. To do this with the Recovery Wheel, turn the)
-    (wheel to the share you want to translate. Mark down the symbols pointed to)
-    (by the $other$ shares' indices, and multiply these together.)
-    /paragraph
-    ($Important:$ Unlike the other wheels, the Recovery Wheel can easily be used)
-    (in the wrong order. Be careful!)
+    /section (Part II: Codex32 Components) /endsection
+    /subsection (Share Data) /endsubsection
+    /dropcap (F) (or a 128-bit secret seed, each share is 48 characters)
+    (long. Shares begin with the three-character prefix MS1. This is)
+    (followed by a six-character header. The next 26-characters are the)
+    (data portion. The final 13 characters are the checksum.)
 
-    /subsection (II.2. Share Format) /endsubsection
-    /dropcap (F) (or 128-bit secret seeds, each share is 48 characters long.)
-    (Shares begin with the three character prefix `MS1`. This is followed by a)
-    (six character header. The next 26-characters are the data portion. The last)
-    (13-characters are the checksum.)
     /paragraph
-    (The header consists of:)
+    /linebreak
+    /linebreak
+    /linebreak
+    ([Copy the image of the share data format here.])
+    /linebreak
+    /linebreak
+
+    /paragraph
+    (The header consists of [add the word header to above diagram]:)
+
     /startlist
-    /listitem* (The *threshold* which is the value $k$, a digit between)
-    (`2` and `9` inclusive, although the main document only supports $k$ values `2` and `3`. When)
-    (secret splitting is not used, a `0` digit is placed here instead.)
-    /endlistitem
-    /listitem* (The *identifier* which is four bech32 characters.) /endlistitem
-    /listitem* (The *share index* which is any bech32 character except for)
-    (`S`. The `S` index is the *secret* *index*. The data portion of the)
-    (secret index contains the secret seed.) /endlistitem
+    /listitem*
+      (The *threshold*, which is the value $k$, a digit between two and)
+      (nine inclusive, although the main document only supports $k$)
+      (values two and three. When secret splitting is not used, a zero)
+      (digit is placed here instead.)/endlistitem
+    /listitem*
+      (The *identifier*, which is four bech32 characters.)/endlistitem
+    /listitem*
+      (The *share index*, which is any bech32 character except for $S$.)
+      (The $S$ index is the *secret index*. The data portion of the)
+      (secret index contains the secret seed.)/endlistitem
+
+      /paragraph
+      (Shares of one secret all have the same threshold and)
+      (identifiers. If you have multiple secrets, you should use)
+      (distinct identifiers for each to avoid mixing up shares of)
+      (different secrets with each other. The identifiers are not)
+      (considered secret themselves.)
+
+      /paragraph
+      (If the user merely wants to checksum their secret and not use)
+      (secret splitting, they should use the same format, but with the)
+      (digit 0 for the threshold value and S for the share index.)
+
+      /toc % turn on table of contents indexing
   ] [ % pagebreak
-    /startText
 
-%| Human-readable Part | Threshold | Secret ID | Share Index | Secret data | Checksum |
-%|---------------|--------|---------|--------|----------|----------|
-%| 3 characters (`ms1`) | 1 character | 4 characters | 1 character | 26 characters | 13 characters |
+      /subsection (Paper Computers & Volvelles) /endsubsection
+      /dropcap (H) (and computation for the procedures in this document)
+      (can be performed either by using the volvelle wheels or Principal)
+      (Tables (referenced on page ???) to look up values. Although the)
+      (volvelle wheels take time to cut out and assemble, they are)
+      (generally easier to use than the tables, when available.)
+
+      /paragraph
+      (There are three volvelles in this codex, each serves a different)
+      (fuction, and has slightly different usage instructions.)
+
+      /paragraph
+      (*1. Addition.* To add two characters, turn the addition wheel to)
+      (one of them and look through the window corresponding to the)
+      (other. It does not matter which character is which; addition is)
+      (symmetric.)
+
+      /paragraph
+      (*2. Translation & Multiplication.* A common task in the scheme is)
+      (to "translate" share data by a given recovery symbol. To do so,)
+      (turn the translation/multiplication wheel so that the window on)
+      (the. multiplication side is showing the correct symbol. Then turn)
+      (the wheel over; the translation side will act like a decoder)
+      (ring, mapping characters to characters.)
+
+      /paragraph
+      (Sometimes you will need to translate a share by multiple symbols)
+      (at once. To accomplish this, turn the multiplication wheel to the)
+      (first symbol. Find the next symbol on the inner wheel; whatever)
+      (symbol that it's pointing to, turn the multiplication wheel to)
+      (that symbol. Repeat for all of the symbols that you need to)
+      (multiply. The multiplication wheel will wind up at the final)
+      (product. You can now turn the wheel over to translate by this)
+      (symbol. As with addition, the order in which you take your)
+      (original symbols does not matter.)
+
+      /paragraph
+      (*3. Recovery.* When recovering a secret, you will need to look up)
+      ("recovery symbols" that will be used. To do this with the)
+      (recovery wheel, turn the wheel to the share you want to)
+      (translate. Mark down the symbols pointed to by the $other shares$)
+      (indices and multiply these together.)
+
+      /paragraph
+      ($Important$: Unlike the other wheels, the recovery wheel can)
+      (easily be used in the wrong order. Be careful!)
+
+      /toc % turn on table of contents indexing
+] [ % pagebreak
+
+    /section (Part III: Process Instructions / Cheatsheet) /endsection
+    /notoc % turn off table of contents indexing
 
     /paragraph
-    /paragraph
-    /paragraph
-    /paragraph
-    (Shares of one secret all have the same threshold and identifiers. If you)
-    (have multiple secrets, you should use distinct identifiers for each secret)
-    (so as not to mix-up shares of different secrets with each other. The)
-    (identifiers are not considered secret themselves.)
-    /paragraph
-    (If the user merely wants to checksum her secret, and not use secret splitting,)
-    (she should use the same format, but with the digit `0` for the threshold value)
-    (and `S` for the share index.)
-    /subsection (II.3. New Secret Seed) /endsubsection
-    /dropcap (G) (enerating a $k$-of-$n$ scheme for a new random secret is most)
-    (easily done by generating fresh random shares directly. This process generates)
-    (a new random secret seed without directly revealing it.)
-    /paragraph
-    (The process for generating a new secret seed is as follows.)
-    /startText
+    (*1. Volvelle Assembly*)
+    /linebreak
+    (You will need: a craft knife, scissors, card stock, brass)
+    (fasteners, and the volvelle printouts from Module 0.)
+
     /startlist
-    /listitem1 (Choose a threshold $k$ and total number of shares $n$ that suits)
-    (your needs. The threshold $k$ must be 2 or 3 and $n$ must be 31 or less.)
-    (\(For $k$ > 3 see Module 2, but we do not recommend this.\))
-    /endlistitem
-    /listitem1 (Choose a 4 character identifier for your new secret seed. The)
-    (identifier can be anything as long as it only uses the Bech32 character set.)
-    (The identifier itself is not secret. However, the identifier should be)
-    (unique for each secret seed.) /endlistitem
-    /listitem1 (Follow Section II.3.a to generate the first $k$ shares.) /endlistitem
-    /listitem1 (Follow Section II.3.b to generate the remaining $n$ - $k$ shares.) /endlistitem
-    /listitem1 (Load your shares into your BIP-????) /footnotemark (compliant wallet or use the)
-    (Recover Secret Seed procedure in Section II.4 to access your new secret seed)
-    (value.) /endlistitem
-    /listitem1 (Copy and distribute your $n$ shares into safe and secure locations.)
-    (Remember that you will need to recover at least $k$ of these shares to)
-    (recover your secret seed. Also remember that anyone else who recovers $k$ of)
-    (these shares can also recover your secret seed.) /endlistitem
-    /listitem1 (Securely dispose of all worksheets you used in the generation)
-    (procedure. If these worksheets are not securely disposed of, they could be)
-    (used to recover your secret seed.) /endlistitem
+    /listitem1 (Cut out each disc with scissors. Then, cut out the)
+      (windows on the top discs with the craft knife.) /endlistitem
+    /listitem1 (Cut out the small center circle in each bottom disc.)
+      (Cut a slit along one of the small lines of the cross in each)
+      (top disc.) /endlistitem
+    /listitem1 (Attach the discs with a brass fastener through the)
+      (center holes.) /endlistitem
 
-    /subsubsection (II.3.a. New Secret Seed: Stage 1) /endsubsubsection
+    /paragraph
+    (*2. Create New Secret Seed*)
+    /startlist
+    /listitem* (See Page ???) /endlistitem
 
-    (Make 2$k$ copies of the Checksum Worksheet and save half of them for later.)
     /paragraph
-    (Fill out the header portion of $k$ many Checksum Worksheets with your chosen)
-    (threshold $k$ and chosen ID. Place a unique share index on each worksheet)
-    (starting with share `A` on the first worksheet, `C` on the second worksheet,)
-    (and so on through the $k$ first characters from the Bech32 character set.)
-    (\(Note that `B` and `I` are not part of the Bech32 character set and are)
-    (omitted\). However, if you are not splitting your secret, \(i.e. $k$ = 1\))
-    (see the special instructions below.)
-    /footnotes
-    /footnotemark (Once we have a BIP number for codex32, we will replace "BIP-????" throughout the document.)
-  ] [ % pagebreak
-    /startText
-    (Fill out the 26 character data portion of each Checksum Worksheet with random)
-    (characters. Use the Di-biasing Worksheet to generate each random)
-    (character.)
+    (*3. Create Initial (First k) Share*)
+    /linebreak
+    (You will need: the addition volvelle, dice de-biasing worksheet,)
+    (checksum worksheet, pencil, eraser, and your secret seed.)
+    (For each of your initial $k$ shares, you should:)
+    /startlist
+    /listitem1 (Generate random data by rolling dice, following the)
+      (instructions on the dice de-biasing worksheet) /endlistitem
+    /listitem1 (Follow the instructions on the checksum worksheet to)
+      (affix a checksum.) /endlistitem
+
     /paragraph
-    (Follow the Checksum Worksheet instructions to generate a checksum for each)
-    (worksheet.)
+    (*4. Create Derived \(Remaining\) Shares*)
+    /linebreak
+    (You will need: the addition volvelle, multiplication/translation)
+    (wheel, translation worksheet, and pencil.)
+    /startlist
+    /listitem1 (Translate the initial shares using the symbols in the)
+      (derived shares section.) /endlistitem
+    /listitem1 (Add the translated initial shares to get the new)
+      (derived share.) /endlistitem
+
     /paragraph
-    (*Critical Step:* Verify your checksum by copying each of the 48 characters)
-    (of the share onto an empty worksheet that you saved earlier. Follow the)
-    (checksum verification instructions to verify each checksum. If any checksum)
-    (fails to verify then make more copies of the Checksum worksheet and redo the)
-    (checksum generation and checksum verification steps again.)
+    (*5. Recover Secret*)
+    /linebreak
+    (You will need: the recovery wheel, and everything used for)
+      (derived share creation (see above).)
+      (To recover your secret, you must have $k$ shares available.)
+
+    /startlist
+    /listitem1 (Look up their recovery symbols with the recovery wheel.) /endlistitem
+    /listitem1 (Multiply all of the symbols for each share with the)
+      (multiplication wheel to get a symbol for each share.) /endlistitem
+    /listitem1 (Translate the share by that symbol.) /endlistitem
+    /listitem1 (Add all of the translated shares to get your secret.) /endlistitem
+
     /paragraph
-    (*Failure to verify each checksum may lead to irrecoverable loss of)
-    (the secret seed and funds.)
+    (??? Yes but how do I spend ???)
+
+  /toc % turn on table of contents indexing
+] [ % pagebreak
+
+    /subsection (III.2 Generate a New Secret) /endsubsection
+
     /paragraph
-    (*Special rules for $k$=1:* If you are not splitting your secret, then use)
-    (a `0` digit in the threshold place, and use the `S` character in the share)
-    (index place. Follow the same instructions for generating the data portion)
-    (and the checksum.)
-    /subsubsection (II.3.b. New Secret Seed: Stage 2) /endsubsubsection
-    (The remaining \($n$ - $k$\) shares are derived from the first $k$ shares using the)
-    (translation worksheet corresponding to the $k$ value you have chosen. Label)
-    (the entries of the translation worksheet with the share indices that you will)
-    (use. We recommend following the Bech32 character order following the)
-    (last index you generated in Stage 1.)
+    (Generating a $k$-of-$n$ scheme requires generating a new random)
+    (secret seed without directly revealing it. The process for)
+    (generating a new secret seed is as follows:)
+
+    /startlist
+    /listitem1 (Choose a threshold $k$ and total number of shares)
+      ($n$ that suits your needs. The threshold $k$ must be two or three,)
+      (and $n$ must be 31 or less. For $k > 3$ see Module ????, but this)
+      (is not recommended.) /endlistitem
+    /listitem1 (Choose a four-character identifier for your new secret)
+      (seed. The identifier can be anything (e.g., a name or nym), as)
+      (long as it only uses the Bech32 character set. The identifier)
+      (itself is not secret. However, the identifier should be unique)
+      (for each secret seed.) /endlistitem
+    /listitem1 (Follow Section III.2.A to generate the first $k$)
+      (shares.) /endlistitem
+    /listitem1 (Follow Section III.2.B to generate the remaining)
+      (\$n - k$\.) /endlistitem
+    /listitem1 (Load your shares into your BIP-??? compliant wallet)
+      (or use the recover secret seed procedure in Section III.3)
+      (to access your new secret seed value.) /endlistitem
+    /listitem1
+      (Copy and distribute your $n$ shares into safe and secure)
+      (locations. Remember that you will need to recover at least)
+      ($k$ of these shares to recover your secret seed. Also remember)
+      (that anyone else who recovers $k$ of these shares can also)
+      (recover your secret seed.) /endlistitem
+    /listitem1
+      (Securely dispose of all worksheets that you used in the)
+      (generation procedure. If these worksheets are not securely)
+      (disposed of, they could be used to recover your secret seed.) /endlistitem
+
+    /subsubsection (II.2.A Create First Share) /endsubsubsection
+
+    /linebreak
+      (You will need: two $k$ copies of the checksum worksheet and)
+      (dice de-biasing worksheet.)
+
+    /linebreak
+    /startlist
+    /listitem1 (Fill out the header portion of $k$ checksum worksheets)
+      (with your chosen threshold $k$ and chosen identifier.) /endlistitem
+    /listitem1 (Place a unique share index on each worksheet starting with)
+      (share A on the first worksheet, C on the second worksheet, and so)
+      (on through $k$ characters from the Bech32 characters etc. Recall)
+      (that the B and I are not part of the Bech32 character set and are)
+      (omitted from the shares.) /endlistitem
+    /listitem1 (Fill out the 26-character data portion of each checksum worksheet)
+      (with each character in the *bold squares*. To do this use the)
+      (dice de-biasing worksheet to generate each random character.) /endlistitem
+    /listitem1 (Once all of the random data is generated, use the rest of the)
+      (checksum worksheet to generate a checksum for each share.) /endlistitem
+    /listitem1 (Critical Step*: Verify your checksum by copying each of the 48)
+      (characters of the share onto an empty worksheet that you saved)
+      (earlier. Follow the checksum verification instructions to verify)
+      (each checksum. If any checksum fails to verify, make more copies)
+      (of the checksum worksheet and redo the checksum generation and)
+      (checksum verification steps. Failure to verify each checksum may)
+      (lead to irrecoverable loss of the secret seed and funds.) /endlistitem
+    /listitem1
+      (Regarding special rules for $k = 1$, if you are not splitting your)
+      (secret, use a 0 digit in the threshold place, and then use the S)
+      (character in the share index place. Follow the same instructions)
+      (for generating the data portion and the checksum.) /endlistitem
+
+  /toc % turn on table of contents indexing
+] [ % pagebreak
+
+    /subsubsection (II.2.B Create Derived Shares) /endsubsubsection
+
+    /linebreak
+    (You will need: ??? translation worksheets.)
+
+    /paragraph
+      (The remaining \($n - k$\) shares are derived from the)
+      (first $k$ shares using the translation worksheet corresponding)
+      (to the $k$ value you have chosen. Label the entries of the)
+      (translation worksheet with the share indices that you will use.)
+      (It is recommend that users use the Bech32 character order)
+      (following the last index you generated in Stage 1.)
+
     /paragraph
     (Use the following procedure to derive a new share:)
+
     /startlist
-    /listitem1 (Make a copy of the Translation Worksheet for the value of $k$ that)
-    (you are using and label the shares with the share indices from the shares)
-    (you have already generated, e.g. `A`, `C` and `D` if $k$ = 3. Label the final)
-    (Share Index with the new share index you want to derive.) /endlistitem
-    /listitem1 (In the derivation table for your value of $k$, find the column)
-    (corresponding to the new share index you want to derive. Fill in the symbols)
-    (on the Translation Worksheet with the symbols from that column next to the)
-    (share index for each row.) /endlistitem
-    /listitem1 (Follow the Translation Worksheet instructions to derive the new share.)
-    /endlistitem
+    /listitem1 (Make a copy of the translation worksheet for the value)
+      (of $k$ that you are using and label the shares with the share)
+      (indices from the shares that you have already generated)
+      (\(e.g., A, C, and D, if $k = 3$\). Label the final share index)
+      (with the new share index that you want to derive.) /endlistitem
+    /listitem1 (In the derivation table for your value of $k$, find the)
+      (column corresponding to the new share index that you want to derive.)
+      (Fill in the symbols on the translation worksheet with the symbols)
+      (from that column next to the share index for each row.) /endlistitem
+    /listitem1 (Follow the translation worksheet instructions to derive)
+      (the new share.) /endlistitem
 
-    /notoc /subsubsection (Derivation Table) /endsubsubsection /toc
-    (These values are used to translate your initial shares in order to compute)
-    (derived shares. Derivation tables for $k$ from 4 upto 8 can be found in Module 2,)
-    (along with instructions for generating the table for $k$ = 9. We re-iterate that)
-    (we strongly discourage large $k$ values.)
+    %****************** Cant get this header to load.
+    %*    /paragraph
+    %*    (Derivation Table. These values are used to translate your)
+    %*    (initial shares in order to compute derived shares.)
 
-] [ % pagebreak
-    /subsection (II.4. Recover Secret Seed) /endsubsection
-    /dropcap (N) (ormally you would not recover a secret seed yourself, and)
-    (instead load shares into a BIP-???? compliant wallet. However, you can)
-    (recover the secret seed by hand if no compatible wallets are available)
-    (or you feel a need to demonstrate your conjuring ability.)
+    /linebreak
+    /linebreak
+    /linebreak
+    ([Move Derivation Table here.])
+    /linebreak
+    /linebreak
+
     /paragraph
-    (The recovery procedure uses exactly $k$ many shares. If you have more than $k$)
-    (many shares, you can select any $k$ of them and set the other shares aside.)
+    (Derivation tables for $k$ from four up to eight can be found in)
+    (Module ???. However, it is strongly discouraged to use)
+    (excessively large $k$ values.)
+
+  /toc % turn on table of contents indexing
+] [ % pagebreak
+
+  /subsection (III.3 Recover a Secret) /endsubsection
+
+  /paragraph
+    (Normally you would not recover a secret seed yourself. Instead,)
+    (you would load shares into a BIP-???? compliant wallet. However,)
+    (you can recover the secret seed by hand if no compatible wallets)
+    (are available or you feel a need to demonstrate your conjuring)
+    (ability. The recovery procedure uses exactly $k$ shares. If you)
+    (have more than $k$ shares, you can select any $k$ of them and)
+    (set the other shares aside.)
+
     /paragraph
     (Use the following procedure to recover the share:)
-    /startlist
-    /listitem1 (For each share, fill in a Checksum Worksheet and verify the checksum.)
-    (If a checksum fails to verify, you may have made an error on your worksheet,)
-    (or there may be an error in your share data. If there is an error in your)
-    (share data, you can try substituting the share with a different one.)
-    (Otherwise you will need to perform the Error Correction Procedure on your)
-    (share, which will involve the assistance of a electronic computer.) /endlistitem
-    /listitem1 (Make a copy of the Translation Worksheet for the value of $k$ that you)
-    (are using and label the shares with the share indices from the shares you)
-    (have selected to recover from, and label the final Share Index as `S`.) /endlistitem
-    /listitem1 (You can fill in the symbols for each share on the Addition)
-    (Worksheet using either the table lookup, or the volvelle lookup:)
-    /paragraph
-    ($Table lookup $k$ = 2:$ Fill in the symbol from the Recover table by)
-    (finding the column with the associated share, and the row for the other)
-    (share.)
-    /paragraph
-    ($Volvelle lookup $k$ = 2:$ Turn the Recovery Wheel to point to the)
-    (share being considered. Find the symbol pointed to under the other share)
-    (index on the wheel and fill in that symbol next to the share we are)
-    (considering on the Translation Worksheet.)
-    /paragraph
-    ($Table lookup $k$ = 3:$ Finding the column with the associated share.)
-    (Lookup the two symbols from the two rows corresponding to the two other)
-    (shares. Make a note of these two symbols on a scrap piece of paper. Use the)
-    (multiplication table to multiply the the two symbols and fill in that)
-    (share's symbol on the Translation Worksheet with the resulting product.)
-    /paragraph
-    ($Volvelle lookup $k$ = 3:$ Turn the Recovery Wheel to point to the)
-    (share being considered. Find the two symbols pointed to under the other share)
-    (indices on the wheel. Turn the multiplication wheel to the first of these)
-    (two symbols. Find the second symbol on the lower ring, and lookup the symbol)
-    (it is pointing to. Fill that symbol next to the share we are considering on)
-    (the Translation Worksheet.)
-    /paragraph
-    (For $k$ > 3 the instructions are essentially the same as those for $k$ = 3,)
-    (except that you will have more symbols to multiply.)
-    /endlistitem
-    /listitem1 (Repeat step 3 for each share on the Addition worksheet.)
-    /endlistitem
-    /listitem1 (Follow the Translation Worksheet instructions recover the secret)
-    (share.) /endlistitem
-  ] [ % pagebreak
-    /section (De-biasing Worksheet) /endsection
-    (*You will need:* five $distinct$ dice, five dice markers \(e.g. pieces of paper, each labeled by)
-      /linebreak (which die it corresponds to\), this and the following page)
-    /startlist
-    /listitem1 (Choose a die track for each die. Place each die's marker on its Free Space.)
-      /endlistitem
-    /listitem1 (Roll all five dice. Move each die's marker to the Die Pad indicating)
-      /linebreak (its value.) /endlistitem
-    /listitem1 (Re-roll the same five dice again and set the $dice$ on the Die Pad)
-      /linebreak (indicating their second values.) /endlistitem
-    /listitem1 (For each die that showed the same value twice, move its marker)
-      /linebreak (back to the free space and repeat steps 2 and 3.)
-      /linebreak (*You must redo both rolls!*) /endlistitem
-    /listitem1 (Using your finger, follow the tree to the right according to)
-      /linebreak (the Die Tracks: take the first left branch if the first die is)
-      /linebreak (to the left of its marker, the right branch if it is to the)
-      /linebreak (right. Similarly, take the second branch based on the)
-      /linebreak (results on the second Die Track, and)
-      (so on, until) /linebreak (the bottom of the tree.) /endlistitem
-    /listitem1 (Repeat Steps 1-5 to generate more characters.) /endlistitem
-  ] [ % blank page -- second page of dice worksheet
-  ] [ % pagebreak
-    /section (Checksum Worksheet \(Generation Instructions\)) /endsection
-    (The Checksum Worksheet is used to generate and verify checksums. It is the)
-    (most frequently used and important worksheet of this codex.)
-    /linebreak
-    (*You will need:* Checksum Worksheet, Checksum Table, Addition Wheel)
-    /linebreak
-    /linebreak
-    (Generating a checksum:)
-    /startlist
-    /listitem1 (Fill in the top diagonal squares \(the bold ones\) with your random data; you should)
-      (have enough to fill the non-pink bolded squares) /endlistitem
-    /listitem1 (Add the first row to the second to fill in the third row, using the)
-      (Addition Wheel.) /endlistitem
-    /listitem1 (Look up the two leftmost underhanging hanging symbols from the third)
-      (row in the Checksum Table \(page 11-12\) to fill in the fourth row.) /endlistitem
-    /listitem1 (Repeat the above two steps, adding the third and fourth row, looking)
-      (up the fifth to fill in the sixth, and so on. You will be able to complete)
-      (the entire sheet except for the pink squares this way.) /endlistitem
-    /listitem1 (To complete the pink squares, work from the bottom up, adding each row)
-      (to the one above it until all the squares are filled.) /endlistitem
-    /linebreak
-    /linebreak
-    (The completed share can now be read from the top diagonal, including the checksum \(the pink bolded squares\).)
-  ] [
-    /section (Checksum Worksheet \(Verification Instructions\)) /endsection
-    (Verifying a checksum:)
-    /startlist
-    /listitem1 (Fill in the top diagonal with your share data; you should have enough)
-      (to fill all the bolded squares) /endlistitem
-    /listitem1 (\(Optional.\) Fill the bottom diagonal, if you have access to this)
-      (data. It will help you catch mistakes.) /endlistitem
-    /listitem1 (Fill in the rest of the worksheet as you did when generating a checksum.)
-      (If your final row does not match `SECRETSHARE32`, or if any of your computed)
-      (bottom diagonal values don't match the expected values, there is a mistake in)
-      (the worksheet or your data has been corrupted.)
-      /endlistitem
-    /linebreak /linebreak
-    (In case of error, first recompute every value in the bad column; then check)
-    (that you copied all the share data correctly; then try redoing the worksheet)
-    (entirely. If the checksum is consistently bad your data is corrupt and you)
-    (need to attempt the online recovery process. \(Under construction; but try)
-    (contacting Pearlwort for help.\))
-  4 { ] [ } repeat  % checksum tables and worksheet
-    /section (Translation Worksheet Instructions) /endsection
-    /notoc %% don't put all the translation worksheets into the ToC
-    (The translation worksheet is used to derive shares, when splitting keys, and)
-    (during key recovery. In all cases, the process is to translate a set of shares)
-    (using the Translation Wheel, then to add the translated results using the)
-    (Addition Wheel.)
-    /linebreak
-    /linebreak
-    (*You will need:* Translation Worksheet, Translation/Multiplication Wheel, Addition Wheel,)
-    (Recovery Wheel \(for key recovery\), Derivation Table \(page 7, for share derivation\))
-    /linebreak
-    /linebreak
-    (In all cases, the number of shares to combine is your k value, the number of)
-    (required shares to reconstruct the secret. The process is:)
-    /startlist
-    /listitem1 (Make sure that you have completed checksum worksheets for all input shares.) /endlistitem
-    /listitem1 (Look up the translation symbols for each share, either in the Derivation Table or)
-      (using the Recovery Wheel and Multiplication Wheel.) /endlistitem
-    /listitem1 (Mark down each share's index \(the sixth character of its header\))
-      (and translation symbol in the appropriate squares.) /endlistitem
-    /listitem1 (Character by character, translate each share from its Checksum Worksheet)
-      (to its row, using the Translation Wheel.) /endlistitem
-    /listitem1 (Using the Addition Wheel, add all rows together.) /endlistitem
-    /linebreak
-    /linebreak
-    (Notice that the resulting share will automatically have the correct share index in its header.)
-    (*If not, you have likely misread the instructions.*)
-  3 { ] [ } repeat  % add a bunch of empty placeholder pages
-    /section (Module 0: Volvelles) /endsection
-  4 { ] [ } repeat
-    /section (Module 1: Share Booklet) /endsection
 
-    (In the common case that your threshold value k is 2, there is a much faster)
-    (way to generate shares rather than using the Translation Worksheet and the)
-    (volvelles.)
-    /paragraph
-    (In this case, your two initially generated shares will be `A` and `C`. To)
-    (generate further shares, go through the characters of your `A` share one by)
-    (one. For each character, find the table labeled by the character; then find)
-    (the row labeled by the corresponding character of your `C` share.)
-    /paragraph
-    (All of the corresponding characters for the `D`, `E`, `F`, etc., shares can)
-    (be read off this row in the correspondingly-labeled column.)
-    /paragraph
-    (We have removed the `S` share from these tables, since this share contains)
-    (your secret data. If you want to generate the `S` share, you must use the)
-    (Recovery process.)
-  9 { ] [ } repeat
-    /section (Module 2: Share Generation Tables) /endsection
-    (The main instructional section contains share derivation tables for $k$ values of)
-    (2 or 3, assuming that initially generated shares are `A`, `C`, and \(sometimes\))
-    (`D`. This page provides tables for higher $k$ values; the next provides tables)
-    (for the case where your `S` share is an initial one.)
-    /paragraph
-    (Even higher values of $k$ can be obtained by editing the PostScript source of)
-    (this document. Search for the text `EDITME` to find the right section.)
-    /paragraph
-    (We caution users that higher $k$ values, in our view, are a bad trade-off between)
-    (usability and robustness \(which are damaged\) and security \(which is improved\).)
+    /startlist
+    /listitem1
+      (For each share, fill in a checksum worksheet and verify the)
+      (checksum. If a checksum fails to verify, you may have made an)
+      (error on your worksheet, or there may be an error in your)
+      (shared data. If there is an error in your share data, you can)
+      (try substituting the share with a different one. Otherwise,)
+      (you will need to perform the error correction procedure on)
+      (your share, which will involve the assistance of an electronic)
+      (computer.) /endlistitem
+    /listitem1
+      (Make a copy of the translation worksheet for the value of $k$)
+      (that you are using and label the shares with the share indices)
+      (from the shares that you have selected to recover from, and)
+      (label the final share index as S.) /endlistitem
+    /listitem1
+      (You can fill in the symbols for each share on the addition)
+      (worksheet using either the table look up or the volvelle)
+      (lookup:) /endlistitem
+
+      /startlist
+      /listitem* (Table lookup $k = 2$: Fill in the symbol from the)
+        (recovery wheel by finding the column with the associated)
+        (share and the row for the other share.) /endlistitem
+      /listitem* (Volvelle lookup $k = 2: $ Turn the recovery wheel to)
+        (point to the share being considered. Find the symbol pointed)
+        (to under the other share index on the wheel and fill in that)
+        (symbol next to the share that we are considering on the)
+        (translation worksheet.) /endlistitem
+      /listitem* (Table lookup $k = 3$: Find the column with the)
+        (associated share. Look up the two symbols from the two rows)
+        (corresponding to the two other shares. Make a note of these)
+        (two symbols on scrap paper. Use the multiplication table to)
+        (multiply the two symbols and fill in that shares symbol on)
+        (the translation worksheet with the resulting product.) /endlistitem
+      /listitem* (Volvelle lookup $k = 3$: Turn the recovery wheel to)
+        (point to the share being considered. Find the two symbols)
+        (pointed to under the other share indices on the wheel. Turn)
+        (the multiplication wheel to the first of these two symbols.)
+        (Find the second symbol on the lower ring and look up the)
+        (symbol to which it is pointing. Fill in the symbol next to)
+        (the share that we are considering on the translation worksheet.)
+        (For $k$ > $3$, the instructions are essentially the same as those)
+        (for $k$ = $3$, except that you will have more symbols to)
+        (multiply.) /endlistitem
+
+      /startlist
+      /listitem1 (Repeat step three for each share on the addition)
+        (worksheet.) /endlistitem
+      /listitem1
+        (Follow the translation worksheet instructions to recover the)
+        (secret share.) /endlistitem
+
+  /toc % turn on table of contents indexing
+] [ % pagebreak
+
+
+] [ % pagebreak
+
+    /section (Worksheets) /endsection
+
+    /subsection (Dice De-biasing Worksheet) /endsubsection
+    (Most dice have small manufacturing imperfections that cause the)
+    (dice to be imbalanced and to push to one side either above or)
+    (below average for an the expected roll. This de-biasing worksheet)
+    (is used to removed that bias.)
+
+    /paragraph (You will need: five distinct dice, five dice markers)
+    (\(e.g., pieces of paper, each labeled by which die it corresponds) (to\), and this worksheet.)
+
+    /startlist
+    /listitem1 (Choose a die track for each die. Place each dies’)
+      (marker on its free space.) /endlistitem
+    /listitem1 (Roll all five dice. Move each dies’ marker to the die)
+      (pad indicating its value.) /endlistitem
+    /listitem1 (Re-roll the same five dice again and set the dice on)
+      (the die pad indicating their second values.) /endlistitem
+    /listitem1 (If a die showed the same value twice, move its marker)
+      (back to the free space and repeat steps two and three.)
+      ($You must redo both rolls!$) /endlistitem
+    /listitem1 (Using your finger, follow the tree to the right)
+      (according to the die tracks. Take the first left branch if the)
+      (first die is to the left of its marker, and the right branch if)
+      (it is to the right. Similarly, take the second branch based on)
+      (the results on the second die track, and so on, until the bottom)
+      (of the tree.) /endlistitem
+    /listitem1 (Repeat steps one through five to generate more)
+      (characters.) /endlistitem
+
+  ] [ % blank page -- second page of dice worksheet
+
+  ] [ % pagebreak
+
+    /subsection (Checksum Worksheet \(Generation Instructions\)) /endsubsection
+    (The checksum worksheets are used to generate and verify checksums.)
+    (The are the most frequently used and important worksheets of)
+    (Codex32.)
+
+   /paragraph (You will need: a checksum worksheet, checksum table,)
+    (and addition wheel.)
+
+   /paragraph (Generating a checksum:)
+    /startlist
+    /listitem1 (Fill in the top diagonal squares)
+      (\(i.e., the bold ones\) with your random data. You should have)
+      (enough to fill the non-pink bolded squares.) /endlistitem
+    /listitem1 (Add the first row to the second to fill in the third)
+      (row, using the addition wheel.) /endlistitem
+    /listitem1 (Look up the two leftmost under hanging symbols from the)
+      (third row in the checksum table \(pages 11-12\) to fill in the)
+      (fourth row.) /endlistitem
+    /listitem1 (Repeat the above two steps, adding the third and fourth)
+      (rows, looking up the fifth to fill in the sixth, and so on. With)
+      (this approach, you will be able to complete the entire sheet)
+      (except for the pink squares.) /endlistitem
+    /listitem1 (To complete the pink squares, work from the bottom up,)
+      (adding each row to the one above it until all of the squares are)
+      (filled. The completed share can now be read from the top)
+      (diagonal, including the checksum \(i.e., the pink bolded)
+      (squares\).) /endlistitem
+
   ] [
+
+    /subsection (Checksum Worksheet \(Verification Instructions\)) /endsubsection
+
+    /paragraph
+      (Verifying a checksum:)
+
+    /startlist
+    /listitem1 (Fill in the top diagonal with your share data; you)
+      (should have enough to fill all the bolded squares) /endlistitem
+    /listitem1 (\(Optional.\) Fill the bottom diagonal, if you have)
+      (access to this data. It will help you catch mistakes.) /endlistitem
+    /listitem1 (Fill in the rest of the worksheet as you did when)
+      (generating a checksum. If your final row does not match)
+      (`SECRETSHARE32`, or if any of your computed bottom diagonal)
+      (values don't match the expected values, there is a mistake in)
+      (the worksheet or your data has been corrupted.) /endlistitem
+
+    /paragraph
+      (In case of error, first recompute every value in the bad column)
+      (and check that you copied all of the share data correctly. Then,)
+      (try redoing the worksheet entirely. If the checksum is)
+      (consistently bad, your data is corrupt and you need to attempt)
+      (the online recovery process.)
+
+
+  4 { ] [ } repeat  % checksum tables and worksheet
+    /subsection (Translation Worksheet) /endsubsection
+    /notoc %% don't put all the translation worksheets into the ToC
+      (The translation worksheet is used to derive shares, when)
+      (splitting keys, and during key recovery. In all cases, the)
+      (process is to translate a set of shares using the translation)
+      (wheel, then to add the translated results using the addition)
+      (wheel.)
+
+    /paragraph
+    (*You will need:* translation worksheet, translation/multiplication)
+    (wheel, addition wheel, recovery Wheel \(for key recovery\),)
+    (derivation table \(page 7, for share derivation\))
+
+    /paragraph
+      (In all cases, the number of shares to combine is your $k$)
+      (value, the number of required shares to reconstruct the secret.)
+      (The process is:)
+
+    /startlist
+    /listitem1 (Make sure that you have completed checksum worksheets)
+      (for all input shares.) /endlistitem
+    /listitem1 (Look up the translation symbols for each share, either)
+      (in the derivation table or using the recovery wheel and)
+      (multiplication wheel.) /endlistitem
+    /listitem1 (Mark down each share's index \(the sixth character of)
+      (its header\) and translation symbol in the appropriate squares.) /endlistitem
+    /listitem1 (Character by character, translate each share from its)
+      (checksum worksheet to its row, using the translation wheel.) /endlistitem
+    /listitem1 (Using the addition wheel, add all rows together.) /endlistitem
+
+    /paragraph
+      (Notice that the resulting share will automatically have the)
+      (correct share index in its header.)
+      (*If not, you have likely misread the instructions.*)
+
+  3 { ] [ } repeat  % add a bunch of empty placeholder pages
+
+    /section (Module 0: Volvelles) /endsection
+
+  4 { ] [ } repeat
+
+    /section (Module 1: Share Booklet) /endsection
+    (In the common case that your threshold value `k` is 2, there is a)
+    (much faster way to generate shares rather than using the)
+    (translation worksheet and the volvelles.)
+
+    /paragraph
+    (In this case, your two initially generated shares will be `A` and)
+    (`C`. To generate further shares, go through the characters of your)
+    (`A` share one by one. For each character, find the table labeled)
+    (by the character; then find the row labeled by the corresponding)
+    (character of your `C` share.)
+
+    /paragraph
+    (All of the corresponding characters for the `D`, `E`, `F`, etc.,)
+    (shares can be read off this row in the correspondingly-labeled)
+    (column.)
+
+    /paragraph
+    (We have removed the `S` share from these tables, since this share)
+    (contains your secret data. If you want to generate the `S` share,)
+    (you must use the recovery process.)
+
+  9 { ] [ } repeat
+
+    /section (Module 2: Share Generation Tables) /endsection
+    (The main instructional section contains share derivation tables)
+    (for $k$ values of 2 or 3, assuming that initially generated shares)
+    (are `A`, `C`, and \(sometimes\) `D`. This page provides tables for)
+    (higher $k$ values; the next provides tables for the case where)
+    (your `S` share is an initial one.)
+
+    /paragraph
+    (Even higher values of $k$ can be obtained by editing the)
+    (PostScript source of this document. Search for the text `EDITME`)
+    (to find the right section.)
+
+    /paragraph
+    (We caution users that higher $k$ values, in our view, are a bad)
+    (trade-off between usability and robustness \(which are damaged\))
+    (and security \(which is improved\).)
+
+  ] [
+
     /startText
-    (These tables allow you to generate shares in the case that your `S` share is)
-    (an initial share. Ordinarily, you would generate the first few shares randomly,)
-    (and infer your `S` share form those; but in some cases, for example when using)
-    (and existing seed with this scheme, you need to generate the `S` share first.)
+    (These tables allow you to generate shares in the case that your)
+    (`S` share is an initial share. Ordinarily, you would generate the)
+    (first few shares randomly, and infer your `S` share form those;)
+    (but in some cases, for example when using and existing seed with)
+    (this scheme, you need to generate the `S` share first.)
+
   20 { ] [ } repeat  % add a bunch of empty placeholder pages
   ]
 ] def
@@ -2479,7 +2633,7 @@ end
   grestore
 
   6.5 boxW mul 40 rmoveto
-  gsave (data \(26 chars for 128 bits\)) centreshow grestore
+  gsave (random data \(26 chars/128 bits\)) centreshow grestore
 
   13 boxW mul -40 rmoveto
   gsave (checksum \(13 chars\)) centreshow grestore
@@ -3328,7 +3482,7 @@ centerX marginY1 16 sub translate
 
 % Header/data format
 /Times-Bold findfont 16 scalefont setfont
-0 0 moveto (Data Format) centreshow
+0 0 moveto (Share Data Format) centreshow
 
 0 -24 translate
 drawDataFormat
@@ -3503,7 +3657,7 @@ end pgsave restore showpage
 portraitPage begin 8 drawPageContent
 end pgsave restore showpage
 
-%%% De-biasing Worksheet
+%%% Dice De-biasing Worksheet
 %%Page: 14 14
 %%PageOrientation: Landscape
 %%BeginPageSetup

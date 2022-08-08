@@ -8,7 +8,7 @@
 [
 (MIT License)
 ()
-(Copyright (c) 2020 Blockstream)
+(Copyright (c) 2022 Blockstream)
 ()
 (Permission is hereby granted, free of charge, to any person obtaining a copy)
 (of this software and associated documentation files (the "Software"), to deal)
@@ -78,7 +78,7 @@
     (checksums and SSSS on Bitcoin secrets.)
 
     /subsection (Assembly) /endsubsection
-    (*You will need*: craft knife, scissors, cardstock or heavy paper, brass fasteners, disc printouts) /linebreak
+    (*You will need*: craft knife, scissors, cardstock or heavy paper, brass fasteners, disc printouts.) /linebreak
     (Using the printouts from Module 0 \(which have pictographic instructions\),)
     /startlist
     /listitem1 (Cut out each disc with scissors. Cut out the windows on the top discs with the craft knife.) /endlistitem
@@ -87,26 +87,26 @@
     /listitem1 (Attach the discs with a brass fastener through the centre holes.) /endlistitem
 
     /subsection (Initial \(First $k$\) Share Creation) /endsubsection
-    (*You will need*: Addition Volvelle, Random Character Worksheet, Checksum Worksheet, pencil and eraser)
+    (*You will need*: the addition wheel, dice de-biasing worksheet, checksum worksheet, pencil, and eraser.)
     /linebreak
     (For each of your initial $k$ shares, you should)
     /startlist
-    /listitem1 (Generate random data by rolling dice, following the instructions on the Random Character Worksheet.) /endlistitem
-    /listitem1 (Follow the instructions on the Checksum Worksheet to affix a checksum.) /endlistitem
+    /listitem1 (Generate random data by rolling dice, following the instructions on the dice de-biasing worksheet.) /endlistitem
+    /listitem1 (Follow the instructions on the checksum worksheet to affix a checksum.) /endlistitem
 
     /subsection (Derived \(Remaining\) Share Creation) /endsubsection
-    (*You will need*: Addition Volvelle, Multiplication/Translation Wheel, Translation Worksheet, pencil)
+    (*You will need*: the addition wheel, multiplication/translation wheel, translation worksheet, and pencil.)
     /startlist
     /listitem1 (Translate the initial shares using the symbols in the Derived Shares section) /endlistitem
     /listitem1 (Add the translated initial shares to get the new derived share.) /endlistitem
 
     /subsection (Secret Recovery) /endsubsection
-    (*You will need*: Everything used for Derived Share Creation \(see above\), Recovery Wheel)
+    (*You will need*: Everything used for Derived Share Creation \(see above\), recovery wheel.)
     /linebreak
     (To recover your secret you must have $k$ shares available. Then)
     /startlist
-    /listitem1 (Look up their recovery symbols with the Recovery Wheel.) /endlistitem
-    /listitem1 (Multiply all the symbols for each share with the Multiplication Wheel to get)
+    /listitem1 (Look up their recovery symbols with the recovery wheel.) /endlistitem
+    /listitem1 (Multiply all the symbols for each share with the multiplication wheel to get)
     (a single symbol for each share.) /endlistitem
     /listitem1 (Translate the share by that symbol.) /endlistitem
     /listitem1 (Add all the translated shares to get your secret.) /endlistitem
@@ -298,32 +298,32 @@
     (There are three volvelles in this codex, which have slightly different usage)
     (instructions.)
     /paragraph
-    (*Addition.* To add two characters, turn the Addition Wheel to one of them,)
+    (*Addition.* To add two characters, turn the addition wheel to one of them,)
     (and look through the window corresponding to the other. It does not matter)
     (which character is which; addition is symmetric.)
     /paragraph
     (*Translation.* A common task is to "translate" share data by a given recovery)
-    (symbol. To do so, turn the Translation/Multiplication Wheel so that the window)
-    (on the Multiplication side is showing the correct symbol. Then turn the wheel)
-    (over; the Translation side will act like a decoder ring, mapping characters)
+    (symbol. To do so, turn the translation/multiplication wheel so that the window)
+    (on the multiplication side is showing the correct symbol. Then turn the wheel)
+    (over; the translation side will act like a decoder ring, mapping characters)
     (to characters.)
     /paragraph
     (*Multiplication.* Sometimes you will need to translate a share by multiple)
-    (symbols at once. To do this, turn the Multiplication Wheel to the first symbol.)
+    (symbols at once. To do this, turn the multiplication wheel to the first symbol.)
     (Find the next symbol on the inner wheel; whatever symbol it is pointing to,)
-    (turn the Multiplication Wheel to that symbol. Repeat for all the symbols you)
-    (need to multiply; the Multiplication Wheel will wind up at the final product.)
-    (You can now turn the Wheel over to translate by this symbol.)
+    (turn the multiplication wheel to that symbol. Repeat for all the symbols you)
+    (need to multiply; the multiplication wheel will wind up at the final product.)
+    (You can now turn the wheel over to translate by this symbol.)
     /paragraph
     (As with addition, it does not matter which order you take your original symbols)
     (in.)
     /paragraph
     (*Recovery.* When recovering your secret, you will need to look up "Recovery)
-    (symbols" that will be used to. To do this with the Recovery Wheel, turn the)
+    (symbols" that will be used to. To do this with the recovery wheel, turn the)
     (wheel to the share you want to translate. Mark down the symbols pointed to)
     (by the $other$ shares' indices, and multiply these together.)
     /paragraph
-    ($Important:$ Unlike the other wheels, the Recovery Wheel can easily be used)
+    ($Important:$ Unlike the other wheels, the recovery wheel can easily be used)
     (in the wrong order. Be careful!)
 
     /subsection (II.2. Share Format) /endsubsection
@@ -392,9 +392,9 @@
 
     /subsubsection (II.3.a. New Secret Seed: Stage 1) /endsubsubsection
 
-    (Make 2$k$ copies of the Checksum Worksheet and save half of them for later.)
+    (Make 2$k$ copies of the checksum worksheet and save half of them for later.)
     /paragraph
-    (Fill out the header portion of $k$ many Checksum Worksheets with your chosen)
+    (Fill out the header portion of $k$ many checksum worksheets with your chosen)
     (threshold $k$ and chosen ID. Place a unique share index on each worksheet)
     (starting with share `A` on the first worksheet, `C` on the second worksheet,)
     (and so on through the $k$ first characters from the Bech32 character set.)
@@ -405,17 +405,17 @@
     /footnotemark (Once we have a BIP number for codex32, we will replace "BIP-????" throughout the document.)
   ] [ % pagebreak
     /startText
-    (Fill out the 26 character data portion of each Checksum Worksheet with random)
-    (characters. Use the Random Character Worksheet to generate each random)
+    (Fill out the 26 character data portion of each checksum worksheet with random)
+    (characters. Use the dice de-biasing worksheet to generate each random)
     (character.)
     /paragraph
-    (Follow the Checksum Worksheet instructions to generate a checksum for each)
+    (Follow the checksum worksheet instructions to generate a checksum for each)
     (worksheet.)
     /paragraph
     (*Critical Step:* Verify your checksum by copying each of the 48 characters)
     (of the share onto an empty worksheet that you saved earlier. Follow the)
     (checksum verification instructions to verify each checksum. If any checksum)
-    (fails to verify then make more copies of the Checksum worksheet and redo the)
+    (fails to verify then make more copies of the checksum worksheet and redo the)
     (checksum generation and checksum verification steps again.)
     /paragraph
     (*Failure to verify each checksum may lead to irrecoverable loss of)
@@ -434,15 +434,15 @@
     /paragraph
     (Use the following procedure to derive a new share:)
     /startlist
-    /listitem1 (Make a copy of the Translation Worksheet for the value of $k$ that)
+    /listitem1 (Make a copy of the translation worksheet for the value of $k$ that)
     (you are using and label the shares with the share indices from the shares)
     (you have already generated, e.g. `A`, `C` and `D` if $k$ = 3. Label the final)
     (Share Index with the new share index you want to derive.) /endlistitem
     /listitem1 (In the derivation table for your value of $k$, find the column)
     (corresponding to the new share index you want to derive. Fill in the symbols)
-    (on the Translation Worksheet with the symbols from that column next to the)
+    (on the translation worksheet with the symbols from that column next to the)
     (share index for each row.) /endlistitem
-    /listitem1 (Follow the Translation Worksheet instructions to derive the new share.)
+    /listitem1 (Follow the translation worksheet instructions to derive the new share.)
     /endlistitem
 
     /notoc /subsubsection (Derivation Table) /endsubsubsection /toc
@@ -463,51 +463,51 @@
     /paragraph
     (Use the following procedure to recover the share:)
     /startlist
-    /listitem1 (For each share, fill in a Checksum Worksheet and verify the checksum.)
+    /listitem1 (For each share, fill in a checksum worksheet and verify the checksum.)
     (If a checksum fails to verify, you may have made an error on your worksheet,)
     (or there may be an error in your share data. If there is an error in your)
     (share data, you can try substituting the share with a different one.)
     (Otherwise you will need to perform the Error Correction Procedure on your)
     (share, which will involve the assistance of a electronic computer.) /endlistitem
-    /listitem1 (Make a copy of the Translation Worksheet for the value of $k$ that you)
+    /listitem1 (Make a copy of the translation worksheet for the value of $k$ that you)
     (are using and label the shares with the share indices from the shares you)
     (have selected to recover from, and label the final Share Index as `S`.) /endlistitem
-    /listitem1 (You can fill in the symbols for each share on the Addition)
-    (Worksheet using either the table lookup, or the volvelle lookup:)
+    /listitem1 (You can fill in the symbols for each share on the translation)
+    (worksheet using either the table lookup, or the volvelle lookup:)
     /paragraph
     ($Table lookup $k$ = 2:$ Fill in the symbol from the Recover table by)
     (finding the column with the associated share, and the row for the other)
     (share.)
     /paragraph
-    ($Volvelle lookup $k$ = 2:$ Turn the Recovery Wheel to point to the)
+    ($Volvelle lookup $k$ = 2:$ Turn the recovery wheel to point to the)
     (share being considered. Find the symbol pointed to under the other share)
     (index on the wheel and fill in that symbol next to the share we are)
-    (considering on the Translation Worksheet.)
+    (considering on the translation worksheet.)
     /paragraph
     ($Table lookup $k$ = 3:$ Finding the column with the associated share.)
     (Lookup the two symbols from the two rows corresponding to the two other)
     (shares. Make a note of these two symbols on a scrap piece of paper. Use the)
     (multiplication table to multiply the the two symbols and fill in that)
-    (share's symbol on the Translation Worksheet with the resulting product.)
+    (share's symbol on the translation worksheet with the resulting product.)
     /paragraph
-    ($Volvelle lookup $k$ = 3:$ Turn the Recovery Wheel to point to the)
+    ($Volvelle lookup $k$ = 3:$ Turn the recovery wheel to point to the)
     (share being considered. Find the two symbols pointed to under the other share)
     (indices on the wheel. Turn the multiplication wheel to the first of these)
     (two symbols. Find the second symbol on the lower ring, and lookup the symbol)
     (it is pointing to. Fill that symbol next to the share we are considering on)
-    (the Translation Worksheet.)
+    (the translation worksheet.)
     /paragraph
     (For $k$ > 3 the instructions are essentially the same as those for $k$ = 3,)
     (except that you will have more symbols to multiply.)
     /endlistitem
-    /listitem1 (Repeat step 3 for each share on the Addition worksheet.)
+    /listitem1 (Repeat step 3 for each share on the addition worksheet.)
     /endlistitem
-    /listitem1 (Follow the Translation Worksheet instructions recover the secret)
+    /listitem1 (Follow the translation worksheet instructions recover the secret)
     (share.) /endlistitem
   ] [ % pagebreak
-    /section (Random Character Worksheet) /endsection
+    /section (Dice De-biasing Worksheet) /endsection
     (*You will need:* five $distinct$ dice, five dice markers \(e.g. pieces of paper, each labeled by)
-      /linebreak (which die it corresponds to\), this and the following page)
+      /linebreak (which die it corresponds to\), this and the following page.)
     /startlist
     /listitem1 (Choose a die track for each die. Place each die's marker on its Free Space.)
       /endlistitem
@@ -528,10 +528,10 @@
   ] [ % blank page -- second page of dice worksheet
   ] [ % pagebreak
     /section (Checksum Worksheet \(Generation Instructions\)) /endsection
-    (The Checksum Worksheet is used to generate and verify checksums. It is the)
+    (The checksum worksheet is used to generate and verify checksums. It is the)
     (most frequently used and important worksheet of this codex.)
     /linebreak
-    (*You will need:* Checksum Worksheet, Checksum Table, Addition Wheel)
+    (*You will need:* checksum worksheet, checksum table, addition wheel.)
     /linebreak
     /linebreak
     (Generating a checksum:)
@@ -539,9 +539,9 @@
     /listitem1 (Fill in the top diagonal squares \(the bold ones\) with your random data; you should)
       (have enough to fill the non-pink bolded squares) /endlistitem
     /listitem1 (Add the first row to the second to fill in the third row, using the)
-      (Addition Wheel.) /endlistitem
+      (addition wheel.) /endlistitem
     /listitem1 (Look up the two leftmost underhanging hanging symbols from the third)
-      (row in the Checksum Table \(page 11-12\) to fill in the fourth row.) /endlistitem
+      (row in the checksum table \(page 11-12\) to fill in the fourth row.) /endlistitem
     /listitem1 (Repeat the above two steps, adding the third and fourth row, looking)
       (up the fifth to fill in the sixth, and so on. You will be able to complete)
       (the entire sheet except for the pink squares this way.) /endlistitem
@@ -574,25 +574,25 @@
     /notoc %% don't put all the translation worksheets into the ToC
     (The translation worksheet is used to derive shares, when splitting keys, and)
     (during key recovery. In all cases, the process is to translate a set of shares)
-    (using the Translation Wheel, then to add the translated results using the)
-    (Addition Wheel.)
+    (using the translation wheel, then to add the translated results using the)
+    (addition wheel.)
     /linebreak
     /linebreak
-    (*You will need:* Translation Worksheet, Translation/Multiplication Wheel, Addition Wheel,)
-    (Recovery Wheel \(for key recovery\), Derivation Table \(page 7, for share derivation\))
+    (*You will need:* translation worksheet, translation/multiplication wheel, addition wheel,)
+    (recovery wheel \(for key recovery\), and derivation table \(page 7, for share derivation\).)
     /linebreak
     /linebreak
     (In all cases, the number of shares to combine is your k value, the number of)
     (required shares to reconstruct the secret. The process is:) 
     /startlist
     /listitem1 (Make sure that you have completed checksum worksheets for all input shares.) /endlistitem
-    /listitem1 (Look up the translation symbols for each share, either in the Derivation Table or)
-      (using the Recovery Wheel and Multiplication Wheel.) /endlistitem
+    /listitem1 (Look up the translation symbols for each share, either in the derivation table or)
+      (using the recovery wheel and multiplication wheel.) /endlistitem
     /listitem1 (Mark down each share's index \(the sixth character of its header\))
       (and translation symbol in the appropriate squares.) /endlistitem
-    /listitem1 (Character by character, translate each share from its Checksum Worksheet)
-      (to its row, using the Translation Wheel.) /endlistitem
-    /listitem1 (Using the Addition Wheel, add all rows together.) /endlistitem
+    /listitem1 (Character by character, translate each share from its checksum worksheet)
+      (to its row, using the translation wheel.) /endlistitem
+    /listitem1 (Using the addition wheel, add all rows together.) /endlistitem
     /linebreak
     /linebreak
     (Notice that the resulting share will automatically have the correct share index in its header.)
@@ -603,7 +603,7 @@
     /section (Module 1: Share Booklet) /endsection
 
     (In the common case that your threshold value k is 2, there is a much faster)
-    (way to generate shares rather than using the Translation Worksheet and the)
+    (way to generate shares rather than using the translation worksheet and the)
     (volvelles.)
     /paragraph
     (In this case, your two initially generated shares will be `A` and `C`. To)
@@ -2630,7 +2630,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
 } bind def
 
 %******************
-%* Dice Worksheet
+%* Dice De-biasing Worksheet
 %*
 %* Functionality for the dice worksheet - the tree and dice pads
 %*
@@ -3427,7 +3427,7 @@ end pgsave restore showpage
 portraitPage begin 8 drawPageContent
 end pgsave restore showpage
 
-%%% Random Character Worksheet
+%%% Dice De-biasing Worksheet
 %%Page: 14 14
 %%PageOrientation: Landscape
 %%BeginPageSetup

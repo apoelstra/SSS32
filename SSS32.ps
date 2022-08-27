@@ -122,7 +122,8 @@
     (one of them may eventually fall into the wrong hands. However, if you make too)
     (few, they could all become lost, destroyed, or misplaced. The consequence in)
     (either case is a complete and total loss of funds.)
-    (Something we would like to avoid.)
+    (By using shares rather than complete copies of our seed, we can make this)
+    (tradeoff in a more nuanced way.)
 
     /paragraph
     (Shamir Secret Sharing Scheme was first proposed in the 1970s,)
@@ -132,7 +133,7 @@
 
   ] [ % pagebreak
     /subsection (Codex32)/endsubsection
-    /dropcap (U) (sing the circular paper computers \(i.e., volvelles\))
+    /dropcap (U) (sing circular paper computers \(i.e., volvelles\))
     (this codex illustrates a method for Shamir Secret Sharing Bitcoin)
     (secrets. This document also defines an error-correcting code and)
     (complete scheme for generating, checksumming, splitting, and)
@@ -145,18 +146,18 @@
     /listitem* (Securely generate random data from  potentially)
       (biased dice rolls or coin flips to create shares.) /endlistitem
     /listitem* (Split a secret into up to 31 shares, of which some)
-      (number of thme are needed to reconstruct the secret.) /endlistitem
-    /listitem* (Compute and verify very powerful checksums)
-      (as part of each share.) /endlistitem
+      (number of them are needed to reconstruct the secret.) /endlistitem
     /listitem* (Recombine your shares into your original secret.) /endlistitem
+    /listitem* (Compute and verify powerful checksums)
+      (as part of each share.) /endlistitem
 
     /paragraph
     (This scheme does not support passphrases or key hardening, so)
-    (security rests solely on the strength of this randomness.)
+    (security rests solely on the strength of your randomness.)
     (Because of this, it is extremely important to to generate)
     (truly random numbers. This document provides a dice de-biasing)
     (worksheet to generate random values from dice rolls by hand.)
-    (Assuming that you can generate strong randomness,)
+    (Assuming you have strong randomness,)
     (you will find no cryptographic compromise in the design or)
     (implementation of the codex.)
 
@@ -204,22 +205,15 @@
       (by the varying power draw from a USB hub.) /endlistitem
   ] [ % pagebreak
     /startText
-    /listitem* (Coins that don't need to be frequently spent may have)
-      (their secure storage refreshed or reorganized an unlimited)
-      (number of times.) /endlistitem
-
-    /paragraph
     (These risks have varying degrees of plausibility, but for a)
-    (Bitcoin secret which may, exceed any one person lifetime, even)
+    (Bitcoin secret which may exceed any one person's lifetime, even)
     ("trivial" risks add up to become very serious.)
 
     /paragraph
     (The good news is that unlike electronic computers, paper cannot)
     (remember or leak secrets! When handled correctly and disposed)
     (of securely, and this can be done without special skills,)
-    (equipment, or magic. On one hand, electronic computers aren't)
-    (perfectly secure. But on the other hand, perfect security is not)
-    (an achievable standard for paper computers either.)
+    (equipment, or magic.)
 
     /paragraph
     (Some of the limitations of SSSS include:)
@@ -232,7 +226,8 @@
       (even if their single-party authority was not intended.)/endlistitem
     /listitem* (SSSS requires the generation of additional random)
       (data beyond the original secret, which must be generated)
-      (securely. If any share is corrupted, the reconstructed secret)
+      (securely.) /endlistitem
+    /listitem* (If any share is corrupted, the reconstructed secret)
       (will be wrong, and it's impossible to determine which share was)
       (responsible, or how many.) /endlistitem
 
@@ -241,7 +236,7 @@
     (error-correcting codes, inspired by SLIP39. However, there is)
     (nothing much that can be done about the fact that SSSS)
     (involves a single point of failure at the time that the secret)
-    (key material is used. Which is why this scheme is only to be)
+    (key material is used. This is why this scheme is only to be)
     (used for backups, and not for enforcing a signing policy.)
 
     /toc % turn on table of contents indexing
@@ -276,24 +271,24 @@
     /linebreak
 
     /paragraph
-    (Although this scheme does not support BIP39 mnemonic codes, it is)
+    (This scheme does not support BIP39 mnemonic codes, which is)
     (currently the most popular way of storing private key backups.)
     (Users should note that the BIP39 checksum is less than one word)
     (long, and may fail to detect even a single incorrect word.)
     (Its primary effects are to cause your key data to be an awkward)
-    (length, and to prevent you from verifying your datas integrity)
+    (length, and to prevent you from verifying your data's integrity)
     (by hand.)
 
     /paragraph
-    (In contrast, The SLIP39 Shamir Secret-Sharing for Mnemonic Codes)
-    (, can detect up to three errors and correct up to one error 100%)
+    (In contrast, the SLIP39 Shamir secret-sharing scheme)
+    (can detect up to three errors and correct up to one error 100%)
     (of the time. Additionally, it will fail to detect other random)
     (errors with extremely low probability. However, the SLIP39)
     (checksum is also quite difficult to compute or verify by hand.)
 
     /paragraph
-    (In Codex32, we introduce the codex32 checksum, which can detect up)
-    (to eight errors and correct up to four. Codex32, has an even)
+    (In Codex32, we introduce the *codex32* checksum, which can detect up)
+    (to eight errors and correct up to four. Codex32 has an even)
     (higher probability than SLIP39 of successfully detecting random)
     (errors. And most importantly, codex32 checksums can be computed)
     (and verified entirely by hand.)
@@ -302,15 +297,16 @@
   ] [ % pagebreak
 
     /subsection (Bitcoin and Seed Values) /endsubsection
-    /dropcap (B) (IP???? assumes that your secret is a 128-bit BIP32)
-    (master seed.  Many users interact with BIP32 master seeds)
-    (indirectly \(e.g., by storing a set of 12 or 24 BIP39 seed words\))
-    (. These seed words represent a 132-bit or 264-bit secret, which is)
-    (converted to a large master human-readable seed in the BIP39)
-    (protocol, by means of a complicated and irreversible process.)
-    (BIP32 128-bit seeds are enough to derive an effectively unlimited)
-    (number of addresses from a single secret value, thus eliminating)
-    (the need for frequent backups.)
+    /dropcap (B) (IP32 is a protocol for deriving an effectively unlimited)
+    (number of addresses from a single *master seed*, which may be between)
+    (128 and 512 bits long. Many users interact with BIP32 master seeds)
+    (indirectly, e.g., by storing a set of 12 or 24 *BIP39 seed words*.)
+    (Unfortunately, these seed words correspond to a 512-bit secret, while)
+    (codex32 works best with 128-bit secrets.)
+    /paragraph
+    (We recommend users of codex32 generate a fresh 128-bit seed, using the)
+    (instructions in this book, and sweep their coins to addresses derived)
+    (from the new seed.)
 
     /linebreak
     /linebreak
@@ -365,7 +361,7 @@
     /subsection (Share Data) /endsubsection
     /dropcap (F) (or a 128-bit secret seed, each share is 48 characters)
     (long. Shares begin with the three-character prefix MS1. This is)
-    (followed by a six-character header. The next 26-characters are the)
+    (followed by a six-character *header*. The next 26 characters are the)
     (data portion. The final 13 characters are the checksum.)
 
     /paragraph
@@ -532,7 +528,7 @@
 
     /startlist
     /listitem1 (Choose a threshold $k$ and total number of shares)
-      ($n$ that suits your needs. The threshold $k$ must be two or three,)
+      ($n$ that suits your needs. The threshold $k$ should be two or three,)
       (and $n$ must be 31 or less. For $k > 3$ see Module ????, but this)
       (is not recommended.) /endlistitem
     /listitem1 (Choose a four-character identifier for your new secret)
@@ -543,7 +539,7 @@
     /listitem1 (Follow Section III.2.A to generate the first $k$)
       (shares.) /endlistitem
     /listitem1 (Follow Section III.2.B to generate the remaining)
-      (\$n - k$\.) /endlistitem
+      (\($n - k$\).) /endlistitem
     /listitem1 (Load your shares into your BIP-??? compliant wallet)
       (or use the recover secret seed procedure in Section III.3)
       (to access your new secret seed value.) /endlistitem
@@ -571,14 +567,13 @@
     /listitem1 (Place a unique share index on each worksheet starting with)
       (share A on the first worksheet, C on the second worksheet, and so)
       (on through $k$ characters from the Bech32 characters etc. Recall)
-      (that the B and I are not part of the Bech32 character set and are)
-      (omitted from the shares.) /endlistitem
+      (that the B and I are not part of the Bech32 character set.) /endlistitem
     /listitem1 (Fill out the 26-character data portion of each checksum worksheet)
       (with each character in the *bold squares*. To do this use the)
       (dice de-biasing worksheet to generate each random character.) /endlistitem
     /listitem1 (Once all of the random data is generated, use the rest of the)
       (checksum worksheet to generate a checksum for each share.) /endlistitem
-    /listitem1 (Critical Step*: Verify your checksum by copying each of the 48)
+    /listitem1 (*Critical Step*: Verify your checksum by copying each of the 48)
       (characters of the share onto an empty worksheet that you saved)
       (earlier. Follow the checksum verification instructions to verify)
       (each checksum. If any checksum fails to verify, make more copies)
@@ -591,7 +586,6 @@
       (character in the share index place. Follow the same instructions)
       (for generating the data portion and the checksum.) /endlistitem
 
-  /toc % turn on table of contents indexing
 ] [ % pagebreak
 
     /subsubsection (II.2.B Create Derived Shares) /endsubsubsection
@@ -719,17 +713,17 @@
 
     /subsection (Dice De-biasing Worksheet) /endsubsection
     (Most dice have small manufacturing imperfections that cause the)
-    (dice to be imbalanced and to push to one side either above or)
-    (below average for an the expected roll. This de-biasing worksheet)
-    (is used to removed that bias.)
+    (dice to be imbalanced, and some values to appear more often than)
+    (others. This de-biasing worksheet is used to remove that bias.)
 
     /paragraph (You will need: five distinct dice, five dice markers)
-    (\(e.g., pieces of paper, each labeled by which die it corresponds) (to\), and this worksheet.)
+    (\(e.g., pieces of paper, each labeled by which die it corresponds)
+    (to\), and this worksheet.)
 
     /startlist
-    /listitem1 (Choose a die track for each die. Place each dies’)
+    /listitem1 (Choose a die track for each die. Place each die's)
       (marker on its free space.) /endlistitem
-    /listitem1 (Roll all five dice. Move each dies’ marker to the die)
+    /listitem1 (Roll all five dice. Move each die's marker to the die)
       (pad indicating its value.) /endlistitem
     /listitem1 (Re-roll the same five dice again and set the dice on)
       (the die pad indicating their second values.) /endlistitem
@@ -761,7 +755,7 @@
     /startlist
     /listitem1 (Fill in the top diagonal squares)
       (\(i.e., the bold ones\) with your random data. You should have)
-      (enough to fill the non-pink bolded squares.) /endlistitem
+      (enough data to fill the non-pink bolded squares.) /endlistitem
     /listitem1 (Add the first row to the second to fill in the third)
       (row, using the addition wheel.) /endlistitem
     /listitem1 (Look up the two leftmost under hanging symbols from the)

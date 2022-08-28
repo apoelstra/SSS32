@@ -78,13 +78,13 @@
 
     /dropcap (C) (ryptography is the art of hiding information. In particular, *Shamir*)
     (*Secret* *Sharing* *Scheme* *(SSSS)* is used to hide secrets in a distributed way.)
-    (*Codex32* describes a way for users, assisted by paper computers in the form of)
+    (*codex32* describes a way for users, assisted by paper computers in the form of)
     (slide charts and circular slide rules,)
     (to perform checksums and SSSS on Bitcoin secrets.)
     (If you are ready to begin using this process, jump to page 7 to follow)
     (the cheatsheet. Alternatively, if you would like a more in-depth primer regarding)
     (this scheme continue reading the high-level introduction below.)
-    /subsection (Shamir Secret Sharing Scheme)/endsubsection
+    /subsection (I.1. Shamir Secret Sharing Scheme)/endsubsection
     /dropcap (T) (he *Shamir Secret Sharing Scheme \(SSSS\)* splits a)
     (*secret* $s$ into $n$ *shares*, any $k$ of which can be used)
     (to reconstruct the original secret. Shares can be kept in separate)
@@ -114,7 +114,7 @@
     (of secret sharing, that can be done entirely on paper.)
 
   ] [ % pagebreak
-    /subsection (Codex32)/endsubsection
+    /subsection (I.2. codex32)/endsubsection
     /dropcap (U) (sing circular paper computers \(i.e., volvelles\))
     (this codex illustrates a method for Shamir Secret Sharing Bitcoin)
     (secrets. This document also defines an error-correcting code and)
@@ -149,7 +149,7 @@
     (Shamir Secret Sharing Scheme for Bitcoin secrets. It does, however,)
     (require the use of electronic computers.)
 
-    /subsection (Computers and Trust)/endsubsection
+    /subsection (I.3. Computers and Trust)/endsubsection
     /dropcap (I) (t is impossible to sign a Bitcoin transaction without)
     (giving an electronic computer access to secret key data, which)
     (puts the user in an unfortunate position. If misused or badly)
@@ -220,7 +220,7 @@
     (key material is used. This is why this scheme is only to be)
     (used for backups, and not for enforcing a signing policy.)
 
-    /subsection (Checksumming and Error Correction) /endsubsection
+    /subsection (I.4. Checksumming and Error Correction) /endsubsection
     /dropcap (W) (hen you copy or transfer keys, and especially when)
     (you are conducting hand-computations on them, it is possible that)
     (errors may arise. A *checksum* is a technique used to determine the)
@@ -249,13 +249,13 @@
 
   ] [ % pagebreak
     /startText
-    (In Codex32, we introduce the *codex32* checksum, which can detect up)
-    (to eight errors and correct up to four. Codex32 has an even)
+    (In codex32, we introduce the *codex32* checksum, which can detect up)
+    (to eight errors and correct up to four. codex32 has an even)
     (higher probability than SLIP39 of successfully detecting random)
     (errors. And most importantly, codex32 checksums can be computed)
     (and verified entirely by hand.)
 
-    /subsection (Seeds and Seed Words) /endsubsection
+    /subsection (I.5. Seeds and Seed Words) /endsubsection
     /dropcap (B) (IP32 is a protocol for deriving an effectively unlimited)
     (number of addresses from a single *master seed*, which may be between)
     (128 and 512 bits long. Many users interact with BIP32 master seeds)
@@ -267,7 +267,7 @@
     (instructions in this book, and sweep their coins to addresses derived)
     (from the new seed.)
 
-    /subsection (Bech32 and Alternative Alphabets) /endsubsection
+    /subsection (I.6. Bech32 and Alternative Alphabets) /endsubsection
     /dropcap (C) (odex32 inherits its name from the Bech32 alphabet.)
     (In order to store 128-bit secrets, we re-use the Bech32 alphabet,)
     (which consists of the 10 Arabic numerals and 22 of the 26 letters)
@@ -292,8 +292,8 @@
     (`pearlwort@secretcodex32.com`.)
 
   ] [ % pagebreak
-    /section (Part II: Codex32 Components) /endsection
-    /subsection (Share Data) /endsubsection
+    /section (Part II: codex32 Components) /endsection
+    /subsection (II.1. Share Data) /endsubsection
     /dropcap (F) (or a 128-bit secret seed, each share is 48 characters)
     (long. Shares begin with the three-character prefix MS1. This is)
     (followed by a six-character *header*. The next 26 characters are the)
@@ -329,7 +329,7 @@
       (secret splitting, they should use the same format, but with the)
       (digit 0 for the threshold value and S for the share index.)
 
-      /subsection (Paper Computers & Volvelles) /endsubsection
+      /subsection (II.2. Paper Computers & Volvelles) /endsubsection
       /dropcap (H) (and computation for the procedures in this document)
       (can be performed either by using the volvelle wheels or Principal)
       (Tables (at the front of this document) to look up values. Although the)
@@ -464,7 +464,7 @@
     (Please contact Pearlwort at `pearlwort@secretcodex32.com` if you believe you have insight)
     (into this.)
 ] [ % pagebreak
-    /subsection (III.2 Generate a New Secret) /endsubsection
+    /subsection (III.1 Generate a New Secret) /endsubsection
     (We generate new secrets indirectly, by generating our $n$ shares, which will imply)
     (the final secret. The process for generating a new secret seed is as follows:)
 
@@ -478,9 +478,9 @@
       (long as it only uses the Bech32 character set. The identifier)
       (itself is not secret. However, the identifier should be unique)
       (for each secret seed.) /endlistitem
-    /listitem1 (Follow Section III.2.A to generate the first $k$)
+    /listitem1 (Follow Section III.1.A to generate the first $k$)
       (shares.) /endlistitem
-    /listitem1 (Follow Section III.2.B to generate the remaining)
+    /listitem1 (Follow Section III.1.B to generate the remaining)
       (\($n - k$\).) /endlistitem
     /listitem1
       (Copy and distribute your $n$ shares into safe and secure)
@@ -493,10 +493,10 @@
       (generation procedure. If these worksheets are not securely)
       (disposed of, they could be used to recover your secret seed.) /endlistitem
     /listitem1 ((Optional) Load your shares into your codex32-compliant wallet)
-      (or use the Recover Secret procedure in Section III.3)
+      (or use the Recover Secret procedure in Section III.2)
       (to compute addresses or access your coins.) /endlistitem
 
-    /subsubsection (III.2.A Create First Share) /endsubsubsection
+    /subsubsection (III.1.A Create First Share) /endsubsubsection
       (You will need: 2$k$ copies of the checksum worksheet and)
       (dice de-biasing worksheet.)
     /startlist
@@ -531,7 +531,7 @@
       (but may be useful in some scenarios such as re-sharing an existing secret.)
 
 ] [ % pagebreak
-    /subsubsection (III.2.B Create Derived Shares) /endsubsubsection
+    /subsubsection (III.1.B Create Derived Shares) /endsubsubsection
     (You will need: \($n - k$\) checksum worksheets, translation worksheet for your value of $k$.)
 
     /paragraph
@@ -559,7 +559,7 @@
     (Module 2. However, we discourage the use of large $k$ values, which)
     (are difficult to use and increase the chance of key loss.)
 
-  /subsection (III.3 Recover a Secret) /endsubsection
+  /subsection (III.2 Recover a Secret) /endsubsection
     (You will need: $k$ checksum worksheets, translation worksheet for your value of $k$.)
     /paragraph
     (Normally you would not recover a secret seed yourself. Instead,)
@@ -590,7 +590,7 @@
       (on the translation worksheet using one of the following procedures:)
       /endlistitem
 ] [ % pagebreak
-  /subsubsection (III.3.A Recovery by Table Lookup) /endsubsubsection
+  /subsubsection (III.2.A Recovery by Table Lookup) /endsubsubsection
   (If your volvelles are missing or otherwise inconvenient to access, you)
   (can do the entire process using the Principal Tables located at the front)
   (of this booklet, or available online at `secretcodex32.com`.)
@@ -614,7 +614,7 @@
   (Rather than using the addition wheel, you can use the addition table.)
   (The result should be a share with index `S`, which is your recovered secret.)
 
-  /subsubsection (III.3.B Recovery by Volvelle) /endsubsubsection
+  /subsubsection (III.2.B Recovery by Volvelle) /endsubsubsection
   (Volvelles easier and less error-prone than tables. If you have your volvelles)
   (the recovery process is as follows.)
   /paragraph
@@ -677,7 +677,7 @@
     /section (Checksum Worksheet \(Generation Instructions\)) /endsection
     (The checksum worksheets are used to generate and verify checksums.)
     (The are the most frequently used and important worksheets of)
-    (Codex32.)
+    (codex32.)
 
    /paragraph (You will need: a checksum worksheet, checksum table,)
     (and addition wheel.)

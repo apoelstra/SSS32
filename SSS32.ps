@@ -347,23 +347,23 @@
       (symmetric.)
 
       /paragraph
-      (*2. Translation & Multiplication.* A common task in the scheme is)
+      (*2. Translation & Fusion A common task in the scheme is)
       (to "translate" share data by a given recovery)
   ] [ % pagebreak
       /startText
       (symbol. To do so,)
-      (turn the translation/multiplication wheel so that the window on)
-      (the. multiplication side is showing the correct symbol. Then turn)
+      (turn the translation/fusion wheel so that the window on)
+      (the fusion side is showing the correct symbol. Then turn)
       (the wheel over; the translation side will act like a decoder)
       (ring, mapping characters to characters.)
 
       /paragraph
       (Sometimes you will need to translate a share by multiple symbols)
-      (at once. To accomplish this, turn the multiplication wheel to the)
+      (at once. To accomplish this, turn the fusion wheel to the)
       (first symbol. Find the next symbol on the inner wheel; whatever)
-      (symbol that it's pointing to, turn the multiplication wheel to)
+      (symbol that it's pointing to, turn the fusion wheel to)
       (that symbol. Repeat for all of the symbols that you need to)
-      (multiply. The multiplication wheel will wind up at the final)
+      (combine. The fusion wheel will wind up at the final)
       (product. You can now turn the wheel over to translate by this)
       (symbol. As with addition, the order in which you take your)
       (original symbols does not matter.)
@@ -411,7 +411,7 @@
     /paragraph
     (*3. Create New Seed (Additional/Derived Shares)*)
     /linebreak
-    (You will need: the addition volvelle, multiplication/translation)
+    (You will need: the addition volvelle, fusion/translation)
     (wheel, translation worksheet, and pencil.)
     /startlist
     /listitem1 (Translate the initial shares using the symbols in the)
@@ -429,7 +429,7 @@
     /startlist
     /listitem1 (Look up their recovery symbols with the recovery wheel.) /endlistitem
     /listitem1 (Multiply all of the symbols for each share with the)
-      (multiplication wheel to get a symbol for each share.) /endlistitem
+      (fusion wheel to get a symbol for each share.) /endlistitem
     /listitem1 (Translate the share by that symbol.) /endlistitem
     /listitem1 (Add all of the translated shares to get your secret.) /endlistitem
 
@@ -602,10 +602,10 @@
   /paragraph
   ($k > 2$. For each share, find that share's *column* in the recovery table)
   (and find all the symbols in the *rows* of the other shares. Multiply these)
-  (symbols together pairwise using the multiplication table, until you have)
+  (symbols together pairwise using the fusion table, until you have)
   (only one left. Copy this into the translation worksheet.)
   /paragraph
-  (Notice that the multiplication table is symmetric, so it does not matter)
+  (Notice that the fusion table is symmetric, so it does not matter)
   (if you swap rows and columns. The recovery table is *not* symmetric, so)
   (you must use this table in the correct order.)
   /paragraph
@@ -624,7 +624,7 @@
   /paragraph
   ($k > 2$. For each share, turn the recovery wheel to *that* *share's* *index*.)
   (Look up the symbols pointed to by the other shares' indices. Multiply these)
-  (symbols together using the multiplication wheel:)
+  (symbols together using the fusion wheel:)
   /startlist
   /listitem1 (Turn the wheel so that it is pointing to the first symbol.) /endlistitem
   /listitem1 (Find the next symbol on the inner part of the wheel. This symbol)
@@ -746,7 +746,7 @@
       (wheel.)
 
     /paragraph
-    (*You will need:* translation worksheet, translation/multiplication)
+    (*You will need:* translation worksheet, translation/fusion)
     (wheel, addition wheel, recovery wheel \(for key recovery\),)
     (derivation table \(page 7, for share derivation\))
 
@@ -760,7 +760,7 @@
       (for all input shares.) /endlistitem
     /listitem1 (Look up the translation symbols for each share, either)
       (in the derivation table or using the recovery wheel and)
-      (multiplication wheel.) /endlistitem
+      (fusion wheel.) /endlistitem
     /listitem1 (Mark down each share's index \(the sixth character of)
       (its header\) and translation symbol in the appropriate squares.) /endlistitem
     /listitem1 (Character by character, translate each share from its)
@@ -2258,7 +2258,7 @@ end
 
 30 dict dup /multiplicationDisc exch def begin
   /radius 200 def
-  /title (Multiplication) def
+  /title (Fusion) def
   /outerTitleSz 6 def
   /outerglyphSz 18 def
   /outerPointerSz 0 def
@@ -3244,7 +3244,7 @@ end
     % Draw title
     0 36 translate
     /Helvetica findfont innerTitleSz scalefont setfont
-    (Multiplication) innerTitleSz 270 60 insidecircletext
+    (Fusion) innerTitleSz 270 60 insidecircletext
   grestore
   } if
 } bind def
@@ -3425,7 +3425,7 @@ tWidth 44 add tHeight tHeight 56 add add
 (Recovery) code permS 1 31 getinterval code permS 1 31 getinterval code2 drawTable
 % bot-right
 tWidth 44 add tHeight 48 add
-{gf32mul} (Multiplication) code2 permId 1 31 getinterval code2 permId 1 31 getinterval code2 drawTable
+{gf32mul} (Fusion) code2 permId 1 31 getinterval code2 permId 1 31 getinterval code2 drawTable
 
 pgsave restore
 showpage

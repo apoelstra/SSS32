@@ -641,7 +641,9 @@
 ] [ % pagebreak
   % This is ugly but we just manually line-break to fit the text around the
   % illustrations on this page.
-    /section (Dice De-biasing Worksheet) /endsection
+/notoc
+    /subsection (Dice De-biasing Worksheet) /endsubsection
+/toc
     (Most dice have small manufacturing imperfections that cause the)
     (dice to be imbalanced, so) /linebreak
     (some values appear more often than)
@@ -670,11 +672,18 @@
       /linebreak (bottom of the tree, which has the resulting character.) /endlistitem
     /listitem1 (Repeat steps one through five for each character.) /endlistitem
 
+    %% This is a huge hack. We want to show "Worksheets" as a section header in
+    %% the TOC but there's no room for it on the actual page. So we just draw
+    %% it off the pagecut
+30 { /linebreak } repeat
+/toc
+    /section (Worksheets) /endsection
+    /subsection (Dice De-biasing Worksheet) /endsubsection
   ] [ % blank page -- second page of dice worksheet
 
   ] [ % pagebreak
 
-    /section (Checksum Worksheet \(Generation Instructions\)) /endsection
+    /subsection (Checksum Worksheet \(Generation Instructions\)) /endsubsection
     (The checksum worksheets are used to generate and verify checksums.)
     (The are the most frequently used and important worksheets of)
     (codex32.)
@@ -704,7 +713,7 @@
 
   ] [
 
-    /section (Checksum Worksheet \(Verification Instructions\)) /endsection
+    /subsection (Checksum Worksheet \(Verification Instructions\)) /endsubsection
 
     /paragraph
       (Verifying a checksum:)
@@ -729,7 +738,7 @@
 
 
   4 { ] [ } repeat  % checksum tables and worksheet
-    /section (Translation Worksheet) /endsection
+    /subsection (Translation Worksheet) /endsubsection
     /notoc %% don't put all the translation worksheets into the ToC
       (The translation worksheet is used to derive shares, when)
       (splitting keys, and during key recovery. In all cases, the)

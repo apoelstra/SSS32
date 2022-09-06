@@ -774,11 +774,16 @@
 
   3 { ] [ } repeat  % add a bunch of empty placeholder pages
 
-    /section (Module 0: Volvelles) /endsection
+/notoc
+    /subsection (Module 0: Volvelles) /endsubsection
+%% More toc hackery
+/toc 80 { /linebreak } repeat
+    /section (Additional Modules) /endsection
+    /subsection (Module 0: Volvelles) /endsubsection
 
   4 { ] [ } repeat
 
-    /section (Module 1: Share Booklet) /endsection
+    /subsection (Module 1: Share Booklet) /endsubsection
     (In the common case that your threshold value `k` is 2, there is a)
     (much faster way to generate shares rather than using the)
     (translation worksheet and the volvelles.)
@@ -802,7 +807,7 @@
 
   9 { ] [ } repeat
 
-    /section (Module 2: Extra Share Generation Tables) /endsection
+    /subsection (Module 2: Extra Share Generation Tables) /endsubsection
     (The main instructional section contains share derivation tables)
     (for $k$ values of 2 or 3, assuming that initially generated shares)
     (are `A`, `C`, and \(sometimes\) `D`. This page provides tables for)

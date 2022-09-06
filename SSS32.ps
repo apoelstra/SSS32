@@ -739,7 +739,6 @@
 
   4 { ] [ } repeat  % checksum tables and worksheet
     /subsection (Translation Worksheet) /endsubsection
-    /notoc %% don't put all the translation worksheets into the ToC
       (The translation worksheet is used to derive shares, when)
       (splitting keys, and during key recovery. In all cases, the)
       (process is to translate a set of shares using the translation)
@@ -803,7 +802,7 @@
 
   9 { ] [ } repeat
 
-    /section (Module 2: Share Generation Tables) /endsection
+    /section (Module 2: Extra Share Generation Tables) /endsection
     (The main instructional section contains share derivation tables)
     (for $k$ values of 2 or 3, assuming that initially generated shares)
     (are `A`, `C`, and \(sometimes\) `D`. This page provides tables for)
@@ -3497,7 +3496,7 @@ gsave
 grestore
 
 [1 4] 0 setdash
-/Times findfont 16 scalefont setfont
+/Times findfont 15 scalefont setfont
 /pagenum 0 def % The TOC itself is "page 0"
 <<
   /x marginX1 def
@@ -3515,7 +3514,7 @@ grestore
       currentpoint xnum 5 sub y moveto lineto stroke
       % Page number
       xnum y moveto pagenum 2 string cvs show
-      /y y 24 sub store
+      /y y 22 sub store
     } { pop } ifelse
   }
   /nametype {

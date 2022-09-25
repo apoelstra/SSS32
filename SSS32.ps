@@ -258,11 +258,10 @@
     /dropcap (B) (IP32 is a protocol for deriving an effectively unlimited)
     (number of addresses from a single *master seed*, which may be between)
     (128 and 512 bits long. Many users interact with BIP32 master seeds)
-    (indirectly, e.g., by storing a set of 12 or 24 *BIP39 seed words*.)
+    (indirectly, (e.g., by storing a set of 12 or 24 BIP39 seed words).)
     (Unfortunately, these seed words correspond to a 512-bit secret, while)
-    (codex32 works best with 128-bit secrets.)
-    /paragraph
-    (We recommend users of codex32 generate a fresh 128-bit seed, using the)
+    (codex32 works best with 128-bit secrets. It is recommended that users)
+    (of codex32 generate a fresh 128-bit seed, using the)
     (instructions in this book, and sweep their coins to addresses derived)
     (from the new seed.)
 
@@ -272,16 +271,14 @@
     (which consists of the 10 Arabic numerals and 22 of the 26 letters)
     (of the Latin alphabet. The excluded letters are B, which may be)
     (confused with 8; O, which may be confused with 0; and I and 1,)
-    (may be confused with many things, such as each other.)
+    (which may be confused with many things, such as each other.)
 
     /paragraph
     (Parts of the codex32 process use an alternate alphabet, consisting)
     (mostly of Greek letters. This alphabet is used for intermediate)
-    (computations, never for data storage, and nothing represented in it)
+    (computations, but never for data storage, and nothing represented in it)
     (is ever secret data. A table of pronunciation is provided on the)
-    ( Reference page at the beginning of this document, to help with its use.)
-
-    4 { /linebreak } repeat
+    (Reference page at the beginning of this document.)
 
     /paragraph
     (The remainder of this document provides detailed mechanical)
@@ -330,13 +327,15 @@
 
       /subsection (II.2. Paper Computers & Volvelles) /endsubsection
       /dropcap (H) (and computation for the procedures in this document)
-      (can be performed either by using the volvelle wheels or Principal)
-      (Tables (at the front of this document) to look up values. Although the)
+      (can be performed either by using the volvelle wheels or principal)
+      (tables (at the front of this document) to look up values. Although the)
       (volvelle wheels take time to cut out and assemble, they are)
       (generally easier to use than the tables, when available.)
+      
+    ] [ % pagebreak
 
       /paragraph
-      (There are three volvelles in this codex, each serves a different)
+      (There are three volvelles in this codex. Each serves a different)
       (fuction, and has slightly different usage instructions.)
 
       /paragraph
@@ -346,13 +345,11 @@
       (symmetric.)
 
       /paragraph
-      (*2. Translation & Fusion A common task in the scheme is)
+      (*2. Translation & Fusion.* A common task in the scheme is)
       (to "translate" share data by a given recovery)
-  ] [ % pagebreak
-      /startText
       (symbol. To do so,)
       (turn the translation/fusion wheel so that the window on)
-      (the fusion side is showing the correct symbol. Then turn)
+      (the fusion side is showing the correct symbol. Then, turn)
       (the wheel over; the translation side will act like a decoder)
       (ring, mapping characters to characters.)
 
@@ -403,7 +400,7 @@
     (For each of your initial $k$ shares, you should:)
     /startlist
     /listitem1 (Generate random data by rolling dice, following the)
-      (instructions on the dice de-biasing worksheet) /endlistitem
+      (instructions on the dice de-biasing worksheet.) /endlistitem
     /listitem1 (Follow the instructions on the checksum worksheet to)
       (affix a checksum.) /endlistitem
 
@@ -435,7 +432,7 @@
     /paragraph
     (*5. Verify Shares*)
     /linebreak
-    (You will need: the addition volvelle, checksum worksheet, pencil, eraser, and the share to validate)
+    (You will need: the addition volvelle, checksum worksheet, pencil, eraser, and the share to validate.)
     /startlist
     /listitem1 (Copy the share data into the bold boxes of the checksum worksheet.) /endlistitem
     /listitem1 (Follow the instructions to complete the worksheet, checking that)
@@ -444,7 +441,7 @@
     /paragraph
     (*6. Correct Shares*)
     /linebreak
-    (You will need: the addition volvelle, checksum worksheet, pencil, eraser, and the share to validate)
+    (You will need: the addition volvelle, checksum worksheet, pencil, eraser, and the share to validate.)
     /startlist
     /listitem1 (Follow the instructions above to verify your share.) /endlistitem
     /listitem1 (If the result is not `SECRETSHARE32`, enter the result into the online tool.)
@@ -456,21 +453,18 @@
     /paragraph
     (*X. Deriving Addresses and Spending Coins*)
     /linebreak
-    (You will need: an electronic computer, into which you must input your secret shares.)
-    /linebreak
-    /linebreak
-    (It is an open question how to derive addresses or spend coins using paper computers.)
+    (It is an open question as to how to derive addresses or spend coins using paper computers.)
     (Please contact Pearlwort at `pearlwort@secretcodex32.com` if you believe you have insight)
     (into this.)
 ] [ % pagebreak
     /subsection (III.1 Generate a New Secret) /endsubsection
-    (We generate new secrets indirectly, by generating our $n$ shares, which will imply)
+    (We generate new secrets indirectly by generating our $n$ shares, which will imply)
     (the final secret. The process for generating a new secret seed is as follows:)
 
     /startlist
     /listitem1 (Choose a threshold $k$ and total number of shares)
       ($n$ that suits your needs. The threshold $k$ should be two or three,)
-      (and $n$ must be 31 or less. For $k > 3$ see Module 2 but this)
+      (and $n$ must be 31 or less. For $k > 3$ see Module 2, but this)
       (is not recommended.) /endlistitem
     /listitem1 (Choose a four-character identifier for your new secret)
       (seed. The identifier can be anything (e.g., a name or nym), as)
@@ -483,7 +477,7 @@
       (\($n - k$\).) /endlistitem
     /listitem1
       (Copy and distribute your $n$ shares into safe and secure)
-      (locations. Remember that you will need to recover at least)
+      (locations. Additionally, remember that you will need to recover at least)
       ($k$ of these shares to recover your secret seed. Also remember)
       (that anyone else who recovers $k$ of these shares can also)
       (recover your secret seed and control your coins.) /endlistitem
@@ -497,13 +491,13 @@
 
     /subsubsection (III.1.A Create First Share) /endsubsubsection
       (You will need: 2$k$ copies of the checksum worksheet and)
-      (dice de-biasing worksheet.)
+      (the dice de-biasing worksheet.)
     /startlist
-    /listitem1 (Fill out the header portion of $k$ checksum worksheets)
+    /listitem1 (Fill out the header portion of the $k$ checksum worksheets)
       (with your chosen threshold $k$ and chosen identifier.) /endlistitem
     /listitem1 (Place a unique share index on each worksheet starting with)
       (share `A` on the first worksheet, `C` on the second worksheet, and so)
-      (on through $k$ characters from the Bech32 characters etc. Recall)
+      (on through $k$ characters from the Bech32 characters. Recall)
       (that the `B` and `I` are not valid characters.) /endlistitem
     /listitem1 (Using the dice de-biasing worksheet, generate 26 random)
       (characters and write them in the *bold squares* of the checksum)
@@ -518,7 +512,7 @@
       (checksum verification steps. Failure to verify each checksum may)
       (lead to irrecoverable loss of the secret seed and funds.) /endlistitem
     /paragraph
-      ($Special rules for k = 1$. if you are not splitting your)
+      ($Special rules for k = 1$. If you are not splitting your)
       (secret, use a 0 digit in the threshold place, and use the `S`)
       (character in the share index place. Follow the same instructions)
       (for generating the data portion and the checksum.)
@@ -531,7 +525,7 @@
 
 ] [ % pagebreak
     /subsubsection (III.1.B Create Derived Shares) /endsubsubsection
-    (You will need: \($n - k$\) checksum worksheets, translation worksheet for your value of $k$.)
+    (You will need: \($n - k$\) checksum worksheets, and the translation worksheet for your value of $k$.)
 
     /paragraph
       (The remaining \($n - k$\) shares are derived from the first $k$ shares,)
@@ -543,8 +537,8 @@
       (indices from the shares that you have already generated)
       (\(e.g., A, C, and D, if $k = 3$\).) /endlistitem 
     /listitem1 (Label the final share index with the new share index that you)
-      (want to derive. \(This can be any bech32 character, but most likely you)
-      (will just want to use the next available character.\)) /endlistitem
+      (want to derive. This can be any bech32 character, but most likely you)
+      (will just want to use the next available character.) /endlistitem
     /listitem1 (In the derivation table (below) for your value of $k$, find the)
       (column corresponding to the new share index. Copy the symbols from that)
       (that column into the translation worksheet, next to the share index for)
@@ -559,9 +553,9 @@
     (are difficult to use and increase the chance of key loss.)
 
   /subsection (III.2 Recover a Secret) /endsubsection
-    (You will need: $k$ checksum worksheets, translation worksheet for your value of $k$.)
+    (You will need: $k$ checksum worksheets, and the translation worksheet for your value of $k$.)
     /paragraph
-    (Normally you would not recover a secret seed yourself. Instead,)
+    (Normally, you would not recover a secret seed yourself. Instead,)
     (you would load shares into a codex32-compliant wallet. However,)
     (you can recover the secret seed by hand if no compatible wallets)
     (are available or you feel a need to demonstrate your conjuring)
@@ -582,7 +576,7 @@
       (computer.) /endlistitem
     /listitem1
       (Label the translation worksheet as though you were deriving a new)
-      (share. (see the previous section) Use your existing shares' indices)
+      (share. Use your existing shares' indices)
       (as the "initial shares" and `S` as the "new share" index.) /endlistitem
     /listitem1
       (Rather than using a derivation table, fill in the symbols for each share)
@@ -600,8 +594,8 @@
   (the translation worksheet.)
   /paragraph
   ($k > 2$. For each share, find that share's *column* in the recovery table)
-  (and find all the symbols in the *rows* of the other shares. Multiply these)
-  (symbols together pairwise using the fusion table, until you have)
+  (and find all of the symbols in the *rows* of the other shares. Multiply these)
+  (symbols together pairwise using the fusion table until you have)
   (only one left. Copy this into the translation worksheet.)
   /paragraph
   (Notice that the fusion table is symmetric, so it does not matter)
@@ -614,8 +608,8 @@
   (The result should be a share with index `S`, which is your recovered secret.)
 
   /subsubsection (III.2.B Recovery by Volvelle) /endsubsubsection
-  (Volvelles easier and less error-prone than tables. If you have your volvelles)
-  (the recovery process is as follows.)
+  (Using the volvelles is easier and less error-prone than using the tables.)
+  (If you have your volvelles, the recovery process is as follows.)
   /paragraph
   ($k = 2$. For each share, turn the recovery wheel to *that* *share's* *index*.)
   (Look up the symbol pointed to by the *other* *share's* *index* and copy that)
@@ -630,7 +624,7 @@
   (will point to a new symbol. Turn the wheel so that it points to the new symbol.)
   /endlistitem
   /listitem1 (Repeat the above step for all the remaining symbols to multiply.)
-  (\(If $k = 3$ then no repetition is needed.\) The resulting symbol is your)
+  (\(If $k = 3$, then no repetition is needed.\) The resulting symbol is your)
   (result. Copy this into the translation worksheet.) /endlistitem
 
   /paragraph

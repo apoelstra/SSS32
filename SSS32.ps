@@ -78,11 +78,11 @@
     /dropcap (C) (ryptography is the art of hiding information. In particular, *Shamir*)
     (*Secret* *Sharing* *Scheme* *(SSSS)* is used to hide secrets in a distributed way.)
     (*codex32* describes a way for users, assisted by paper computers in the form of)
-    (slide charts and circular slide rules,)
+    (slide charts and circular slide rules \(i.e., volvelles\),)
     (to perform checksums and SSSS on Bitcoin secrets.)
     (If you are ready to begin using this process, jump to page 7 to follow)
-    (the cheatsheet. Alternatively, if you would like a more in-depth primer regarding)
-    (this scheme, continue reading the high-level introduction below.)
+    (the cheatsheet. For a more in-depth primer,)
+    (continue reading the high-level introduction below.)
     /subsection (I.1. Shamir Secret Sharing Scheme)/endsubsection
     /dropcap (T) (he *Shamir Secret Sharing Scheme \(SSSS\)* splits a)
     (*secret* $s$ into $n$ *shares*, any $k$ of which can be used)
@@ -95,16 +95,17 @@
     23 { /linebreak } repeat
 
     /paragraph
+    ()
     (With SSSS, $n$ is typically five or more, depending on your desire)
     (for redundancy, while $k$ is two or three, reflecting your fear of)
     (individual shares being compromised. There is an inherent)
     (trade-off between the availability of a)
     (secret and its risk of theft. If you make many copies of your seed words,)
-    (one of them may eventually fall into the wrong hands. However, if you make too)
-    (few, they could all become lost, destroyed, or misplaced. The consequence in)
+    (one of them may fall into the wrong hands. However, if you make too)
+    (few, they could become lost, destroyed, or misplaced. The consequence in)
     (either case is a complete and total loss of funds.)
     (By using shares rather than complete copies of our seed, we can make this)
-    (tradeoff in a more nuanced way.)
+    (tradeoff in a more flexible way.)
 
     /paragraph
     (Shamir Secret Sharing Scheme was first proposed in the 1970s,)
@@ -114,11 +115,12 @@
 
   ] [ % pagebreak
     /subsection (I.2. codex32)/endsubsection
-    /dropcap (U) (sing circular paper computers \(i.e., volvelles\))
+    /dropcap (U) (sing volvelles)
     (this codex illustrates a method for Shamir Secret Sharing Bitcoin)
     (secrets. This document also defines an error-correcting code and)
     (complete scheme for generating, checksumming, splitting, and)
     (reconstructing secret data.)
+    ()
 
     /paragraph
     /linebreak
@@ -138,14 +140,9 @@
     (Because of this, it is extremely important to generate)
     (truly random numbers. This document provides a dice de-biasing)
     (worksheet to generate random values from dice rolls by hand.)
-    (Assuming you have strong randomness,)
-    (you will find no cryptographic compromise in the design or)
-    (implementation of the codex.)
-
-    /paragraph
     (If you prefer the added security of passphrase-based key hardening,)
     (you should instead use SLIP39. SLIP39 is a non-paper-based)
-    (Shamir Secret Sharing Scheme for Bitcoin secrets. It does, however,)
+    (Shamir Secret Sharing Scheme for Bitcoin secrets. Which does, however,)
     (require the use of electronic computers.)
 
     /subsection (I.3. Computers and Trust)/endsubsection
@@ -157,6 +154,7 @@
     (an electronic computer is interacting with your keys.)
 
     /paragraph
+    ()
     (General-purpose computers are so complex and exposed to an)
     (adversarial environment \(i.e., in the form of Internet)
     (connections, arbitrary programs, and human beings\).)
@@ -167,8 +165,6 @@
     (But this introduces additional questions: how can the hardware)
     (wallet be sure that it's communicating with the correct user,)
     (and under correct circumstances?)
-
-    /paragraph
     ($Ultimately, there is no hardware wallet that a wizard can fully trust.$)
 
     /paragraph
@@ -221,13 +217,12 @@
 
     /subsection (I.4. Checksumming and Error Correction) /endsubsection
     /dropcap (W) (hen you copy or transfer keys, and especially when)
-    (you are conducting hand computations on them, it is possible that)
+    (you are conducting hand computations, it is possible that)
     (errors may arise. A *checksum* is a technique used to determine the)
     (authenticity of received data, to detect whether there was an error)
     (in transmission, storage, or copying. Errors might also)
-    (crop up during long-term storage \(e.g., if Cryptosteel tiles are)
-    (subjected to extreme heat, which makes some letters unclear, or)
-    (if printer paper suffers water damage\).)
+    (crop up during long-term storage \(e.g., if a paper backup suffers water)
+    (damage, or a cryptosteels' tiles are damaged making some of the letters illegible\).)
 
     16 { /linebreak } repeat
 
@@ -248,7 +243,7 @@
 
   ] [ % pagebreak
     /startText
-    (In codex32, we introduce the *codex32* checksum, which can detect up)
+    (In the Codex32 book, we introduce the *codex32* checksum, which can detect up)
     (to eight errors and correct up to four. codex32 has an even)
     (higher probability than SLIP39 of successfully detecting random)
     (errors. And most importantly, codex32 checksums can be computed)
@@ -274,6 +269,7 @@
     (which may be confused with many things, such as each other.)
 
     /paragraph
+    ()
     (Parts of the codex32 process use an alternate alphabet, consisting)
     (mostly of Greek letters. This alphabet is used for intermediate)
     (computations, but never for data storage, and nothing represented in it)

@@ -41,7 +41,7 @@
 (ISBN 978-1-7338712-2-8 (Paperback))
 ()
 (Cover and Vovelle Illustrations by Micaela Paez)
-(Illuminated Letters and Inline Illustrations by M. Lutfi' As'ad)
+(Illuminated Letters & Inline Illustrations by M. Lutfi' As'ad)
 (Edited & Produced by Arri Isak Beck)
 ]
 
@@ -82,15 +82,15 @@
     (to perform checksums and SSSS on Bitcoin secrets.)
     (If you are ready to begin using this process, jump to page 7 to follow)
     (the cheatsheet. Alternatively, if you would like a more in-depth primer regarding)
-    (this scheme continue reading the high-level introduction below.)
+    (this scheme, continue reading the high-level introduction below.)
     /subsection (I.1. Shamir Secret Sharing Scheme)/endsubsection
     /dropcap (T) (he *Shamir Secret Sharing Scheme \(SSSS\)* splits a)
     (*secret* $s$ into $n$ *shares*, any $k$ of which can be used)
     (to reconstruct the original secret. Shares can be kept in separate)
     (places. The shares can later be used to reconstruct the original)
     (secret. It is important to emphasize that SSSS is a mechanism for)
-    (storing backups, and not a mechanism for enforcing a signing)
-    (policy as is done with multisig.)
+    (storing backups, not a mechanism for enforcing a signing)
+    (policy, as is done with multisig.)
 
     23 { /linebreak } repeat
 
@@ -110,7 +110,7 @@
     (Shamir Secret Sharing Scheme was first proposed in the 1970s,)
     (and has historically required the use of computers to generate)
     (secrets and shares. Instead, this codex outlines a novel method)
-    (of secret sharing, that can be done entirely on paper.)
+    (of secret sharing that can be done entirely on paper.)
 
   ] [ % pagebreak
     /subsection (I.2. codex32)/endsubsection
@@ -135,7 +135,7 @@
     /paragraph
     (This scheme does not support passphrases or key hardening, so)
     (security rests solely on the strength of your randomness.)
-    (Because of this, it is extremely important to to generate)
+    (Because of this, it is extremely important to generate)
     (truly random numbers. This document provides a dice de-biasing)
     (worksheet to generate random values from dice rolls by hand.)
     (Assuming you have strong randomness,)
@@ -169,7 +169,7 @@
     (and under correct circumstances?)
 
     /paragraph
-    ($Ultimately, there is no hardware wallet a wizard can fully trust.$)
+    ($Ultimately, there is no hardware wallet that a wizard can fully trust.$)
 
     /paragraph
     (Even hardware wallets are opaque and imperfect:)
@@ -178,7 +178,7 @@
       (insecurely.) /endlistitem
     /listitem* (It may have bugs that cause key leakage, either now or)
       (as a consequence of some future software update.) /endlistitem
-    /listitem* (Key material stored in physical form, can be)
+    /listitem* (Key material stored in physical form can be)
       (extracted by an attacker with physical access, even if the)
       (wallet has "deleted" it.)/endlistitem
     /listitem* (It may expose secret data through side channels, such)
@@ -186,7 +186,7 @@
       (by the varying power draw from a USB hub.) /endlistitem
     /paragraph
     (These risks have varying degrees of plausibility, but for a)
-    (Bitcoin secret which may exceed any one person's lifetime, even)
+    (Bitcoin secret, which may exceed any one person's lifetime, even)
     ("trivial" risks add up to become very serious.)
   ] [ % pagebreak
     /startText
@@ -196,10 +196,10 @@
     (equipment, or magic.)
 
     /paragraph
-    (Some of the limitations of SSSS include:)
+    (Some limitations of SSSS include:)
     /startlist
     /listitem* (SSSS requires that the complete secret be reconstructed)
-      (in a single-place before it can be used. If the shares)
+      (in a single place before it can be used. If the shares)
       (created were initially distributed among different individuals)
       (in a group, the party that brings together the shares to)
       (recreate the secret has the opportunity to spend funds,)
@@ -213,15 +213,15 @@
 
     /paragraph
     (We have addressed the latter issue through the clever use of)
-    (error-correcting codes, inspired by SLIP39. However, there is)
-    (nothing much that can be done about the fact that SSSS)
+    (error-correcting codes, inspired by SLIP39. HHowever, not much)
+    (can be done about the fact that SSSS)
     (involves a single point of failure at the time that the secret)
     (key material is used. This is why this scheme is only to be)
     (used for backups, and not for enforcing a signing policy.)
 
     /subsection (I.4. Checksumming and Error Correction) /endsubsection
     /dropcap (W) (hen you copy or transfer keys, and especially when)
-    (you are conducting hand-computations on them, it is possible that)
+    (you are conducting hand computations on them, it is possible that)
     (errors may arise. A *checksum* is a technique used to determine the)
     (authenticity of received data, to detect whether there was an error)
     (in transmission, storage, or copying. Errors might also)
@@ -240,7 +240,7 @@
     (length, and to prevent you from verifying your data's integrity)
     (by hand.)
     /paragraph
-    (In contrast, the SLIP39 Shamir secret-sharing scheme)
+    (In contrast, the SLIP39 Shamir Secret Sharing Scheme)
     (can detect up to three errors and correct up to one error 100%)
     (of the time. Additionally, it will fail to detect other random)
     (errors with extremely low probability. However, the SLIP39)

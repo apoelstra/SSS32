@@ -29,12 +29,6 @@
 (SOFTWARE.)
 ]
 [
-(WARNING: Seriously, this is a work in progress, and it is only a concept right now.)
-(If you try to use this for your valuable data, I promise that you will lose your data. You will)
-(lose this document and come back here only to find that I have made incompatible changes,)
-(and your data is lost forever. Even if you don't lose this document, there is no warranty or)
-(guarantee of any kind that you will be able to successfully recover your data.)
-()
 (Produced in the United States of America)
 ()
 (10 9 8 7 6 5 4 3 2 1)
@@ -3287,11 +3281,12 @@ showpage
 %%EndPageSetup
 portraitPage begin
 
-/Times findfont 6 scalefont setfont
+/Courier findfont 10 scalefont setfont
 marginX1 marginY1 16 sub moveto
 MIT {gsave ((c)) search {show pop /copyright glyphshow} if show grestore 0 -8 rmoveto} forall
-/Times findfont 6 scalefont setfont
-warning {gsave show grestore 0 -7 rmoveto} forall
+0 -380 rmoveto
+/Times findfont 12 scalefont setfont
+warning {gsave show grestore 0 -14 rmoveto} forall
 
 end
 pgsave restore

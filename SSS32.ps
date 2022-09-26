@@ -11,7 +11,7 @@
 (Copyright (c) 2022 Blockstream)
 ()
 (Permission is hereby granted, free of charge, to any person obtaining a copy)
-(of this Software and associated documentation files (the "Software"), to deal)
+(of this software and associated documentation files (the "Software"), to deal)
 (in the Software without restriction, including without limitation the rights)
 (to use, copy, modify, merge, publish, distribute, sublicense, and/or sell)
 (copies of the Software, and to permit persons to whom the Software is)
@@ -27,7 +27,8 @@
 (LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,)
 (OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE)
 (SOFTWARE.)
-()
+]
+[
 (WARNING: Seriously, this is a work in progress, and it is only a concept right now.)
 (If you try to use this for your valuable data, I promise that you will lose your data. You will)
 (lose this document and come back here only to find that I have made incompatible changes,)
@@ -209,7 +210,7 @@
 
     /paragraph
     (We have addressed the latter issue through the clever use of)
-    (error-correcting codes, inspired by SLIP39. HHowever, not much)
+    (error-correcting codes, inspired by SLIP39. However, not much)
     (can be done about the fact that SSSS)
     (involves a single point of failure at the time that the secret)
     (key material is used. This is why this scheme is only to be)
@@ -327,8 +328,9 @@
       (tables (at the front of this document) to look up values. Although the)
       (volvelle wheels take time to cut out and assemble, they are)
       (generally easier to use than the tables, when available.)
-      
+
     ] [ % pagebreak
+      /startText
 
       /paragraph
       (There are three volvelles in this codex. Each serves a different)
@@ -531,7 +533,7 @@
     /listitem1 (Make a copy of the translation worksheet for the value)
       (of $k$ that you are using and label the shares with the share)
       (indices from the shares that you have already generated)
-      (\(e.g., A, C, and D, if $k = 3$\).) /endlistitem 
+      (\(e.g., A, C, and D, if $k = 3$\).) /endlistitem
     /listitem1 (Label the final share index with the new share index that you)
       (want to derive. This can be any bech32 character, but most likely you)
       (will just want to use the next available character.) /endlistitem
@@ -810,15 +812,15 @@
 
     /paragraph
     (We caution users that higher $k$ values, in our view, are a bad)
-    (trade-off between usability and robustness \(i.e., which are damaged\))
-    (and security \(i.e., which is improved\).)
+    (trade-off between usability and robustness \(which are damaged\))
+    (and security \(which is improved\).)
 
   ] [
 
     /startText
     (These tables allow you to generate shares in the case that your)
     (`S` share is an initial share. However, in some cases, you need)
-    (to generate the S share first, when using an existing seed with) 
+    (to generate the S share first, when using an existing seed with)
     (this scheme.)
 
   20 { ] [ } repeat  % add a bunch of empty placeholder pages

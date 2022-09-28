@@ -1,6 +1,6 @@
 %!PS-Adobe-3.0
 %%Orientation: Portrait
-%%Pages: 48
+%%Pages: 49
 %%EndComments
 %%BeginSetup
 [(Shamir Secret) (Sharing Codex)]
@@ -32,6 +32,8 @@
 (Additional materials and copies of this document can be found at:)
 (https://secretcodex32.com/docs/index.html)
 (https://github.com/roconnor-blockstream/SSS32/)
+()
+(NEVER ENTER SECRET DATA INTO THOSE WEBSITES, OR ANY WEBSITE.)
 ]
 [
 (Produced in the United States of America)
@@ -251,7 +253,7 @@
 
     /subsection (I.5. Seeds and Seed Words) /endsubsection
     /dropcap (B) (IP32 is a protocol for deriving an effectively unlimited)
-    (number of addresses from a single *master seed*, which may be between)
+    (number of addresses from a single *master* *seed*, which may be between)
     (128 and 512 bits long. Many users interact with BIP32 master seeds)
     (indirectly, (e.g., by storing a set of 12 or 24 BIP39 seed words).)
     (Unfortunately, these seed words correspond to a 512-bit secret, while)
@@ -583,7 +585,7 @@
   /subsubsection (III.2.A Recovery by Table Lookup) /endsubsubsection
   (If your volvelles are missing or otherwise inconvenient to access, you)
   (can do the entire process using the Principal Tables located at the front)
-  (of this booklet, or available online at `secretcodex32.com`.)
+  (of this booklet.)
 
   /paragraph
   ($k = 2$. For each share, find that share's *column* in the recovery table)
@@ -771,7 +773,7 @@
     /section (Additional Modules) /endsection
     /subsection (Module 0: Volvelles) /endsubsection
 
-  8 { ] [ } repeat
+  5 { ] [ } repeat
 
     /subsection (Module 1: Share Booklet) /endsubsection
     (In the common case that your threshold value `k` is 2, there is a)
@@ -4067,7 +4069,7 @@ end pgsave restore showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-landscapePage begin 0 drawPageContent
+landscapePage begin 19 drawPageContent
 
 /Times-Roman findfont 14 scalefont setfont
 marginX1 marginY1 moveto (Translation Worksheet \(k = 2\)) show
@@ -4094,7 +4096,7 @@ end pgsave restore showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-landscapePage begin 0 drawPageContent
+landscapePage begin 20 drawPageContent
 
 /Times-Roman findfont 14 scalefont setfont
 marginX1 marginY1 moveto (Translation Worksheet \(k = 3\)) show
@@ -4119,7 +4121,14 @@ end pgsave restore showpage
 %******************
 %* Volvelles
 %*
+%% Deliberately blank page
 %%Page: 28 28
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+showpage
+
+%%Page: 29 29
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -4130,33 +4139,33 @@ end pgsave restore
 showpage
 
 %% Deliberately blank page
-%%Page: 29 29
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-showpage
 %%Page: 30 30
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 23 drawPageContent
+showpage
+%%Page: 31 31
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+portraitPage begin 22 drawPageContent
 {xor} (Addition) code dup perm drawBottomWheelPage
 
 end pgsave restore
 showpage
 
 %% Deliberately blank page
-%%Page: 31 31
+%%Page: 32 32
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
 showpage
 
-%%Page: 32 32
+%%Page: 33 33
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 25 drawPageContent
+portraitPage begin 23 drawPageContent
 
 recoveryDisc begin
 % Draw assembly diagram
@@ -4202,13 +4211,13 @@ end pgsave restore
 showpage
 
 %% Deliberately blank page
-%%Page: 33 33
+%%Page: 34 34
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
 showpage
 
-%%Page: 34 34
+%%Page: 35 35
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
@@ -4271,17 +4280,17 @@ pgsave restore
 showpage
 
 %% Deliberately blank page
-%%Page: 35 35
+%%Page: 36 36
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
 showpage
 
-%%Page: 36 36
+%%Page: 37 37
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 27 drawPageContent
+portraitPage begin 25 drawPageContent
 % Draw assembly diagram
 gsave
   60 700 translate
@@ -4408,33 +4417,24 @@ end pgsave restore
 showpage
 
 %% Deliberately blank page
-%%Page: 37 37
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-showpage
 %%Page: 38 38
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 29 drawPageContent
-end pgsave restore showpage
-
+showpage
 %%Page: 39 39
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 30 drawPageContent
-29 24 13 25 showShareTablePage
+portraitPage begin 26 drawPageContent
+end pgsave restore showpage
 
-end pgsave restore
-showpage
 %%Page: 40 40
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 31 drawPageContent
-9 8 23 18 showShareTablePage
+portraitPage begin 27 drawPageContent
+29 24 13 25 showShareTablePage
 
 end pgsave restore
 showpage
@@ -4442,8 +4442,8 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 32 drawPageContent
-22 31 27 19 showShareTablePage
+portraitPage begin 28 drawPageContent
+9 8 23 18 showShareTablePage
 
 end pgsave restore
 showpage
@@ -4451,8 +4451,8 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 33 drawPageContent
-1 0 3 16 showShareTablePage
+portraitPage begin 29 drawPageContent
+22 31 27 19 showShareTablePage
 
 end pgsave restore
 showpage
@@ -4460,8 +4460,8 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 34 drawPageContent
-11 28 12 14 showShareTablePage
+portraitPage begin 30 drawPageContent
+1 0 3 16 showShareTablePage
 
 end pgsave restore
 showpage
@@ -4469,8 +4469,8 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 35 drawPageContent
-6 4 2 15 showShareTablePage
+portraitPage begin 31 drawPageContent
+11 28 12 14 showShareTablePage
 
 end pgsave restore
 showpage
@@ -4478,8 +4478,8 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 36 drawPageContent
-10 17 21 20 showShareTablePage
+portraitPage begin 32 drawPageContent
+6 4 2 15 showShareTablePage
 
 end pgsave restore
 showpage
@@ -4487,17 +4487,26 @@ showpage
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 37 drawPageContent
+portraitPage begin 33 drawPageContent
+10 17 21 20 showShareTablePage
+
+end pgsave restore
+showpage
+%%Page: 47 47
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+portraitPage begin 34 drawPageContent
 26 30 7 5 showShareTablePage
 
 end pgsave restore
 showpage
 
-%%Page: 47 47
+%%Page: 48 48
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 38 drawPageContent
+portraitPage begin 35 drawPageContent
 
 % EDITME
 % Edit the 4 and 8 (min/max k) to draw tables for high k. For example, for k=9, set
@@ -4511,11 +4520,11 @@ portraitPage begin 38 drawPageContent
 end pgsave restore
 showpage
 
-%%Page: 48 48
+%%Page: 49 49
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-portraitPage begin 39 drawPageContent
+portraitPage begin 36 drawPageContent
 
 % EDITME
 % Edit the 4 and 8 (min/max k) to draw tables for high k. For example, for k=9, set

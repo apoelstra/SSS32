@@ -2966,7 +2966,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
             % lower-left index
             i starti sub 3 add 0 offset ysize add moveto 1 1 rmoveto
             /idx i hrplen sub 1 sub def
-            idx 26 gt { botalphabet idx 26 idiv 1 sub 1 getinterval show } if
+            idx 26 ge { botalphabet idx 26 idiv 1 sub 1 getinterval show } if
             botalphabet idx 26 mod 1 getinterval show
           } for
 
@@ -3002,6 +3002,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
   grestore
   gsave
     /Courier findfont 3 scalefont setfont
+    % First (input) row
     thick line
     0 1 firstrowlen hrplen add {
       /i exch def
@@ -3011,6 +3012,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
       n 10 lt { ( ) show } if n 2 string cvs show
     } for
 
+    % Second row (first non-input row)
     thin line
     0 1 firstrowlen 1 sub {
       hrplen 1 add add 1 offset xsize ysize rectstroke
@@ -3027,6 +3029,12 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
       0 1 checksumlen 1 sub {
         hrplen add j add 1 sub odd sub /i exch def
         thin line
+        i j sub hrplen odd sub le { % draw bottom-left numbers
+          i j offset ysize add moveto 1 1 rmoveto
+          /idx i 2 idiv j 2 idiv add 2 sub def
+          idx 26 ge { botalphabet idx 26 idiv 1 sub 1 getinterval show } if
+          botalphabet idx 26 mod 1 getinterval show
+        } if
         i j offset xsize ysize rectstroke
         i 2 add j 1 add offset xsize ysize rectstroke
       } for
@@ -3944,7 +3952,7 @@ pgsize aload pop
 /pageH exch def
 
 /Times-Bold findfont 10 scalefont setfont
-pageW 2 div pageH 48 sub moveto (MS32 Checksum Table) centreshow
+pageW 2 div pageH 48 sub moveto (codex32 Checksum Table) centreshow
 
 /Courier findfont 8.5 scalefont setfont
 36 pageH 58 sub  % x y
@@ -3970,7 +3978,7 @@ pgsize aload pop
 /pageH exch def
 
 /Times-Bold findfont 10 scalefont setfont
-pageW 2 div pageH 48 sub moveto (MS32 Checksum Table) centreshow
+pageW 2 div pageH 48 sub moveto (codex32 Checksum Table) centreshow
 
 /Courier findfont 8.5 scalefont setfont
 36 pageH 58 sub  % x y
@@ -3995,7 +4003,7 @@ end pgsave restore showpage
 
 /Helvetica-Bold findfont 10 scalefont setfont
 pgsize aload pop exch pop 2 div 700
-moveto (ms32 Checksum Worksheet) centreshow
+moveto (codex32 Checksum Worksheet) centreshow
 
 /Times findfont 10 scalefont setfont
 72 180 moveto (For additional worksheets visit secretcodex32.com.) show

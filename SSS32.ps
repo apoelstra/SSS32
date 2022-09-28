@@ -92,7 +92,8 @@
     (places. The shares can later be used to reconstruct the original)
     (secret. It is important to emphasize that SSSS is a mechanism for)
     (storing backups, not a mechanism for enforcing a signing)
-    (policy, as is done with multisig.)
+    (policy, as is done with multisig. In fact, even when using a multisignature)
+    (scheme, there are still keys to be backed up, which could use SSSS.)
 
     23 { /linebreak } repeat
 
@@ -238,7 +239,7 @@
     (by hand.)
     /paragraph
     (In contrast, the SLIP39 Shamir Secret Sharing Scheme)
-    (can detect up to three errors and correct up to one error 100%)
+    (can detect up to three word errors and correct up to one word 100%)
     (of the time. Additionally, it will fail to detect other random)
     (errors with extremely low probability. However, the SLIP39)
     (checksum is also quite difficult to compute or verify by hand.)
@@ -246,7 +247,7 @@
   ] [ % pagebreak
     /startText
     (In the Codex32 book, we introduce the *codex32* checksum, which can detect up)
-    (to eight errors and correct up to four. codex32 has an even)
+    (to eight character errors and correct up to four. codex32 has an even)
     (higher probability than SLIP39 of successfully detecting random)
     (errors. And most importantly, codex32 checksums can be computed)
     (and verified entirely by hand.)
@@ -261,6 +262,11 @@
     (of codex32 generate a fresh 128-bit seed, using the)
     (instructions in this book, and sweep their coins to addresses derived)
     (from the new seed.)
+    /paragraph
+    (We note that Bitcoin's EC signatures have only 128)
+    (bits of security, so as long as your secret is randomly generated and)
+    (securely stored, additional bit-length serves no purpose except to)
+    (complicate things.)
 
     /subsection (I.6. Bech32 and Alternative Alphabets) /endsubsection
     /dropcap (C) (odex32 inherits its name from the Bech32 alphabet.)
@@ -344,7 +350,18 @@
       (symmetric.)
 
       /paragraph
-      (*2. Translation & Fusion.* A common task in the scheme is)
+      (*2. Recovery.* When recovering a secret, you will need to look up)
+      ("recovery symbols" that will be used. To do this with the)
+      (recovery wheel, turn the wheel to the share you want to)
+      (translate. Mark down the symbols pointed to by the $other shares$)
+      (indices and fuse these together.)
+
+      /paragraph
+      ($Important$: Unlike the other wheels, the recovery wheel can)
+      (easily be used in the wrong order. Be careful!)
+
+      /paragraph
+      (*3. Translation & Fusion.* A common task in the scheme is)
       (to "translate" share data by a given recovery)
       (symbol. To do so,)
       (turn the translation/fusion wheel so that the window on)
@@ -362,17 +379,6 @@
       (product. You can now turn the wheel over to translate by this)
       (symbol. As with addition, the order in which you take your)
       (original symbols does not matter.)
-
-      /paragraph
-      (*3. Recovery.* When recovering a secret, you will need to look up)
-      ("recovery symbols" that will be used. To do this with the)
-      (recovery wheel, turn the wheel to the share you want to)
-      (translate. Mark down the symbols pointed to by the $other shares$)
-      (indices and fuse these together.)
-
-      /paragraph
-      ($Important$: Unlike the other wheels, the recovery wheel can)
-      (easily be used in the wrong order. Be careful!)
 
   ] [ % pagebreak
     /section (Part III: Process Instructions / Cheatsheet) /endsection
@@ -685,6 +691,7 @@
 
    /paragraph (Generating a checksum:)
     /startlist
+    /listitem1 (Fill in the bottom row with the word `SECRETSHARE32`) /endlistitem
     /listitem1 (Fill in the top diagonal squares)
       (\(i.e., the bold ones\) with your random data. You should have)
       (enough data to fill the non-pink bolded squares.) /endlistitem
@@ -703,6 +710,8 @@
       (diagonal, including the checksum \(i.e., the pink bolded)
       (squares\).) /endlistitem
 
+    /paragraph
+    ($Note.$ To avoid confusion, we recommend slashing your `0`s, `7`s, `Z`s and `S`s when handwriting.)
   ] [
 
     /subsection (Checksum Worksheet \(Verification Instructions\)) /endsubsection
@@ -727,6 +736,9 @@
       (try redoing the worksheet entirely. If the checksum is)
       (consistently bad, your data is corrupt and you need to attempt)
       (the online recovery process.)
+
+    /paragraph
+    ($Note.$ To avoid confusion, we recommend slashing your `0`s, `7`s, `Z`s and `S`s when handwriting.)
 
 
   4 { ] [ } repeat  % checksum tables and worksheet
@@ -2675,7 +2687,7 @@ end
         rowidx 0 eq {
           % First row (heading)
           k (k =   ) rowtitle copy 4 2 getinterval cvs pop
-          rowtitle show
+          rowtitle show (  ) show
 
           k mink sub { 12 0 rmoveto } repeat
           k 1 31 {
@@ -2687,7 +2699,7 @@ end
           /xinterp rowidx 1 sub def % x coord to interpolate at
           (  ) show
           perm xinterp get code exch get glyphshow
-          (   ) show
+          (     ) show
 
           k mink sub { 12 0 rmoveto } repeat
           k 1 31 {
@@ -3224,7 +3236,7 @@ end
     newpath 0 4.5 moveto 0 -4.5 lineto 4.5 0 moveto -4.5 0 lineto resetstroke
     % Draw title
     /Helvetica findfont innerTitleSz scalefont setfont
-    (Recovery) innerTitleSz 270 30 insidecircletext
+    (Translation) innerTitleSz 270 30 insidecircletext
   grestore
   } if
 } bind def

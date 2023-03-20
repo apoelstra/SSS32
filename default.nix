@@ -35,6 +35,12 @@ let
       content = builtins.readFile "${src}/include/setup/page-setup.ps.inc";
       dependencies = [ ];
     };
+    textRendering = {
+      content = builtins.readFile "${src}/include/setup/text-rendering.ps.inc";
+      dependencies = [
+        graphicsHelpers # for glyphwidth
+      ];
+    };
     helpers = {
       content = builtins.readFile "${src}/include/setup/helpers.ps.inc";
       dependencies = [ ];
@@ -140,6 +146,14 @@ let
       dependencies = with setup; [ graphicsVolvelles ]; # for portraitPage
     };
 
+    page1 = {
+      content = builtins.readFile "${src}/include/text/page1.ps.inc";
+      dependencies = with setup; [
+        textRendering
+      ];
+      drawFooter = true;
+    };
+
     generationInstructions = {
       content = builtins.readFile "${src}/include/page7.ps.inc";
       dependencies = with setup; [
@@ -181,6 +195,7 @@ let
       license
       reference
       principalTables
+      page1
       additionBottom
       additionTop
       generationInstructions

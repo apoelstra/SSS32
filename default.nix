@@ -85,7 +85,7 @@ let
   };
   # Dependencies that every page has
   standardDependencies = with setup; [
-    frontMatter # for ver, in each page footer
+    frontMatter # for ver, in each page footer; also pulls in license text to the top of the doc
     graphicsHelpers # for portraitPage and landscapePage
   ];
 
@@ -93,22 +93,7 @@ let
     title = {
       sourceHeader = "Title Page";
       content = builtins.readFile "${src}/include/title.ps.inc";
-      # These dependencies are entirely to force the ordering of the setup
-      # code in the full booklet. None are needed, and they will be removed
-      # in a later commit (which will have a ton of moved code in SSS32.ps,
-      # which we're trying to avoid for now).
-      dependencies = with setup; [
-        frontMatter
-        helpers
-        field
-        code
-        bch
-        graphicsVolvelles
-        graphicsHelpers
-        reference
-        shareTables
-        checksumTable
-      ];
+      dependencies = [ ];
       skipPageNumber = true;
     };
     license = {
@@ -215,8 +200,8 @@ let
     (item: (dependencyContentRecur item.dependencies) ++ [ item.content ])
     content;
   dependencyContent = pages: lib.lists.unique (
-    (builtins.concatMap (page: dependencyContentRecur page.dependencies) pages) ++
-    (map (dep: dep.content) standardDependencies)
+    (map (dep: dep.content) standardDependencies) ++
+    (builtins.concatMap (page: dependencyContentRecur page.dependencies) pages)
   );
 
   renderBooklet = booklet:

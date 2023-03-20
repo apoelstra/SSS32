@@ -1,6 +1,6 @@
-%******************
-%* Reference Sheet
-%*
+%****************************************************************
+%* Reference Page
+%****************************************************************
 
 % Draws the data format box. Assumes that position 0 0 is the top-center of the page
 /drawDataFormat {

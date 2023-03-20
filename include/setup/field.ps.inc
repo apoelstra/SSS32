@@ -1,5 +1,5 @@
-%******************
-%* Field Arthmetic
+%****************************************************************
+%* GF32 Field Arithmetic
 %*
 %* Calculations within GF(32), extended with the "null element", represented by
 %* numberic 32, which is displayed as a blank, and on which every operation
@@ -7,6 +7,8 @@
 %*
 %* Our generator for GF(32) has minimum polynomial x^5 + x^3 + 1.
 %*
+%****************************************************************
+
 /gf32add % x y -> x [+] y where [+] is addition in GF32.
          % returns 32 if x or y is out of range.
          % Note that x [+] y = x [-] y in GF32.

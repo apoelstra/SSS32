@@ -35,19 +35,10 @@
 (and your data is lost forever. Even if you don't lose this document, there is no warranty or)
 (guarantee of any kind that you will be able to recover successfully recover your data.)
 ]
-%************************************************************************
-%************************************************************************
-%*
-%* Section One: Preamble
-%*
-%************************************************************************
-%************************************************************************
 
-%******************
-%* Front matter
-%*
-%* Define variables for the preceeding front matter text.
-%*
+%****************************************************************
+%* Front Matter
+%****************************************************************
 /warning exch def
 /MIT exch def
 /ver exch def
@@ -150,17 +141,9 @@ portraitPage dup 20 dict copy dup /landscapePage exch def begin
   } bind def
 end
 
-%************************************************************************
-%************************************************************************
-%*
-%* Section Two: Graphics
-%*
-%************************************************************************
-%************************************************************************
-
-%******************
-%* Helper Functions and Utilities
-%*
+%****************************************************************
+%* Graphics Helpers
+%****************************************************************
 
 % line : width --
 /line {
@@ -652,11 +635,28 @@ circtextdict begin
 /pi 3.1415923 def
 end
 
-%******************
-%* Code Parameters
-%*
-%* Data related to the representation of GF(32) elements
-%*
+%****************************************************************
+%* Definition of codex32 BCH code
+%****************************************************************
+
+/polymodulus [25 27 17 8 0 25 25 25 31 27 24 16 16] def % coefficents from c12 to c0
+/checksum [16 25 24 3 25 11 16 23 29 3 25 17 10] def
+/checksumstring { polymodulus length array checksum 0 1 polymodulus length 1 sub {3 copy exch 1 index get code exch 1 getinterval putinterval pop } for pop } bind def
+
+/polymod0 % array -> [ c5 c4 c3 c2 c1 c0 ]
+ { [ polymodulus length {0} repeat ]
+   exch
+   { [ exch 2 index 1 polymodulus length 1 sub getinterval aload pop polymodulus length dup 1 sub roll ] exch 0 get polymodulus gf32mularray gf32addarray  } forall
+ } bind def
+
+/polymodshift2 % c7 c6 -> [ c5 c4 c3 c2 c1 c0 ]
+ {  [ 3 1 roll polymodulus length {0} repeat ] polymod0
+ } bind def
+
+/polymodhrp % string -> [ c5 c4 c3 c2 c1 c0 ]
+ {
+   [ exch 1 exch dup { dup dup 65 ge exch 90 le exch and { 32 add } if 32 idiv exch } forall 0 exch { 31 and } forall ] polymod0
+ } bind def
 
 /perm [29 24 13 25 9 8 23 18 22 31 27 19 1 0 3 16 11 28 12 14 6 4 2 15 10 17 21 20 26 30 7 5 ] def
 /permS [16 29 24 13 25 9 8 23 18 22 31 27 19 1 0 3 11 28 12 14 6 4 2 15 10 17 21 20 26 30 7 5 ] def
@@ -666,70 +666,11 @@ end
 /code [/Q /P /Z /R /Y /nine /X /eight /G /F /two /T /V /D /W /zero /S /three /J /N /five /four /K /H /C /E /six /M /U /A /seven /L /space] def
 /code2 [/multiply /aleph /alpha /beta /Gamma /Delta /epsilon /eta /Theta /Lambda /mu /Xi /Pi /rho /Sigma /Phi /Psi /Omega /at /numbersign /percent /cent /yen /Euro /currency /circleplus /dagger /daggerdbl /section /paragraph /diamond /heart /space ] def
 
-/decode {
- [ exch { <<
-113 0
-81 0
-112 1
-80 1
-122 2
-90 2
-114 3
-82 3
-121 4
-89 4
-57 5
-120 6
-88 6
-56 7
-103 8
-71 8
-102 9
-70 9
-50 10
-116 11
-84 11
-118 12
-86 12
-100 13
-68 13
-119 14
-87 14
-48 15
-115 16
-83 16
-51 17
-106 18
-74 18
-110 19
-78 19
-53 20
-52 21
-107 22
-75 22
-104 23
-72 23
-99 24
-67 24
-101 25
-69 25
-54 26
-109 27
-77 27
-117 28
-85 28
-97 29
-65 29
-55 30
-108 31
-76 31
-32 32
- >> exch get } forall ]
-} bind def
+% For inverse of code see Checksum Worksheet section
 
-%******************
-%* Reference Sheet
-%*
+%****************************************************************
+%* Reference Page
+%****************************************************************
 
 % Draws the data format box. Assumes that position 0 0 is the top-center of the page
 /drawDataFormat {
@@ -909,8 +850,8 @@ end
   end
 } bind def
 
-%******************
-%* Field Arthmetic
+%****************************************************************
+%* GF32 Field Arithmetic
 %*
 %* Calculations within GF(32), extended with the "null element", represented by
 %* numberic 32, which is displayed as a blank, and on which every operation
@@ -918,6 +859,8 @@ end
 %*
 %* Our generator for GF(32) has minimum polynomial x^5 + x^3 + 1.
 %*
+%****************************************************************
+
 /gf32add % x y -> x [+] y where [+] is addition in GF32.
          % returns 32 if x or y is out of range.
          % Note that x [+] y = x [-] y in GF32.
@@ -1003,9 +946,9 @@ end
   { [ 3 1 roll 0 1 2 index length 1 sub { 2 index 1 index get 2 index 2 index get gf32add exch pop 3 1 roll } for pop pop ]
   } bind def
 
-%******************
-%* Helper Functions and Utilities
-%*
+%****************************************************************
+%* Helpers and Utilities
+%****************************************************************
 
 % determinant : matrix -- det(matrix)
 /determinant {
@@ -1067,9 +1010,10 @@ end
    } bind def
 
 
-%******************
-%* Volvelle and Slide Charts
-%*
+%****************************************************************
+%* Volvelle Drawing
+%****************************************************************
+
 /magic 94 def % a magic angle for making nice looking spirals.
 /drawBottomWheelPage
  { 10 dict begin
@@ -1425,36 +1369,70 @@ end
 end
 } bind def
 
-%******************
-%* BCH
-%*
-%* Data and functions related to the error-correcting code.
-%*
-/polymodulus [25 27 17 8 0 25 25 25 31 27 24 16 16] def % coefficents from c12 to c0
-/checksum [16 25 24 3 25 11 16 23 29 3 25 17 10] def
-/checksumstring { polymodulus length array checksum 0 1 polymodulus length 1 sub {3 copy exch 1 index get code exch 1 getinterval putinterval pop } for pop } bind def
-
-/polymod0 % array -> [ c5 c4 c3 c2 c1 c0 ]
- { [ polymodulus length {0} repeat ]
-   exch
-   { [ exch 2 index 1 polymodulus length 1 sub getinterval aload pop polymodulus length dup 1 sub roll ] exch 0 get polymodulus gf32mularray gf32addarray  } forall
- } bind def
-
-/polymodshift2 % c7 c6 -> [ c5 c4 c3 c2 c1 c0 ]
- {  [ 3 1 roll polymodulus length {0} repeat ] polymod0
- } bind def
-
-/polymodhrp % string -> [ c5 c4 c3 c2 c1 c0 ]
- {
-   [ exch 1 exch dup { dup dup 65 ge exch 90 le exch and { 32 add } if 32 idiv exch } forall 0 exch { 31 and } forall ] polymod0
- } bind def
-
-%******************
+%****************************************************************
 %* Checksum Worksheet
-%*
-%* Functionality for the checksum, addition, bit conversion, etc., worksheets,
-%* to assist user manipulation of long bech32 strings
-%*
+%****************************************************************
+
+/decode {
+ [ exch { <<
+113 0
+81 0
+112 1
+80 1
+122 2
+90 2
+114 3
+82 3
+121 4
+89 4
+57 5
+120 6
+88 6
+56 7
+103 8
+71 8
+102 9
+70 9
+50 10
+116 11
+84 11
+118 12
+86 12
+100 13
+68 13
+119 14
+87 14
+48 15
+115 16
+83 16
+51 17
+106 18
+74 18
+110 19
+78 19
+53 20
+52 21
+107 22
+75 22
+104 23
+72 23
+99 24
+67 24
+101 25
+69 25
+54 26
+109 27
+77 27
+117 28
+85 28
+97 29
+65 29
+55 30
+108 31
+76 31
+32 32
+ >> exch get } forall ]
+} bind def
 
 30 dict dup /ladder exch def begin
   /hrp (MS) def
@@ -1618,9 +1596,10 @@ end
   end
 } bind def
 
-%******************
-%* Share Tables
-%*
+%****************************************************************
+%* Share Tables (tables for quick derivation of k=2 shares)
+%****************************************************************
+
 /showShareTable {
 /offsety exch def
 /offsetx exch def
@@ -1654,11 +1633,9 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
 50 720 showShareTable
 } bind def
 
-%******************
-%* Checksum Table
-%*
-%* Draws the giant lookup table used by the checksum worksheet
-%*
+%****************************************************************
+%* Checksum Table (lookup table for Checksum Worksheet)
+%****************************************************************
 
 /drawChecksumTable {
   10 dict begin
@@ -1728,15 +1705,8 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
 
   end
 } bind def
-%%EndSetup
 
-%************************************************************************
-%************************************************************************
-%*
-%* Section Three: Page Rendering
-%*
-%************************************************************************
-%************************************************************************
+%%EndSetup
 
 %****************************************************************
 %*

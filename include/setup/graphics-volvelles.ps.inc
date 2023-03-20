@@ -1,6 +1,7 @@
-%******************
-%* Volvelle and Slide Charts
-%*
+%****************************************************************
+%* Volvelle Drawing
+%****************************************************************
+
 /magic 94 def % a magic angle for making nice looking spirals.
 /drawBottomWheelPage
  { 10 dict begin

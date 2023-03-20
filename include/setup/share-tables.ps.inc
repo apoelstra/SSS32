@@ -1,6 +1,7 @@
-%******************
-%* Share Tables
-%*
+%****************************************************************
+%* Share Tables (tables for quick derivation of k=2 shares)
+%****************************************************************
+
 /showShareTable {
 /offsety exch def
 /offsetx exch def

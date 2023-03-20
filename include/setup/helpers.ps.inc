@@ -1,6 +1,6 @@
-%******************
-%* Helper Functions and Utilities
-%*
+%****************************************************************
+%* Helpers and Utilities
+%****************************************************************
 
 % determinant : matrix -- det(matrix)
 /determinant {

@@ -1,8 +1,6 @@
-%******************
-%* Checksum Table
-%*
-%* Draws the giant lookup table used by the checksum worksheet
-%*
+%****************************************************************
+%* Checksum Table (lookup table for Checksum Worksheet)
+%****************************************************************
 
 /drawChecksumTable {
   10 dict begin

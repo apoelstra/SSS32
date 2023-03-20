@@ -30,19 +30,10 @@
 (and your data is lost forever. Even if you don't lose this document, there is no warranty or)
 (guarantee of any kind that you will be able to recover successfully recover your data.)
 ]
-%************************************************************************
-%************************************************************************
-%*
-%* Section One: Preamble
-%*
-%************************************************************************
-%************************************************************************
 
-%******************
-%* Front matter
-%*
-%* Define variables for the preceeding front matter text.
-%*
+%****************************************************************
+%* Front Matter
+%****************************************************************
 /warning exch def
 /MIT exch def
 /ver exch def

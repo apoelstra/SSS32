@@ -33,7 +33,7 @@ let
     };
     pageSetup = {
       content = builtins.readFile "${src}/include/setup/page-setup.ps.inc";
-      dependencies = [];
+      dependencies = [ ];
     };
     helpers = {
       content = builtins.readFile "${src}/include/setup/helpers.ps.inc";
@@ -41,10 +41,6 @@ let
     };
     field = {
       content = builtins.readFile "${src}/include/setup/field.ps.inc";
-      dependencies = [ ];
-    };
-    code = {
-      content = builtins.readFile "${src}/include/setup/code.ps.inc";
       dependencies = [ ];
     };
     bch = {
@@ -59,24 +55,22 @@ let
       content = builtins.readFile "${src}/include/setup/graphics-volvelles.ps.inc";
       dependencies = [
         field
-        code
+        bch
         helpers # for determinant
         graphicsHelpers # for verythin
       ];
     };
     reference = {
       content = builtins.readFile "${src}/include/setup/reference.ps.inc";
-      dependencies = [
-        code
-      ];
+      dependencies = [ bch ];
     };
     shareTables = {
       content = builtins.readFile "${src}/include/setup/share-tables.ps.inc";
-      dependencies = [ field code ];
+      dependencies = [ field bch ];
     };
     checksumTable = {
       content = builtins.readFile "${src}/include/setup/checksum-table.ps.inc";
-      dependencies = [ field code bch ];
+      dependencies = [ field bch ];
     };
     checksumWorksheet = {
       content = builtins.readFile "${src}/include/setup/checksum-worksheet.ps.inc";
@@ -120,18 +114,18 @@ let
       content = builtins.readFile "${src}/include/principal-tables.ps.inc";
       dependencies = with setup; [
         field
-        code
+        bch
         graphicsHelpers # for centrecodexshow
       ];
     };
 
     additionBottom = {
       content = "{xor} (Addition) code dup perm drawBottomWheelPage\n";
-      dependencies = with setup; [ code graphicsVolvelles ]; # for pgsize
+      dependencies = with setup; [ bch graphicsVolvelles ]; # for pgsize
     };
     additionTop = {
       content = "showTopWheelPage\n";
-      dependencies = with setup; [ code graphicsVolvelles ]; # for pgsize
+      dependencies = with setup; [ bch graphicsVolvelles ]; # for pgsize
     };
     recovery = {
       content = builtins.readFile "${src}/include/volvelle-recovery.ps.inc";
@@ -149,7 +143,7 @@ let
     generationInstructions = {
       content = builtins.readFile "${src}/include/page7.ps.inc";
       dependencies = with setup; [
-        code
+        bch
         checksumWorksheet # for showParagraphs
       ];
     };
@@ -168,7 +162,7 @@ let
     };
     checksumWorksheet = {
       content = builtins.readFile "${src}/include/checksum-worksheet.ps.inc";
-      dependencies = with setup; [ code checksumWorksheet ];
+      dependencies = with setup; [ bch checksumWorksheet ];
       isLandscape = true;
       drawFooter = true;
     };
@@ -247,15 +241,8 @@ let
           %%Pages: ${toString (builtins.length booklet.pages)}
           %%EndComments
           %%BeginSetup
-          ${builtins.concatStringsSep "\n" (dependencyContent booklet.pages)}%%EndSetup
-
-          %************************************************************************
-          %************************************************************************
-          %*
-          %* Section Three: Page Rendering
-          %*
-          %************************************************************************
-          %************************************************************************
+          ${builtins.concatStringsSep "\n" (dependencyContent booklet.pages)}
+          %%EndSetup
 
         '';
         nextPgIdx = 1;

@@ -78,17 +78,9 @@
 (The result is your secret share and will have share index S and a valid checksum.)
 ] def
 
-%************************************************************************
-%************************************************************************
-%*
-%* Section Two: Graphics
-%*
-%************************************************************************
-%************************************************************************
-
-%******************
-%* Helper Functions and Utilities
-%*
+%****************************************************************
+%* Page Setup
+%****************************************************************
 
 /pgsize currentpagedevice /PageSize known
   { currentpagedevice /PageSize get
@@ -96,6 +88,8 @@
     [611.842163 791.842163] % letter size
   } ifelse
 def
+
+/centreshow {dup stringwidth pop 2 div neg 0 rmoveto show} bind def
 
 20 dict dup /portraitPage exch def begin
   pgsize aload pop [ /pageH /pageW ] { exch def } forall
@@ -125,7 +119,7 @@ def
     gsave
       /Times-Roman findfont 12 scalefont setfont
       centerX marginY2 moveto
-      pagenum pagenum 10 lt { 1 } { 2 } ifelse string cvs show
+      pagenum pagenum 10 lt { 1 } { 2 } ifelse string cvs centreshow
 
       /Courier findfont 10 scalefont setfont
       marginX1 marginY2 4 sub moveto
@@ -155,6 +149,18 @@ portraitPage dup 20 dict copy dup /landscapePage exch def begin
     portraitPage /drawFooter get exec
   } bind def
 end
+
+%************************************************************************
+%************************************************************************
+%*
+%* Section Two: Graphics
+%*
+%************************************************************************
+%************************************************************************
+
+%******************
+%* Helper Functions and Utilities
+%*
 
 % line : width --
 /line {
@@ -568,8 +574,6 @@ end
   mul 1000 div
   0
 } bind def
-
-/centreshow {dup stringwidth pop 2 div neg 0 rmoveto show} bind def
 
 /centrecodexshow {2 copy codexwidth pop 2 div neg 0 rmoveto codexshow} bind def
 
@@ -1061,6 +1065,7 @@ end
      dup dup 4 2 roll copy length
      4 -1 roll putinterval
    } bind def
+
 
 %******************
 %* Volvelle and Slide Charts

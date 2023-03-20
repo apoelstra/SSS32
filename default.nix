@@ -31,6 +31,10 @@ let
       content = builtins.readFile "${src}/include/setup/front-matter.ps.inc";
       dependencies = [ ];
     };
+    pageSetup = {
+      content = builtins.readFile "${src}/include/setup/page-setup.ps.inc";
+      dependencies = [];
+    };
     helpers = {
       content = builtins.readFile "${src}/include/setup/helpers.ps.inc";
       dependencies = [ ];
@@ -86,7 +90,7 @@ let
   # Dependencies that every page has
   standardDependencies = with setup; [
     frontMatter # for ver, in each page footer; also pulls in license text to the top of the doc
-    graphicsHelpers # for portraitPage and landscapePage
+    pageSetup # for portraitPage and landscapePage
   ];
 
   allPages = {
@@ -105,13 +109,20 @@ let
     reference = {
       sourceHeader = "Reference Sheet";
       content = builtins.readFile "${src}/include/reference.ps.inc";
-      dependencies = with setup; [ reference ];
+      dependencies = with setup; [
+        graphicsHelpers # for codexshow
+        reference
+      ];
       drawFooter = true;
     };
     principalTables = {
       sourceHeader = "Arithmetic Tables";
       content = builtins.readFile "${src}/include/principal-tables.ps.inc";
-      dependencies = with setup; [ field code ];
+      dependencies = with setup; [
+        field
+        code
+        graphicsHelpers # for centrecodexshow
+      ];
     };
 
     additionBottom = {

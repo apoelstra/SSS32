@@ -1,4 +1,4 @@
-/Helvetica-Bold findfont 10 scalefont setfont
+/Times-Bold findfont 10 scalefont setfont
 pgsize aload pop exch pop 2 div 700
 moveto (ms32 Checksum Worksheet) centreshow
 
@@ -12,10 +12,10 @@ end
 grestore
 
 100 320 moveto
-/Helvetica-Bold findfont 10 scalefont setfont
+/Times-Bold findfont 10 scalefont setfont
 (Verifying Checksums) show
 100 300 moveto
-/Helvetica findfont 9 scalefont setfont
+/Times findfont 9 scalefont setfont
 (Write out the 45 character data portion in the) show
 100 290 moveto
 (bold boxes, two at a time, starting on the top) show
@@ -38,10 +38,10 @@ grestore
 100 200 moveto
 (to ) show checksumstring {glyphshow} forall ( if the checksum is valid.) show
 100 160 moveto
-/Helvetica-Bold findfont 10 scalefont setfont
+/Times-Bold findfont 10 scalefont setfont
 (Creating Checksums) show
 100 140 moveto
-/Helvetica findfont 9 scalefont setfont
+/Times findfont 9 scalefont setfont
 (Follow the "Verifying Checksums" instructions) show
 100 130 moveto
 (to fill in everything but the shaded cells. To fill in) show

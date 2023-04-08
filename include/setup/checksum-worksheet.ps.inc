@@ -136,7 +136,7 @@
       n 10 lt { ( ) show } if n 2 string cvs show
     } for
 
-    /Helvetica-Bold findfont 10 scalefont setfont
+    /Times-Bold findfont 10 scalefont setfont
     1 1 numsteps 1 add {
       2 mul /j exch def
       j j offset moveto xsize 0.7 mul 5 rmoveto (+) centreshow

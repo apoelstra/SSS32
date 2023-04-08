@@ -1,6 +1,6 @@
 10 dict begin
     72 720 moveto
-    /Helvetica findfont 20 scalefont setfont
+    /Times findfont 20 scalefont setfont
     gsave (Constructing Shares) show grestore
     0 -20 rmoveto
     /Times-Roman findfont 12 scalefont setfont

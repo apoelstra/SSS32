@@ -20,7 +20,7 @@ gsave
   end
   5 175 foldingBottomDiscs
 grestore
-/Helvetica findfont 14 scalefont setfont
+/Times findfont 14 scalefont setfont
 20 740 moveto (1.) show
 95 600 moveto (2.) show
 % Move cursor to center of page

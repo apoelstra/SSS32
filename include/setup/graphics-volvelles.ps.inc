@@ -20,10 +20,10 @@
      newpath 0 0 6 0 360 arc stroke
    grestore
    % Draw title (small text, repeated)
-   /Helvetica findfont 12 scalefont setfont
+   /Times findfont 12 scalefont setfont
    title 12 270 30 insidecircletext
    % Draw letters (using human-centric ABCD... permutation)
-   /Helvetica findfont 6 scalefont setfont
+   /Times findfont 6 scalefont setfont
    gsave
    360 16 div 360 64 div sub rotate
    0 360 8 div 360 {title 6 3 -1 roll 262 outsidecircletext} for
@@ -197,7 +197,7 @@ end
      newpath 0 0 innerRadius 0 360 arc thick line resetstroke
      % Draw letters
      gsave
-       /Helvetica findfont outerTitleSz scalefont setfont
+       /Times findfont outerTitleSz scalefont setfont
        360 8 div dup 2 div exch 360 {title outerTitleSz 3 -1 roll radius outerTitleSz sub outsidecircletext} for
      grestore
      outerglyphs {
@@ -262,7 +262,7 @@ end
      grestore
      % Draw title
      gsave
-       /Helvetica findfont innerTitleSz scalefont setfont
+       /Times findfont innerTitleSz scalefont setfont
        title innerTitleSz 270 30 insidecircletext
      grestore
      % Draw letters

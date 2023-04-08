@@ -1,4 +1,4 @@
-/Helvetica-Bold findfont 16 scalefont setfont
+/Times-Bold findfont 16 scalefont setfont
 pgsize aload pop 48 sub exch 2 div exch
 moveto (Principal Tables) centreshow
 
@@ -12,7 +12,7 @@ pgsize aload pop
 
   % Top 16 pts are title
   x y moveto
-  /Helvetica findfont 12 scalefont setfont
+  /Times findfont 12 scalefont setfont
   tWidth 2 div -12 rmoveto title centreshow
 
   % Remainder is split into the table (one extra row and column for heading)

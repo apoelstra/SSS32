@@ -100,7 +100,7 @@ gsave
     0 0 moveto 4.5 2 mul drawSplitPin
   end
 grestore
-/Helvetica findfont 14 scalefont setfont
+/Times findfont 14 scalefont setfont
 20 740 moveto (3.) show
 125 600 moveto (4.) show
 410 260 moveto (5.) show

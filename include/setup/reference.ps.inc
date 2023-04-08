@@ -81,7 +81,7 @@
 
   boxW -17 mul -32 moveto
   % Draw headings above/below braces
-  /Helvetica findfont 12 scalefont setfont
+  /Times findfont 12 scalefont setfont
   3.5 boxW mul 0 rmoveto
   gsave
     gsave (recovery) centreshow grestore

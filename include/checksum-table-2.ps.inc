@@ -1,4 +1,4 @@
-/Helvetica-Bold findfont 10 scalefont setfont
+/Times-Bold findfont 10 scalefont setfont
 pageW 2 div pageH 48 sub moveto (MS32 Checksum Table) centreshow
 
 /Courier findfont 8.5 scalefont setfont

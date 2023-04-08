@@ -736,7 +736,7 @@ end
 
   boxW -17 mul -32 moveto
   % Draw headings above/below braces
-  /Helvetica findfont 12 scalefont setfont
+  /Times findfont 12 scalefont setfont
   3.5 boxW mul 0 rmoveto
   gsave
     gsave (recovery) centreshow grestore
@@ -1434,10 +1434,10 @@ end
      newpath 0 0 6 0 360 arc stroke
    grestore
    % Draw title (small text, repeated)
-   /Helvetica findfont 12 scalefont setfont
+   /Times findfont 12 scalefont setfont
    title 12 270 30 insidecircletext
    % Draw letters (using human-centric ABCD... permutation)
-   /Helvetica findfont 6 scalefont setfont
+   /Times findfont 6 scalefont setfont
    gsave
    360 16 div 360 64 div sub rotate
    0 360 8 div 360 {title 6 3 -1 roll 262 outsidecircletext} for
@@ -1611,7 +1611,7 @@ end
      newpath 0 0 innerRadius 0 360 arc thick line resetstroke
      % Draw letters
      gsave
-       /Helvetica findfont outerTitleSz scalefont setfont
+       /Times findfont outerTitleSz scalefont setfont
        360 8 div dup 2 div exch 360 {title outerTitleSz 3 -1 roll radius outerTitleSz sub outsidecircletext} for
      grestore
      outerglyphs {
@@ -1676,7 +1676,7 @@ end
      grestore
      % Draw title
      gsave
-       /Helvetica findfont innerTitleSz scalefont setfont
+       /Times findfont innerTitleSz scalefont setfont
        title innerTitleSz 270 30 insidecircletext
      grestore
      % Draw letters
@@ -1909,7 +1909,7 @@ end
       n 10 lt { ( ) show } if n 2 string cvs show
     } for
 
-    /Helvetica-Bold findfont 10 scalefont setfont
+    /Times-Bold findfont 10 scalefont setfont
     1 1 numsteps 1 add {
       2 mul /j exch def
       j j offset moveto xsize 0.7 mul 5 rmoveto (+) centreshow
@@ -2174,7 +2174,7 @@ portraitPage begin
 centerX marginY1 16 sub translate
 
 % Header/data format
-/Helvetica-Bold findfont 16 scalefont setfont
+/Times-Bold findfont 16 scalefont setfont
 0 0 moveto (Data Format) centreshow
 
 0 -24 translate
@@ -2182,14 +2182,14 @@ drawDataFormat
 
 % bech32->binary chart
 0 -100 translate
-/Helvetica-Bold findfont 16 scalefont setfont
+/Times-Bold findfont 16 scalefont setfont
 0 0 moveto  (Bech32 to Binary Conversion) centreshow
 
 0 -24 translate
 false drawBech32BinaryTable
 
 0 -150 translate
-/Helvetica-Bold findfont 16 scalefont setfont
+/Times-Bold findfont 16 scalefont setfont
 0 0 moveto (Binary to Bech32 Conversion) centreshow
 
 0 -24 translate
@@ -2197,7 +2197,7 @@ true drawBech32BinaryTable
 
 % Symbol pronunciation
 0 -150 translate
-/Helvetica-Bold findfont 16 scalefont setfont
+/Times-Bold findfont 16 scalefont setfont
 0 0 moveto (Symbols) centreshow
 
 0 -24 translate
@@ -2218,7 +2218,7 @@ showpage
 %%EndPageSetup
 portraitPage begin
 
-/Helvetica-Bold findfont 16 scalefont setfont
+/Times-Bold findfont 16 scalefont setfont
 pgsize aload pop 48 sub exch 2 div exch
 moveto (Principal Tables) centreshow
 
@@ -2232,7 +2232,7 @@ pgsize aload pop
 
   % Top 16 pts are title
   x y moveto
-  /Helvetica findfont 12 scalefont setfont
+  /Times findfont 12 scalefont setfont
   tWidth 2 div -12 rmoveto title centreshow
 
   % Remainder is split into the table (one extra row and column for heading)
@@ -2423,7 +2423,7 @@ portraitPage begin
 
 10 dict begin
     72 720 moveto
-    /Helvetica findfont 20 scalefont setfont
+    /Times findfont 20 scalefont setfont
     gsave (Constructing Shares) show grestore
     0 -20 rmoveto
     /Times-Roman findfont 12 scalefont setfont
@@ -2691,7 +2691,7 @@ gsave
   end
   5 175 foldingBottomDiscs
 grestore
-/Helvetica findfont 14 scalefont setfont
+/Times findfont 14 scalefont setfont
 20 740 moveto (1.) show
 95 600 moveto (2.) show
 % Move cursor to center of page
@@ -2836,7 +2836,7 @@ gsave
     0 0 moveto 4.5 2 mul drawSplitPin
   end
 grestore
-/Helvetica findfont 14 scalefont setfont
+/Times findfont 14 scalefont setfont
 20 740 moveto (3.) show
 125 600 moveto (4.) show
 410 260 moveto (5.) show
@@ -2867,7 +2867,7 @@ showpage
 %%EndPageSetup
 landscapePage begin
 11 drawFooter
-/Helvetica-Bold findfont 10 scalefont setfont
+/Times-Bold findfont 10 scalefont setfont
 pageW 2 div pageH 48 sub moveto (MS32 Checksum Table) centreshow
 
 /Courier findfont 8.5 scalefont setfont
@@ -2890,7 +2890,7 @@ showpage
 %%EndPageSetup
 landscapePage begin
 12 drawFooter
-/Helvetica-Bold findfont 10 scalefont setfont
+/Times-Bold findfont 10 scalefont setfont
 pageW 2 div pageH 48 sub moveto (MS32 Checksum Table) centreshow
 
 /Courier findfont 8.5 scalefont setfont
@@ -2913,7 +2913,7 @@ showpage
 %%EndPageSetup
 landscapePage begin
 13 drawFooter
-/Helvetica-Bold findfont 10 scalefont setfont
+/Times-Bold findfont 10 scalefont setfont
 pgsize aload pop exch pop 2 div 700
 moveto (ms32 Checksum Worksheet) centreshow
 
@@ -2927,10 +2927,10 @@ end
 grestore
 
 100 320 moveto
-/Helvetica-Bold findfont 10 scalefont setfont
+/Times-Bold findfont 10 scalefont setfont
 (Verifying Checksums) show
 100 300 moveto
-/Helvetica findfont 9 scalefont setfont
+/Times findfont 9 scalefont setfont
 (Write out the 45 character data portion in the) show
 100 290 moveto
 (bold boxes, two at a time, starting on the top) show
@@ -2953,10 +2953,10 @@ grestore
 100 200 moveto
 (to ) show checksumstring {glyphshow} forall ( if the checksum is valid.) show
 100 160 moveto
-/Helvetica-Bold findfont 10 scalefont setfont
+/Times-Bold findfont 10 scalefont setfont
 (Creating Checksums) show
 100 140 moveto
-/Helvetica findfont 9 scalefont setfont
+/Times findfont 9 scalefont setfont
 (Follow the "Verifying Checksums" instructions) show
 100 130 moveto
 (to fill in everything but the shaded cells. To fill in) show

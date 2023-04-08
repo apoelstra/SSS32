@@ -153,6 +153,69 @@ let
       ];
       drawFooter = true;
     };
+    page2 = {
+      content = builtins.readFile "${src}/include/text/page2.ps.inc";
+      dependencies = with setup; [
+        textRendering
+      ];
+      drawFooter = true;
+    };
+    page3 = {
+      content = builtins.readFile "${src}/include/text/page3.ps.inc";
+      dependencies = with setup; [
+        textRendering
+      ];
+      drawFooter = true;
+    };
+    page4 = {
+      content = builtins.readFile "${src}/include/text/page4.ps.inc";
+      dependencies = with setup; [
+        textRendering
+      ];
+      drawFooter = true;
+    };
+    page5 = {
+      content = builtins.readFile "${src}/include/text/page5.ps.inc";
+      dependencies = with setup; [
+        textRendering
+      ];
+      drawFooter = true;
+    };
+    page6 = {
+      content = builtins.readFile "${src}/include/text/page6.ps.inc";
+      dependencies = with setup; [
+        textRendering
+      ];
+      drawFooter = true;
+    };
+    page7 = {
+      content = builtins.readFile "${src}/include/text/page7.ps.inc";
+      dependencies = with setup; [
+        textRendering
+      ];
+      drawFooter = true;
+    };
+    page8 = {
+      content = builtins.readFile "${src}/include/text/page8.ps.inc";
+      dependencies = with setup; [
+        textRendering
+      ];
+      drawFooter = true;
+    };
+    page9 = {
+      content = builtins.readFile "${src}/include/text/page9.ps.inc";
+      dependencies = with setup; [
+        textRendering
+      ];
+      drawFooter = true;
+    };
+    page10 = {
+      content = builtins.readFile "${src}/include/text/page10.ps.inc";
+      dependencies = with setup; [
+        textRendering
+      ];
+      drawFooter = true;
+    };
 
     checksumTable1 = {
       content = builtins.readFile "${src}/include/checksum-table-1.ps.inc";
@@ -188,6 +251,15 @@ let
       reference
       principalTables
       page1
+      page2
+      page3
+      page4
+      page5
+      page6
+      page7
+      page8
+      page9
+      page10
       additionBottom
       additionTop
       (shareTable 29 24 13 25)

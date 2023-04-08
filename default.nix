@@ -154,14 +154,6 @@ let
       drawFooter = true;
     };
 
-    generationInstructions = {
-      content = builtins.readFile "${src}/include/page7.ps.inc";
-      dependencies = with setup; [
-        bch
-        checksumWorksheet # for showParagraphs
-      ];
-    };
-
     checksumTable1 = {
       content = builtins.readFile "${src}/include/checksum-table-1.ps.inc";
       isLandscape = true;
@@ -198,7 +190,6 @@ let
       page1
       additionBottom
       additionTop
-      generationInstructions
       (shareTable 29 24 13 25)
       (shareTable 9 8 23 18)
       (shareTable 22 31 27 19)

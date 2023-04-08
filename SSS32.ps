@@ -1,6 +1,6 @@
 %!PS-Adobe-3.0
 %%Orientation: Portrait
-%%Pages: 22
+%%Pages: 21
 %%EndComments
 %%BeginSetup
 [(Shamir's Secret) (Sharing Codex)]
@@ -1772,6 +1772,116 @@ end
 } bind def
 
 %****************************************************************
+%* Share Tables (tables for quick derivation of k=2 shares)
+%****************************************************************
+
+/showShareTable {
+/offsety exch def
+/offsetx exch def
+/page exch def
+/Courier findfont 10 scalefont setfont
+20 offsetx add offsety moveto (Page: ) show
+/Courier-Bold findfont 8 scalefont setfont
+code page get glyphshow
+2 1 31 {
+dup 7 mul offsetx add offsety 10 sub moveto
+permS exch get
+code exch get glyphshow
+} for
+
+0 1 31 {
+/Courier-Bold findfont 8 scalefont setfont
+offsetx offsety 20 sub 2 index 8 mul sub moveto
+dup code exch perm exch get get glyphshow
+/Courier findfont 8 scalefont setfont
+2 1 31 {
+dup 7 mul offsetx add offsety 20 sub 3 index 8 mul sub moveto
+permS exch get
+page exch perm 3 index get exch  makeShare code exch get glyphshow
+} for pop } for
+} bind def
+
+/showShareTablePage {
+325 400 showShareTable
+50 400 showShareTable
+325 720 showShareTable
+50 720 showShareTable
+} bind def
+
+%****************************************************************
+%* Checksum Table (lookup table for Checksum Worksheet)
+%****************************************************************
+
+/drawChecksumTable {
+  10 dict begin
+  { /startVal /tHeight /tWidth /y /x } {exch def} forall
+
+  /cellH tHeight 32 div def
+  /cellW tWidth 8 div def
+
+  % Draw horizontal background lines: one black one for the heading then
+  % alternating 4-cell-height white/gray for the content background
+  x y moveto
+  0 1 31 {
+    dup 0 eq { 0.808 0.923 0.953 } {
+      8 mod 4 lt { 0.808 0.923 0.953 } { 1 1 1 } ifelse
+    } ifelse setrgbcolor
+
+    gsave
+      tWidth 0 rlineto
+      0 cellH neg rlineto tWidth neg 0 rlineto closepath fill
+    grestore
+    0 cellH neg rmoveto
+  } for
+
+  % Draw vertical background lines: one double-wide black one per column
+  0 setgray
+  x y moveto
+  0 1 7 {
+    gsave
+      0 tHeight neg rlineto
+      cellW 2 mul 13 div 0 rlineto 0 tHeight rlineto closepath fill
+    grestore
+    cellW 0 rmoveto
+  } for
+
+  % Draw content
+  startVal 1 startVal 7 add {
+    /xVal exch def
+    x xVal startVal sub cellW mul add 2 add y 1.5 add moveto
+    0 1 31 {
+      /yVal exch def
+      0 cellH neg rmoveto
+
+      gsave
+        /Courier-Bold findfont 8.5 scalefont setfont
+        1 setgray
+        code perm xVal get get glyphshow
+        code perm yVal get get glyphshow
+      grestore
+
+      gsave
+        cellW 2 mul 13 div 0 rmoveto
+        perm xVal get perm yVal get polymodshift2 {
+          code exch get glyphshow
+          0.25 0 rmoveto
+        } forall
+      grestore
+    } for
+  } for
+
+  % Bounding box
+  0.5 setlinewidth
+  x y moveto
+  0 tHeight neg rlineto
+  tWidth 0 rlineto
+  0 tHeight rlineto
+  closepath stroke
+
+  end
+} bind def
+
+%****************************************************************
 %* Checksum Worksheet
 %****************************************************************
 
@@ -1995,116 +2105,6 @@ end
     lines lines length 1 sub get gsave show grestore
     0 height neg 2 mul rmoveto
   } forall
-  end
-} bind def
-
-%****************************************************************
-%* Share Tables (tables for quick derivation of k=2 shares)
-%****************************************************************
-
-/showShareTable {
-/offsety exch def
-/offsetx exch def
-/page exch def
-/Courier findfont 10 scalefont setfont
-20 offsetx add offsety moveto (Page: ) show
-/Courier-Bold findfont 8 scalefont setfont
-code page get glyphshow
-2 1 31 {
-dup 7 mul offsetx add offsety 10 sub moveto
-permS exch get
-code exch get glyphshow
-} for
-
-0 1 31 {
-/Courier-Bold findfont 8 scalefont setfont
-offsetx offsety 20 sub 2 index 8 mul sub moveto
-dup code exch perm exch get get glyphshow
-/Courier findfont 8 scalefont setfont
-2 1 31 {
-dup 7 mul offsetx add offsety 20 sub 3 index 8 mul sub moveto
-permS exch get
-page exch perm 3 index get exch  makeShare code exch get glyphshow
-} for pop } for
-} bind def
-
-/showShareTablePage {
-325 400 showShareTable
-50 400 showShareTable
-325 720 showShareTable
-50 720 showShareTable
-} bind def
-
-%****************************************************************
-%* Checksum Table (lookup table for Checksum Worksheet)
-%****************************************************************
-
-/drawChecksumTable {
-  10 dict begin
-  { /startVal /tHeight /tWidth /y /x } {exch def} forall
-
-  /cellH tHeight 32 div def
-  /cellW tWidth 8 div def
-
-  % Draw horizontal background lines: one black one for the heading then
-  % alternating 4-cell-height white/gray for the content background
-  x y moveto
-  0 1 31 {
-    dup 0 eq { 0.808 0.923 0.953 } {
-      8 mod 4 lt { 0.808 0.923 0.953 } { 1 1 1 } ifelse
-    } ifelse setrgbcolor
-
-    gsave
-      tWidth 0 rlineto
-      0 cellH neg rlineto tWidth neg 0 rlineto closepath fill
-    grestore
-    0 cellH neg rmoveto
-  } for
-
-  % Draw vertical background lines: one double-wide black one per column
-  0 setgray
-  x y moveto
-  0 1 7 {
-    gsave
-      0 tHeight neg rlineto
-      cellW 2 mul 13 div 0 rlineto 0 tHeight rlineto closepath fill
-    grestore
-    cellW 0 rmoveto
-  } for
-
-  % Draw content
-  startVal 1 startVal 7 add {
-    /xVal exch def
-    x xVal startVal sub cellW mul add 2 add y 1.5 add moveto
-    0 1 31 {
-      /yVal exch def
-      0 cellH neg rmoveto
-
-      gsave
-        /Courier-Bold findfont 8.5 scalefont setfont
-        1 setgray
-        code perm xVal get get glyphshow
-        code perm yVal get get glyphshow
-      grestore
-
-      gsave
-        cellW 2 mul 13 div 0 rmoveto
-        perm xVal get perm yVal get polymodshift2 {
-          code exch get glyphshow
-          0.25 0 rmoveto
-        } forall
-      grestore
-    } for
-  } for
-
-  % Bounding box
-  0.5 setlinewidth
-  x y moveto
-  0 tHeight neg rlineto
-  tWidth 0 rlineto
-  0 tHeight rlineto
-  closepath stroke
-
   end
 } bind def
 
@@ -2420,114 +2420,13 @@ showpage
 /pgsave save def
 %%EndPageSetup
 portraitPage begin
-
-10 dict begin
-    72 720 moveto
-    /Times findfont 20 scalefont setfont
-    gsave (Constructing Shares) show grestore
-    0 -20 rmoveto
-    /Times-Roman findfont 12 scalefont setfont
-    468 12
-    [ [
-    (Before constructing shares, you must choose your threshold value k, which is the number of)
-    (shares needed to reconstruct the secret, and must be between 2 and 31 inclusive. \(k = 1 can be)
-    (achieved by simply duplicating the original secret, and k > 31 is mathematically impossible with)
-    (this scheme.\) Be aware that the work required during recovery is quadratic in k, so values greater)
-    (than 4 are not recommended. You also cannot generate more than 31 shares total.)
-    ] [
-    (Next, generate the "S" share, which is the unshared secret, as well as k - 1 more shares with)
-    (consecutive indices starting from "A". These initial shares should be generated randomly using)
-    (dice, affixed with a header, then checksummed. See the Dice Table page and the Checksum)
-    (Worksheet for more details.)
-    ] [
-    (For the case k = 2, you will have only two shares, S and A, and there is a simplified method)
-    (available to generate the remaining shares. Use each character from your S share to select a table)
-    (from the following pages. Look up the row indexed by the corresponding character of your A)
-    (share, then read the corresponding character for the C share from the first column. The character)
-    (for the D share will be in the column after that, and so on.)
-    ] ] showParagraphs
-    [
-    (The general scheme is more involved:)
-    (    1. Choose the appropriate table from this page based on your choice of k.)
-    (    2. Find the column corresponding to the share you wish to create.)
-    (    3. Translate each initial share by its symbol from that column, using the Translation Wheel.)
-    (    4. Add all the translated initial shares together using the Addition Wheel.)
-    ()
-    (Tables for higher k can be easily generated by editing the source code of this file.)
-    ]
-    { gsave show grestore 0 -12 rmoveto } forall
-
-    % EDITME
-    % Edit these values to draw tables for larger k. Be warned that the total work to recover
-    % a secret from k shares will be on the other of (48 + k - 1)k volvelle applications. For
-    % k = 8 this is already over 250. And this is not even considering the logistics of keeping
-    % eight distributed shares intact and available..
-    /mink 2 def
-    /maxk 6 def
-
-    /x 104 def
-    /y 400 def
-    /rowtitle 6 string def
-    mink 1 maxk {
-        /k exch def
-
-        0 1 k {
-            /rowidx exch def
-            x y moveto
-            /Courier-Bold findfont 12 scalefont setfont
-            rowidx 0 eq {
-                % First row (heading)
-                k (k =   ) rowtitle copy 4 2 getinterval cvs pop
-                rowtitle show
-
-                k mink sub { 12 0 rmoveto } repeat
-                k 1 31 {
-                    permS exch get code exch get gsave glyphshow grestore
-                    12 0 rmoveto
-                } for % horizontal loop
-            } {
-                % Symbol rows
-                /xinterp rowidx 1 sub def % x coord to interpolate at
-                (  ) show
-                permS xinterp get code exch get glyphshow
-                (   ) show
-
-                k mink sub { 12 0 rmoveto } repeat
-                k 1 31 {
-                    permS exch get  % x coord to evaluate at
-                    permS xinterp get % x coord to interpolate at
-                    permS 0 k getinterval % x coords to interpolate at
-                    lagrange % symbol
-                    code2 exch get gsave 12 codexshow grestore % print symbol
-                    12 0 rmoveto
-                } for % horizontal loop
-            } ifelse
-
-
-            /y y 11 sub def
-        } for % vertical loop
-
-        /y y 20 sub def
-    } for
-
-end
-
-end
-pgsave restore
-showpage
-%%Page: 9 9
-
-%%BeginPageSetup
-/pgsave save def
-%%EndPageSetup
-portraitPage begin
 3 drawFooter
 29 24 13 25 showShareTablePage
 
 end
 pgsave restore
 showpage
-%%Page: 10 10
+%%Page: 9 9
 
 %%BeginPageSetup
 /pgsave save def
@@ -2539,7 +2438,7 @@ portraitPage begin
 end
 pgsave restore
 showpage
-%%Page: 11 11
+%%Page: 10 10
 
 %%BeginPageSetup
 /pgsave save def
@@ -2551,7 +2450,7 @@ portraitPage begin
 end
 pgsave restore
 showpage
-%%Page: 12 12
+%%Page: 11 11
 
 %%BeginPageSetup
 /pgsave save def
@@ -2563,7 +2462,7 @@ portraitPage begin
 end
 pgsave restore
 showpage
-%%Page: 13 13
+%%Page: 12 12
 
 %%BeginPageSetup
 /pgsave save def
@@ -2575,7 +2474,7 @@ portraitPage begin
 end
 pgsave restore
 showpage
-%%Page: 14 14
+%%Page: 13 13
 
 %%BeginPageSetup
 /pgsave save def
@@ -2587,7 +2486,7 @@ portraitPage begin
 end
 pgsave restore
 showpage
-%%Page: 15 15
+%%Page: 14 14
 
 %%BeginPageSetup
 /pgsave save def
@@ -2599,7 +2498,7 @@ portraitPage begin
 end
 pgsave restore
 showpage
-%%Page: 16 16
+%%Page: 15 15
 
 %%BeginPageSetup
 /pgsave save def
@@ -2611,7 +2510,7 @@ portraitPage begin
 end
 pgsave restore
 showpage
-%%Page: 17 17
+%%Page: 16 16
 
 %%BeginPageSetup
 /pgsave save def
@@ -2662,7 +2561,7 @@ end
 end
 pgsave restore
 showpage
-%%Page: 18 18
+%%Page: 17 17
 
 %%BeginPageSetup
 /pgsave save def
@@ -2727,7 +2626,7 @@ end
 end
 pgsave restore
 showpage
-%%Page: 19 19
+%%Page: 18 18
 
 %%BeginPageSetup
 /pgsave save def
@@ -2859,7 +2758,7 @@ end
 end
 pgsave restore
 showpage
-%%Page: 20 20
+%%Page: 19 19
 %%PageOrientation: Landscape
 
 %%BeginPageSetup
@@ -2882,7 +2781,7 @@ pageW 64 sub pageH 148 sub 2 div % w h
 end
 pgsave restore
 showpage
-%%Page: 21 21
+%%Page: 20 20
 %%PageOrientation: Landscape
 
 %%BeginPageSetup
@@ -2905,7 +2804,7 @@ pageW 64 sub pageH 148 sub 2 div % w h
 end
 pgsave restore
 showpage
-%%Page: 22 22
+%%Page: 21 21
 %%PageOrientation: Landscape
 
 %%BeginPageSetup

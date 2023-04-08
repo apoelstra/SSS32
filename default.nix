@@ -27,20 +27,88 @@ let
   shortId = lib.optionalString (! isNull ref) ("-" + builtins.substring 0 8 src.rev);
 
   setup = rec {
-    # Will be broken into multiple sub-files in a later PR.
-    fullSetup = {
-      content = builtins.readFile "${src}/include/setup.ps.inc";
+    frontMatter = {
+      content = builtins.readFile "${src}/include/setup/front-matter.ps.inc";
       dependencies = [ ];
+    };
+    helpers = {
+      content = builtins.readFile "${src}/include/setup/helpers.ps.inc";
+      dependencies = [ ];
+    };
+    field = {
+      content = builtins.readFile "${src}/include/setup/field.ps.inc";
+      dependencies = [ ];
+    };
+    code = {
+      content = builtins.readFile "${src}/include/setup/code.ps.inc";
+      dependencies = [ ];
+    };
+    bch = {
+      content = builtins.readFile "${src}/include/setup/bch.ps.inc";
+      dependencies = [ ];
+    };
+    graphicsHelpers = {
+      content = builtins.readFile "${src}/include/setup/graphics-helpers.ps.inc";
+      dependencies = [ ];
+    };
+    graphicsVolvelles = {
+      content = builtins.readFile "${src}/include/setup/graphics-volvelles.ps.inc";
+      dependencies = [
+        field
+        code
+        helpers # for determinant
+        graphicsHelpers # for verythin
+      ];
+    };
+    reference = {
+      content = builtins.readFile "${src}/include/setup/reference.ps.inc";
+      dependencies = [
+        code
+      ];
+    };
+    shareTables = {
+      content = builtins.readFile "${src}/include/setup/share-tables.ps.inc";
+      dependencies = [ field code ];
+    };
+    checksumTable = {
+      content = builtins.readFile "${src}/include/setup/checksum-table.ps.inc";
+      dependencies = [ field code bch ];
+    };
+    checksumWorksheet = {
+      content = builtins.readFile "${src}/include/setup/checksum-worksheet.ps.inc";
+      dependencies = [
+        field
+        bch
+        graphicsHelpers # for codexcentreshow
+      ];
     };
   };
   # Dependencies that every page has
-  standardDependencies = [ setup.fullSetup ];
+  standardDependencies = with setup; [
+    frontMatter # for ver, in each page footer
+    graphicsHelpers # for portraitPage and landscapePage
+  ];
 
   allPages = {
     title = {
       sourceHeader = "Title Page";
       content = builtins.readFile "${src}/include/title.ps.inc";
-      dependencies = [ ];
+      # These dependencies are entirely to force the ordering of the setup
+      # code in the full booklet. None are needed, and they will be removed
+      # in a later commit (which will have a ton of moved code in SSS32.ps,
+      # which we're trying to avoid for now).
+      dependencies = with setup; [
+        frontMatter
+        helpers
+        field
+        code
+        bch
+        graphicsVolvelles
+        graphicsHelpers
+        reference
+        shareTables
+        checksumTable
+      ];
       skipPageNumber = true;
     };
     license = {
@@ -52,63 +120,66 @@ let
     reference = {
       sourceHeader = "Reference Sheet";
       content = builtins.readFile "${src}/include/reference.ps.inc";
-      dependencies = [ ];
+      dependencies = with setup; [ reference ];
       drawFooter = true;
     };
     principalTables = {
       sourceHeader = "Arithmetic Tables";
       content = builtins.readFile "${src}/include/principal-tables.ps.inc";
-      dependencies = [ ];
+      dependencies = with setup; [ field code ];
     };
 
     additionBottom = {
       content = "{xor} (Addition) code dup perm drawBottomWheelPage\n";
-      dependencies = [ ];
+      dependencies = with setup; [ code graphicsVolvelles ]; # for pgsize
     };
     additionTop = {
       content = "showTopWheelPage\n";
-      dependencies = [ ];
+      dependencies = with setup; [ code graphicsVolvelles ]; # for pgsize
     };
     recovery = {
       content = builtins.readFile "${src}/include/volvelle-recovery.ps.inc";
-      dependencies = [ ];
+      dependencies = with setup; [ graphicsVolvelles ]; # for portraitPage
     };
     fusionInner = {
       content = builtins.readFile "${src}/include/volvelle-fusion-1.ps.inc";
-      dependencies = [ ];
+      dependencies = with setup; [ graphicsVolvelles ]; # for portraitPage
     };
     fusionOuter = {
       content = builtins.readFile "${src}/include/volvelle-fusion-2.ps.inc";
-      dependencies = [ ];
+      dependencies = with setup; [ graphicsVolvelles ]; # for portraitPage
     };
 
     generationInstructions = {
       content = builtins.readFile "${src}/include/page7.ps.inc";
-      dependencies = [ ];
+      dependencies = with setup; [
+        code
+        checksumWorksheet # for showParagraphs
+      ];
     };
 
     checksumTable1 = {
       content = builtins.readFile "${src}/include/checksum-table-1.ps.inc";
       isLandscape = true;
-      dependencies = [ ];
+      dependencies = with setup; [ checksumTable ];
       drawFooter = true;
     };
     checksumTable2 = {
       content = builtins.readFile "${src}/include/checksum-table-2.ps.inc";
-      dependencies = [ ];
+      dependencies = with setup; [ checksumTable ];
       isLandscape = true;
       drawFooter = true;
     };
     checksumWorksheet = {
       content = builtins.readFile "${src}/include/checksum-worksheet.ps.inc";
-      dependencies = [ ];
+      dependencies = with setup; [ code checksumWorksheet ];
       isLandscape = true;
       drawFooter = true;
     };
 
     shareTable = a: b: c: d: {
       content = "${toString a} ${toString b} ${toString c} ${toString d} showShareTablePage\n";
-      dependencies = [ ];
+      dependencies = with setup; [ shareTables ];
       drawFooter = true;
     };
   };
@@ -144,8 +215,8 @@ let
     (item: (dependencyContentRecur item.dependencies) ++ [ item.content ])
     content;
   dependencyContent = pages: lib.lists.unique (
-    (map (dep: dep.content) standardDependencies) ++
-    (builtins.concatMap (page: dependencyContentRecur page.dependencies) pages)
+    (builtins.concatMap (page: dependencyContentRecur page.dependencies) pages) ++
+    (map (dep: dep.content) standardDependencies)
   );
 
   renderBooklet = booklet:
@@ -180,7 +251,7 @@ let
           %%Pages: ${toString (builtins.length booklet.pages)}
           %%EndComments
           %%BeginSetup
-          ${toString (dependencyContent (booklet.pages))}%%EndSetup
+          ${builtins.concatStringsSep "\n" (dependencyContent booklet.pages)}%%EndSetup
 
           %************************************************************************
           %************************************************************************
@@ -230,6 +301,8 @@ stdenv.mkDerivation {
     FULL_BW="${renderBooklet fullBooklet}"
 
     # Copy output Postscript into place
+    ghostscriptTest "$FULL_BW"
+
     mkdir "$out"
     cd "$out"
     cp "$FULL_BW" SSS32.ps

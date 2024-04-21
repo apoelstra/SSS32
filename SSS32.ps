@@ -1,6 +1,6 @@
 %!PS-Adobe-3.0
 %%Orientation: Portrait
-%%Pages: 21
+%%Pages: 22
 %%EndComments
 %%BeginSetup
 [(Shamir's Secret) (Sharing Codex)]
@@ -1580,6 +1580,77 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
   end
 } bind def
 
+/drawQuickChecksumTable {
+  10 dict begin
+  { /quickidx /tHeight /tWidth /y /x } {exch def} forall
+
+  /modulus quickcheckmodulus quickidx get def
+  /cellH tHeight 32 div def
+  /cellW tWidth 32 div def
+
+  % Draw horizontal background lines: one black one for the heading then
+  % alternating 4-cell-height white/gray for the content background
+  x y moveto
+  0 1 31 {
+    dup 0 eq { pop 0.808 0.923 0.953 } {
+      8 mod 4 lt { 0.808 0.923 0.953 } { 1 1 1 } ifelse
+    } ifelse setrgbcolor
+
+    gsave
+      tWidth 0 rlineto
+      0 cellH neg rlineto tWidth neg 0 rlineto closepath fill
+    grestore
+    0 cellH neg rmoveto
+  } for
+
+  % Draw vertical background lines: one double-wide black one per column
+  0 setgray
+  x y moveto
+  0 1 31 {
+    pop
+    gsave
+      0 tHeight neg rlineto
+      cellW 2 mul 4 div 0 rlineto 0 tHeight rlineto closepath fill
+    grestore
+    cellW 0 rmoveto
+  } for
+
+  % Draw content
+  0 1 31 {
+    /xVal exch def
+    x xVal 0 sub cellW mul add 0.5 add y 1.5 add moveto
+    0 1 31 {
+      /yVal exch def
+      0 cellH neg rmoveto
+
+      gsave
+        /Courier-Bold findfont 8.5 scalefont setfont
+        1 setgray
+        code perm xVal get get glyphshow
+        code perm yVal get get glyphshow
+      grestore
+
+      gsave
+        cellW 2 mul 4 div 0 rmoveto
+        perm xVal get perm yVal get modulus polymodshift2 {
+          code exch get glyphshow
+          0.25 0 rmoveto
+        } forall
+      grestore
+    } for
+  } for
+
+  % Bounding box
+  0.5 setlinewidth
+  x y moveto
+  0 tHeight neg rlineto
+  tWidth 0 rlineto
+  0 tHeight rlineto
+  closepath stroke
+
+  end
+} bind def
+
 %******************
 %* Checksum Worksheet
 %*
@@ -1605,6 +1676,146 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
   /offset {
     dup ysize mul exch 2 idiv ygap mul add exch
     dup xsize mul exch 4 idiv xgap mul add exch
+  } bind def
+
+  /qkckgap 30 def
+  /qkcklinelengths [ 24 48 ] def
+  /qkcklineoffsets [
+    % First line is offset by hrp+1, plus an arbitrary fudge factor of 20
+    hrplen 1 add 4 idiv xgap mul hrplen 1 add xsize mul add 20 add
+    % Second line same as the first, but also offset by a pair-width to "right-align" it.
+    dup 2 xsize mul qkckgap add add
+  ] def
+  % Variant of "offset" above used for the quickcheck grid. Here we have significant
+  % gaps between every pair of elements and we have no ygaps (since we have just one
+  % row). This should not be used to display the HRP characters.
+  /qkckoffset {
+  10 dict begin
+    [ /y /x ] { exch def } forall
+
+    /hrplen1 hrplen 1 add def
+    % Start by just subtracting the hrplen from everything, so the HRP does
+    % not affect our line spacing (to avoid colliding with the HRP, the
+    % first line's qkcklineoffsets value should be incremented appropriately).
+    %
+    % We do this since all our x coordinates are relative to the start of the
+    % string, including the HRP, but because we display the HRP with separate
+    % logic, we want to pretend that the HRP isn't there.
+    /x x hrplen1 sub store
+    % However, if the HRP has an odd length, partially undo this offsetting;
+    % bump x by one to put a "phantom square" in the first pair. This way each
+    % pair has an odd cell then an even one. (To preserve this property for
+    % every line, each value in qkcklinelengths should be even.)
+    /x x hrplen1 2 mod add store
+
+    /xoffset qkcklineoffsets 0 get def
+    0 1 qkcklinelengths length 1 sub {
+      /idx exch def
+      /breakx qkcklinelengths idx get def
+
+      x breakx ge {
+        % For each line for which x >= breakx, subtract the length and offset
+        % y to effect a newline.
+        /x x breakx sub store
+        /y y 4 add store
+      } {
+        % Set xoffset to the offset of the last line for which x is < breakx
+        /xoffset qkcklineoffsets idx get def
+        exit
+      } ifelse
+    } for
+
+    % Return
+    x xsize mul x 2 idiv qkckgap mul add xoffset add
+    y ysize mul
+  end
+  } bind def
+
+  /drawquickgrid {
+  10 dict begin
+    /quickidx exch def
+    /modulus quickcheckmodulus quickidx get def
+
+    % A few observations about how this worksheet works. The observation is basically
+    % that our strings, mod the generator polynomial, should be constant for all valid
+    % codex32 strings. The same applies if we first multiply or add any constant. This
+    % means that we can arbitrarily left-shift our string (multiplying by x),
+    % arbitrarily skip/ignore the HRP (assuming it is constant, which we do assume in
+    % the booklet), and arbitrarily set our initial prefilled values.
+    %
+    % We do all three things with the goal of having a simple/intuitive worksheet that
+    % will still work for odd- or even-length strings, and which will have a particular
+    % target residue.
+    %
+    % Basically if any step seems mathematically sketchy here, just think "will this
+    % do the same thing for all valid codex32 strings?" and if the answer is yes, don't
+    % bother thinking further.
+
+    gsave
+      /Courier findfont 3 scalefont setfont
+
+      % 1. Draw bold boxes.
+      % 1a. Draw the HRP boxes, which appear separately to the rest.
+      thick line
+      0 1 hrplen {
+        /i exch def
+        % We use `offset` rather than `qkckoffset` so that the cells are spaced
+        % properly (as in the other worksheets, not grouped into pairs).
+        i 1 offset 2 copy xsize ysize rectstroke moveto
+        xsize 4.5 sub -3 rmoveto
+        /n i 1 add def
+        n 10 lt { ( ) show } if n 2 string cvs show
+      } for
+
+      % 1b. Draw the non-HRP boxes.
+      hrplen 1 add
+      1
+      sharelen 1 sub {
+        /i exch def
+
+        i 1 qkckoffset 2 copy xsize ysize rectstroke moveto
+        xsize 4.5 sub -3 rmoveto
+        /n i 1 add def
+        n 10 lt { ( ) show } if n 2 string cvs show
+      } for
+
+      % 1c. Draw the HRP text.
+      /Courier findfont fsize scalefont setfont
+      0 1 hrplen 1 sub {
+        dup 1 offset moveto xsize 2 div ysize fgap add rmoveto hrp exch 1 getinterval centreshow
+      } for
+      hrplen 1 offset moveto xsize 2 div ysize fgap add rmoveto (1) centreshow
+
+      % 2. Draw input and sum boxes.
+      thin line
+      hrplen 1 add 1 sharelen 1 sub {
+        /i exch def
+
+        i 0 qkckoffset 2 copy xsize ysize rectstroke moveto
+        i 2 qkckoffset 2 copy xsize ysize rectstroke moveto
+      } for
+
+      % 2b. If the HRP (including 1) has odd length, add extra input/output boxes
+      %     for the initial blank spot, and an arrow, telling the user to just
+      %     copy the value from the top square to the bottom one without adding.
+      hrplen 2 mod 0 eq {
+        hrplen 0 qkckoffset 2 copy xsize ysize rectstroke moveto
+        hrplen 2 qkckoffset 2 copy xsize ysize rectstroke moveto
+
+        thick line
+        hrplen 1 qkckoffset moveto
+        xsize 2 div -2 rmoveto
+        0 ysize 4 add rlineto
+        -1 1 rlineto
+        2 0 rlineto
+        -1 -1 rlineto
+        stroke
+      } if
+
+      % 3. Draw = and + symbols
+    grestore
+
+  end
   } bind def
   /drawgrid {
   10 dict begin
@@ -2542,4 +2753,30 @@ perm 2 index get gf32add code exch get glyphshow
 
 pgsave restore
 showpage
+
+%%Page: 22 22
+%%PageOrientation: Landscape
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+landscapePage begin 22 drawPageContent
+
+/Times-Bold findfont 10 scalefont setfont
+pageW 2 div pageH 48 sub moveto (codex32 Quickcheck 1) centreshow
+
+gsave
+marginX1 pageH 64 sub translate
+
+ladder begin
+ 0 drawquickgrid
+end
+grestore
+
+/Courier findfont 8.5 scalefont setfont
+36 pageH 188 sub  % x y
+pageW 64 sub pageH 256 sub % w h
+0 drawQuickChecksumTable
+
+end pgsave restore showpage
+
 %%EOF

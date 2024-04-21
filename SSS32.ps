@@ -316,6 +316,29 @@ end
 %* Data and functions related to the error-correcting code.
 %*
 /polymodulus [25 27 17 8 0 25 25 25 31 27 24 16 16] def % coefficents from c12 to c0
+/quickcheckmodulus [
+  % Our quickchecks are a series of quadratic factors of the codex32
+  % generator polynomial, which together cover all the consecutive
+  % roots beta^78 through beta^85.
+  %
+  % Powers 78, 81 and 84 all lie in the base field and therefore appear as
+  % linear factors. The first and second-to-last quickchecks are constructed
+  % as products of these linear factors (and beta^84 appears twice). In
+  % theory these three could be "linear quickchecks" which would be even
+  % quicker, but we decided to stick with quadratics to reduce the total
+  % number of processes that users need to keep track of.
+  %
+  % Other than the first and last checks, each of these is an irreducible
+  % factor as a polynomial over GF32. (Though of course, they all split
+  % over GF1024, and you can check the math there.)
+  [ 27 20 ]  % (x - beta^84)(x - beta^81)
+  [ 2 4 ]    % (x - beta^83)(x - beta^52)
+  [ 10 22 ]  % (x - beta^82)(x - beta^20)
+  [ 14 6 ]   % (x - beta^80)(x - beta^49)  (remember 81 was done above)
+  [ 31 29 ]  % (x - beta^79)(x - beta^17)
+  [ 8 23 ]   % (x - beta^78)(x - beta^84)
+  [ 3 5 ]    % (x - beta^77)(x - beta^46)
+]  def
 /checksum [16 25 24 3 25 11 16 23 29 3 25 17 10] def
 /checksumstring { polymodulus length array checksum 0 1 polymodulus length 1 sub {3 copy exch 1 index get code exch 1 getinterval putinterval pop } for pop } bind def
 

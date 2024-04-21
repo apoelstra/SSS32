@@ -330,8 +330,8 @@ end
 end
 } bind def
 
-/polymodshift2 % c7 c6 -> [ c5 c4 c3 c2 c1 c0 ]
- {  [ 3 1 roll polymodulus length {0} repeat ] polymodulus polymod0
+/polymodshift2 % c7 c6 modulus -> [ c5 c4 c3 c2 c1 c0 ]
+ {  [ 4 2 roll 3 index length {0} repeat ] exch polymod0
  } bind def
 
 /polymodhrp % string -> [ c5 c4 c3 c2 c1 c0 ]
@@ -1537,7 +1537,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
 
       gsave
         cellW 2 mul 13 div 0 rmoveto
-        perm xVal get perm yVal get polymodshift2 {
+        perm xVal get perm yVal get polymodulus polymodshift2 {
           code exch get glyphshow
           0.25 0 rmoveto
         } forall
@@ -1687,7 +1687,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
         i hrplen add y add 1 add odd sub 2 y add offset moveto xsize 2 div ysize fgap add rmoveto
         odd 1 eq 0 i eq and 0 y eq and not {code residue i get get fsize centredraftingshow} if
       } for
-      /addrow residue 0 get residue 1 get polymodshift2 def
+      /addrow residue 0 get residue 1 get polymodulus polymodshift2 def
       0 1 checksumlen 1 sub {
         /i exch def
         i hrplen add y add 3 add odd sub 3 y add offset moveto xsize 2 div ysize fgap add rmoveto

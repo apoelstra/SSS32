@@ -393,7 +393,7 @@ def
 end
 
 % landscapePage is a modified copy of portraitPage
-portraitPage dup 20 dict copy dup /landscapePage exch def begin
+portraitPage 20 dict copy dup /landscapePage exch def begin
   pgsize aload pop exch [ /pageH /pageW ] { exch def } forall
   /centerX pageW 2 div def
   /centerY pageH 2 div def
@@ -1498,7 +1498,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
   % alternating 4-cell-height white/gray for the content background
   x y moveto
   0 1 31 {
-    dup 0 eq { 0.808 0.923 0.953 } {
+    dup 0 eq { pop 0.808 0.923 0.953 } {
       8 mod 4 lt { 0.808 0.923 0.953 } { 1 1 1 } ifelse
     } ifelse setrgbcolor
 
@@ -1513,6 +1513,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
   0 setgray
   x y moveto
   0 1 7 {
+    pop % index unused
     gsave
       0 tHeight neg rlineto
       cellW 2 mul 13 div 0 rlineto 0 tHeight rlineto closepath fill

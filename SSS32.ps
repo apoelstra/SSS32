@@ -319,19 +319,24 @@ end
 /checksum [16 25 24 3 25 11 16 23 29 3 25 17 10] def
 /checksumstring { polymodulus length array checksum 0 1 polymodulus length 1 sub {3 copy exch 1 index get code exch 1 getinterval putinterval pop } for pop } bind def
 
-/polymod0 % array -> [ c5 c4 c3 c2 c1 c0 ]
- { [ polymodulus length {0} repeat ]
-   exch
-   { [ exch 2 index 1 polymodulus length 1 sub getinterval aload pop polymodulus length dup 1 sub roll ] exch 0 get polymodulus gf32mularray gf32addarray  } forall
- } bind def
+/polymod0 % modulus array -> [ c5 c4 c3 c2 c1 c0 ]
+{
+10 dict begin
+  [ /modulus /arr ] { exch def } forall
+  [ modulus length {0} repeat ]
+  arr {
+    [ exch 2 index 1 modulus length 1 sub getinterval aload pop modulus length dup 1 sub roll ] exch 0 get modulus gf32mularray gf32addarray
+  } forall
+end
+} bind def
 
 /polymodshift2 % c7 c6 -> [ c5 c4 c3 c2 c1 c0 ]
- {  [ 3 1 roll polymodulus length {0} repeat ] polymod0
+ {  [ 3 1 roll polymodulus length {0} repeat ] polymodulus polymod0
  } bind def
 
 /polymodhrp % string -> [ c5 c4 c3 c2 c1 c0 ]
  {
-   [ exch 1 exch dup { dup dup 65 ge exch 90 le exch and { 32 add } if 32 idiv exch } forall 0 exch { 31 and } forall ] polymod0
+   [ exch 1 exch dup { dup dup 65 ge exch 90 le exch and { 32 add } if 32 idiv exch } forall 0 exch { 31 and } forall ] polymodulus polymod0
  } bind def
 
 %************************************************************************
@@ -1572,7 +1577,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
   /numsteps sharelen hrplen sub checksumlen sub 2 idiv def
   /firstrowlen sharelen hrplen sub 1 sub numsteps 2 mul sub def
   /odd checksumlen firstrowlen sub def
-  /initresidue [hrp polymodhrp aload pop firstrowlen {0} repeat ] polymod0 def
+  /initresidue [hrp polymodhrp aload pop firstrowlen {0} repeat ] polymodulus polymod0 def
   /offset {
     dup ysize mul exch 2 idiv ygap mul add exch
     dup xsize mul exch 4 idiv xgap mul add exch
@@ -1667,13 +1672,13 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
      code data i get get fsize centredraftingshow
     } for
     /residue
-      data 0 firstrowlen getinterval polymod0
+      data 0 firstrowlen getinterval polymodulus polymod0
       initresidue gf32addarray
     def
     0 2 numsteps 1 sub 2 mul {
       /y exch def
       /residue
-      [ residue polymod0 aload pop
+      [ residue polymodulus polymod0 aload pop
         data firstrowlen y add get
         data firstrowlen y add 1 add get
       ] def
@@ -1689,7 +1694,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
         code addrow i get get fsize centredraftingshow
       } for
     } for
-    /residue residue polymod0 def
+    /residue residue polymodulus polymod0 def
     0 1 checksumlen 1 sub {
       /i exch def
       i hrplen add numsteps 2 mul add 1 add 2 numsteps 2 mul add offset moveto xsize 2 div ysize fgap add rmoveto

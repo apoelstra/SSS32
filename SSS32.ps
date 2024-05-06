@@ -1865,6 +1865,82 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
 
   end
   } bind def
+  /fillquickgrid {
+  10 dict begin
+    [ /quickidx /str ] { exch def } forall
+
+    /data str decode def
+    /datalen str length def
+    /residue quickcheckinitialvalues quickidx get def
+    /modulus quickcheckmodulus quickidx get def
+
+    0 1 datalen 1 sub {
+     /i exch def
+     i hrplen add 1 add 1 qkckoffset moveto xsize 2 div ysize fgap add rmoveto
+       code data i get get fsize centredraftingshow
+    } for
+
+    % The first addition must be done specially since (a) we don't write the residue,
+    % it is provided, if the HRP has odd length we only do one addition.
+    hrplen 2 mod 0 eq {
+      /sum0 residue 0 get def
+      /sum1 residue 1 get data 0 get gf32add def
+
+      hrplen 1 add 2 qkckoffset moveto xsize 2 div ysize fgap add rmoveto
+       code sum1 get fsize centredraftingshow
+    } {
+      /sum0 residue 0 get data 0 get gf32add def
+      /sum1 residue 1 get data 1 get gf32add def
+
+      hrplen 1 add 2 qkckoffset moveto xsize 2 div ysize fgap add rmoveto
+       code sum0 get fsize centredraftingshow
+      hrplen 2 add 2 qkckoffset moveto xsize 2 div ysize fgap add rmoveto
+       code sum1 get fsize centredraftingshow
+    } ifelse
+    /residue sum0 sum1 modulus polymodshift2 store
+
+    % Count by 2s. If the HRP1 len is even, start from index 0 onward; otherwise
+    % start from index 1 onward.
+    hrplen 2 mod 1 add 2 datalen 1 sub {
+      /idx exch def
+
+      /sum0 residue 0 get data idx get gf32add def
+      /sum1 residue 1 get data idx 1 add get gf32add def
+
+      idx hrplen add 1 add 0 qkckoffset moveto xsize 2 div ysize fgap add rmoveto
+       code residue 0 get get fsize centredraftingshow
+      idx 1 add hrplen add 1 add 0 qkckoffset moveto xsize 2 div ysize fgap add rmoveto
+       code residue 1 get get fsize centredraftingshow
+
+      idx hrplen add 1 add 2 qkckoffset moveto xsize 2 div ysize fgap add rmoveto
+       code sum0 get fsize centredraftingshow
+      idx 1 add hrplen add 1 add 2 qkckoffset moveto xsize 2 div ysize fgap add rmoveto
+       code sum1 get fsize centredraftingshow
+
+      /residue sum0 sum1 modulus polymodshift2 store
+    } for
+
+    100000 1 datalen 2 idiv 1 sub {
+      /i exch def
+      /d0 data 2 i mul get def
+      /d1 data 2 i mul 1 add get def
+      /res0 residue 0 get d0 gf32add def
+      /res1 residue 1 get d1 gf32add def
+
+      2 i mul hrplen add 1 add 2 qkckoffset moveto xsize 2 div ysize fgap add rmoveto
+       code res0 get fsize centredraftingshow
+      2 i mul 1 add hrplen add 1 add 2 qkckoffset moveto xsize 2 div ysize fgap add rmoveto
+       code res1 get fsize centredraftingshow
+    } for
+
+    % If the datalength's parity is different from the HRP1 length's parity,
+    % we have one straggling addition to do.
+    datalen 2 mod 1 eq false and {
+      datalen hrplen add 2 qkckoffset moveto xsize 2 div ysize fgap add rmoveto
+       code residue 0 get get fsize centredraftingshow
+    } if
+  end
+  } bind def
   /drawgrid {
   10 dict begin
   gsave
@@ -2817,6 +2893,7 @@ marginX1 pageH 64 sub translate
 
 ladder begin
  0 drawquickgrid
+% (2NAMES5GS8YDXGMLUW34LEN0PRDAK9GL6ZYKW4PC78QG0) 0 fillquickgrid
 end
 grestore
 

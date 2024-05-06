@@ -339,6 +339,41 @@ end
   [ 8 23 ]   % (x - beta^78)(x - beta^84)
   [ 3 5 ]    % (x - beta^77)(x - beta^46)
 ]  def
+% First two prefilled values in the quickcheck worksheet
+%
+% To find these initial values, the "easiest" way is to first set them
+% to 00 (QQ) and look at the result of a valid codex32 string. This will
+% get you the valid codex32 residue, mod the quickcheck generator. (This
+% residue will NOT be "SECRETCODEX32" because in the quickcheck worksheet
+% we don't bother computing polymodhrp, on the basis that it'll just get
+% erased by our cherry-picked prefill values.)
+%
+% Add your target residue (e.g. D0 or RE) to this residue.
+%
+% Finally, tweak `polymodshift2` to add 44 zeros rather than length-many, e.g.
+% by replacing `3 index length` by `44`. Then regenerate your quickcheck
+% worksheet, and do a search for your summed residue to find its preimage.
+% This preimage is your initial value.
+/quickcheckinitialvalues [
+  [ 6 3 ]
+  [ 31 25 ]
+  [ 21 28 ]
+  [ 19 1 ]
+  [ 5 6 ]
+  [ 24 28 ]
+  [ 0 15 ]
+] def
+% Target values for quickcheck worksheets
+/quickcheckfinalvalues [
+  [ 13 15 ] % D0
+  [ 3 25 ]  % RE
+  [ 27 25 ] % ME
+  [ 9 29 ]  % FA
+  [ 16 15 ] % S0
+  [ 31 29 ] % LA
+  [ 11 25 ] % TE
+] def
+
 /checksum [16 25 24 3 25 11 16 23 29 3 25 17 10] def
 /checksumstring { polymodulus length array checksum 0 1 polymodulus length 1 sub {3 copy exch 1 index get code exch 1 getinterval putinterval pop } for pop } bind def
 
@@ -1795,12 +1830,19 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
         i 2 qkckoffset 2 copy xsize ysize rectstroke moveto
       } for
 
+      % 2a. Draw initial values
+      /initvalx hrplen hrplen 2 mod add def
+      initvalx 0 qkckoffset moveto xsize 2 div ysize fgap add rmoveto code quickcheckinitialvalues quickidx get 0 get get fsize centrecodexshow
+      initvalx 1 add 0 qkckoffset moveto xsize 2 div ysize fgap add rmoveto code quickcheckinitialvalues quickidx get 1 get get fsize centrecodexshow
+
       % 2b. If the HRP (including 1) has odd length, add extra input/output boxes
       %     for the initial blank spot, and an arrow, telling the user to just
       %     copy the value from the top square to the bottom one without adding.
       hrplen 2 mod 0 eq {
         hrplen 0 qkckoffset 2 copy xsize ysize rectstroke moveto
         hrplen 2 qkckoffset 2 copy xsize ysize rectstroke moveto
+
+        hrplen 2 qkckoffset moveto xsize 2 div ysize fgap add rmoveto code quickcheckinitialvalues quickidx get 0 get get fsize centrecodexshow
 
         thick line
         hrplen 1 qkckoffset moveto
@@ -1813,6 +1855,12 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
       } if
 
       % 3. Draw = and + symbols
+      % TODO
+
+      % 4. Draw final residue
+      0.85 setgray
+      sharelen 2 sub 2 qkckoffset moveto xsize 2 div ysize fgap add rmoveto code quickcheckfinalvalues quickidx get 0 get get fsize centrecodexshow
+      sharelen 1 sub 2 qkckoffset moveto xsize 2 div ysize fgap add rmoveto code quickcheckfinalvalues quickidx get 1 get get fsize centrecodexshow
     grestore
 
   end

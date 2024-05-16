@@ -1,6 +1,6 @@
 %!PS-Adobe-3.0
 %%Orientation: Portrait
-%%Pages: 28
+%%Pages: 29
 %%EndComments
 %%BeginSetup
 [(Shamir's Secret) (Sharing Codex)]
@@ -354,6 +354,10 @@ end
 % by replacing `3 index length` by `44`. Then regenerate your quickcheck
 % worksheet, and do a search for your summed residue to find its preimage.
 % This preimage is your initial value.
+%
+% (For the BIP39_24 worksheet, which has 27 more share characters, use
+% `70` rather than `44`.) (Not `71` because of off-by-one weirdness related
+% to the initial pair.)
 /quickcheckinitialvalues [
   [ 6 3 ]
   [ 31 25 ]
@@ -2064,6 +2068,36 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
   } bind def
 end
 
+% bip3924ladder is a copy of ladder
+ladder 30 dict copy dup /bip3924ladder exch def begin
+  /hrp (BIP39_24W) def
+  /hrplen hrp length def
+  /sharelen 82 def
+  /numsteps sharelen hrplen sub checksumlen sub 2 idiv def
+  /firstrowlen sharelen hrplen sub 1 sub numsteps 2 mul sub def
+
+%  /xsize 8 def
+%  /ysize -8 def
+%  /fsize 8 def
+  /hrplen hrp length def
+  /checksumlen checksum length def
+  /numsteps sharelen hrplen sub checksumlen sub 2 idiv def
+  /firstrowlen sharelen hrplen sub 1 sub numsteps 2 mul sub def
+  /odd checksumlen firstrowlen sub def
+  /initresidue [hrp polymodhrp aload pop firstrowlen {0} repeat ] polymodulus polymod0 def
+
+  /qkckgap 25 def
+  /qkcklinelengths [ 22 26 26 ] def
+  /qkcklineoffsets [
+    % First line is offset by hrp+1, plus an arbitrary fudge factor of 8
+    hrplen 1 add 4 idiv xgap mul 8 add hrplen 1 add xsize mul add
+    % Unlike for the normal ladder, we don't have room to right-shift the second line
+    % a whole bunch to nicely right-align it under the first.
+    dup 4 xsize mul sub 2 qkckgap mul sub
+    dup
+  ] def
+end
+
 /arraySpace 13 def
 
 /showParagraphs {
@@ -3057,6 +3091,38 @@ grestore
 36 pageH 188 sub  % x y
 pageW 64 sub pageH 256 sub % w h
 6 drawQuickChecksumTable
+
+end pgsave restore showpage
+
+%%Page: 29 29
+%%PageOrientation: Landscape
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+landscapePage begin 22 drawPageContent
+
+/Times-Bold findfont 10 scalefont setfont
+marginX1 pageH 48 sub moveto (bip39_24w1 Quickcheck 1) show
+
+gsave
+marginX1 pageH 40 sub translate
+
+/quickcheckinitialvalues [
+  [ 23 22 ] % MF + VL = HK
+] def
+
+bip3924ladder begin
+ 0 drawquickgrid
+% (2NAMES23456789ACDEFGHJKLMNPQRSTUVWXYZ023456789ACDEFGHJKLMNPNXHADERYUEGDK) 0 fillquickgrid
+ (D97LPKZTGS3CCEQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQSECRETSHARE32) 0 fillquickgrid
+% (QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ) 0 fillquickgrid
+end
+grestore
+
+/Courier findfont 8.5 scalefont setfont
+36 pageH 200 sub  % x y
+pageW 64 sub pageH 264 sub % w h
+0 drawQuickChecksumTable
 
 end pgsave restore showpage
 

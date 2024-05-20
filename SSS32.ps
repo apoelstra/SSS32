@@ -378,6 +378,26 @@ end
   [ 11 25 ] % TE
 ] def
 
+/bip3924quickcheckinitialvalues [
+  [ 23 22 ]
+  [ 21 13 ]
+  [ 24 1 ]
+  [ 25 28 ]
+  [ 11 2 ]
+  [ 5 17 ]
+  [ 13 15 ]
+] def
+
+/baaip3924quickcheckinitialvalues [
+  [ 0 0 ]
+  [ 0 0 ]
+  [ 0 0 ]
+  [ 0 0 ]
+  [ 0 0 ]
+  [ 0 0 ]
+  [ 0 0 ]
+] def
+
 /checksum [16 25 24 3 25 11 16 23 29 3 25 17 10] def
 /checksumstring { polymodulus length array checksum 0 1 polymodulus length 1 sub {3 copy exch 1 index get code exch 1 getinterval putinterval pop } for pop } bind def
 
@@ -3094,12 +3114,13 @@ pageW 64 sub pageH 256 sub % w h
 
 end pgsave restore showpage
 
+
 %%Page: 29 29
 %%PageOrientation: Landscape
 %%BeginPageSetup
 /pgsave save def
 %%EndPageSetup
-landscapePage begin 22 drawPageContent
+landscapePage begin 29 drawPageContent
 
 /Times-Bold findfont 10 scalefont setfont
 marginX1 pageH 48 sub moveto (bip39_24w1 Quickcheck 1) show
@@ -3107,15 +3128,12 @@ marginX1 pageH 48 sub moveto (bip39_24w1 Quickcheck 1) show
 gsave
 marginX1 pageH 40 sub translate
 
-/quickcheckinitialvalues [
-  [ 23 22 ] % MF + VL = HK
-] def
+/quickcheckinitialvalues bip3924quickcheckinitialvalues def
 
 bip3924ladder begin
  0 drawquickgrid
 % (2NAMES23456789ACDEFGHJKLMNPQRSTUVWXYZ023456789ACDEFGHJKLMNPNXHADERYUEGDK) 0 fillquickgrid
- (D97LPKZTGS3CCEQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQSECRETSHARE32) 0 fillquickgrid
-% (QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ) 0 fillquickgrid
+% (D97LPKZTGS3CCEQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQSECRETSHARE32) 0 fillquickgrid
 end
 grestore
 
@@ -3123,6 +3141,180 @@ grestore
 36 pageH 200 sub  % x y
 pageW 64 sub pageH 264 sub % w h
 0 drawQuickChecksumTable
+
+end pgsave restore showpage
+
+%%Page: 30 30
+%%PageOrientation: Landscape
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+landscapePage begin 30 drawPageContent
+
+/Times-Bold findfont 10 scalefont setfont
+marginX1 pageH 48 sub moveto (bip39_24w1 Quickcheck 2) show
+
+gsave
+marginX1 pageH 40 sub translate
+
+/quickcheckinitialvalues bip3924quickcheckinitialvalues def
+
+bip3924ladder begin
+ 1 drawquickgrid
+% (2NAMES23456789ACDEFGHJKLMNPQRSTUVWXYZ023456789ACDEFGHJKLMNPNXHADERYUEGDK) 1 fillquickgrid
+% (D97LPKZTGS3CCEQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQSECRETSHARE32) 1 fillquickgrid
+end
+grestore
+
+/Courier findfont 8.5 scalefont setfont
+36 pageH 200 sub  % x y
+pageW 64 sub pageH 264 sub % w h
+1 drawQuickChecksumTable
+
+end pgsave restore showpage
+
+%%Page: 31 31
+%%PageOrientation: Landscape
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+landscapePage begin 31 drawPageContent
+
+/Times-Bold findfont 10 scalefont setfont
+marginX1 pageH 48 sub moveto (bip39_24w1 Quickcheck 3) show
+
+gsave
+marginX1 pageH 40 sub translate
+
+/quickcheckinitialvalues bip3924quickcheckinitialvalues def
+
+bip3924ladder begin
+ 2 drawquickgrid
+% (2NAMES23456789ACDEFGHJKLMNPQRSTUVWXYZ023456789ACDEFGHJKLMNPNXHADERYUEGDK) 2 fillquickgrid
+% (D97LPKZTGS3CCEQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQSECRETSHARE32) 2 fillquickgrid
+end
+grestore
+
+/Courier findfont 8.5 scalefont setfont
+36 pageH 200 sub  % x y
+pageW 64 sub pageH 264 sub % w h
+2 drawQuickChecksumTable
+
+end pgsave restore showpage
+
+%%Page: 32 32
+%%PageOrientation: Landscape
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+landscapePage begin 32 drawPageContent
+
+/Times-Bold findfont 10 scalefont setfont
+marginX1 pageH 48 sub moveto (bip39_24w1 Quickcheck 4) show
+
+gsave
+marginX1 pageH 40 sub translate
+
+/quickcheckinitialvalues bip3924quickcheckinitialvalues def
+
+bip3924ladder begin
+ 3 drawquickgrid
+% (2NAMES23456789ACDEFGHJKLMNPQRSTUVWXYZ023456789ACDEFGHJKLMNPNXHADERYUEGDK) 3 fillquickgrid
+% (D97LPKZTGS3CCEQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQSECRETSHARE32) 3 fillquickgrid
+end
+grestore
+
+/Courier findfont 8.5 scalefont setfont
+36 pageH 200 sub  % x y
+pageW 64 sub pageH 264 sub % w h
+3 drawQuickChecksumTable
+
+end pgsave restore showpage
+
+%%Page: 33 33
+%%PageOrientation: Landscape
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+landscapePage begin 33 drawPageContent
+
+/Times-Bold findfont 10 scalefont setfont
+marginX1 pageH 48 sub moveto (bip39_24w1 Quickcheck 5) show
+
+gsave
+marginX1 pageH 40 sub translate
+
+/quickcheckinitialvalues bip3924quickcheckinitialvalues def
+
+bip3924ladder begin
+ 4 drawquickgrid
+% (2NAMES23456789ACDEFGHJKLMNPQRSTUVWXYZ023456789ACDEFGHJKLMNPNXHADERYUEGDK) 4 fillquickgrid
+% (D97LPKZTGS3CCEQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQSECRETSHARE32) 4 fillquickgrid
+end
+grestore
+
+/Courier findfont 8.5 scalefont setfont
+36 pageH 200 sub  % x y
+pageW 64 sub pageH 264 sub % w h
+4 drawQuickChecksumTable
+
+end pgsave restore showpage
+
+%%Page: 34 34
+%%PageOrientation: Landscape
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+landscapePage begin 34 drawPageContent
+
+/Times-Bold findfont 10 scalefont setfont
+marginX1 pageH 48 sub moveto (bip39_24w1 Quickcheck 6) show
+
+gsave
+marginX1 pageH 40 sub translate
+
+/quickcheckinitialvalues bip3924quickcheckinitialvalues def
+
+bip3924ladder begin
+ 5 drawquickgrid
+% (2NAMES23456789ACDEFGHJKLMNPQRSTUVWXYZ023456789ACDEFGHJKLMNPNXHADERYUEGDK) 5 fillquickgrid
+% (D97LPKZTGS3CCEQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQSECRETSHARE32) 5 fillquickgrid
+end
+grestore
+
+/Courier findfont 8.5 scalefont setfont
+36 pageH 200 sub  % x y
+pageW 64 sub pageH 264 sub % w h
+5 drawQuickChecksumTable
+
+end pgsave restore showpage
+
+%%Page: 35 35
+%%PageOrientation: Landscape
+%%BeginPageSetup
+/pgsave save def
+%%EndPageSetup
+landscapePage begin 35 drawPageContent
+
+/Times-Bold findfont 10 scalefont setfont
+marginX1 pageH 48 sub moveto (bip39_24w1 Quickcheck 7) show
+
+gsave
+marginX1 pageH 40 sub translate
+
+/quickcheckinitialvalues bip3924quickcheckinitialvalues def
+
+bip3924ladder begin
+ 6 drawquickgrid
+% (2NAMES23456789ACDEFGHJKLMNPQRSTUVWXYZ023456789ACDEFGHJKLMNPNXHADERYUEGDK) 6 fillquickgrid
+% (D97LPKZTGS3CCEQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQSECRETSHARE32) 6 fillquickgrid
+end
+grestore
+
+/Courier findfont 8.5 scalefont setfont
+36 pageH 200 sub  % x y
+pageW 64 sub pageH 264 sub % w h
+6 drawQuickChecksumTable
 
 end pgsave restore showpage
 

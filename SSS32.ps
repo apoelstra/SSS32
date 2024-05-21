@@ -1879,9 +1879,19 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
       } if
 
       % 3. Draw = and + symbols
-      % TODO
+      /Times-Roman findfont 8 scalefont setfont
+      hrplen hrplen 2 mod add
+      2
+      sharelen 2 sub {
+        /i exch def
 
-      % 4. Draw final residue
+        i 2 qkckoffset 5 add exch xsize sub 8 add exch moveto (+) show
+        i 3 qkckoffset 5 add exch xsize sub 8 add exch moveto (=) show
+      } for
+
+      % 4. TODO Draw arrow
+
+      % 5. Draw final residue
       0.85 setgray
       sharelen 2 sub 2 qkckoffset moveto xsize 2 div ysize fgap add rmoveto code quickcheckfinalvalues quickidx get 0 get get fsize centrecodexshow
       sharelen 1 sub 2 qkckoffset moveto xsize 2 div ysize fgap add rmoveto code quickcheckfinalvalues quickidx get 1 get get fsize centrecodexshow

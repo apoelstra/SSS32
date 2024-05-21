@@ -1080,6 +1080,90 @@ end
    } for
  } bind def
 
+/drawquickcheckarrow {
+10 dict begin
+  [ /y1 /x1 /y2 /x2 ] {exch def} forall
+  /width x2 x1 sub def
+  % Curve
+  gsave
+    newpath
+    x1 y1 moveto
+      x1 x2 add 2 div width 5 div add y1
+      x1 x2 add 2 div width 5 div sub y2
+      x2 y2 curveto stroke
+  grestore
+
+  % Arrowhead
+  gsave
+    newpath
+    verythin line
+    x1 1.5 add y1 translate
+    0 0 moveto 5 rotate
+    -1.5 -1.5 rlineto
+    0 3 rlineto
+    1.5 -1.5 rlineto
+    gsave fill grestore stroke
+  grestore
+
+  % Box
+  gsave
+    x1 x2 add 2 div
+    y1 y2 add 2 div
+    translate
+
+    -4 -3 moveto 0 6 rlineto 3 0 rlineto 0 -6 rlineto fill
+    0.808 0.923 0.953 setrgbcolor
+    -1 0 moveto 0 3 rlineto 5 0 rlineto 0 -3 rlineto fill
+    1 setgray
+    -1 0 moveto 0 -3 rlineto 5 0 rlineto 0 3 rlineto fill
+    0 setgray
+    -4 -3 8 6 rectstroke
+  grestore
+end
+} bind def
+
+/drawquickcheckarrow2 {
+10 dict begin
+  [ /y1 /x1 /y2 /x2 ] {exch def} forall
+  /height y2 y1 sub def
+  % Curve
+  gsave
+    newpath
+    x1 y1 moveto
+      x1 80 sub y2 height 2 div add
+      x2 80 add y1 height 2 div sub
+      x2 y2 curveto stroke
+  grestore
+
+  % Arrowhead
+  gsave
+    newpath
+    verythin line
+    x1 1.5 add y1 0.5 sub translate
+    0 0 moveto -25 rotate
+    -1.5 -1.5 rlineto
+    0 3 rlineto
+    1.5 -1.5 rlineto
+    gsave fill grestore stroke
+  grestore
+
+  % Box
+  gsave
+    x1 x2 add 2 div
+    y1 y2 add 2 div
+    translate
+
+    -4 -3 moveto 0 6 rlineto 3 0 rlineto 0 -6 rlineto fill
+    0.808 0.923 0.953 setrgbcolor
+    -1 0 moveto 0 3 rlineto 5 0 rlineto 0 -3 rlineto fill
+    1 setgray
+    -1 0 moveto 0 -3 rlineto 5 0 rlineto 0 3 rlineto fill
+    0 setgray
+    -4 -3 8 6 rectstroke
+  grestore
+end
+} bind def
+
 % drawPointer : sz --
 % draws a fillied triangle of sz pointing up (or down if sz is negative).
 /drawPointer {
@@ -1776,7 +1860,7 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
         % For each line for which x >= breakx, subtract the length and offset
         % y to effect a newline.
         /x x breakx sub store
-        /y y 4 add store
+        /y y 4.5 add store
       } {
         % Set xoffset to the offset of the last line for which x is < breakx
         /xoffset qkcklineoffsets idx get def
@@ -1889,7 +1973,24 @@ page exch perm 3 index get exch  makeShare code exch get glyphshow
         i 3 qkckoffset 5 add exch xsize sub 8 add exch moveto (=) show
       } for
 
-      % 4. TODO Draw arrow
+      % 4. Draw arrow (though only try if the gap is wide enough)
+      qkckgap 20 ge {
+        hrplen 1 add hrplen 2 mod add
+        2
+        sharelen 2 sub {
+          /i exch def
+
+          i 3 qkckoffset ysize 2 div sub exch xsize add 4 add exch
+            i 2 add 1 qkckoffset ysize 2 div sub exch xsize sub 4 sub exch
+
+            % Draw the arrow except across linebreaks
+            2 index 1 index lt {
+              drawquickcheckarrow
+            } {
+              drawquickcheckarrow2
+            } ifelse
+        } for
+      } if
 
       % 5. Draw final residue
       0.85 setgray
@@ -3148,7 +3249,7 @@ end
 grestore
 
 /Courier findfont 8.5 scalefont setfont
-36 pageH 200 sub  % x y
+36 pageH 216 sub  % x y
 pageW 64 sub pageH 264 sub % w h
 0 drawQuickChecksumTable
 
@@ -3177,7 +3278,7 @@ end
 grestore
 
 /Courier findfont 8.5 scalefont setfont
-36 pageH 200 sub  % x y
+36 pageH 216 sub  % x y
 pageW 64 sub pageH 264 sub % w h
 1 drawQuickChecksumTable
 
@@ -3206,7 +3307,7 @@ end
 grestore
 
 /Courier findfont 8.5 scalefont setfont
-36 pageH 200 sub  % x y
+36 pageH 216 sub  % x y
 pageW 64 sub pageH 264 sub % w h
 2 drawQuickChecksumTable
 
@@ -3235,7 +3336,7 @@ end
 grestore
 
 /Courier findfont 8.5 scalefont setfont
-36 pageH 200 sub  % x y
+36 pageH 216 sub  % x y
 pageW 64 sub pageH 264 sub % w h
 3 drawQuickChecksumTable
 
@@ -3264,7 +3365,7 @@ end
 grestore
 
 /Courier findfont 8.5 scalefont setfont
-36 pageH 200 sub  % x y
+36 pageH 216 sub  % x y
 pageW 64 sub pageH 264 sub % w h
 4 drawQuickChecksumTable
 
@@ -3293,7 +3394,7 @@ end
 grestore
 
 /Courier findfont 8.5 scalefont setfont
-36 pageH 200 sub  % x y
+36 pageH 216 sub  % x y
 pageW 64 sub pageH 264 sub % w h
 5 drawQuickChecksumTable
 
@@ -3322,7 +3423,7 @@ end
 grestore
 
 /Courier findfont 8.5 scalefont setfont
-36 pageH 200 sub  % x y
+36 pageH 216 sub  % x y
 pageW 64 sub pageH 264 sub % w h
 6 drawQuickChecksumTable
 
